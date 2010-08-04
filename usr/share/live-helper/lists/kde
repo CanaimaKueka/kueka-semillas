@@ -1,0 +1,13 @@
+# /usr/share/live-helper/lists/kde - package list for live-helper(7)
+
+## LH: KDE
+#include <kde-core>
+
+#if DISTRIBUTION lenny
+kde
+#endif
+#if DISTRIBUTION squeeze sid
+kde-standard
+#endif
+kdm
+desktop-base

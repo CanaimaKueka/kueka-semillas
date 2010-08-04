@@ -1,0 +1,23 @@
+Package: canaima-semilla
+Version: 1.0
+Architecture: all
+Maintainer: Equipo de Desarrollo de Canaima <desarrolladores@canaima.softwarelibre.gob.ve>
+Installed-Size: 4180
+Depends: debootstrap | cdebootstrap | cdebootstrap-static
+Recommends: cpio, gettext-base, gnu-fdisk
+Suggests: dosfstools, genisoimage, memtest86+ | memtest86, mtools, parted, squashfs-tools | genext2fs | mtd-tools, sudo | fakeroot, syslinux | grub, uuid-runtime, win32-loader
+Conflicts: live-helper (<< 2.0~a20)
+Replaces: live-helper
+Section: misc
+Priority: optional
+Description: canaima-semilla - Generador de medios vivos
+ canaima-semilla es un paquete que permite generar un sistema nVivo para
+ el sistema operativo Canaima GNU/Linux.
+ .
+ Se le brinda a el usuario la opción de escoger la arquitectura (i386, amd64)
+ y el medio a utilizar (USB, CD o DVD).
+ .
+ En el futuro, éste paquete también podrá generar sistemas nVivo para los
+ diferentes sabores de la metadistribución Canaima GNU/Linux.
+ .
+ Éste desarrollo está basado en el Proyecto Debian Live.

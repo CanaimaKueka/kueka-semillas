@@ -1,0 +1,13 @@
+# /usr/share/live-helper/lists/xfce - package list for live-helper(7)
+
+## LH: Xfce
+#include <standard-x11>
+
+xfce4
+#if DISTRIBUTION lenny
+gdm
+#endif
+#if DISTRIBUTION squeeze sid
+gdm3
+#endif
+desktop-base
