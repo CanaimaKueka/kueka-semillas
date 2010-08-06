@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE glade-interface SYSTEM "glade-2.0.dtd">
-<!--Generated with glade3 3.4.5 on Fri Aug  6 14:58:44 2010 -->
+<!--Generated with glade3 3.4.5 on Fri Aug  6 15:03:16 2010 -->
 <glade-interface>
   <widget class="GtkWindow" id="window1">
     <property name="width_request">600</property>
@@ -92,19 +92,6 @@ todos los paquetes necesarios para la Administracion Publica Nacional.</property
                   <packing>
                     <property name="x">18</property>
                     <property name="y">13</property>
-                  </packing>
-                </child>
-                <child>
-                  <widget class="GtkLabel" id="label9">
-                    <property name="width_request">84</property>
-                    <property name="height_request">23</property>
-                    <property name="visible">True</property>
-                    <property name="label" translatable="yes">&lt;b&gt;50 MB&lt;/b&gt;</property>
-                    <property name="use_markup">True</property>
-                  </widget>
-                  <packing>
-                    <property name="x">477</property>
-                    <property name="y">9</property>
                   </packing>
                 </child>
                 <child>
@@ -609,7 +596,8 @@ los contenidos educativos producidos por el Ministerio de Educación.</property>
             <property name="width_request">300</property>
             <property name="height_request">59</property>
             <property name="visible">True</property>
-            <property name="label" translatable="yes">&lt;b&gt;Seleccione el sabor de canaima que desea generar.&lt;/b&gt;</property>
+            <property name="label" translatable="yes">&lt;b&gt;Aqui va la imagen/logo representativo de 
+canaima-semilla&lt;/b&gt;</property>
             <property name="use_markup">True</property>
           </widget>
           <packing>
