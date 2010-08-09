@@ -26,14 +26,6 @@ Set_defaults ()
 			debian|debian-release)
 				LH_DISTRIBUTION="lenny"
 				;;
-
-			emdebian)
-				LH_DISTRIBUTION="sid"
-				;;
-
-			ubuntu)
-				LH_DISTRIBUTION="karmic"
-				;;
 		esac
 	fi
 
@@ -80,12 +72,8 @@ Set_defaults ()
 
 	# Setting apt recommends
 	case "${LH_MODE}" in
-		debian|debian-release|ubuntu)
+		debian)
 			LH_APT_RECOMMENDS="${LH_APT_RECOMMENDS:-true}"
-			;;
-
-		emdebian)
-			LH_APT_RECOMMENDS="${LH_APT_RECOMMENDS:-false}"
 			;;
 	esac
 
@@ -186,9 +174,7 @@ Set_defaults ()
 	else
 		if [ -x /usr/bin/sudo ]
 		then
-			# FIXME: this is false until considered safe
-			#LH_ROOT_COMMAND="sudo"
-			LH_ROOT_COMMAND=""
+			LH_ROOT_COMMAND="sudo"		
 		fi
 	fi
 
@@ -271,6 +257,9 @@ Set_defaults ()
 		cdebootstrap)
 			LH_BOOTSTRAP_FLAVOUR="${LH_BOOTSTRAP_FLAVOUR:-standard}"
 			;;
+		debootstrap)
+                        LH_BOOTSTRAP_FLAVOUR="${LH_BOOTSTRAP_FLAVOUR:-minimal}"
+                        ;;
 	esac
 
 	# Setting bootstrap keyring
@@ -280,24 +269,8 @@ Set_defaults ()
 	if [ -z "${LH_MIRROR_BOOTSTRAP}" ]
 	then
 		case "${LH_MODE}" in
-			debian|debian-release)
-				LH_MIRROR_BOOTSTRAP="http://ftp.de.debian.org/debian/"
-				;;
-
-			emdebian)
-				LH_MIRROR_BOOTSTRAP="http://buildd.emdebian.org/grip/"
-				;;
-
-			ubuntu)
-				case "${LH_ARCHITECTURE}" in
-					amd64|i386)
-						LH_MIRROR_BOOTSTRAP="http://archive.ubuntu.com/ubuntu/"
-						;;
-
-					*)
-						LH_MIRROR_BOOTSTRAP="http://ports.ubuntu.com/"
-						;;
-				esac
+			debian)
+				LH_MIRROR_BOOTSTRAP="http://universo.canaima.softwarelibre.gob.ve/"
 				;;
 		esac
 	fi
@@ -308,24 +281,8 @@ Set_defaults ()
 	if [ -z "${LH_MIRROR_CHROOT_SECURITY}" ]
 	then
 		case "${LH_MODE}" in
-			debian|debian-release)
-				LH_MIRROR_CHROOT_SECURITY="http://security.debian.org/"
-				;;
-
-			emdebian)
+			debian)
 				LH_MIRROR_CHROOT_SECURITY="none"
-				;;
-
-			ubuntu)
-				case "${LH_ARCHITECTURE}" in
-					amd64|i386)
-						LH_MIRROR_CHROOT_SECURITY="http://security.ubuntu.com/ubuntu/"
-						;;
-
-					*)
-						LH_MIRROR_CHROOT_SECURITY="http://ports.ubuntu.com/"
-						;;
-				esac
 				;;
 		esac
 	fi
@@ -334,22 +291,10 @@ Set_defaults ()
 	if [ -z "${LH_MIRROR_CHROOT_VOLATILE}" ]
 	then
 		case "${LH_MODE}" in
-			debian|debian-release)
+			debian)
 				case "${LH_DISTRIBUTION}" in
 					lenny)
-						LH_MIRROR_CHROOT_VOLATILE="http://volatile.debian.org/debian-volatile/"
-						;;
-				esac
-				;;
-
-			ubuntu)
-				case "${LH_ARCHITECTURE}" in
-					amd64|i386)
-						LH_MIRROR_CHROOT_VOLATILE="http://security.ubuntu.com/ubuntu/"
-						;;
-
-					*)
-						LH_MIRROR_CHROOT_VOLATILE="http://ports.ubuntu.com/"
+						LH_MIRROR_CHROOT_VOLATILE="none"
 						;;
 				esac
 				;;
@@ -362,24 +307,8 @@ Set_defaults ()
 	if [ -z "${LH_MIRROR_BINARY}" ]
 	then
 		case "${LH_MODE}" in
-			debian|debian-release)
-				LH_MIRROR_BINARY="http://cdn.debian.net/debian/"
-				;;
-
-			emdebian)
-				LH_MIRROR_BINARY="http://buildd.emdebian.org/grip/"
-				;;
-
-			ubuntu)
-				case "${LH_ARCHITECTURE}" in
-					amd64|i386)
-						LH_MIRROR_BINARY="http://archive.ubuntu.com/ubuntu/"
-						;;
-
-					*)
-						LH_MIRROR_BINARY="http://ports.ubuntu.com/"
-						;;
-				esac
+			debian)
+				LH_MIRROR_BINARY="http://universo.canaima.softwarelibre.gob.ve/"
 				;;
 		esac
 	fi
@@ -388,24 +317,8 @@ Set_defaults ()
 	if [ -z "${LH_MIRROR_BINARY_SECURITY}" ]
 	then
 		case "${LH_MODE}" in
-			debian|debian-release)
-				LH_MIRROR_BINARY_SECURITY="http://security.debian.org/"
-				;;
-
-			emdebian)
-				LH_MIRROR_BINARY_SECURITY="none"
-				;;
-
-			ubuntu)
-				case "${LH_ARCHITECTURE}" in
-					amd64|i386)
-						LH_MIRROR_BINARY_SECURITY="http://archive.ubuntu.com/ubuntu/"
-						;;
-
-					*)
-						LH_MIRROR_BINARY_SECURITY="http://ports.ubuntu.com/"
-						;;
-				esac
+			debian)
+				LH_MIRROR_BINARY_SECURITY="http://universo.canaima.softwarelibre.gob.ve/"
 				;;
 		esac
 	fi
@@ -414,24 +327,8 @@ Set_defaults ()
 	if [ -z "${LH_MIRROR_BINARY_VOLATILE}" ]
 	then
 		case "${LH_MODE}" in
-			debian|debian-release)
-				case "${LH_DISTRIBUTION}" in
-					lenny)
-						LH_MIRROR_BINARY_VOLATILE="http://volatile.debian.org/debian-volatile/"
-						;;
-				esac
-				;;
-
-			ubuntu)
-				case "${LH_ARCHITECTURE}" in
-					amd64|i386)
-						LH_MIRROR_BINARY_VOLATILE="http://security.ubuntu.com/ubuntu/"
-						;;
-
-					*)
-						LH_MIRROR_BINARY_VOLATILE="http://ports.ubuntu.com/"
-						;;
-				esac
+			debian)
+				LH_MIRROR_BINARY_VOLATILE="none"
 				;;
 		esac
 
