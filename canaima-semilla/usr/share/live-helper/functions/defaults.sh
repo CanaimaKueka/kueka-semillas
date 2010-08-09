@@ -598,14 +598,6 @@ Set_defaults ()
 			amd64|i386)
 				LH_BOOTLOADER="syslinux"
 				;;
-
-			powerpc)
-				LH_BOOTLOADER="yaboot"
-				;;
-
-			sparc)
-				LH_BOOTLOADER="silo"
-				;;
 		esac
 	fi
 
@@ -616,7 +608,7 @@ Set_defaults ()
 	LH_BUILD_WITH_CHROOT="${LH_BUILD_WITH_CHROOT:-true}"
 
 	# Setting debian-installer option
-	LH_DEBIAN_INSTALLER="${LH_DEBIAN_INSTALLER:-false}"
+	LH_DEBIAN_INSTALLER="${LH_DEBIAN_INSTALLER:-live}"
 
 	# Setting debian-installer distribution
 	LH_DEBIAN_INSTALLER_DISTRIBUTION="${LH_DEBIAN_INSTALLER_DISTRIBUTION:-${LH_DISTRIBUTION}}"
@@ -668,7 +660,7 @@ Set_defaults ()
 	fi
 
 	# Setting boot parameters
-	# LH_BOOTAPPEND_LIVE
+	LH_BOOTAPPEND_LIVE="locale=es_VE.UTF-8 keyb=es quiet splash vga=791"
 	if [ -n "${LH_DEBIAN_INSTALLER_PRESEEDFILE}" ]
 	then
 		case "${LH_BINARY_IMAGES}" in
