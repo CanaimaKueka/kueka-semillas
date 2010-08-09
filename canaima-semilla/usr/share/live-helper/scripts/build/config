@@ -818,9 +818,9 @@ Check_defaults
 
 if [ ! -e config ]
 then
-	Echo_message "Creating config tree"
+	Echo_message "Configurando Canaima Semilla"
 else
-	Echo_message "Updating config tree"
+	Echo_message "Actualizando configuración de Canaima Semilla"
 fi
 
 # Creating bootstrap configuration
@@ -837,7 +837,7 @@ LH_CONFIG_VERSION="${CONFIG_VERSION}"
 
 # \$LH_APT: set package manager
 # (Default: ${LH_APT})
-LH_APT="apt-get"
+LH_APT="${LH_APT}"
 
 # \$LH_APT_FTP_PROXY: set apt/aptitude ftp proxy
 # (Default: autodetected or empty)
@@ -865,7 +865,7 @@ LH_APT_SECURE="${LH_APT_SECURE}"
 
 # \$LH_BOOTSTRAP: set bootstrap program
 # (Default: ${LH_BOOTSTRAP})
-LH_BOOTSTRAP="debootstrap"
+LH_BOOTSTRAP="${LH_BOOTSTRAP}"
 
 # \$LH_CACHE: control cache
 # (Default: ${LH_CACHE})
@@ -885,7 +885,7 @@ LH_CACHE_STAGES="${LH_CACHE_STAGES}"
 
 # \$LH_DEBCONF_FRONTEND: set debconf(1) frontend to use
 # (Default: ${LH_DEBCONF_FRONTEND})
-LH_DEBCONF_FRONTEND="dialog"
+LH_DEBCONF_FRONTEND="${LH_DEBCONF_FRONTEND}"
 
 # \$LH_DEBCONF_NOWARNINGS: set debconf(1) warnings
 # (Default: ${LH_DEBCONF_NOWARNINGS})
@@ -913,7 +913,7 @@ LH_MODE="${LH_MODE}"
 
 # \$LH_ROOT_COMMAND: use sudo or equivalent
 # (Default: empty)
-#LH_ROOT_COMMAND="sudo"
+LH_ROOT_COMMAND="${LH_ROOT_COMMAND}"
 
 # \$LH_USE_FAKEROOT: use fakeroot/fakechroot
 # (Default: ${LH_USE_FAKEROOT})
@@ -986,7 +986,7 @@ LH_BOOTSTRAP_EXCLUDE="${LH_BOOTSTRAP_EXCLUDE}"
 
 # \$LH_BOOTSTRAP_FLAVOUR: select flavour to use
 # (Default: empty)
-LH_BOOTSTRAP_FLAVOUR="minimal"
+LH_BOOTSTRAP_FLAVOUR="${LH_BOOTSTRAP_FLAVOUR}"
 
 # \$LH_BOOTSTRAP_KEYRING: set distribution keyring
 # (Default: empty)
@@ -994,43 +994,43 @@ LH_BOOTSTRAP_KEYRING="${LH_BOOTSTRAP_KEYRING}"
 
 # \$LH_DISTRIBUTION: select distribution to use
 # (Default: ${LH_DISTRIBUTION})
-LH_DISTRIBUTION="lenny"
+LH_DISTRIBUTION="${LH_DISTRIBUTION}"
 
 # \$LH_MIRROR_BOOTSTRAP: set mirror to bootstrap from
 # (Default: ${LH_MIRROR_BOOTSTRAP})
-LH_MIRROR_BOOTSTRAP="http://universo.canaima.softwarelibre.gob.ve/"
+LH_MIRROR_BOOTSTRAP="${LH_MIRROR_BOOTSTRAP}"
 
 # \$LH_MIRROR_CHROOT: set mirror to fetch packages from
 # (Default: ${LH_MIRROR_CHROOT})
-LH_MIRROR_CHROOT="http://universo.canaima.softwarelibre.gob.ve/"
+LH_MIRROR_CHROOT="${LH_MIRROR_CHROOT}"
 
 # \$LH_MIRROR_CHROOT_SECURITY: set security mirror to fetch packages from
 # (Default: ${LH_MIRROR_CHROOT_SECURITY})
-LH_MIRROR_CHROOT_SECURITY="none"
+LH_MIRROR_CHROOT_SECURITY="${LH_MIRROR_CHROOT_SECURITY}"
 
 # \$LH_MIRROR_CHROOT_VOLATILE: set volatile mirror to fetch packages from
 # (Default: ${LH_MIRROR_CHROOT_VOLATILE})
-LH_MIRROR_CHROOT_VOLATILE="none"
+LH_MIRROR_CHROOT_VOLATILE="${LH_MIRROR_CHROOT_VOLATILE}"
 
 # \$LH_MIRROR_BINARY: set mirror which ends up in the image
 # (Default: ${LH_MIRROR_BINARY})
-LH_MIRROR_BINARY="http://universo.canaima.softwarelibre.gob.ve/"
+LH_MIRROR_BINARY="${LH_MIRROR_BINARY}"
 
 # \$LH_MIRROR_BINARY_SECURITY: set security mirror which ends up in the image
 # (Default: ${LH_MIRROR_BINARY_SECURITY})
-LH_MIRROR_BINARY_SECURITY="none"
+LH_MIRROR_BINARY_SECURITY="${LH_MIRROR_BINARY_SECURITY}"
 
 # \$LH_MIRROR_BINARY_VOLATILE: set volatile mirror which ends up in the image
 # (Default: ${LH_MIRROR_BINARY_VOLATILE})
-LH_MIRROR_BINARY_VOLATILE="none"
+LH_MIRROR_BINARY_VOLATILE="${LH_MIRROR_BINARY_VOLATILE}"
 
 # \$LH_MIRROR_DEBIAN_INSTALLER: set debian-installer mirror
 # (Default: ${LH_MIRROR_BOOTSTRAP})
-LH_MIRROR_DEBIAN_INSTALLER="http://universo.canaima.softwarelibre.gob.ve/"
+LH_MIRROR_DEBIAN_INSTALLER="${LH_MIRROR_BOOTSTRAP}"
 
 # \$LH_ARCHIVE_AREAS: select archive areas to use
 # (Default: ${LH_ARCHIVE_AREAS})
-LH_ARCHIVE_AREAS="main contrib non-free"
+LH_ARCHIVE_AREAS="${LH_ARCHIVE_AREAS}"
 EOF
 
 # Creating lh_chroot_* configuration
@@ -1069,7 +1069,7 @@ LH_HOOKS="${LH_HOOKS}"
 
 # \$LH_INTERACTIVE: set interactive build
 # (Default: ${LH_INTERACTIVE})
-LH_INTERACTIVE="shell"
+LH_INTERACTIVE="${LH_INTERACTIVE}"
 
 # \$LH_KEYRING_PACKAGES: set keyring packages
 # (Default: empty)
@@ -1077,7 +1077,7 @@ LH_KEYRING_PACKAGES="${LH_KEYRING_PACKAGES}"
 
 # \$LH_LANGUAGE: set language to use
 # (Default: empty)
-LH_LANGUAGE="es"
+LH_LANGUAGE="${LH_LANGUAGE}"
 
 # \$LH_LINUX_FLAVOURS: set kernel flavour to use
 # (Default: autodetected)
@@ -1093,7 +1093,7 @@ LH_REPOSITORIES="${LH_REPOSITORIES}"
 
 # \$LH_PACKAGES: set packages to install
 # (Default: empty)
-LH_PACKAGES="gparted firefox canaima-base canaima-acerca canaima-bienvenido canaima-chat canaima-estilo-visual canaima-estilo-visual-iconos canaima-llaves canaima-accesibilidad"
+LH_PACKAGES="gparted firefox canaima-base canaima-acerca canaima-bienvenido canaima-chat canaima-estilo-visual canaima-estilo-visual-iconos canaima-llaves canaima-accesibilidad canaima-instalador-vivo canaima-particionador"
 
 # \$LH_PACKAGES_LISTS: set package list to install
 # (Default: ${LH_PACKAGES_LISTS})
@@ -1105,11 +1105,11 @@ LH_TASKS="${LH_TASKS}"
 
 # \$LH_SECURITY: enable security updates
 # (Default: ${LH_SECURITY})
-LH_SECURITY="false"
+LH_SECURITY="${LH_SECURITY}"
 
 # \$LH_VOLATILE: enable volatile updates
 # (Default: ${LH_VOLATILE})
-LH_VOLATILE="false"
+LH_VOLATILE="${LH_VOLATILE}"
 
 # \$LH_SYMLINKS: enable symlink convertion
 # (Default: ${LH_SYMLINKS})

@@ -341,12 +341,8 @@ Set_defaults ()
 	if [ -z "${LH_ARCHIVE_AREAS}" ]
 	then
 		case "${LH_MODE}" in
-			ubuntu)
-				LH_ARCHIVE_AREAS="main restricted"
-				;;
-
-			*)
-				LH_ARCHIVE_AREAS="main"
+			debian)
+				LH_ARCHIVE_AREAS="main contrib non-free"
 				;;
 		esac
 	fi
@@ -372,125 +368,31 @@ Set_defaults ()
 
 	# Setting keyring packages
 	case "${LH_MODE}" in
-		debian|debian-release)
+		debian)
 			LH_KEYRING_PACKAGES="${LH_KEYRING_PACKAGES:-debian-archive-keyring}"
-			;;
-
-		emdebian)
-			LH_KEYRING_PACKAGES="${LH_kEYRING_PACKAGES:-debian-archive-keyring}"
-			;;
-
-		ubuntu)
-			LH_KEYRING_PACKAGES="${LH_KEYRING_PACKAGES:-ubuntu-keyring}"
 			;;
 	esac
 
 	# Setting language string
-	LH_LANGUAGE="${LH_LANGUAGE:-en}"
+	LH_LANGUAGE="${LH_LANGUAGE:-es}"
 
 	# Setting linux flavour string
 	if [ -z "${LH_LINUX_FLAVOURS}" ]
 	then
 		case "${LH_ARCHITECTURE}" in
-			arm|armel)
-				Echo_error "There is no default kernel flavour defined for your architecture."
-				Echo_error "Please configure it manually with 'lh config -k FLAVOUR'."
-				exit 1
-				;;
-
-			alpha)
-				case "${LH_MODE}" in
-					ubuntu)
-						Echo_error "Architecture ${LH_ARCHITECTURE} not supported on Ubuntu."
-						exit 1
-						;;
-
-					*)
-						LH_LINUX_FLAVOURS="alpha-generic"
-						;;
-				esac
-				;;
-
 			amd64)
 				case "${LH_MODE}" in
-					ubuntu)
-						LH_LINUX_FLAVOURS="generic"
-						;;
-
-					*)
+					debian)
 						LH_LINUX_FLAVOURS="amd64"
 						;;
 				esac
 				;;
-
-			hppa)
-				case "${LH_MODE}" in
-					ubuntu)
-						LH_LINUX_FLAVOURS="hppa32 hppa64"
-						;;
-
-					*)
-						LH_LINUX_FLAVOURS="parisc"
-						;;
-				esac
-				;;
-
 			i386)
 				case "${LH_MODE}" in
-					ubuntu)
-						LH_LINUX_FLAVOURS="generic"
-						;;
-
-					*)
-						case "${LIST}" in
-							stripped|minimal)
-								LH_LINUX_FLAVOURS="486"
-								;;
-
-							*)
-								LH_LINUX_FLAVOURS="486 686"
-								;;
-						esac
+					debian)
+						LH_LINUX_FLAVOURS="686"
 						;;
 				esac
-				;;
-
-			ia64)
-				LH_LINUX_FLAVOURS="itanium"
-				;;
-
-			powerpc)
-				case "${LIST}" in
-					stripped|minimal)
-						LH_LINUX_FLAVOURS="powerpc"
-						;;
-
-					*)
-						LH_LINUX_FLAVOURS="powerpc powerpc64"
-						;;
-				esac
-				;;
-
-			s390)
-				case "${LH_MODE}" in
-					ubuntu)
-						Echo_error "Architecture ${LH_ARCHITECTURE} not supported on Ubuntu."
-						exit 1
-						;;
-
-					*)
-						LH_LINUX_FLAVOURS="s390"
-						;;
-				esac
-				;;
-
-			sparc)
-				LH_LINUX_FLAVOURS="sparc64"
-				;;
-
-			*)
-				Echo_error "Architecture ${LH_ARCHITECTURE} not yet supported (FIXME)"
-				exit 1
 				;;
 		esac
 	fi
