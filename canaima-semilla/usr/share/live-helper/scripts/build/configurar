@@ -36,8 +36,8 @@ USAGE="${PROGRAM} [--apt apt|aptitude]\n\
 \t    [--apt-pipeline FIXME]\n\
 \t    [--apt-recommends true|false]\n\
 \t    [--apt-secure true|false]\n\
-\t    [-a|--architecture ARCHITECTURE]\n\
-\t    [-b|--binary-images iso|net|tar|usb-hdd]\n\
+\t    [-a|--arquitectura ARQUITECTURA]\n\
+\t    [-b|--medio iso|net|tar|usb-hdd]\n\
 \t    [--binary-filesystem fat16|fat32]\n\
 \t    [--binary-indices true|false|none]\n\
 \t    [--bootappend-install PARAMETER|\"PARAMETERS\"]\n\
@@ -139,11 +139,11 @@ Local_arguments ()
 		apt-pipeline:,apt-recommends:,apt-secure:,bootstrap:,cache:,cache-indices:,cache-packages:,
 		cache-stages:,debconf-frontend:,debconf-nowarnings:,debconf-priority:,dump,
 		initramfs:,fdisk:,losetup:,mode:,repositories:,root-command:,use-fakeroot:,tasksel:,includes:,
-		templates:,architecture:,bootstrap-config:,bootstrap-flavour:,bootstrap-keyring:,clean,
+		templates:,arquitectura:,bootstrap-config:,bootstrap-flavour:,bootstrap-keyring:,clean,
 		distribution:,mirror-bootstrap:,mirror-chroot:,mirror-chroot-security:,mirror-chroot-volatile:,mirror-binary:,
 		mirror-binary-security:,mirror-binary-volatile:,mirror-debian-installer:,archive-areas:,chroot-filesystem:,exposed-root:,virtual-root-size:,
 		gzip-options:,hooks:,interactive:,keyring-packages:,language:,linux-flavours:,linux-packages:,
-		packages:,packages-lists:,tasks:,security:,volatile:,symlinks:,sysvinit:,binary-filesystem:,binary-images:,
+		packages:,packages-lists:,tasks:,security:,volatile:,symlinks:,sysvinit:,binary-filesystem:,medio:,
 		binary-indices:,bootappend-install:,bootappend-live:,bootloader:,checksums:,build-with-chroot:,
 		debian-installer:,debian-installer-distribution:,debian-installer-preseedfile:,debian-installer-gui:,
 		encryption:,grub-splash:,hostname:,isohybrid-options:,iso-application:,iso-preparer:,iso-publisher:,
@@ -369,7 +369,7 @@ Local_arguments ()
 				;;
 
 			# config/bootstrap
-			-a|--architecture)
+			-a|--arquitectura)
 				LH_ARCHITECTURE="${2}"
 				shift 2
 				;;
@@ -539,7 +539,7 @@ Local_arguments ()
 				shift 2
 				;;
 
-			-b|--binary-images)
+			-b|--medio)
 				LH_BINARY_IMAGES="${2}"
 				shift 2
 				;;

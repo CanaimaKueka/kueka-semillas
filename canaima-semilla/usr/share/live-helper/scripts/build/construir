@@ -16,7 +16,7 @@ set -e
 if [ -x auto/config ] && [ ! -e .stage/config ]
 then
 	Echo_message "Se te olvidó configurar la semilla. Canaima lo hará por ti, pero después no te quejes."
-	canaima-semilla config
+	canaima-semilla configurar
 fi
 
 # Read meta config
