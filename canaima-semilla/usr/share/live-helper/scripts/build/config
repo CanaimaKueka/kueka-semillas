@@ -1093,7 +1093,7 @@ LH_REPOSITORIES="${LH_REPOSITORIES}"
 
 # \$LH_PACKAGES: set packages to install
 # (Default: empty)
-LH_PACKAGES="gparted firefox canaima-base canaima-acerca canaima-bienvenido canaima-chat canaima-estilo-visual canaima-estilo-visual-iconos canaima-llaves canaima-accesibilidad canaima-instalador-vivo canaima-particionador"
+LH_PACKAGES="${LH_PACKAGES}"
 
 # \$LH_PACKAGES_LISTS: set package list to install
 # (Default: ${LH_PACKAGES_LISTS})
@@ -1149,7 +1149,7 @@ LH_BINARY_INDICES="${LH_BINARY_INDICES}"
 
 # \$LH_BOOTAPPEND_LIVE: set boot parameters
 # (Default: empty)
-LH_BOOTAPPEND_LIVE="locale=es_VE.UTF-8 keyb=es quiet splash vga=791"
+LH_BOOTAPPEND_LIVE="${LH_BOOTAPPEND_LIVE}"
 
 # \$LH_BOOTAPPEND_INSTALL: set boot parameters
 # (Default: empty)
@@ -1157,7 +1157,7 @@ LH_BOOTAPPEND_INSTALL="${LH_BOOTAPPEND_INSTALL}"
 
 # \$LH_BOOTLOADER: set bootloader
 # (Default: ${LH_BOOTLOADER})
-LH_BOOTLOADER="syslinux"
+LH_BOOTLOADER="${LH_BOOTLOADER}"
 
 # \$LH_CHECKSUMS: set checksums
 # (Default: ${LH_CHECKSUMS})
@@ -1170,7 +1170,7 @@ LH_BUILD_WITH_CHROOT="${LH_BUILD_WITH_CHROOT}"
 
 # \$LH_DEBIAN_INSTALLER: set debian-installer
 # (Default: ${LH_DEBIAN_INSTALLER})
-LH_DEBIAN_INSTALLER="live"
+LH_DEBIAN_INSTALLER="${LH_DEBIAN_INSTALLER}"
 
 # \$LH_DEBIAN_INSTALLER_DISTRIBUTION: set debian-installer suite
 # (Default: empty)
@@ -1194,11 +1194,11 @@ LH_GRUB_SPLASH="${LH_GRUB_SPLASH}"
 
 # \$LH_HOSTNAME: set hostname
 # (Default: ${LH_HOSTNAME})
-LH_HOSTNAME="canaima"
+LH_HOSTNAME="${LH_HOSTNAME}"
 
 # \$LH_ISO_APPLICATION: set iso author
 # (Default: ${LH_ISO_APPLICATION})
-LH_ISO_APPLICATION="Canaima"
+LH_ISO_APPLICATION="${LH_ISO_APPLICATION}"
 
 # \$LH_ISO_PREPARER: set iso preparer
 # (Default: ${LH_ISO_PREPARER})
@@ -1206,11 +1206,11 @@ LH_ISO_PREPARER="${LH_ISO_PREPARER}"
 
 # \$LH_ISO_PUBLISHER: set iso publisher
 # (Default: ${LH_ISO_PUBLISHER})
-LH_ISO_PUBLISHER="Canaima GNU/Linux;http://www.canaima.softwarelibre.gob.ve;desarrolladores@canaima.softwarelibre.gob.ve"
+LH_ISO_PUBLISHER="${LH_ISO_PUBLISHER}"
 
 # \$LH_ISO_VOLUME: set iso volume (max 32 chars)
 # (Default: ${LH_ISO_VOLUME})
-LH_ISO_VOLUME="nvivo"
+LH_ISO_VOLUME="${LH_ISO_VOLUME}"
 
 # \$LH_JFFS2_ERASEBLOCK: set jffs2 eraseblock size
 # (Default: unset)
@@ -1218,11 +1218,11 @@ LH_JFFS2_ERASEBLOCK=""
 
 # \$LH_MEMTEST: set memtest
 # (Default: ${LH_MEMTEST})
-LH_MEMTEST="none"
+LH_MEMTEST="${LH_MEMTEST}"
 
 # \$LH_WIN32_LOADER: set win32-loader
 # (Default: ${LH_WIN32_LOADER})
-LH_WIN32_LOADER="false"
+LH_WIN32_LOADER="${LH_WIN32_LOADER}"
 
 # \$LH_NET_ROOT_FILESYSTEM: set netboot filesystem
 # (Default: ${LH_NET_ROOT_FILESYSTEM})
@@ -1262,7 +1262,7 @@ LH_NET_TARBALL="${LH_NET_TARBALL}"
 
 # \$LH_SYSLINUX_SPLASH: set custom syslinux splash
 # (Default: empty)
-LH_SYSLINUX_SPLASH="/usr/share/live-helper/includes/lenny/install/pics/splash.jpg"
+LH_SYSLINUX_SPLASH=""
 
 # \$LH_SYSLINUX_TIMEOUT: set custom syslinux timeout in seconds
 # (Default: 0)
@@ -1278,11 +1278,11 @@ LH_SYSLINUX_MENU="${LH_SYSLINUX_MENU}"
 
 # \$LH_SYSLINUX_MENU_LIVE_ENTRY: set text to be used on the menu for live entries
 # (Default: ${LH_SYSLINUX_MENU_LIVE_ENTRY})
-LH_SYSLINUX_MENU_LIVE_ENTRY="Probar Canaima"
+LH_SYSLINUX_MENU_LIVE_ENTRY="${LH_SYSLINUX_MENU_LIVE_ENTRY}"
 
 # \$LH_SYSLINUX_MENU_LIVE_FAILSAFE_ENTRY: set text to be used on the menu for live entries (failsafe ones)
 # (Default: ${LH_SYSLINUX_MENU_LIVE_FAILSAFE_ENTRY})
-LH_SYSLINUX_MENU_LIVE_FAILSAFE_ENTRY="Probar Canaima"
+LH_SYSLINUX_MENU_LIVE_FAILSAFE_ENTRY="${LH_SYSLINUX_MENU_LIVE_FAILSAFE_ENTRY}"
 
 # \$LH_SYSLINUX_MENU_MEMTEST_ENTRY: set text to be used on the menu for memtest entry
 # (Default: ${LH_SYSLINUX_MENU_MEMTEST_ENTRY})
@@ -1290,7 +1290,7 @@ LH_SYSLINUX_MENU_MEMTEST_ENTRY="${LH_SYSLINUX_MENU_MEMTEST_ENTRY}"
 
 # \$LH_USERNAME: set username
 # (Default: ${LH_USERNAME})
-LH_USERNAME="nvivo"
+LH_USERNAME="{LH_USERNAME}"
 EOF
 
 # Creating lh_source_* configuration
