@@ -1,0 +1,105 @@
+#envolvente
+{
+	-khtml-border-radius:5px;
+	-moz-border-radius:5px;
+	-webkit-border-radius:5px;
+	background:#efeae0;
+	border-radius:5px;
+	margin:0 auto;
+	padding:50px 15px;
+	position:relative;
+	text-align:justify;
+	width:780px
+}
+
+#orla
+{
+	background:url(fondo.png) no-repeat #dbd1bb;
+	height:200px;
+	left:0;
+	position:absolute;
+	top:0;
+	width:100px
+}
+
+.p
+{
+	line-height:150%;
+	margin-left:0;
+	margin-right:0
+}
+
+.parrafo
+{
+	line-height:150%;
+	margin-left:0;
+	margin-right:0;
+	text-align:justify!important;
+	text-indent:1.039cm
+}
+
+a
+{
+	-khtml-border-radius:5px;
+	-moz-border-radius:5px;
+	-webkit-border-radius:5px;
+	background:#f0d9aa;
+	border:none;
+	border-radius:5px;
+	color:#444;
+	padding:1px 3px;
+	text-decoration:none;
+	vertical-align:middle
+}
+
+a:hover
+{
+	background:#d3b084;
+	text-decoration:none
+}
+
+b
+{
+	font-size:.9em
+}
+
+body
+{
+	background:url(fondo_deg.png) repeat-x #dbd1bb;
+	color:#452f27;
+	font:1em "DejaVu Sans",Verdana,Arial,sans-serif;
+	text-align:center
+}
+
+div.c1
+{
+	text-align:center
+}
+
+dl
+{
+	font-size:.7em
+}
+
+h1
+{
+	text-align:center;
+	text-shadow:1px 1px 1px #999
+}
+
+h2
+{
+	margin-top:1cm;
+	text-align:center;
+	text-shadow:1px 1px 1px #999
+}
+
+li
+{
+	line-height:1.5em
+}
+
+table
+{
+	width:100%
+}

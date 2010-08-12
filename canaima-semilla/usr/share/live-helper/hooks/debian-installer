@@ -1,0 +1,32 @@
+#!/bin/sh
+
+# /usr/share/live-helper/hooks/minimal - hook list for live-helper(7)
+# Copyright (C) 2006-2010 Daniel Baumann <daniel@debian.org>
+#
+# live-helper comes with ABSOLUTELY NO WARRANTY; for details see COPYING.
+# This is free software, and you are welcome to redistribute it
+# under certain conditions; see COPYING for details.
+
+set -e
+
+if [ -e /usr/share/live-helper/includes/lenny/images/banner.png ]
+then
+        TARGET_INITRD="binary/install/gtk/initrd.gz"
+        REPACK_TMPDIR="binary.initrd"
+
+        if [ -e "${TARGET_INITRD}" ]
+        then
+                # cpio does not have a "extract to directory", so we must change
+                # directory
+                mkdir -p ${REPACK_TMPDIR}
+                cd ${REPACK_TMPDIR}
+                gzip -d < ../${TARGET_INITRD} | cpio -i --make-directories --no-absolute-filenames
+
+                # Overwrite banner
+                cp /usr/share/live-helper/includes/lenny/images/banner.png ./usr/share/graphics/logo_debian.png
+
+                find | cpio -H newc -o | gzip -9 > ../${TARGET_INITRD}
+                cd ..
+                rm -rf ${REPACK_TMPDIR}
+        fi
+fi
