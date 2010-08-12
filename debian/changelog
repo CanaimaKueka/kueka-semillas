@@ -1,5 +1,80 @@
-canaima-semilla (1.1-3-1) unstable; urgency=low
+canaima-semilla (1.1-1) estable; urgency=low
 
-  * Initial release (Closes: #nnnn)  <nnnn is the bug number of your ITP>
+  * Renombramiento de scripts. Commit f9af80e.
+
+ -- Luis Alejandro Martínez Faneyth <lmartinez@cnti.gob.ve>  Thu, 12 Aug 2010 18:43:55 -0430
+
+canaima-semilla (1.1) estable; urgency=low
+
+  * Ajuste de parámetros. Commit 99635f8.
+  * Ajuste de parámetros. Commit 0e0e193.
+  * Limpieza de archivos, corrección de bugs. Commit cb42bcb.
+
+ -- Luis Alejandro Martínez Faneyth <lmartinez@cnti.gob.ve>  Thu, 12 Aug 2010 18:41:24 -0430
+
+canaima-semilla (1.0-10) estable; urgency=low
+
+  * Modificación de parámetros varios. Commit 868dec8. 
+
+ -- Luis Alejandro Martínez Faneyth <lmartinez@cnti.gob.ve>  Thu, 12 Aug 2010 18:39:26 -0430
+
+canaima-semilla (1.0-9) estable; urgency=low
+
+  * Renombramiento de binarios. Commit 53afe6d.
+
+ -- Luis Alejandro Martínez Faneyth <lmartinez@cnti.gob.ve>  Thu, 12 Aug 2010 18:38:34 -0430
+
+canaima-semilla (1.0-8) estable; urgency=low
+
+  * Depuración de archivos y renombramiento de binarios. Commit 6e0fbd6.
+  * Bug: Renombramiento de binarios. Commit 94d32ba.
+
+ -- Luis Alejandro Martínez Faneyth <lmartinez@cnti.gob.ve>  Thu, 12 Aug 2010 18:36:01 -0430
+
+canaima-semilla (1.0-7) estable; urgency=low
+
+  * Agregando imágenes de Canaima y adaptando las opciones por defecto. Commit 7ed544a.
+
+ -- Luis Alejandro Martínez Faneyth <lmartinez@cnti.gob.ve>  Thu, 12 Aug 2010 18:33:08 -0430
+
+canaima-semilla (1.0-6) estable; urgency=low
+
+  * Modificando archivos de Configuración. Commit 8c1ec0d.
+
+ -- Luis Alejandro Martínez Faneyth <lmartinez@cnti.gob.ve>  Thu, 12 Aug 2010 18:31:57 -0430
+
+canaima-semilla (1.0-5) estable; urgency=low
+
+  * Modificando archivos de Configuración. Commit 911de05.
+
+ -- Luis Alejandro Martínez Faneyth <lmartinez@cnti.gob.ve>  Thu, 12 Aug 2010 18:27:27 -0430
+
+canaima-semilla (1.0-4) estable; urgency=low
+
+  * Quitando etiqueta duplicada de tamaño de imagen. Commit 459b94a.
+
+ -- Luis Alejandro Martínez Faneyth <lmartinez@cnti.gob.ve>  Thu, 12 Aug 2010 18:24:30 -0430
+
+canaima-semilla (1.0-3) estable; urgency=low
+
+  * Incluyendo archivo fuente para interfaz grafica (GUI). Commit 0055e09.
+
+ -- Luis Alejandro Martínez Faneyth <lmartinez@cnti.gob.ve>  Thu, 12 Aug 2010 18:22:26 -0430
+
+canaima-semilla (1.0-2) estable; urgency=low
+
+  * Sacando .git de el .deb. Commit 2b75db4.
+
+ -- Luis Alejandro Martínez Faneyth <lmartinez@cnti.gob.ve>  Thu, 12 Aug 2010 18:20:27 -0430
+
+canaima-semilla (1.0-1) estable; urgency=low
+
+  * Modificación de las dependencias. Commit bc79d4b.
+
+ -- Luis Alejandro Martínez Faneyth <lmartinez@cnti.gob.ve>  Thu, 12 Aug 2010 18:16:39 -0430
+
+canaima-semilla (1.0) estable; urgency=high
+
+  * Versión inicial. Commit 4ac7c3d.
 
  -- Luis Alejandro Martínez Faneyth <lmartinez@cnti.gob.ve>  Thu, 12 Aug 2010 17:28:01 -0430
