@@ -29,26 +29,26 @@ Require_stagefile .stage/chroot_install-packages
 Setup_cleanup
 
 # Enabling network in chroot
-lh chroot_hosts install ${*}
-lh chroot_resolv install ${*}
-lh chroot_hostname install ${*}
-lh chroot_sources install ${*}
+canaima-semilla chroot_hosts install ${*}
+canaima-semilla chroot_resolv install ${*}
+canaima-semilla chroot_hostname install ${*}
+canaima-semilla chroot_sources install ${*}
 
 # Preparing images
-lh source_debian-live ${*}
-lh source_debian ${*}
-lh source_disk ${*}
-lh source_checksums ${*}
+canaima-semilla source_debian-live ${*}
+canaima-semilla source_debian ${*}
+canaima-semilla source_disk ${*}
+canaima-semilla source_checksums ${*}
 
 # Building images
-lh source_iso ${*}
-lh source_net ${*}
-lh source_tar ${*}
-lh source_usb ${*}
-lh source_virtual-hdd ${*}
+canaima-semilla source_iso ${*}
+canaima-semilla source_net ${*}
+canaima-semilla source_tar ${*}
+canaima-semilla source_usb ${*}
+canaima-semilla source_virtual-hdd ${*}
 
 # Deconfiguring chroot
 rm -f .stage/chroot_sources
-lh chroot_hostname remove ${*}
-lh chroot_resolv remove ${*}
-lh chroot_hosts remove ${*}
+canaima-semilla chroot_hostname remove ${*}
+canaima-semilla chroot_resolv remove ${*}
+canaima-semilla chroot_hosts remove ${*}

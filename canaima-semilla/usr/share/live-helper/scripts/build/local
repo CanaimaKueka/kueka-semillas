@@ -14,5 +14,5 @@ export LH_BASE PATH
 
 if [ ! -z "${1}" ]
 then
-	exec lh "${@}"
+	exec canaima-semilla "${@}"
 fi

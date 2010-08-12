@@ -27,54 +27,54 @@ Set_defaults
 Setup_cleanup
 
 # Configuring chroot
-lh chroot_cache restore ${*}
-lh chroot_devpts install ${*}
-lh chroot_proc install ${*}
-lh chroot_selinuxfs install ${*}
-lh chroot_sysfs install ${*}
-lh chroot_debianchroot install ${*}
-lh chroot_dpkg install ${*}
-lh chroot_sysv-rc install ${*}
-lh chroot_upstart install ${*}
-lh chroot_hosts install ${*}
-lh chroot_resolv install ${*}
-lh chroot_hostname install ${*}
-lh chroot_apt install ${*}
-lh chroot_sources install ${*}
-lh chroot_linux-image install ${*}
+canaima-semilla chroot_cache restore ${*}
+canaima-semilla chroot_devpts install ${*}
+canaima-semilla chroot_proc install ${*}
+canaima-semilla chroot_selinuxfs install ${*}
+canaima-semilla chroot_sysfs install ${*}
+canaima-semilla chroot_debianchroot install ${*}
+canaima-semilla chroot_dpkg install ${*}
+canaima-semilla chroot_sysv-rc install ${*}
+canaima-semilla chroot_upstart install ${*}
+canaima-semilla chroot_hosts install ${*}
+canaima-semilla chroot_resolv install ${*}
+canaima-semilla chroot_hostname install ${*}
+canaima-semilla chroot_apt install ${*}
+canaima-semilla chroot_sources install ${*}
+canaima-semilla chroot_linux-image install ${*}
 
 # Customizing chroot
-lh chroot_preseed ${*}
-lh chroot_local-preseed ${*}
-lh chroot_tasks ${*}
-lh chroot_packageslists ${*}
-lh chroot_local-packageslists ${*}
-lh chroot_packages ${*}
-lh chroot_local-packages ${*}
-lh chroot_install-packages ${*}
-lh chroot_localization ${*}
-lh chroot_local-includes ${*}
-lh chroot_local-patches ${*}
-lh chroot_sysvinit ${*}
-lh chroot_local-hooks ${*}
-lh chroot_hooks ${*}
-lh chroot_symlinks ${*}
-lh chroot_hacks ${*}
-lh chroot_interactive ${*}
+canaima-semilla chroot_preseed ${*}
+canaima-semilla chroot_local-preseed ${*}
+canaima-semilla chroot_tasks ${*}
+canaima-semilla chroot_packageslists ${*}
+canaima-semilla chroot_local-packageslists ${*}
+canaima-semilla chroot_packages ${*}
+canaima-semilla chroot_local-packages ${*}
+canaima-semilla chroot_install-packages ${*}
+canaima-semilla chroot_localization ${*}
+canaima-semilla chroot_local-includes ${*}
+canaima-semilla chroot_local-patches ${*}
+canaima-semilla chroot_sysvinit ${*}
+canaima-semilla chroot_local-hooks ${*}
+canaima-semilla chroot_hooks ${*}
+canaima-semilla chroot_symlinks ${*}
+canaima-semilla chroot_hacks ${*}
+canaima-semilla chroot_interactive ${*}
 
 # Deconfiguring chroot
-lh chroot_linux-image remove ${*}
-lh chroot_sources remove ${*}
-lh chroot_apt remove ${*}
-lh chroot_hostname remove ${*}
-lh chroot_resolv remove ${*}
-lh chroot_hosts remove ${*}
-lh chroot_sysv-rc remove ${*}
-lh chroot_upstart remove ${*}
-lh chroot_dpkg remove ${*}
-lh chroot_debianchroot remove ${*}
-lh chroot_sysfs remove ${*}
-lh chroot_selinuxfs remove ${*}
-lh chroot_proc remove ${*}
-lh chroot_devpts remove ${*}
-lh chroot_cache save ${*}
+canaima-semilla chroot_linux-image remove ${*}
+canaima-semilla chroot_sources remove ${*}
+canaima-semilla chroot_apt remove ${*}
+canaima-semilla chroot_hostname remove ${*}
+canaima-semilla chroot_resolv remove ${*}
+canaima-semilla chroot_hosts remove ${*}
+canaima-semilla chroot_sysv-rc remove ${*}
+canaima-semilla chroot_upstart remove ${*}
+canaima-semilla chroot_dpkg remove ${*}
+canaima-semilla chroot_debianchroot remove ${*}
+canaima-semilla chroot_sysfs remove ${*}
+canaima-semilla chroot_selinuxfs remove ${*}
+canaima-semilla chroot_proc remove ${*}
+canaima-semilla chroot_devpts remove ${*}
+canaima-semilla chroot_cache save ${*}
