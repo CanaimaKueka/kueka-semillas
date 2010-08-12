@@ -38,7 +38,7 @@ Set_defaults
 # Avoid cases were users accidentally nuke their config/binary
 if [ ! -d config ] && [ "$(basename ${PWD})" = "config" ]
 then
-	Echo_error "%s is not a good Debian Live working directory to clean." "${PWD}"
+	Echo_error "%s no parece un directorio configurado por canaima-semilla. ¿Estás seguro que estás en el lugar correcto?" "${PWD}"
 	exit 1
 fi
 
@@ -71,7 +71,7 @@ do
 			;;
 
 		--chroot)
-			Echo_message "Cleaning chroot"
+			Echo_message "Canaima Semilla está limpiando el directorio cuidadosamente. Te sugiero que vayas a tomar un café y vuelvas."
 			${LH_ROOT_COMMAND} umount -f chroot/sys > /dev/null 2>&1 || true
 			${LH_ROOT_COMMAND} umount -f chroot/proc/sys/fs/binfmt_misc > /dev/null 2>&1 || true
 			${LH_ROOT_COMMAND} umount -f chroot/proc > /dev/null 2>&1 || true
