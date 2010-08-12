@@ -27,8 +27,8 @@ Set_defaults
 Setup_cleanup
 
 # Bootstrapping system
-lh bootstrap_cache restore ${*}
-lh bootstrap_copy ${*}
-lh bootstrap_cdebootstrap ${*}
-lh bootstrap_debootstrap ${*}
-lh bootstrap_cache save ${*}
+canaima-semilla bootstrap_cache restore ${*}
+canaima-semilla bootstrap_copy ${*}
+canaima-semilla bootstrap_cdebootstrap ${*}
+canaima-semilla bootstrap_debootstrap ${*}
+canaima-semilla bootstrap_cache save ${*}

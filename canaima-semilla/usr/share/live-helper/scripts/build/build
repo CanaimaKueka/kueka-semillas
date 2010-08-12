@@ -15,8 +15,8 @@ set -e
 # Automatically populating config tree
 if [ -x auto/config ] && [ ! -e .stage/config ]
 then
-	Echo_message "Automatically populating config tree."
-	lh config
+	Echo_message "Se te olvidó configurar la semilla. Canaima lo hará por ti, pero después no te quejes."
+	canaima-semilla config
 fi
 
 # Read meta config
