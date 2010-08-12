@@ -23,14 +23,14 @@ Set_defaults ()
 	if [ -z "${LH_DISTRIBUTION}" ]
 	then
 		case "${LH_MODE}" in
-			debian|debian-release)
+			debian)
 				LH_DISTRIBUTION="lenny"
 				;;
 		esac
 	fi
 
 	# Setting package manager
-	LH_APT="${LH_APT:-apt}"
+	LH_APT="${LH_APT:-apt-get}"
 
 	# Setting apt ftp proxy
 	if [ -z "${LH_APT_FTP_PROXY}" ] && [ -n "${ftp_proxy}" ]
@@ -60,7 +60,7 @@ Set_defaults ()
 	# Setting apt pipeline
 	# LH_APT_PIPELINE
 
-	APT_OPTIONS="${APT_OPTIONS:---yes}"
+	APT_OPTIONS="${APT_OPTIONS:---force-yes}"
 	APTITUDE_OPTIONS="${APTITUDE_OPTIONS:---assume-yes}"
 
 	GZIP_OPTIONS="${GZIP_OPTIONS:---best}"
@@ -90,7 +90,7 @@ Set_defaults ()
 		then
 			LH_BOOTSTRAP="cdebootstrap"
 		else
-			Echo_error "Cannot find /usr/sbin/debootstrap or /usr/bin/cdebootstrap. Please install debootstrap or cdebootstrap, or specify an alternative bootstrapping utility."
+			Echo_error "Canaima Semilla no puede encontrar /usr/sbin/debootstrap o /usr/bin/cdebootstrap. Por favor instala debootstrap o cdebootstrap, o especifica un método alternativo con la opción --bootstrap."
 			exit 1
 		fi
 	fi
@@ -124,11 +124,7 @@ Set_defaults ()
 		if [ "${LH_INITRAMFS}" = "auto" ]
 		then
 			case "${LH_MODE}" in
-				ubuntu)
-					LH_INITRAMFS="casper"
-					;;
-
-				*)
+				debian)
 					LH_INITRAMFS="live-initramfs"
 					;;
 			esac
@@ -147,7 +143,7 @@ Set_defaults ()
 		then
 			LH_FDISK="fdisk"
 		else
-			Echo_error "Can't process file /sbin/fdisk"
+			Echo_error "Canaima Semilla no encuentra /sbin/fdisk, por favor reinstala el paquete canaima-semilla."
 		fi
 	fi
 
@@ -361,7 +357,7 @@ Set_defaults ()
 	# Setting union filesystem
 	LH_UNION_FILESYSTEM="${LH_UNION_FILESYSTEM:-aufs}"
 
-	# LH_HOOKS
+	#LH_HOOKS
 
 	# Setting interactive shell/X11/Xnest
 	LH_INTERACTIVE="${LH_INTERACTIVE:-false}"
@@ -440,12 +436,8 @@ Set_defaults ()
 
 	# Setting packages string
 	case "${LH_MODE}" in
-		ubuntu)
-			LH_PACKAGES="${LH_PACKAGES:-ubuntu-minimal}"
-			;;
-
 		*)
-			LH_PACKAGES_LISTS="${LH_PACKAGES_LISTS:-standard}"
+			LH_PACKAGES_LISTS="${LH_PACKAGES_LISTS:-minimal}"
 			;;
 	esac
 
@@ -586,7 +578,7 @@ Set_defaults ()
 	# Setting apt indices
 	if echo ${LH_PACKAGES_LISTS} | grep -qs -E "(stripped|minimal)\b"
 	then
-		LH_BINARY_INDICES="${LH_BINARY_INDICES:-none}"
+		LH_BINARY_INDICES="${LH_BINARY_INDICES:-true}"
 	else
 		LH_BINARY_INDICES="${LH_BINARY_INDICES:-true}"
 	fi
@@ -615,33 +607,12 @@ Set_defaults ()
 
 	# Setting debian-installer-gui
 	case "${LH_MODE}" in
-		debian)
-			case "${LH_DISTRIBUTION}" in
-				squeeze|sid)
-					LH_DEBIAN_INSTALLER_GUI="${LH_DEBIAN_INSTALLER_GUI:-false}"
-					;;
-
-				*)
-					LH_DEBIAN_INSTALLER_GUI="${LH_DEBIAN_INSTALLER_GUI:-true}"
-					;;
-			esac
-			;;
-
-		ubuntu)
-			case "${LH_DEBIAN_INSTALLER_DISTRIBUTION}" in
-				karmic)
-					# Not available for Karmic currently.
-					LH_DEBIAN_INSTALLER_GUI="${LH_DEBIAN_INSTALLER_GUI:-false}"
-					;;
-
-				*)
-					LH_DEBIAN_INSTALLER_GUI="${LH_DEBIAN_INSTALLER_GUI:-true}"
-					;;
-			esac
-			;;
-
 		*)
-			LH_DEBIAN_INSTALLER_GUI="${LH_DEBIAN_INSTALLER_GUI:-false}"
+			case "${LH_DISTRIBUTION}" in
+				*)
+					LH_DEBIAN_INSTALLER_GUI="${LH_DEBIAN_INSTALLER_GUI:-true}"
+					;;
+			esac
 			;;
 	esac
 
@@ -718,16 +689,8 @@ Set_defaults ()
 	if [ -z "${LH_HOSTNAME}" ]
 	then
 		case "${LH_MODE}" in
-			embedian)
-				LH_HOSTNAME="embedian"
-				;;
-
-			ubuntu)
-				LH_HOSTNAME="ubuntu"
-				;;
-
 			*)
-				LH_HOSTNAME="debian"
+				LH_HOSTNAME="canaima"
 				;;
 		esac
 	fi
@@ -736,65 +699,35 @@ Set_defaults ()
 	if [ -z "${LH_ISO_APPLICATION}" ]
 	then
 		case "${LH_MODE}" in
-			debian|debian-release)
-				LH_ISO_APPLICATION="Debian Live"
-				;;
-
-			emdebian)
-				LH_ISO_APPLICATION="Emdebian Live"
-				;;
-
-			ubuntu)
-				LH_ISO_APPLICATION="Ubuntu Live"
+			debian)
+				LH_ISO_APPLICATION="Canaima GNU/Linux"
 				;;
 		esac
 	fi
 
 	# Set iso preparer
-	LH_ISO_PREPARER="${LH_ISO_PREPARER:-live-helper \$VERSION; http://packages.qa.debian.org/live-helper}"
+	LH_ISO_PREPARER="${LH_ISO_PREPARER:-canaima-semilla; http://gitorious.org/canaima-gnu-linux/canaima-semilla}"
 
 	# Set iso publisher
-	LH_ISO_PUBLISHER="${LH_ISO_PUBLISHER:-Debian Live project; http://debian-live.alioth.debian.org/; debian-live@lists.debian.org}"
+	LH_ISO_PUBLISHER="${LH_ISO_PUBLISHER:-Canaima GNU/Linux; http://canaima.softwarelibre.gob.ve/; desarrolladores@canaima.softwarelibre.gob.ve}"
 
 	# Setting iso volume
 	if [ -z "${LH_ISO_VOLUME}" ]
 	then
 		case "${LH_MODE}" in
 			debian)
-				LH_ISO_VOLUME="Debian ${LH_DISTRIBUTION} \$(date +%Y%m%d-%H:%M)"
-				;;
-
-			debian-release)
-				eval VERSION="$`echo RELEASE_${LH_DISTRIBUTION}`"
-				LH_ISO_VOLUME="Debian ${VERSION} ${LH_ARCHITECTURE} live"
-				;;
-
-			emdebian)
-				LH_ISO_VOLUME="Emdebian ${LH_DISTRIBUTION} \$(date +%Y%m%d-%H:%M)"
-				;;
-
-			ubuntu)
-				LH_ISO_VOLUME="Ubuntu ${LH_DISTRIBUTION} \$(date +%Y%m%d-%H:%M)"
+				LH_ISO_VOLUME="Canaima \$(date +%Y%m%d-%H:%M)"
 				;;
 		esac
 	fi
 
 	# Setting memtest option
-	LH_MEMTEST="${LH_MEMTEST:-memtest86+}"
+	LH_MEMTEST="${LH_MEMTEST:-none}"
 
 	# Setting win32-loader option
 	if [ "${LH_MODE}" != "ubuntu" ]
 	then
 		case "${LH_ARCHITECTURE}" in
-			amd64|i386)
-				if [ "${LH_DEBIAN_INSTALLER}" != "false" ]
-				then
-					LH_WIN32_LOADER="${LH_WIN32_LOADER:-true}"
-				else
-					LH_WIN32_LOADER="${LH_WIN32_LOADER:-false}"
-				fi
-				;;
-
 			*)
 				LH_WIN32_LOADER="${LH_WIN32_LOADER:-false}"
 				;;
@@ -835,7 +768,7 @@ Set_defaults ()
 	# LH_SYSLINUX_CFG
 
 	# Setting syslinux splash
-	# LH_SYSLINUX_SPLASH
+	LH_SYSLINUX_SPLASH="${LH_SYSLINUX_SPLASH:-/usr/share/live-helper/includes/lenny/images/splash.png}"
 
 	LH_SYSLINUX_TIMEOUT="${LH_SYSLINUX_TIMEOUT:-0}"
 
@@ -844,14 +777,9 @@ Set_defaults ()
 
 	# Setting syslinux menu live entries
 	case "${LH_MODE}" in
-		debian|debian-release)
-			LH_SYSLINUX_MENU_LIVE_ENTRY="${LH_SYSLINUX_MENU_LIVE_ENTRY:-Live}"
-			LH_SYSLINUX_MENU_LIVE_ENTRY_FAILSAFE="${LH_SYSLINUX_MENU_LIVE_ENTRY_FAILSAFE:-${LH_SYSLINUX_MENU_LIVE_ENTRY} (failsafe)}"
-			;;
-
-		*)
-			LH_SYSLINUX_MENU_LIVE_ENTRY="${LH_SYSLINUX_MENU_LIVE_ENTRY:-Start ${LH_ISO_APPLICATION}}"
-			LH_SYSLINUX_MENU_LIVE_ENTRY_FAILSAFE="${LH_SYSLINUX_MENU_LIVE_ENTRY_FAILSAFE:-${LH_SYSLINUX_MENU_LIVE_ENTRY} (failsafe)}"
+		debian)
+			LH_SYSLINUX_MENU_LIVE_ENTRY="${LH_SYSLINUX_MENU_LIVE_ENTRY:-Probar Canaima}"
+			LH_SYSLINUX_MENU_LIVE_ENTRY_FAILSAFE="${LH_SYSLINUX_MENU_LIVE_ENTRY_FAILSAFE:-${LH_SYSLINUX_MENU_LIVE_ENTRY} (A Prueba de Fallos)}"
 			;;
 	esac
 
@@ -860,12 +788,8 @@ Set_defaults ()
 
 	# Setting username
 	case "${LH_MODE}" in
-		ubuntu)
-			LH_USERNAME="${LH_USERNAME:-ubuntu}"
-			;;
-
 		*)
-			LH_USERNAME="${LH_USERNAME:-user}"
+			LH_USERNAME="${LH_USERNAME:-nvivo}"
 			;;
 	esac
 
