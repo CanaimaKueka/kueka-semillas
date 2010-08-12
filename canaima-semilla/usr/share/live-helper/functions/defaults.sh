@@ -30,7 +30,7 @@ Set_defaults ()
 	fi
 
 	# Setting package manager
-	LH_APT="${LH_APT:-apt-get}"
+	LH_APT="${LH_APT:-aptitude}"
 
 	# Setting apt ftp proxy
 	if [ -z "${LH_APT_FTP_PROXY}" ] && [ -n "${ftp_proxy}" ]
@@ -94,7 +94,9 @@ Set_defaults ()
 			exit 1
 		fi
 	fi
-
+	
+	# Aditional packages
+	LH_PACKAGES="gparted canaima-base canaima-acerca canaima-bienvenido canaima-chat canaima-estilo-visual canaima-estilo-visual-iconos canaima-llaves canaima-accesibilidad"
 	# Setting cache option
 	LH_CACHE="${LH_CACHE:-true}"
 	LH_CACHE_INDICES="${LH_CACHE_INDICES:-false}"
@@ -459,7 +461,7 @@ Set_defaults ()
 	do
 		case "${LIST}" in
 			stripped|minimal)
-				LH_APT="apt-get"
+				LH_APT="aptitude"
 				;;
 
 			gnome-desktop)
