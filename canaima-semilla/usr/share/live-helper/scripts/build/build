@@ -40,18 +40,18 @@ Arguments "${@}"
 
 if [ ! -d config ]
 then
-	Echo_warning "No config/ directory; using defaults for all options"
+	Echo_warning "Canaima Semilla no encuentra el directorio de configuración, usaremos las opciones por defecto."
 fi
 
 if [ "$(pwd)" = "/" ]
 then
-	Echo_error "Cannot build live image from the root directory (/)"
+	Echo_error "Canaima Semilla no puede construirse en el directorio Root(/)."
 	exit 1
 fi
 
 if echo $(pwd) | grep -qs " "
 then
-	Echo_error "Cannot build live image from a directory containing spaces"
+	Echo_error "Canaima Semilla no puede generarse en un directorio con espacios."
 	exit 1
 fi
 
@@ -63,13 +63,13 @@ Set_defaults
 Check_defaults
 
 # Bootstrapping system
-lh bootstrap ${*}
+canaima-semilla bootstrap ${*}
 
 # Customizing chroot
-lh chroot ${*}
+canaima-semilla chroot ${*}
 
 # Building binary images
-lh binary ${*}
+canaima-semilla binary ${*}
 
 # Building source images
-lh source ${*}
+canaima-semilla source ${*}
