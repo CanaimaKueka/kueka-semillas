@@ -10,7 +10,7 @@ Vcs-Git: git://gitorious.org/canaima-gnu-linux/canaima-semilla.git
 Package: canaima-semilla
 Version: 1.1-3
 Architecture: all
-Maintainer: Equipo de Desarrollo de Canaima <desarrolladores@canaima.softwarelibre.gob.ve>
+Maintainer: Luis Alejandro Martínez Faneyth <lmartinez@cnti.gob.ve>
 Installed-Size: 4180
 Depends: debootstrap (>=1.0.23), gnu-fdisk (>=1.2.4-3), libparted0debian1 (>=2.3-1), libreadline6 (>=6.1-3)
 Recommends: cpio, gettext-base
