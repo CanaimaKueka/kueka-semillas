@@ -1,5 +1,5 @@
 Package: canaima-semilla
-Version: 1.0-3
+Version: 1.0-4
 Architecture: all
 Maintainer: Equipo de Desarrollo de Canaima <desarrolladores@canaima.softwarelibre.gob.ve>
 Installed-Size: 4180
@@ -10,8 +10,8 @@ Conflicts: live-helper, live-build
 Replaces: live-helper, live-build
 Section: misc
 Priority: optional
-Description: canaima-semilla - Generador de medios vivos
- canaima-semilla es un paquete que permite generar un sistema nVivo para
+Description: Generador de medios vivos para Canaima GNU/Linux
+ Canaima Semilla es un paquete que permite generar medios vivos para
  el sistema operativo Canaima GNU/Linux.
  .
  Se le brinda a el usuario la opción de escoger la arquitectura (i386, amd64)

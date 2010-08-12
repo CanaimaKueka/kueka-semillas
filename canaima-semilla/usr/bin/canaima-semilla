@@ -13,23 +13,26 @@ set -e
 . "${LH_BASE:-/usr/share/live-helper}"/scripts/build.sh
 
 # Setting static variables
-DESCRIPTION="$(Echo 'utility to build Debian Live systems')"
+DESCRIPTION="$(Echo 'Utilidad para generar medios vivos para Canaima GNU/Linux e instalar sabores de la metadistribución.')"
 HELP="FIXME"
 USAGE="FIXME"
 
 case "${1}" in
-	-h|--help)
+	--ayuda)
 		if [ -x "$(which man 2>/dev/null)" ]
 		then
-			man lh
+			man canaima-semilla
 			exit 0
 		else
-			${0} --usage
+		        Echo "Canaima Semilla es una utilidad que permite generar medios vivos para Canaima GNU/Linux e instalar sabores de la metadistribución."
+		        echo
+		        Echo "Se le brinda a el usuario la opción de escoger la arquitectura (i386, amd64) y el medio a utilizar (USB, CD o DVD)."
+		        echo
 			exit 0
 		fi
 		;;
 
-	""|-u|--usage)
+	""|-u|--uso)
 		Usage
 		;;
 
@@ -51,7 +54,7 @@ case "${1}" in
 		then
 			LH=1 exec "${COMMAND}" "${@}"
 		else
-			Echo_error "no such script"
+			Echo_error "Comando no existente. El manual de canaima-semilla es un buen lugar para buscar (man canaima-semilla)."
 			exit 1
 		fi
 		;;
