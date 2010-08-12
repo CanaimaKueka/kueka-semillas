@@ -1290,7 +1290,7 @@ LH_SYSLINUX_MENU_MEMTEST_ENTRY="${LH_SYSLINUX_MENU_MEMTEST_ENTRY}"
 
 # \$LH_USERNAME: set username
 # (Default: ${LH_USERNAME})
-LH_USERNAME="{LH_USERNAME}"
+LH_USERNAME="${LH_USERNAME}"
 EOF
 
 # Creating lh_source_* configuration
