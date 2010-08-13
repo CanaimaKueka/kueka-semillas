@@ -469,7 +469,7 @@ Set_defaults ()
 	for LIST in ${LH_PACKAGES_LISTS}
 	do
 		case "${LIST}" in
-			stripped|minimal)
+			minimal)
 				LH_APT="apt-get"
 				;;
 		esac
@@ -656,7 +656,7 @@ Set_defaults ()
 	if [ -z "${LH_ISO_APPLICATION}" ]
 	then
 		case "${LH_MODE}" in
-			debian)
+			*)
 				LH_ISO_APPLICATION="Canaima GNU/Linux"
 				;;
 		esac
@@ -672,7 +672,7 @@ Set_defaults ()
 	if [ -z "${LH_ISO_VOLUME}" ]
 	then
 		case "${LH_MODE}" in
-			debian)
+			*)
 				LH_ISO_VOLUME="Canaima \$(date +%Y%m%d-%H:%M)"
 				;;
 		esac
