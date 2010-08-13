@@ -9,7 +9,7 @@
 
 set -e
 
-if [ -e /usr/share/live-helper/includes/lenny/images/banner.png ]
+if [ -e config/binary_debian-installer/banner.png ]
 then
         TARGET_INITRD="binary/install/gtk/initrd.gz"
         REPACK_TMPDIR="binary.initrd"
@@ -23,7 +23,7 @@ then
                 gzip -d < ../${TARGET_INITRD} | cpio -i --make-directories --no-absolute-filenames
 
                 # Overwrite banner
-                cp /usr/share/live-helper/includes/lenny/images/banner.png ./usr/share/graphics/logo_debian.png
+                cp ../config/binary_debian-installer/banner.png ./usr/share/graphics/logo_debian.png
 
                 find | cpio -H newc -o | gzip -9 > ../${TARGET_INITRD}
                 cd ..
