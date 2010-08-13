@@ -1131,6 +1131,7 @@ mkdir -p config/binary_local-packageslists
 mkdir -p config/binary_local-udebs
 mkdir -p config/binary_rootfs
 mkdir -p config/binary_syslinux
+cp /usr/share/live-helper/includes/lenny/images/banner.png config/binary_debian-installer/
 
 cat > config/binary << EOF
 # config/binary - options for live-helper(7), binary stage
