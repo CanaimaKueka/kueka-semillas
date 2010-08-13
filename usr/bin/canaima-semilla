@@ -18,6 +18,11 @@ HELP="FIXME"
 USAGE="FIXME"
 
 case "${1}" in
+	"")
+		cd /usr/share/canaima-semilla/
+		python /usr/share/canaima-semilla/gui.py
+		;;
+
 	--ayuda)
 		if [ -x "$(which man 2>/dev/null)" ]
 		then
@@ -32,7 +37,7 @@ case "${1}" in
 		fi
 		;;
 
-	""|-u|--uso)
+	-u|--uso)
 		Usage
 		;;
 
