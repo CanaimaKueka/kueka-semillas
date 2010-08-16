@@ -3,15 +3,15 @@ Section: misc
 Priority: optional
 Maintainer: Luis Alejandro Martínez Faneyth <lmartinez@cnti.gob.ve>
 Build-Depends: cdbs, debhelper (>= 7.0.50~)
-Standards-Version: 3.8.4
+Standards-Version: 3.9.1
 Homepage: http://gitorious.org/canaima-gnu-linux/canaima-semilla
 Vcs-Git: git://gitorious.org/canaima-gnu-linux/canaima-semilla.git
 
 Package: canaima-semilla
-Version: 1.1-3
+Version: 1.1+1
 Architecture: all
 Maintainer: Luis Alejandro Martínez Faneyth <lmartinez@cnti.gob.ve>
-Installed-Size: 4180
+Installed-Size: 4180k
 Depends: debootstrap (>=1.0.23), gnu-fdisk (>=1.2.4-3), libparted0debian1 (>=2.3-1), libreadline6 (>=6.1-3)
 Recommends: cpio, gettext-base
 Suggests: dosfstools, genisoimage, memtest86+ | memtest86, mtools, parted, squashfs-tools | genext2fs | mtd-tools, sudo | fakeroot, syslinux | grub, uuid-runtime, win32-loader
