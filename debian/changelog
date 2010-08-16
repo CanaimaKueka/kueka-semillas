@@ -1,4 +1,4 @@
-canaima-semilla (1.1-1) estable; urgency=low
+canaima-semilla (1.1+1) stable; urgency=low
 
   * Renombramiento de scripts. Commit f9af80e.
 
