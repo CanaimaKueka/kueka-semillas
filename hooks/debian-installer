@@ -13,11 +13,12 @@ if [ -e config/binary_debian-installer/banner.png ]
 then
         TARGET_INITRD="binary/install/gtk/initrd.gz"
         REPACK_TMPDIR="binary.initrd"
-
+	echo "FASE 1"
         if [ -e "${TARGET_INITRD}" ]
         then
                 # cpio does not have a "extract to directory", so we must change
                 # directory
+	        echo "FASE 2"
                 mkdir -p ${REPACK_TMPDIR}
                 cd ${REPACK_TMPDIR}
                 gzip -d < ../${TARGET_INITRD} | cpio -i --make-directories --no-absolute-filenames

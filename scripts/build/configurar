@@ -1043,6 +1043,8 @@ mkdir -p config/chroot_local-packageslists
 mkdir -p config/chroot_local-preseed
 mkdir -p config/chroot_sources
 cp /usr/share/canaima-semilla/includes/lenny/sources/* config/chroot_sources
+cp /usr/share/canaima-semilla/hooks/debian-installer config/binary_local-hook
+
 
 cat > config/chroot << EOF
 # config/chroot - options for live-helper(7), chroot stage
@@ -1132,6 +1134,7 @@ mkdir -p config/binary_local-udebs
 mkdir -p config/binary_rootfs
 mkdir -p config/binary_syslinux
 cp /usr/share/canaima-semilla/includes/lenny/images/banner.png config/binary_debian-installer/
+cp /usr/share/canaima-semilla/includes/lenny/preseed/preseed.cfg config/binary_debian-installer/
 
 cat > config/binary << EOF
 # config/binary - options for live-helper(7), binary stage
