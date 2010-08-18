@@ -1,3 +1,10 @@
+canaima-semilla (1.2+4) stable; urgency=low
+
+  * [41f1e9f] Cambiando a la versión 1.2+4
+  * [de741b0] Agregando canaima-instalador-vivo a las dependencias
+
+ -- Luis Alejandro Martínez Faneyth <lmartinez@cnti.gob.ve>  Wed, 18 Aug 2010 10:22:00 -0430
+
 canaima-semilla (1.2+3) stable; urgency=low
 
   * [f906147] Cambiando a la versión 1.2+3
