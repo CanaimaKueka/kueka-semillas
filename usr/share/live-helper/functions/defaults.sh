@@ -11,7 +11,7 @@ Set_defaults ()
 {
 	## config/common
 
-	LH_BASE="${LH_BASE:-/usr/share/live-helper}"
+	LH_BASE="${LH_BASE:-/usr/share/canaima-semilla}"
 
 	# Setting mode
 	if [ -z "${LH_MODE}" ]
@@ -368,7 +368,7 @@ Set_defaults ()
 	# Setting union filesystem
 	LH_UNION_FILESYSTEM="${LH_UNION_FILESYSTEM:-aufs}"
 
-	LH_HOOKS="/usr/share/live-helper/hooks/debian-installer"
+	LH_HOOKS="/usr/share/canaima-semilla/hooks/debian-installer"
 
 	# Setting interactive shell/X11/Xnest
 	LH_INTERACTIVE="${LH_INTERACTIVE:-false}"
@@ -725,7 +725,7 @@ Set_defaults ()
 	# LH_SYSLINUX_CFG
 
 	# Setting syslinux splash
-	LH_SYSLINUX_SPLASH="${LH_SYSLINUX_SPLASH:-/usr/share/live-helper/includes/lenny/images/splash.png}"
+	LH_SYSLINUX_SPLASH="${LH_SYSLINUX_SPLASH:-/usr/share/canaima-semilla/includes/lenny/images/splash.png}"
 
 	LH_SYSLINUX_TIMEOUT="${LH_SYSLINUX_TIMEOUT:-0}"
 
