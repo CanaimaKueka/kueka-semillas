@@ -450,7 +450,7 @@ Set_defaults ()
 		meta-minimal)
 			LH_PACKAGES_LISTS="${LH_PACKAGES_LISTS:-meta-minimal}"
 			;;
-                meta-cd
+                meta-cd)
                         LH_PACKAGES_LISTS="${LH_PACKAGES_LISTS:-meta-cd}"
                         ;;
                 meta-dvd)
