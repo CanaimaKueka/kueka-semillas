@@ -2,14 +2,14 @@
 
 SHELL := sh -e
 
-LANGUAGES = de
+LANGUAGES = es
 
-SCRIPTS = cgi/* functions/* examples/*/*.sh scripts/*.sh scripts/*/*
+SCRIPTS = functions/* examples/*/*.sh scripts/*.sh scripts/*/*
 
 all: test build
 
 test:
-	@echo -n "Checking for syntax errors"
+	@echo -n "Comprobando posibles errores de sintaxis..."
 
 	@for SCRIPT in $(SCRIPTS); \
 	do \
@@ -17,10 +17,9 @@ test:
 		echo -n "."; \
 	done
 
-	@echo " done."
+	@echo "Hecho!"
 
-	@# We can't just fail yet on bashisms (FIXME)
-	@echo -n "Checking for bashisms"
+	@echo -n "Iniciando bashisms..."
 
 	@if [ -x /usr/bin/checkbashisms ]; \
 	then \
@@ -30,29 +29,29 @@ test:
 			echo -n "."; \
 		done; \
 	else \
-		echo "WARNING: skipping bashism test - you need to install devscripts."; \
+		echo "ADVERTENCIA: Obviando bashisms - Necesitas instalar el paquete devscripts"; \
 	fi
 
-	@echo " done."
+	@echo " Hecho!"
 
 build:
-	@echo "Nothing to build."
+	@echo "Nada para compilar!"
 
 install:
 	# Installing shared data
-	mkdir -p $(DESTDIR)/usr/share/live/build
-	cp -r cgi data examples functions scripts hooks includes lists repositories templates $(DESTDIR)/usr/share/live/build
+	mkdir -p $(DESTDIR)/usr/share/canaima-semilla
+	cp -r data functions scripts hooks includes lists repositories templates $(DESTDIR)/usr/share/canaima-semilla
 
 	# Installing executables
 	mkdir -p $(DESTDIR)/usr/bin
-	mv $(DESTDIR)/usr/share/live/build/scripts/build/lh $(DESTDIR)/usr/share/live/build/scripts/build/live-helper $(DESTDIR)/usr/bin
+	mv $(DESTDIR)/usr/share/canaima-semilla/scripts/build/canaima-semilla $(DESTDIR)/usr/bin
 
 	# Installing documentation
-	mkdir -p $(DESTDIR)/usr/share/doc/live-build
-	cp -r COPYING docs/* $(DESTDIR)/usr/share/doc/live-build
+	mkdir -p $(DESTDIR)/usr/share/doc/canaima-semilla
+	cp -r COPYING docs/* $(DESTDIR)/usr/share/doc/canaima-semilla
 
 	# Installing manpages
-	for MANPAGE in manpages/en/*; \
+	for MANPAGE in manpages/es/*; \
 	do \
 		SECTION="$$(basename $${MANPAGE} | awk -F. '{ print $$2 }')"; \
 		install -D -m 0644 $${MANPAGE} $(DESTDIR)/usr/share/man/man$${SECTION}/$$(basename $${MANPAGE}); \
@@ -72,17 +71,17 @@ install:
 
 uninstall:
 	# Uninstalling shared data
-	rm -rf $(DESTDIR)/usr/share/live/build
-	rmdir --ignore-fail-on-non-empty $(DESTDIR)/usr/share/live
+	rm -rf $(DESTDIR)/usr/share/canaima-semilla
+	rmdir --ignore-fail-on-non-empty $(DESTDIR)/usr/share/canaima-semilla
 
 	# Uninstalling executables
-	rm -f $(DESTDIR)/usr/bin/lh $(DESTDIR)/usr/bin/live-helper
+	rm -f $(DESTDIR)/usr/bin/canaima-semilla
 
 	# Uninstalling documentation
-	rm -rf $(DESTDIR)/usr/share/doc/live-build
+	rm -rf $(DESTDIR)/usr/share/doc/canaima-semilla
 
 	# Uninstalling manpages
-	for MANPAGE in manpages/en/*; \
+	for MANPAGE in manpages/es/*; \
 	do \
 		SECTION="$$(basename $${MANPAGE} | awk -F. '{ print $$2 }')"; \
 		rm -f $(DESTDIR)/usr/share/man/man$${SECTION}/$$(basename $${MANPAGE} .en.$${SECTION}).$${SECTION}; \
