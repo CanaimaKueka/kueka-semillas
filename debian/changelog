@@ -1,3 +1,16 @@
+canaima-semilla (1.2+1) stable; urgency=low
+
+  * [525f375] Reestructurando paquete fuente para ser coherente con el
+    nuevo ciclo de desarrollo de Canaima GNU/Linux
+  * [8cb07c9] Modificando makefile del paquete fuente, agregando
+    documentación y eliminando archivos innecesarios
+  * [5f87f55] Corrigiendo bug del makefile
+  * [5b00cc5] Incluyendo páginas de manual de live-helper en inglés,
+    para traducir luego
+  * [7ca9bee] Corrigiendo bug con los manuales
+
+ -- Luis Alejandro Martínez Faneyth <lmartinez@canaima.softwarelibre.gob.ve>  Wed, 18 Aug 2010 00:24:12 -0430
+
 canaima-semilla (1.1+1) stable; urgency=low
 
   * Renombramiento de scripts. Commit f9af80e.
