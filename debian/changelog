@@ -1,3 +1,9 @@
+canaima-semilla (1.2+5) stable; urgency=low
+
+  * [2c22fd8] Evitando eliminación de paquetes fundamentales
+
+ -- Luis Alejandro Martínez Faneyth <lmartinez@cnti.gob.ve>  Wed, 18 Aug 2010 13:20:34 -0430
+
 canaima-semilla (1.2+4) stable; urgency=low
 
   * [41f1e9f] Cambiando a la versión 1.2+4
