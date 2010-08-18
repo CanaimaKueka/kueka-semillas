@@ -4,7 +4,7 @@ SHELL := sh -e
 
 LANGUAGES = es
 
-SCRIPTS = functions/* examples/*/*.sh scripts/*.sh scripts/*/*
+SCRIPTS = functions/* scripts/*.sh scripts/*/*
 
 all: test build
 
