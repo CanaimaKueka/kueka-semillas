@@ -1,3 +1,10 @@
+canaima-semilla (1.2+2) stable; urgency=low
+
+  * [d1ba4bc] Actualizando manuales
+  * [0418593] Cambiando el banner del debian-installer
+
+ -- Luis Alejandro Martínez Faneyth <lmartinez@cnti.gob.ve>  Wed, 18 Aug 2010 03:39:56 -0430
+
 canaima-semilla (1.2+1) stable; urgency=low
 
   * [525f375] Reestructurando paquete fuente para ser coherente con el
@@ -9,7 +16,7 @@ canaima-semilla (1.2+1) stable; urgency=low
     para traducir luego
   * [7ca9bee] Corrigiendo bug con los manuales
 
- -- Luis Alejandro Martínez Faneyth <lmartinez@canaima.softwarelibre.gob.ve>  Wed, 18 Aug 2010 00:24:12 -0430
+ -- Luis Alejandro Martínez Faneyth <lmartinez@cnti.gob.ve>  Wed, 18 Aug 2010 00:24:12 -0430
 
 canaima-semilla (1.1+1) stable; urgency=low
 
