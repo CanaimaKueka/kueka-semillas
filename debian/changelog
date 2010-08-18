@@ -1,8 +1,11 @@
 canaima-semilla (1.2+3) stable; urgency=low
 
-  * UNRELEASED
+  * [f906147] Cambiando a la versión 1.2+3
+  * [488fa79] Añadiendo base de datos de paquetes para las
+    metadistribuciones Canaima GNU/Linux
+  * [0a6fe09] Corrigiendo error en el script functions/defaults.sh
 
- -- Luis Alejandro Martínez Faneyth <lmartinez@cnti.gob.ve>  Wed, 18 Aug 2010 04:16:00 -0430
+ -- Luis Alejandro Martínez Faneyth <lmartinez@cnti.gob.ve>  Wed, 18 Aug 2010 09:51:20 -0430
 
 canaima-semilla (1.2+2) stable; urgency=low
 
