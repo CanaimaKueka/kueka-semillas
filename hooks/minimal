@@ -9,6 +9,99 @@
 
 set -e
 
+# Configuración de los repos
+
+cat <<EOF >/etc/apt/sources.list
+#
+# Repositorios de Canaima GNU/Linux 2.1
+#
+
+# Repositorios en línea
+deb http://repositorio.canaima.softwarelibre.gob.ve/ estable usuarios
+#deb http://repositorio.canaima.softwarelibre.gob.ve/ pruebas usuarios
+#deb http://repositorio.canaima.softwarelibre.gob.ve/ desarrollo usuarios
+deb http://universo.canaima.softwarelibre.gob.ve/ lenny main contrib non-free
+deb http://seguridad.canaima.softwarelibre.gob.ve/ seguridad usuarios
+
+EOF
+
+# Configuración de APT
+
+cat <<EOP >/etc/apt/preferences
+Package: *
+Pin: release a=desarrollo
+Pin-Priority: 900
+
+Package: *
+Pin: release a=pruebas
+Pin-Priority: 800
+
+Package: *
+Pin: release a=estable
+Pin-Priority: 700
+
+Package: *
+Pin: release o=Debian
+Pin-Priority: 50
+
+EOP
+
+# Diccionarios de OOo (cruft?)
+
+echo "HYPH es ES hyph_es_ES" >> /usr/share/myspell/dictionary.lst || true
+echo "THES es ES th_es_ES" >> /usr/share/myspell/dictionary.lst || true
+
+# Cruft?
+
+update-grub
+update-mime
+
+# Configuración del teclado en Xorg
+
+while read line
+do
+  echo $line | debconf-set-selections
+done <<SEEDS
+xserver-xorg xserver-xorg/config/inputdevice/keyboard/model string pc105
+xserver-xorg xserver-xorg/config/inputdevice/keyboard/layout string es
+SEEDS
+
+dpkg-reconfigure -fnoninteractive xserver-xorg
+
+# Mimetypes de OOXML/Firefox
+
+cat <<EOA >> /usr/share/gnome/applications/defaults.list
+application/vnd.ms-word.document.macroEnabled.12=openoffice.org-writer.desktop 
+application/vnd.ms-word.template.macroEnabled.12=openoffice.org-writer.desktop
+application/vnd.openxmlformats-officedocument.wordprocessingml.document=openoffice.org-writer.desktop
+application/vnd.openxmlformats-officedocument.wordprocessingml.template=openoffice.org-writer.desktop
+application/vnd.ms-powerpoint.presentation.macroEnabled.12=openoffice.org-impress.desktop
+application/vnd.ms-powerpoint.slideshow.macroEnabled.12=openoffice.org-impress.desktop
+application/vnd.ms-powerpoint.template.macroEnabled.12=openoffice.org-impress.desktop 
+application/vnd.openxmlformats-officedocument.presentationml.presentation=openoffice.org-impress.desktop
+application/vnd.openxmlformats-officedocument.presentationml.slideshow=openoffice.org-impress.desktop
+application/vnd.openxmlformats-officedocument.presentationml.template=openoffice.org-impress.desktop
+application/vnd.ms-excel.sheet.macroEnabled.12=openoffice.org-calc.desktop
+application/vnd.ms-excel.template.macroEnabled.12=openoffice.org-calc.desktop
+application/vnd.openxmlformats-officedocument.spreadsheetml.sheet=openoffice.org-calc.desktop
+application/vnd.openxmlformats-officedocument.spreadsheetml.template=openoffice.org-calc.desktop
+text/html=firefox.desktop
+text/xml=firefox.desktop
+EOA
+
+# Teclado en consola
+
+install-keymap es
+
+# Elimina el usuario canaima si otro usuario fue creado durante la instalacion
+if grep -q '^+:' /etc/passwd || \
+   grep -q '^[^:]*:[^:]*:[1-9][0-9][0-9][0-9]:' /etc/passwd || \
+   grep -q '^[^:]*:[^:]*:[12][0-9][0-9][0-9][0-9]:' /etc/passwd; then
+
+userdel -r canaima
+
+fi
+
 # Removing unused files
 find . -name *~ -print0 | xargs -0 rm -f
 
