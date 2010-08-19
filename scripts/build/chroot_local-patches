@@ -55,7 +55,7 @@ then
 	done
 
 	# Removing depends
-	Remove_package
+	#Remove_package
 
 	# Saving cache
 	Save_cache cache/packages_chroot

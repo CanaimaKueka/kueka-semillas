@@ -118,7 +118,7 @@ then
 	mv chroot/var/lib/dpkg/status.tmp chroot/var/lib/dpkg/status
 
 	# Removing depends
-	Remove_package
+	#Remove_package
 
 	# Saving cache
 	Save_cache cache/packages_chroot

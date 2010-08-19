@@ -140,7 +140,7 @@ rm -f binary/${INITFS}/filesystem.${LH_CHROOT_FILESYSTEM}.tmp
 Save_cache cache/packages_binary
 
 # Removing depends
-Remove_package
+#Remove_package
 
 # Creating stage file
 Create_stagefile .stage/binary_encryption
