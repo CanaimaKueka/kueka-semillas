@@ -57,7 +57,7 @@ then
 	done
 
 	# Remove dependency
-	Remove_package
+	#Remove_package
 
 	# Creating stage file
 	Create_stagefile .stage/chroot_local-preseed

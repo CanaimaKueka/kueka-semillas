@@ -133,7 +133,7 @@ then
 fi
 
 # Removing depends
-Remove_package
+#Remove_package
 
 # Creating stage file
 Create_stagefile .stage/source_usb

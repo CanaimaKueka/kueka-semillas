@@ -52,7 +52,7 @@ Install_package
 Chroot chroot "symlinks -c -r -s /"
 
 # Removing depends
-Remove_package
+#Remove_package
 
 # Creating stage file
 Create_stagefile .stage/chroot_symlinks
