@@ -1,3 +1,11 @@
+canaima-semilla (1.2+6) stable; urgency=low
+
+  * [7edf0e9] Cambiando a versión 1.2+6
+  * [d3584fb] Modificando estructura de archivos de la documentación e
+    información del paquete
+
+ -- Luis Alejandro Martínez Faneyth <lmartinez@cnti.gob.ve>  Thu, 19 Aug 2010 11:39:46 -0430
+
 canaima-semilla (1.2+5) stable; urgency=low
 
   * [2c22fd8] Evitando eliminación de paquetes fundamentales
