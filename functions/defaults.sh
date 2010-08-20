@@ -366,7 +366,7 @@ Set_defaults ()
 	# Setting union filesystem
 	LH_UNION_FILESYSTEM="${LH_UNION_FILESYSTEM:-aufs}"
 
-	LH_HOOKS="config/binary_local-hooks/canaima"
+	#LH_HOOKS="config/binary_local-hooks/canaima"
 
 	# Setting interactive shell/X11/Xnest
 	LH_INTERACTIVE="${LH_INTERACTIVE:-false}"
@@ -600,7 +600,7 @@ Set_defaults ()
 			esac
 			;;
 	esac
-	LH_DEBIAN_INSTALLER_PRESEEDFILE="config/binary_debian-installer/preseed.cfg"
+	#LH_DEBIAN_INSTALLER_PRESEEDFILE="config/binary_debian-installer/preseed.cfg"
 	# Setting debian-installer preseed filename
 	if [ -z "${LH_DEBIAN_INSTALLER_PRESEEDFILE}" ]
 	then
