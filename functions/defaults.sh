@@ -447,9 +447,16 @@ Set_defaults ()
 
 	# Setting packages string
 	case "${LH_SABOR}" in
-		meta-minimal)
-			LH_PACKAGES_LISTS="${LH_PACKAGES_LISTS:-meta-minimal}"
-			;;
+                meta-minimal)
+                        case "${LH_ARCHITECTURE}" in
+                                i386)
+                                        LH_PACKAGES_LISTS="${LH_PACKAGES_LISTS:-meta-minimal-i386}"
+                                        ;;
+                                amd64)
+                                        LH_PACKAGES_LISTS="${LH_PACKAGES_LISTS:-meta-minimal-amd64}"
+                                        ;;
+                        esac
+                        ;;
                 meta-cd)
                         LH_PACKAGES_LISTS="${LH_PACKAGES_LISTS:-meta-cd}"
                         ;;
