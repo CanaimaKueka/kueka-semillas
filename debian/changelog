@@ -1,3 +1,12 @@
+canaima-semilla (1.2+7) stable; urgency=low
+
+  * [d3584fb] Modificando estructura de archivos de la documentación e
+    información del paquete
+  * [deb1716] Cambios menores
+  * [c151bca] Arreglando bug que desinstala canaima-base
+
+ -- Luis Alejandro Martínez Faneyth <lmartinez@canaima.softwarelibre.gob.ve>  Thu, 19 Aug 2010 20:39:28 -0430
+
 canaima-semilla (1.2+6) stable; urgency=low
 
   * [7edf0e9] Cambiando a versión 1.2+6
