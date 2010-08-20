@@ -60,8 +60,7 @@ install:
 uninstall:
 	# Uninstalling shared data
 	rm -rf $(DESTDIR)/usr/share/canaima-semilla/
-	rmdir --ignore-fail-on-non-empty $(DESTDIR)/usr/share/canaima-semilla/
-
+	
 	# Uninstalling executables
 	rm -f $(DESTDIR)/usr/bin/canaima-semilla
 
