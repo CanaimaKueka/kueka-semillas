@@ -372,7 +372,7 @@ case "${1}" in
 
 			Apt update
 			Apt upgrade
-			Apt full-upgrade
+			Apt dist-upgrade
 
 			# Installing keyring packages
 			if [ -n "${LH_KEYRING_PACKAGES}" ]
