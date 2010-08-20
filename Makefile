@@ -15,7 +15,7 @@ test:
 		echo -n "."; \
 	done
 
-	@echo "\nHecho!"
+	@echo " Hecho!"
 
 	@echo -n "Iniciando bashisms"
 
@@ -30,7 +30,7 @@ test:
 		echo "ADVERTENCIA: Obviando bashisms - Necesitas instalar el paquete devscripts"; \
 	fi
 
-	@echo "\nHecho!"
+	@echo " Hecho!"
 
 build:
 	@echo "Nada para compilar!"
