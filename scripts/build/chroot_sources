@@ -370,9 +370,9 @@ case "${1}" in
 				Chroot chroot "apt-get ${APT_OPTIONS} install aptitude"
 			fi
 
-			Apt update
-			Apt upgrade
-			Apt dist-upgrade
+			#Apt update
+			#Apt upgrade
+			#Apt dist-upgrade
 
 			# Installing keyring packages
 			if [ -n "${LH_KEYRING_PACKAGES}" ]

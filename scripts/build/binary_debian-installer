@@ -389,7 +389,7 @@ then
 		done
 
 		# Download .deb's that we just marked as "purged" which caused broken dependencies
-		Chroot chroot ${_LH_APT_COMMAND} -f dist-upgrade
+		#Chroot chroot ${_LH_APT_COMMAND} -f dist-upgrade
 
 		# Revert dpkg status file
 		mv chroot/var/lib/dpkg/status.tmp chroot/var/lib/dpkg/status

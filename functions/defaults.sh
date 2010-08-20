@@ -379,7 +379,7 @@ Set_defaults ()
 	esac
 
 	# Setting language string
-	LH_LANGUAGE="${LH_LANGUAGE:-es}"
+	LH_LANGUAGE="${LH_LANGUAGE:-es-es}"
 
 	# Setting linux flavour string
 	if [ -z "${LH_LINUX_FLAVOURS}" ]
