@@ -2,14 +2,12 @@
 
 SHELL := sh -e
 
-LANGUAGES = es
-
 SCRIPTS = functions/* scripts/*.sh scripts/*/*
 
 all: test build
 
 test:
-	@echo -n "Comprobando posibles errores de sintaxis..."
+	@echo -n "Comprobando posibles errores de sintaxis"
 
 	@for SCRIPT in $(SCRIPTS); \
 	do \
@@ -17,9 +15,9 @@ test:
 		echo -n "."; \
 	done
 
-	@echo "Hecho!"
+	@echo "\nHecho!"
 
-	@echo -n "Iniciando bashisms..."
+	@echo -n "Iniciando bashisms"
 
 	@if [ -x /usr/bin/checkbashisms ]; \
 	then \
@@ -32,7 +30,7 @@ test:
 		echo "ADVERTENCIA: Obviando bashisms - Necesitas instalar el paquete devscripts"; \
 	fi
 
-	@echo " Hecho!"
+	@echo "\nHecho!"
 
 build:
 	@echo "Nada para compilar!"
@@ -48,7 +46,7 @@ install:
 
 	# Installing documentation
 	mkdir -p $(DESTDIR)/usr/share/doc/canaima-semilla
-	cp COPYING AUTHORS* CREDITS* $(DESTDIR)/usr/share/doc/canaima-semilla/
+	cp AUTHORS CREDITS README $(DESTDIR)/usr/share/doc/canaima-semilla/
 
 	# Installing manpages
 	for MANPAGE in manuales/*; \
