@@ -28,6 +28,7 @@ fi
 SYSTEM_LH_CONFFILE="/etc/default/live-helper"
 DESCRIPTION="$(Echo 'create configuration for live-helper(7)')"
 USAGE="${PROGRAM} [--apt apt|aptitude]\n\
+\t    [--sabor SABOR]\n\
 \t    [--apt-ftp-proxy URL]\n\
 \t    [--apt-http-proxy URL]\n\
 \t    [--apt-pdiffs true|false]\n\
@@ -151,7 +152,7 @@ Local_arguments ()
 		net-root-path:,net-root-server:,net-cow-filesystem:,net-cow-mountoptions:,net-cow-path:,
 		net-cow-server:,net-tarball:,syslinux-splash:,syslinux-timeout:,syslinux-menu:,
 		username:,win32-loader:,source:,source-images:,breakpoints,conffile:,debug,force,
-		help,ignore-system-defaults,quiet,usage,verbose,version"
+		help,ignore-system-defaults,quiet,usage,verbose,version,sabor:"
 	# Remove spaces added by indentation
 	LONG_OPTIONS="$(echo ${LONG_OPTIONS} | tr -d ' ')"
 	ARGUMENTS="$(getopt --longoptions ${LONG_OPTIONS} --name=${PROGRAM} --options a:f:d:m:l:k:p:b:e:r:s:c:huv --shell sh -- "${@}")"
@@ -507,6 +508,11 @@ Local_arguments ()
 				LH_PACKAGES_LISTS="${2}"
 				shift 2
 				;;
+
+                        --sabor) 
+                                LH_SABOR="${2}"
+                                shift 2
+                                ;;
 
 			--tasks)
 				LH_TASKS="${2}"
@@ -1099,6 +1105,10 @@ LH_PACKAGES="${LH_PACKAGES}"
 # (Default: ${LH_PACKAGES_LISTS})
 LH_PACKAGES_LISTS="${LH_PACKAGES_LISTS}"
 
+# \$LH_SABOR: especificar el sabor Canaima a instalar
+# (Default: ${LH_SABOR})
+LH_SABOR="${LH_SABOR}"
+
 # \$LH_TASKS: set tasks to install
 # (Default: empty)
 LH_TASKS="${LH_TASKS}"
@@ -1133,7 +1143,7 @@ mkdir -p config/binary_rootfs
 mkdir -p config/binary_syslinux
 cp /usr/share/canaima-semilla/includes/lenny/images/banner.png config/binary_debian-installer/
 cp /usr/share/canaima-semilla/includes/lenny/preseed/preseed.cfg config/binary_debian-installer/
-cp /usr/share/canaima-semilla/hooks/debian-installer config/binary_local-hooks/
+cp /usr/share/canaima-semilla/hooks/canaima config/binary_local-hooks/
 
 cat > config/binary << EOF
 # config/binary - options for live-helper(7), binary stage
