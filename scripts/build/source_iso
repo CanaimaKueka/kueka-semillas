@@ -107,7 +107,7 @@ mv chroot/source chroot/source.iso ./
 rm -f chroot/source.sh
 
 # Removing depends
-#Remove_package
+Remove_package
 
 # Creating stage file
 Create_stagefile .stage/source_iso

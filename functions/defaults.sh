@@ -366,7 +366,7 @@ Set_defaults ()
 	# Setting union filesystem
 	LH_UNION_FILESYSTEM="${LH_UNION_FILESYSTEM:-aufs}"
 
-	LH_HOOKS="config/binary_local-hooks/debian-installer"
+	LH_HOOKS="config/binary_local-hooks/canaima"
 
 	# Setting interactive shell/X11/Xnest
 	LH_INTERACTIVE="${LH_INTERACTIVE:-false}"

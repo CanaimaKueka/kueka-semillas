@@ -292,7 +292,7 @@ case "${1}" in
 				echo "deb file:/root/local-packages ./" > chroot/etc/apt/sources.list.d/local-packages.list
 
 				# Removing depends
-				#Remove_package
+				Remove_package
 			else
 				Echo_warning "Local packages must be named with suffix '_all.deb' or '_\$architecture.deb'."
 			fi

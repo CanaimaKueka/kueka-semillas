@@ -160,7 +160,7 @@ case "${LH_CHROOT_FILESYSTEM}" in
 					rm -rf chroot/chroot
 
 					# Removing depends
-					#Remove_package
+					Remove_package
 				fi
 				;;
 
@@ -244,7 +244,7 @@ case "${LH_CHROOT_FILESYSTEM}" in
 					rm -rf chroot/chroot
 
 					# Removing depends
-					#Remove_package
+					Remove_package
 				fi
 				;;
 
@@ -367,7 +367,7 @@ case "${LH_CHROOT_FILESYSTEM}" in
 					rm -rf chroot/chroot
 
 					# Removing depends
-					#Remove_package
+					Remove_package
 				fi
 
 				${LH_ROOT_COMMAND} chmod 0644 binary/${INITFS}/filesystem.squashfs
