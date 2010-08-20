@@ -1,3 +1,10 @@
+canaima-semilla (1.3+2) stable; urgency=low
+
+  * [663aeab] Arreglando bug del script/configurar y la copia de los
+    hooks a binary_local-hooks
+
+ -- Luis Alejandro Martínez Faneyth <lmartinez@cnti.gob.ve>  Fri, 20 Aug 2010 00:53:08 -0430
+
 canaima-semilla (1.3+1) stable; urgency=low
 
   * [df90e54] Corrigiendo manuales
