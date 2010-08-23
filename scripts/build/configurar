@@ -1144,6 +1144,8 @@ mkdir -p config/binary_syslinux
 cp /usr/share/canaima-semilla/includes/lenny/images/banner.png config/binary_debian-installer/
 cp /usr/share/canaima-semilla/includes/lenny/preseed/preseed.cfg config/binary_debian-installer/
 cp /usr/share/canaima-semilla/hooks/canaima config/binary_local-hooks/
+cp /usr/share/canaima-semilla/includes/lenny/gtkrc/gtkrc config/binary_debian-installer-includes/
+
 
 cat > config/binary << EOF
 # config/binary - options for live-helper(7), binary stage
