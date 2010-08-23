@@ -657,7 +657,7 @@ Set_defaults ()
 			;;
 	esac
 
-	if [ -n ${_LH_BOOTAPPEND_PRESEED} ]
+	if [ -n "${_LH_BOOTAPPEND_PRESEED}" ]
 	then
 		LH_BOOTAPPEND_INSTALL="${LH_BOOTAPPEND_INSTALL} ${_LH_BOOTAPPEND_PRESEED}"
 	fi
