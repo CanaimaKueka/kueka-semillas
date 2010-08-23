@@ -600,7 +600,7 @@ Set_defaults ()
 			esac
 			;;
 	esac
-	LH_DEBIAN_INSTALLER_PRESEEDFILE="config/binary_debian-installer/preseed.cfg"
+	#LH_DEBIAN_INSTALLER_PRESEEDFILE="config/binary_debian-installer/preseed.cfg"
 	# Setting debian-installer preseed filename
 	if [ -z "${LH_DEBIAN_INSTALLER_PRESEEDFILE}" ]
 	then

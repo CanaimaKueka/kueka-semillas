@@ -15,7 +15,7 @@ then
         TARGET_INITRD="binary/install/gtk/initrd.gz"
         REPACK_TMPDIR="binary.initrd"
 
-	echo "FASE 1: Cambiando banner del Debian Installer"
+	echo "FASE 1: Cambiando banner y colores del Debian Installer"
 
 	if [ -e "${TARGET_INITRD}" ]
         then
