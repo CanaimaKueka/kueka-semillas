@@ -366,7 +366,7 @@ Set_defaults ()
 	# Setting union filesystem
 	LH_UNION_FILESYSTEM="${LH_UNION_FILESYSTEM:-aufs}"
 
-	#LH_HOOKS="config/binary_local-hooks/canaima"
+	LH_HOOKS="config/binary_local-hooks/canaima"
 
 	# Setting interactive shell/X11/Xnest
 	LH_INTERACTIVE="${LH_INTERACTIVE:-false}"
@@ -600,7 +600,7 @@ Set_defaults ()
 			esac
 			;;
 	esac
-	#LH_DEBIAN_INSTALLER_PRESEEDFILE="config/binary_debian-installer/preseed.cfg"
+	LH_DEBIAN_INSTALLER_PRESEEDFILE="config/binary_debian-installer/preseed.cfg"
 	# Setting debian-installer preseed filename
 	if [ -z "${LH_DEBIAN_INSTALLER_PRESEEDFILE}" ]
 	then
@@ -621,26 +621,26 @@ Set_defaults ()
 	then
 		case "${LH_BINARY_IMAGES}" in
 			iso*)
-				_LH_BOOTAPPEND_PRESEED="file=/cdrom/install/${LH_DEBIAN_INSTALLER_PRESEEDFILE}"
+				_LH_BOOTAPPEND_PRESEED="debian-installer/locale=es_VE.UTF-8 preseed/file=/cdrom/install/${LH_DEBIAN_INSTALLER_PRESEEDFILE}"
 				;;
 
 			usb*)
 				if [ "${LH_MODE}" = "ubuntu" ] || [ "${LH_DEBIAN_INSTALLER}" = "live" ]
 				then
-					_LH_BOOTAPPEND_PRESEED="file=/cdrom/install/${LH_DEBIAN_INSTALLER_PRESEEDFILE}"
+					_LH_BOOTAPPEND_PRESEED="debian-installer/locale=es_VE.UTF-8 preseed/file=/cdrom/install/${LH_DEBIAN_INSTALLER_PRESEEDFILE}"
 				else
-					_LH_BOOTAPPEND_PRESEED="file=/hd-media/install/${LH_DEBIAN_INSTALLER_PRESEEDFILE}"
+					_LH_BOOTAPPEND_PRESEED="debian-installer/locale=es_VE.UTF-8 preseed/file=/hd-media/install/${LH_DEBIAN_INSTALLER_PRESEEDFILE}"
 				fi
 				;;
 
 			net)
 				case "${LH_DEBIAN_INSTALLER_PRESEEDFILE}" in
 					*://*)
-						_LH_BOOTAPPEND_PRESEED="file=${LH_DEBIAN_INSTALLER_PRESEEDFILE}"
+						_LH_BOOTAPPEND_PRESEED="preseed/file=${LH_DEBIAN_INSTALLER_PRESEEDFILE}"
 						;;
 
 					*)
-						_LH_BOOTAPPEND_PRESEED="file=/${LH_DEBIAN_INSTALLER_PRESEEDFILE}"
+						_LH_BOOTAPPEND_PRESEED="preseed/file=/${LH_DEBIAN_INSTALLER_PRESEEDFILE}"
 						;;
 				esac
 				;;
