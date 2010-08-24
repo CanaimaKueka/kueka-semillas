@@ -1,3 +1,9 @@
+canaima-semilla (1.3+13) stable; urgency=low
+
+  * [4985f33] Corrigiendo bug en el hook "canaima_chroot"
+
+ -- Luis Alejandro Martínez Faneyth <lmartinez@cnti.gob.ve>  Tue, 24 Aug 2010 13:46:15 -0430
+
 canaima-semilla (1.3+12) stable; urgency=low
 
   * [35c7b7a] Corrigiendo bug en la copia del hook canaima_chroot
