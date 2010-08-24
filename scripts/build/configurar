@@ -1049,7 +1049,7 @@ mkdir -p config/chroot_local-packageslists
 mkdir -p config/chroot_local-preseed
 mkdir -p config/chroot_sources
 cp /usr/share/canaima-semilla/includes/lenny/sources/* config/chroot_sources/
-cp /usr/share/canaima-semilla/lists/canaima_chroot config/chroot_local-hooks/
+cp /usr/share/canaima-semilla/hooks/canaima_chroot config/chroot_local-hooks/
 
 cat > config/chroot << EOF
 # config/chroot - options for live-helper(7), chroot stage
