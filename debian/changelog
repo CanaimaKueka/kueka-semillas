@@ -1,3 +1,9 @@
+canaima-semilla (1.3+10) stable; urgency=low
+
+  * [9688863] Corrigiendo bug por falta de comillas en defaults.sh
+
+ -- Luis Alejandro Martínez Faneyth <lmartinez@cnti.gob.ve>  Tue, 24 Aug 2010 08:59:43 -0430
+
 canaima-semilla (1.3+9) stable; urgency=low
 
   * [e8fac1e] Agregando soporte a gtkrc
