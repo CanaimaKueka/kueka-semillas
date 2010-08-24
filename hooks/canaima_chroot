@@ -99,4 +99,4 @@ EOA
 echo "FASE 7: Configurando idioma"
 LANG=es_VE.UTF-8
 install-keymap es
-locales-gen
+locale-gen
