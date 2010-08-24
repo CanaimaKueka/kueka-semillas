@@ -6,16 +6,14 @@
 
 set -e
 
-echo "*************************************************************"
-echo "Ejecutando Script para configurar Canaima GNU/Linux Instalado"
-echo "*************************************************************"
+echo "*************************************"
+echo "Cambiando banner del Debian Installer"
+echo "*************************************"
 
 if [ -e config/binary_debian-installer/banner.png ]
 then
         TARGET_INITRD="binary/install/gtk/initrd.gz"
         REPACK_TMPDIR="binary.initrd"
-
-	echo "FASE 1: Cambiando banner y colores del Debian Installer"
 
 	if [ -e "${TARGET_INITRD}" ]
         then
@@ -35,93 +33,3 @@ then
                 rm -rf ${REPACK_TMPDIR}
         fi
 fi
-
-# Configuración de los repos
-
-echo "FASE 2: Escribiendo /etc/apt/sources.list de Canaima"
-cat <<EOF >/etc/apt/sources.list
-#
-# Repositorios de Canaima GNU/Linux
-#
-
-# Repositorios en línea
-deb http://repositorio.canaima.softwarelibre.gob.ve/ estable usuarios
-deb-src http://repositorio.canaima.softwarelibre.gob.ve/ estable usuarios
-#deb http://repositorio.canaima.softwarelibre.gob.ve/ pruebas usuarios
-#deb http://repositorio.canaima.softwarelibre.gob.ve/ desarrollo usuarios
-deb http://universo.canaima.softwarelibre.gob.ve/ lenny main contrib non-free
-deb http://seguridad.canaima.softwarelibre.gob.ve/ seguridad usuarios
-
-EOF
-
-# Configuración de APT
-
-echo "FASE 3: /etc/apt/preferences de Canaima"
-cat <<EOP >/etc/apt/preferences
-Package: *
-Pin: release a=desarrollo
-Pin-Priority: 900
-
-Package: *
-Pin: release a=pruebas
-Pin-Priority: 800
-
-Package: *
-Pin: release a=estable
-Pin-Priority: 700
-
-Package: *
-Pin: release o=Debian
-Pin-Priority: 50
-
-EOP
-
-# Diccionarios de OOo (cruft?)
-echo "FASE 4: Configurando diccionario de openoffice.org"
-echo "HYPH es ES hyph_es_ES" >> /usr/share/myspell/dictionary.lst || true
-echo "THES es ES th_es_ES" >> /usr/share/myspell/dictionary.lst || true
-
-# Cruft?
-echo "FASE 5: Actualizando Grub"
-update-grub
-update-mime
-
-# Configuración del teclado en Xorg
-echo "FASE 6: Reconfigurando el xorg"
-while read line
-do
-  echo $line | debconf-set-selections
-done <<SEEDS
-xserver-xorg xserver-xorg/config/inputdevice/keyboard/model string pc105
-xserver-xorg xserver-xorg/config/inputdevice/keyboard/layout string es
-SEEDS
-
-dpkg-reconfigure -fnoninteractive xserver-xorg
-
-# Mimetypes de OOXML/Firefox
-echo "FASE 6: Estableciendo programas predeterminados"
-cat <<EOA >> /usr/share/gnome/applications/defaults.list
-application/vnd.ms-word.document.macroEnabled.12=openoffice.org-writer.desktop 
-application/vnd.ms-word.template.macroEnabled.12=openoffice.org-writer.desktop
-application/vnd.openxmlformats-officedocument.wordprocessingml.document=openoffice.org-writer.desktop
-application/vnd.openxmlformats-officedocument.wordprocessingml.template=openoffice.org-writer.desktop
-application/vnd.ms-powerpoint.presentation.macroEnabled.12=openoffice.org-impress.desktop
-application/vnd.ms-powerpoint.slideshow.macroEnabled.12=openoffice.org-impress.desktop
-application/vnd.ms-powerpoint.template.macroEnabled.12=openoffice.org-impress.desktop 
-application/vnd.openxmlformats-officedocument.presentationml.presentation=openoffice.org-impress.desktop
-application/vnd.openxmlformats-officedocument.presentationml.slideshow=openoffice.org-impress.desktop
-application/vnd.openxmlformats-officedocument.presentationml.template=openoffice.org-impress.desktop
-application/vnd.ms-excel.sheet.macroEnabled.12=openoffice.org-calc.desktop
-application/vnd.ms-excel.template.macroEnabled.12=openoffice.org-calc.desktop
-application/vnd.openxmlformats-officedocument.spreadsheetml.sheet=openoffice.org-calc.desktop
-application/vnd.openxmlformats-officedocument.spreadsheetml.template=openoffice.org-calc.desktop
-text/html=firefox.desktop
-text/xml=firefox.desktop
-EOA
-
-# Teclado en consola
-
-echo "FASE 7: Configurando idioma"
-LANG=es_VE.UTF-8
-install-keymap es
-locales-gen
