@@ -21,14 +21,17 @@ cat <<EOF >/etc/apt/sources.list
 # Repositorios en línea
 deb http://repositorio.canaima.softwarelibre.gob.ve/ estable usuarios
 deb-src http://repositorio.canaima.softwarelibre.gob.ve/ estable usuarios
+
+# Repositorio de Pruebas
 #deb http://repositorio.canaima.softwarelibre.gob.ve/ pruebas usuarios
+
+# Repositorio de Desarrollo
 #deb http://repositorio.canaima.softwarelibre.gob.ve/ desarrollo usuarios
+
 deb http://universo.canaima.softwarelibre.gob.ve/ lenny main contrib non-free
 deb http://seguridad.canaima.softwarelibre.gob.ve/ seguridad usuarios
 
 EOF
-
-rm -rf /etc/apt/sources.list.d/
 
 # Configuración de APT
 
