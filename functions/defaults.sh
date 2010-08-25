@@ -458,26 +458,82 @@ Set_defaults ()
                         esac
                         ;;
                 meta-cd)
-                        LH_PACKAGES_LISTS="${LH_PACKAGES_LISTS:-meta-cd}"
+                        case "${LH_ARCHITECTURE}" in
+                                i386)
+                                        LH_PACKAGES_LISTS="${LH_PACKAGES_LISTS:-meta-cd-i386}"
+                                        ;;
+                                amd64)
+                                        LH_PACKAGES_LISTS="${LH_PACKAGES_LISTS:-meta-cd-amd64}"
+                                        ;;
+                        esac
                         ;;
+
                 meta-dvd)
-                        LH_PACKAGES_LISTS="${LH_PACKAGES_LISTS:-meta-dvd}"
+                        case "${LH_ARCHITECTURE}" in
+                                i386)
+                                        LH_PACKAGES_LISTS="${LH_PACKAGES_LISTS:-meta-dvd-i386}"
+                                        ;;
+                                amd64)
+                                        LH_PACKAGES_LISTS="${LH_PACKAGES_LISTS:-meta-dvd-amd64}"
+                                        ;;
+                        esac
                         ;;
+
                 universitario)
-                        LH_PACKAGES_LISTS="${LH_PACKAGES_LISTS:-universitario}"
+                        case "${LH_ARCHITECTURE}" in
+                                i386)
+                                        LH_PACKAGES_LISTS="${LH_PACKAGES_LISTS:-universitario-i386}"
+                                        ;;
+                                amd64)
+                                        LH_PACKAGES_LISTS="${LH_PACKAGES_LISTS:-universitario-amd64}"
+                                        ;;
+                        esac
                         ;;
+
                 forense)
-                        LH_PACKAGES_LISTS="${LH_PACKAGES_LISTS:-forense}"
+                        case "${LH_ARCHITECTURE}" in
+                                i386)
+                                        LH_PACKAGES_LISTS="${LH_PACKAGES_LISTS:-forense-i386}"
+                                        ;;
+                                amd64)
+                                        LH_PACKAGES_LISTS="${LH_PACKAGES_LISTS:-forense-amd64}"
+                                        ;;
+                        esac
                         ;;
+
                 educativo)
-                        LH_PACKAGES_LISTS="${LH_PACKAGES_LISTS:-educativo}"
+                        case "${LH_ARCHITECTURE}" in
+                                i386)
+                                        LH_PACKAGES_LISTS="${LH_PACKAGES_LISTS:-educativo-i386}"
+                                        ;;
+                                amd64)
+                                        LH_PACKAGES_LISTS="${LH_PACKAGES_LISTS:-educativo-amd64}"
+                                        ;;
+                        esac
                         ;;
+
                 colibri)
-                        LH_PACKAGES_LISTS="${LH_PACKAGES_LISTS:-colibri}"
+                        case "${LH_ARCHITECTURE}" in
+                                i386)
+                                        LH_PACKAGES_LISTS="${LH_PACKAGES_LISTS:-colibri-i386}"
+                                        ;;
+                                amd64)
+                                        LH_PACKAGES_LISTS="${LH_PACKAGES_LISTS:-colibri-amd64}"
+                                        ;;
+                        esac
                         ;;
+
                 apn)
-                        LH_PACKAGES_LISTS="${LH_PACKAGES_LISTS:-apn}"
+                        case "${LH_ARCHITECTURE}" in
+                                i386)
+                                        LH_PACKAGES_LISTS="${LH_PACKAGES_LISTS:-apn-i386}"
+                                        ;;
+                                amd64)
+                                        LH_PACKAGES_LISTS="${LH_PACKAGES_LISTS:-apn-amd64}"
+                                        ;;
+                        esac
                         ;;
+
 	esac
 
 	case "${LH_ENCRYPTION}" in
