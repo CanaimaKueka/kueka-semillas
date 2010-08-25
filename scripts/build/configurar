@@ -919,6 +919,10 @@ fi
 
         esac
 
+# Creating bootstrap configuration
+mkdir -p config
+mkdir -p config/includes
+mkdir -p config/templates
 
 # Creating live-helper configuration
 cat > config/common << EOF
