@@ -28,7 +28,7 @@ fi
 SYSTEM_LH_CONFFILE="/etc/default/live-helper"
 DESCRIPTION="$(Echo 'create configuration for live-helper(7)')"
 USAGE="${PROGRAM} [--apt apt|aptitude]\n\
-\t    [--sabor SABOR]\n\
+\t    [--sabor meta-minimal|meta-cd|meta-dvd|apn|universitario|colibri|forense|educativo]\n\
 \t    [--apt-ftp-proxy URL]\n\
 \t    [--apt-http-proxy URL]\n\
 \t    [--apt-pdiffs true|false]\n\
@@ -37,7 +37,7 @@ USAGE="${PROGRAM} [--apt apt|aptitude]\n\
 \t    [--apt-pipeline FIXME]\n\
 \t    [--apt-recommends true|false]\n\
 \t    [--apt-secure true|false]\n\
-\t    [-a|--arquitectura ARQUITECTURA]\n\
+\t    [-a|--arquitectura amd64|i386]\n\
 \t    [-b|--medio iso|net|tar|usb-hdd]\n\
 \t    [--binary-filesystem fat16|fat32]\n\
 \t    [--binary-indices true|false|none]\n\
