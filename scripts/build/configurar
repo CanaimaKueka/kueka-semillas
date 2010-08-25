@@ -829,10 +829,96 @@ else
 	Echo_message "Actualizando configuración de Canaima Semilla"
 fi
 
-# Creating bootstrap configuration
-mkdir -p config
-mkdir -p config/includes
-mkdir -p config/templates
+	case "${LH_SABOR}" in
+                meta-minimal)
+                        case "${LH_ARCHITECTURE}" in
+                                i386)
+                                        LH_PACKAGES_LISTS="${LH_PACKAGES_LISTS:-meta-minimal-i386}"
+                                        ;;
+                                amd64)
+                                        LH_PACKAGES_LISTS="${LH_PACKAGES_LISTS:-meta-minimal-amd64}"
+                                        ;;
+                        esac
+                        ;;
+                meta-cd)
+                        case "${LH_ARCHITECTURE}" in
+                                i386)
+                                        LH_PACKAGES_LISTS="${LH_PACKAGES_LISTS:-meta-cd-i386}"
+                                        ;;
+                                amd64)
+                                        LH_PACKAGES_LISTS="${LH_PACKAGES_LISTS:-meta-cd-amd64}"
+                                        ;;
+                        esac
+                        ;;
+
+                meta-dvd)
+                        case "${LH_ARCHITECTURE}" in
+                                i386)
+                                        LH_PACKAGES_LISTS="${LH_PACKAGES_LISTS:-meta-dvd-i386}"
+                                        ;;
+                                amd64)
+                                        LH_PACKAGES_LISTS="${LH_PACKAGES_LISTS:-meta-dvd-amd64}"
+                                        ;;
+                        esac
+                        ;;
+
+                universitario)
+                        case "${LH_ARCHITECTURE}" in
+                                i386)
+                                        LH_PACKAGES_LISTS="${LH_PACKAGES_LISTS:-universitario-i386}"
+                                        ;;
+                                amd64)
+                                        LH_PACKAGES_LISTS="${LH_PACKAGES_LISTS:-universitario-amd64}"
+                                        ;;
+                        esac
+                        ;;
+
+                forense)
+                        case "${LH_ARCHITECTURE}" in
+                                i386)
+                                        LH_PACKAGES_LISTS="${LH_PACKAGES_LISTS:-forense-i386}"
+                                        ;;
+                                amd64)
+                                        LH_PACKAGES_LISTS="${LH_PACKAGES_LISTS:-forense-amd64}"
+                                        ;;
+                        esac
+                        ;;
+
+                educativo)
+                        case "${LH_ARCHITECTURE}" in
+                                i386)
+                                        LH_PACKAGES_LISTS="${LH_PACKAGES_LISTS:-educativo-i386}"
+                                        ;;
+                                amd64)
+                                        LH_PACKAGES_LISTS="${LH_PACKAGES_LISTS:-educativo-amd64}"
+                                        ;;
+                        esac
+                        ;;
+
+                colibri)
+                        case "${LH_ARCHITECTURE}" in
+                                i386)
+                                        LH_PACKAGES_LISTS="${LH_PACKAGES_LISTS:-colibri-i386}"
+                                        ;;
+                                amd64)
+                                        LH_PACKAGES_LISTS="${LH_PACKAGES_LISTS:-colibri-amd64}"
+                                        ;;
+                        esac
+                        ;;
+
+                apn)
+                        case "${LH_ARCHITECTURE}" in
+                                i386)
+                                        LH_PACKAGES_LISTS="${LH_PACKAGES_LISTS:-apn-i386}"
+                                        ;;
+                                amd64)
+                                        LH_PACKAGES_LISTS="${LH_PACKAGES_LISTS:-apn-amd64}"
+                                        ;;
+                        esac
+                        ;;
+
+        esac
+
 
 # Creating live-helper configuration
 cat > config/common << EOF
