@@ -1,3 +1,9 @@
+canaima-semilla (1.4+2) stable; urgency=low
+
+  * [92ea846] Agregando sabores
+
+ -- Luis Alejandro Martínez Faneyth <lmartinez@cnti.gob.ve>  Wed, 25 Aug 2010 01:03:38 -0430
+
 canaima-semilla (1.4+1) stable; urgency=low
 
   * [fbcdc39] Corrigiendo bug de los hooks
