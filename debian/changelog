@@ -1,8 +1,10 @@
 canaima-semilla (1.5+3) stable; urgency=low
 
   * [608f718] Modificando dependencias
+  * [67cffb4] Nueva versión 1.5+3
+  * [9376b15] Removiendo sources.list.d/
 
- -- Luis Alejandro Martínez Faneyth <lmartinez@cnti.gob.ve>  Wed, 01 Sep 2010 16:48:45 -0430
+ -- Luis Alejandro Martínez Faneyth <lmartinez@cnti.gob.ve>  Wed, 01 Sep 2010 17:22:34 -0430
 
 canaima-semilla (1.5+2) stable; urgency=low
 
