@@ -33,5 +33,3 @@ then
                 rm -rf ${REPACK_TMPDIR}
         fi
 fi
-
-rm -rf chroot/etc/apt/sources.list.d/
