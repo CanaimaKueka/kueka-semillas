@@ -1,3 +1,9 @@
+canaima-semilla (1.5+3) stable; urgency=low
+
+  * [608f718] Modificando dependencias
+
+ -- Luis Alejandro Martínez Faneyth <lmartinez@cnti.gob.ve>  Wed, 01 Sep 2010 16:48:45 -0430
+
 canaima-semilla (1.5+2) stable; urgency=low
 
   * [f145c7c] Corrigiendo bug en el debian/rules y agregando
