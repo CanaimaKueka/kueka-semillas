@@ -591,6 +591,8 @@ case "${1}" in
 		# Remove local package repository
 		rm -f chroot/etc/apt/sources.list.d/local-packages.list
 		rm -rf chroot/root/local-packages
+		rm -rf chroot/etc/apt/sources.list
+		mv chroot/etc/apt/sources.list.d/*.list chroot/etc/apt/sources.list
 
 		# Remove local packages key if it exists
 		if apt-key list | grep -q ${_LH_LOCAL_KEY_EMAIL}
