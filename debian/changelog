@@ -1,3 +1,10 @@
+canaima-semilla (1.5+1) stable; urgency=low
+
+  * [d97c8c3] Complementando lista de paquetes y agregando el script
+    scripts/build/instalar
+
+ -- Luis Alejandro Martínez Faneyth <lmartinez@cnti..gob.ve>  Wed, 01 Sep 2010 03:26:08 -0430
+
 canaima-semilla (1.4+5) stable; urgency=low
 
   * [238f334] Corrigiendo bug con las listas de paquetes predeterminados
