@@ -1,3 +1,10 @@
+canaima-semilla (1.5+2) stable; urgency=low
+
+  * [f145c7c] Corrigiendo bug en el debian/rules y agregando
+    {$misc:depends} a debian/control
+
+ -- Luis Alejandro Martínez Faneyth <lmartinez@cnti.gob.ve>  Wed, 01 Sep 2010 04:21:03 -0430
+
 canaima-semilla (1.5+1) stable; urgency=low
 
   * [d97c8c3] Complementando lista de paquetes y agregando el script
