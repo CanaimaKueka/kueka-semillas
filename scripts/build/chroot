@@ -26,6 +26,9 @@ Set_defaults
 # Setup cleanup function
 Setup_cleanup
 
+Echo_message "--- ETAPA DE CONFIGURACIÓN DEL SISTEMA BASE (CHROOT) ---"
+Echo_message "En ésta etapa se customiza el sistema base con las características especificadas en la configuración de canaima-semilla, para ello se montan los dispositivos y se crean los archivos de configuración necesarios."
+
 # Configuring chroot
 canaima-semilla chroot_cache restore ${*}
 canaima-semilla chroot_devpts install ${*}

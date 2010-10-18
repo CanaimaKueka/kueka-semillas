@@ -31,7 +31,7 @@ Require_stagefile .stage/config .stage/bootstrap
 
 case "${1}" in
 	install)
-		Echo_message "Begin mounting /sys..."
+		Echo_message "Montando /sys..."
 
 		# Checking stage file
 		Check_stagefile .stage/chroot_sysfs
@@ -59,7 +59,7 @@ case "${1}" in
 		;;
 
 	remove)
-		Echo_message "Begin unmounting /sys..."
+		Echo_message "Desmontando /sys..."
 
 		# Checking lock file
 		Check_lockfile .lock

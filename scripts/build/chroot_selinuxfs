@@ -33,7 +33,7 @@ case "${1}" in
 	install)
 		if [ -e /selinux/enforce ] && [ "$(cat /selinux/enforce)" = "1" ]
 		then
-			Echo_message "Begin mounting /selinux..."
+			Echo_message "Montando /selinux..."
 
 			# Checking stage file
 			Check_stagefile .stage/chroot_selinuxfs
@@ -62,7 +62,7 @@ case "${1}" in
 		;;
 
 	remove)
-		Echo_message "Begin unmounting /selinux..."
+		Echo_message "Desmontando /selinux..."
 
 		# Checking lock file
 		Check_lockfile .lock

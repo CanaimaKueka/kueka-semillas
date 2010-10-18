@@ -28,7 +28,7 @@ Require_stagefile .stage/config .stage/bootstrap
 
 case "${1}" in
 	install)
-		Echo_message "Configuring file /etc/hostname"
+		Echo_message "Configurando archivo /etc/hostname"
 
 		# Checking stage file
 		Check_stagefile .stage/chroot_hostname

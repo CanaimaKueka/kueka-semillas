@@ -28,7 +28,7 @@ Require_stagefile .stage/config .stage/bootstrap
 
 case "${1}" in
 	install)
-		Echo_message "Configuring file /etc/resolv.conf"
+		Echo_message "Configurando archivo /etc/resolv.conf"
 
 		# Checking stage file
 		Check_stagefile .stage/chroot_resolv
@@ -63,7 +63,7 @@ case "${1}" in
 		;;
 
 	remove)
-		Echo_message "Deconfiguring file /etc/resolv.conf"
+		Echo_message "Desconfigurando archivo /etc/resolv.conf"
 
 		# Checking lock file
 		Check_lockfile .lock

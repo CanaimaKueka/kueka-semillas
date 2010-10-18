@@ -26,7 +26,7 @@ Set_defaults
 # Check architecture
 Check_crossarchitecture
 
-Echo_message "Begin caching bootstrap stage..."
+Echo_message "Activando sistema de cacheo para la etapa de bootstrap..."
 
 for STAGE in ${LH_CACHE_STAGES}
 do

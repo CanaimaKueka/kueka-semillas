@@ -31,7 +31,7 @@ Require_stagefile .stage/config .stage/bootstrap
 
 case "${1}" in
 	install)
-		Echo_message "Begin mounting /dev/pts..."
+		Echo_message "Montando /dev/pts..."
 
 		# Checking stage file
 		Check_stagefile .stage/chroot_devpts
@@ -56,7 +56,7 @@ case "${1}" in
 		;;
 
 	remove)
-		Echo_message "Begin unmounting /dev/pts..."
+		Echo_message "Desmontando /dev/pts..."
 
 		# Checking lock file
 		Check_lockfile .lock

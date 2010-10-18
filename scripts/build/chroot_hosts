@@ -28,7 +28,7 @@ Require_stagefile .stage/config .stage/bootstrap
 
 case "${1}" in
 	install)
-		Echo_message "Configuring file /etc/hosts"
+		Echo_message "Configurando archivo /etc/hosts"
 
 		# Checking stage file
 		Check_stagefile .stage/chroot_hosts
@@ -48,8 +48,8 @@ case "${1}" in
 		# Creating hosts file
 
 cat > chroot/etc/hosts << EOF
-127.0.0.1	localhost localhost.localdomain
-127.0.1.1	debian
+127.0.0.1	localhost
+127.0.1.1	canaima
 EOF
 
 		if [ -f /etc/hosts ]
@@ -64,7 +64,7 @@ EOF
 		;;
 
 	remove)
-		Echo_message "Deconfiguring file /etc/hosts"
+		Echo_message "Desconfigurando archivo /etc/hosts"
 
 		# Checking lock file
 		Check_lockfile .lock

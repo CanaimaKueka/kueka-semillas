@@ -28,7 +28,7 @@ Require_stagefile .stage/config .stage/bootstrap
 
 case "${1}" in
 	install)
-		Echo_message "Configuring file /sbin/start-stop-daemon"
+		Echo_message "Configurando archivo /sbin/start-stop-daemon"
 
 		# Checking stage file
 		Check_stagefile .stage/chroot_dpkg
@@ -68,7 +68,7 @@ EOF
 		;;
 
 	remove)
-		Echo_message "Deconfiguring file /sbin/start-stop-daemon"
+		Echo_message "Desconfigurando archivo /sbin/start-stop-daemon"
 
 		# Checking lock file
 		Check_lockfile .lock

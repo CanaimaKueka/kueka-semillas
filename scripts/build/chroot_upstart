@@ -28,7 +28,7 @@ Require_stagefile .stage/config .stage/bootstrap
 
 case "${1}" in
 	install)
-		Echo_message "Configuring file /usr/sbin/initctl"
+		Echo_message "Configurando archivo /usr/sbin/initctl"
 
 		# Checking stage file
 		Check_stagefile .stage/chroot_upstart
@@ -59,7 +59,7 @@ EOF
 		;;
 
 	remove)
-		Echo_message "Deconfiguring file /usr/sbin/initctl"
+		Echo_message "Desconfigurando archivo /usr/sbin/initctl"
 
 		# Checking lock file
 		Check_lockfile .lock

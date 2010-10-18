@@ -31,7 +31,7 @@ fi
 # Check architecture
 Check_crossarchitecture
 
-Echo_message "Begin bootstrapping system..."
+Echo_message "Comenzando a crear el sistema base..."
 
 # Ensure that a system is built as root
 canaima-semilla testroot

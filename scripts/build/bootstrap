@@ -26,6 +26,9 @@ Set_defaults
 # Setup cleanup function
 Setup_cleanup
 
+Echo_message "--- ETAPA DE CREACIÓN DEL SISTEMA BASE ---"
+Echo_message "En ésta etapa se crea un sistema linux dentro de una carpeta llamada chroot, en donde se genera un sistema de archivos unix típico, se configuran los archivos de sistema y se instalan paquetes básicos para tener un sistema minimalista y funcional. "
+
 # Bootstrapping system
 canaima-semilla bootstrap_cache restore ${*}
 canaima-semilla bootstrap_copy ${*}

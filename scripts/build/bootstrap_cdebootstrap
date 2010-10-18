@@ -31,7 +31,7 @@ fi
 # Check architecture
 Check_crossarchitecture
 
-Echo_message "Begin bootstrapping system..."
+Echo_message "Comenzando a crear el sistema base..."
 
 Check_package /usr/bin/${LH_BOOTSTRAP} cdebootstrap
 
