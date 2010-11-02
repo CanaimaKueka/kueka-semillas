@@ -28,7 +28,7 @@ then
 	exit 0
 fi
 
-Echo_message "Begin converting symlinks..."
+Echo_message "Corrigiendo enlaces simbólicos..."
 
 # Requiring stage file
 Require_stagefile .stage/config .stage/bootstrap

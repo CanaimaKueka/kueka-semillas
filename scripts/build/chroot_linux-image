@@ -28,7 +28,7 @@ Require_stagefile .stage/config .stage/bootstrap
 
 case "${1}" in
 	install)
-		Echo_message "Configuring file /etc/kernel-img.conf"
+		Echo_message "Configurando archivo /etc/kernel-img.conf"
 
 		# Checking stage file
 		Check_stagefile .stage/chroot_linux-image
@@ -80,7 +80,7 @@ EOF
 		;;
 
 	remove)
-		Echo_message "Deconfiguring file /etc/kernel-img.conf"
+		Echo_message "Desconfigurando archivo /etc/kernel-img.conf"
 
 		# Checking lock file
 		Check_lockfile .lock

@@ -23,7 +23,7 @@ Arguments "${@}"
 Read_conffiles config/all config/common config/bootstrap config/chroot config/binary config/source
 Set_defaults
 
-Echo_message "Begin copying chroot local includes..."
+Echo_message "Copiando inclusiones locales en el CHROOT..."
 
 # Requiring stage file
 Require_stagefile .stage/config .stage/bootstrap

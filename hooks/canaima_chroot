@@ -36,7 +36,7 @@ EOF
 # Configuración de APT
 
 echo "FASE 2: /etc/apt/preferences de Canaima"
-cat <<EOP >/etc/apt/preferences
+cat <<EOF >/etc/apt/preferences
 Package: *
 Pin: release a=desarrollo
 Pin-Priority: 900
@@ -53,7 +53,7 @@ Package: *
 Pin: release o=Debian
 Pin-Priority: 50
 
-EOP
+EOF
 
 # Diccionarios de OOo (cruft?)
 echo "FASE 3: Configurando diccionario de openoffice.org"

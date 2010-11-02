@@ -45,7 +45,7 @@ case "${1}" in
 		# Create hostname file
 		echo "localhost.localdomain" > chroot/etc/hostname
 
-		Echo_message "Configuring file /bin/hostname"
+		Echo_message "Configurando archivo /bin/hostname"
 
 		# Create hostname program
 
@@ -62,7 +62,7 @@ EOF
 		;;
 
 	remove)
-		Echo_message "Deconfiguring file /etc/hostname"
+		Echo_message "Desconfigurando archivo /etc/hostname"
 
 		# Checking lock file
 		Check_lockfile .lock
@@ -76,7 +76,7 @@ EOF
 			cp -a config/chroot_local-includes/etc/hostname chroot/etc/hostname
 		fi
 
-		Echo_message "Deconfiguring file /bin/hostname"
+		Echo_message "Desconfigurando archivo /bin/hostname"
 
 		# Restore hostname file
 		if [ -e chroot/bin/hostname.orig ]

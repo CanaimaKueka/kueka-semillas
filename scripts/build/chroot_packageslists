@@ -23,7 +23,7 @@ Arguments "${@}"
 Read_conffiles config/all config/common config/bootstrap config/chroot config/binary config/source
 Set_defaults
 
-Echo_message "Begin queueing installation of packages lists..."
+Echo_message "Encolando la instalación de las listas de paquetes..."
 
 # Requiring stage file
 Require_stagefile .stage/config .stage/bootstrap
