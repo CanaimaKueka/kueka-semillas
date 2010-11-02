@@ -15,7 +15,9 @@ set -e
 # Automatically populating config tree
 if [ -x auto/config ] && [ ! -e .stage/config ]
 then
+
 	Echo_message "Se te olvidó configurar la semilla. Canaima lo hará por ti, pero pueden haber resultados inesperados."
+
 	canaima-semilla configurar
 fi
 
@@ -45,13 +47,17 @@ fi
 
 if [ "$(pwd)" = "/" ]
 then
-	Echo_error "Canaima Semilla no puede construirse en el directorio base unix (/)."
+
+	Echo_error "Canaima Semilla no puede construirse en el directorio base unix."
+
 	exit 1
 fi
 
 if echo $(pwd) | grep -qs " "
 then
+
 	Echo_error "Canaima Semilla no puede generarse en un directorio que contenga espacios en su nombre."
+
 	exit 1
 fi
 

@@ -2,7 +2,6 @@
 
 # /usr/share/canaima-semilla/hooks/canaima - script de post-intalación de canaima-semilla
 # Copyright (C) 2010 Luis Alejandro Martínez Faneyth <lmartinez@cnti.gob.ve>
-#
 
 set -e
 
@@ -36,6 +35,7 @@ EOF
 # Configuración de APT
 
 echo "FASE 2: /etc/apt/preferences de Canaima"
+
 cat <<EOF >/etc/apt/preferences
 Package: *
 Pin: release a=desarrollo
