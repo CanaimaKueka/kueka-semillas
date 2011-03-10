@@ -1,10 +1,16 @@
-canaima-semilla (1.5+3) stable; urgency=low
+canaima-semilla (2.0+0) testing; urgency=low
 
-  * [608f718] Modificando dependencias
-  * [67cffb4] Nueva versión 1.5+3
-  * [9376b15] Removiendo sources.list.d/
+  * [b55fd11] Agregando sabor Canaima Primera Base
+  * [5fcaf2c] Borrando residuos
+  * [425eeea] Agregando plantillas para los sabores: popular, primera-
+    base e institucional. Comenzando la documentación. Cambios mínimos
+    varios.
+  * [b594b83] Removiendo residuos de la vieja versión de canaima-semilla
+  * [2d7d97e] Renombrando carpeta plantillas a perfiles, agregando
+    documentación, corrigiendo detalles mínimos en los scripts y
+    optimizando Makefile.
 
- -- Luis Alejandro Martínez Faneyth <lmartinez@cnti.gob.ve>  Wed, 01 Sep 2010 17:22:34 -0430
+ -- Luis Alejandro Martínez Faneyth <martinez.faneyth@gmail.com>  Thu, 10 Mar 2011 15:19:08 -0430
 
 canaima-semilla (1.5+2) stable; urgency=low
 
