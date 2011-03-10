@@ -2,8 +2,8 @@
 #
 # ==============================================================================
 # PAQUETE: canaima-semilla
-# ARCHIVO: canaima-semilla.sh
-# DESCRIPCIÓN: Script de bash principal del paquete canaima-desarrollador
+# ARCHIVO: manual-semilla.sh
+# DESCRIPCIÓN: Script que inicia el Manual de Canaima Semilla
 # COPYRIGHT:
 #  (C) 2010 Luis Alejandro Martínez Faneyth <martinez.faneyth@gmail.com>
 # LICENCIA: GPL3
@@ -12,16 +12,9 @@
 # Este programa es software libre. Puede redistribuirlo y/o modificarlo bajo los
 # términos de la Licencia Pública General de GNU (versión 3).
 
-function ERROR() {
-echo -e ${ROJO}${1}${FIN}
-exit 1
-}
+VARIABLES="/usr/share/canaima-semilla/conf/variables.conf"
 
-function ADVERTENCIA() {
-echo -e ${AMARILLO}${1}${FIN}
-}
+# Inicializando variables
+. ${VARIABLES}
 
-function EXITO() {
-echo -e ${VERDE}${1}${FIN}
-}
-
+${NAVEGADOR} /usr/share/doc/canaima-semilla/html/index.html

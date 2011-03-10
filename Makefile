@@ -6,9 +6,9 @@ SCRIPTS =	"debian/preinst install" \
 		"debian/postinst configure" \
 		"debian/prerm remove" \
 		"debian/postrm remove" \
-		"scripts/canaima-desarrollador.sh" \
-		"scripts/funciones-desarrollador.sh" \
-		"scripts/manual-desarrollador.sh"
+		"scripts/canaima-semilla.sh" \
+		"scripts/funciones-semilla.sh" \
+		"scripts/manual-semilla.sh"
 
 all: build
 
@@ -28,7 +28,7 @@ build:
 	$(MAKE) clean
 
 	# Generar la documentación con python-sphinx
-	rst2man --language="es" --title="CANAIMA DESARROLLADOR" documentos/man-canaima-desarrollador.rst documentos/canaima-desarrollador.1
+	rst2man --language="es" --title="CANAIMA SEMILLA" documentos/man-canaima-semilla.rst documentos/canaima-semilla.1
 	$(MAKE) -C documentos latex
 	$(MAKE) -C documentos html
 	$(MAKE) -C documentos/_build/latex all-pdf
@@ -38,32 +38,30 @@ build:
 install:
 
 	mkdir -p $(DESTDIR)/usr/bin/
-	mkdir -p $(DESTDIR)/usr/share/canaima-desarrollador/
-	mkdir -p $(DESTDIR)/etc/skel/.config/canaima-desarrollador/
+	mkdir -p $(DESTDIR)/usr/share/canaima-semilla/
+	mkdir -p $(DESTDIR)/etc/skel/.config/canaima-semilla/
 	mkdir -p $(DESTDIR)/usr/share/applications/
-	mkdir -p $(DESTDIR)/etc/skel/Escritorio/
-	cp -r desktop/manual-desarrollador.desktop $(DESTDIR)/usr/share/applications/
-	cp -r desktop/manual-desarrollador.desktop $(DESTDIR)/etc/skel/Escritorio/
-	cp -r scripts/canaima-desarrollador.sh $(DESTDIR)/usr/bin/canaima-desarrollador
-	cp -r scripts/canaima-desarrollador.sh $(DESTDIR)/usr/bin/c-d
-	cp -r scripts/manual-desarrollador.sh $(DESTDIR)/usr/bin/manual-desarrollador
-	cp -r scripts plantillas $(DESTDIR)/usr/share/canaima-desarrollador/
-	cp -r conf/variables.conf $(DESTDIR)/usr/share/canaima-desarrollador/
-	cp -r conf/usuario.conf $(DESTDIR)/etc/skel/.config/canaima-desarrollador/
+	cp -r desktop/manual-semilla.desktop $(DESTDIR)/usr/share/applications/
+	cp -r scripts/canaima-semilla.sh $(DESTDIR)/usr/bin/canaima-semilla
+	ln -s /usr/bin/canaima-semilla $(DESTDIR)/usr/bin/c-s
+	cp -r scripts/manual-semilla.sh $(DESTDIR)/usr/bin/manual-semilla
+	cp -r scripts plantillas $(DESTDIR)/usr/share/canaima-semilla/
+	cp -r conf/variables.conf $(DESTDIR)/usr/share/canaima-semilla/
+	cp -r conf/usuario.conf $(DESTDIR)/etc/skel/.config/canaima-semilla/
 
 uninstall:
 
-	rm -rf $(DESTDIR)/usr/share/canaima-desarrollador
-	rm -rf $(DESTDIR)/usr/bin/canaima-desarrollador
-	rm -rf $(DESTDIR)/usr/bin/c-d
-	rm -rf $(DESTDIR)/usr/bin/manual-desarrollador
-	rm -rf $(DESTDIR)/etc/skel/Escritorio/manual-desarrollador.desktop
-	rm -rf $(DESTDIR)/etc/skel/.config/canaima-desarrollador/
-	rm -rf $(DESTDIR)/usr/share/applications/manual-desarrollador.desktop
+	rm -rf $(DESTDIR)/usr/share/canaima-semilla
+	rm -rf $(DESTDIR)/usr/bin/canaima-semilla
+	rm -rf $(DESTDIR)/usr/bin/c-s
+	rm -rf $(DESTDIR)/usr/bin/manual-semilla
+	rm -rf $(DESTDIR)/etc/skel/.config/canaima-semilla/
+	rm -rf $(DESTDIR)/usr/share/applications/manual-semilla.desktop
+
 clean:
 
 	rm -rf documentos/_build/*
-	rm -rf documentos/canaima-desarrollador.1
+	rm -rf documentos/canaima-semilla.1
 
 distclean:
 

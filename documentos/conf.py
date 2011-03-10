@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-# Manual del Desarrollador documentation build configuration file, created by
+# Manual de Canaima Semilla documentation build configuration file, created by
 # sphinx-quickstart on Thu Jan 13 18:23:51 2011.
 #
 # This file is execfile()d with the current directory set to its containing dir.
@@ -37,7 +37,7 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'Canaima Desarrollador'
+project = u'Canaima Semilla'
 copyright = u'2011, Equipo de Desarrollo de Canaima GNU/Linux'
 
 # The version info for the project you're documenting, acts as replacement for
@@ -103,7 +103,7 @@ html_theme = 'default'
 
 # The name for this set of Sphinx documents.  If None, it defaults to
 # "<project> v<release> documentation".
-html_title = 'Manual del Desarrollador para Canaima GNU/Linux'
+html_title = 'Manual de Canaima Semilla'
 
 # A shorter title for the navigation bar.  Default is the same as html_title.
 #html_short_title = None
@@ -158,7 +158,7 @@ html_show_sourcelink = True
 #html_file_suffix = ''
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'manual-desarrollador'
+htmlhelp_basename = 'manual-canaima-semilla'
 
 
 # -- Options for LaTeX output --------------------------------------------------
@@ -172,7 +172,7 @@ latex_font_size = '12pt'
 # Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title, author, documentclass [howto/manual]).
 latex_documents = [
-  ('index', 'manual-desarrollador.tex', u'Manual del Desarrollador',
+  ('index', 'manual-canaima-semilla.tex', u'Manual de Canaima Semilla',
    u'Equipo de Desarrollo Canaima GNU/Linux', 'manual'),
 ]
 

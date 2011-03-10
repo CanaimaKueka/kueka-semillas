@@ -1,6 +1,6 @@
-=========================
-**CANAIMA-DESARROLLADOR**
-=========================
+===================
+**CANAIMA-SEMILLA**
+===================
 
 ----------------------------------------------------------------------------
 Un conjunto de herramientas para la eliminación de las barreras tecnológicas
