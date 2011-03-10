@@ -2,77 +2,66 @@
 
 SHELL := sh -e
 
-SCRIPTS = functions/* scripts/*.sh scripts/*/*
+SCRIPTS =	"debian/preinst install" \
+		"debian/postinst configure" \
+		"debian/prerm remove" \
+		"debian/postrm remove" \
+		"scripts/canaima-semilla.sh" \
+		"scripts/funciones-semilla.sh" \
+		"scripts/manual-semilla.sh"
 
-all: test build
+all: build
 
 test:
-	@echo -n "Comprobando posibles errores de sintaxis"
+
+	@echo -n "\n===== Comprobando posibles errores de sintaxis en los scripts de mantenedor =====\n"
 
 	@for SCRIPT in $(SCRIPTS); \
 	do \
-		sh -n $${SCRIPT}; \
-		echo -n "."; \
+		echo -n "$${SCRIPT}\n"; \
+		bash -n $${SCRIPT}; \
 	done
 
-	@echo " Hecho!"
-
-	@echo -n "Iniciando bashisms"
-
-	@if [ -x /usr/bin/checkbashisms ]; \
-	then \
-		for SCRIPT in $(SCRIPTS); \
-		do \
-			checkbashisms -f -x $${SCRIPT} || true; \
-			echo -n "."; \
-		done; \
-	else \
-		echo "ADVERTENCIA: Obviando bashisms - Necesitas instalar el paquete devscripts"; \
-	fi
-
-	@echo " Hecho!"
+	@echo -n "¡TODO BIEN!\n=================================================================================\n\n"
 
 build:
-	@echo "Nada para compilar!"
+	$(MAKE) clean
+
+	# Generar la documentación con python-sphinx
+	rst2man --language="es" --title="CANAIMA SEMILLA" documentos/man-canaima-semilla.rst documentos/canaima-semilla.1
+	$(MAKE) -C documentos latex
+	$(MAKE) -C documentos html
+	$(MAKE) -C documentos/_build/latex all-pdf
+
+	$(MAKE) test
 
 install:
-	# Installing shared data
-	mkdir -p $(DESTDIR)/usr/share/canaima-semilla/
-	cp -r data functions scripts hooks includes lists repositories templates $(DESTDIR)/usr/share/canaima-semilla/
 
-	# Installing executables
 	mkdir -p $(DESTDIR)/usr/bin/
-	cp $(DESTDIR)/usr/share/canaima-semilla/scripts/build/canaima-semilla $(DESTDIR)/usr/bin/
-
-	# Installing documentation
-	mkdir -p $(DESTDIR)/usr/share/doc/canaima-semilla
-	cp AUTHORS CREDITS README $(DESTDIR)/usr/share/doc/canaima-semilla/
-
-	# Installing manpages
-	for MANPAGE in manuales/*; \
-	do \
-		SECTION="$$(basename $${MANPAGE} | awk -F. '{ print $$2 }')"; \
-		install -D -m 0644 $${MANPAGE} $(DESTDIR)/usr/share/man/man$${SECTION}/$$(basename $${MANPAGE}); \
-	done
+	mkdir -p $(DESTDIR)/usr/share/canaima-semilla/
+	mkdir -p $(DESTDIR)/etc/skel/.config/canaima-semilla/
+	mkdir -p $(DESTDIR)/usr/share/applications/
+	cp -r desktop/manual-semilla.desktop $(DESTDIR)/usr/share/applications/
+	cp -r scripts/canaima-semilla.sh $(DESTDIR)/usr/bin/canaima-semilla
+	ln -s /usr/bin/canaima-semilla $(DESTDIR)/usr/bin/c-s
+	cp -r scripts/manual-semilla.sh $(DESTDIR)/usr/bin/manual-semilla
+	cp -r scripts plantillas $(DESTDIR)/usr/share/canaima-semilla/
+	cp -r conf/variables.conf $(DESTDIR)/usr/share/canaima-semilla/
+	cp -r conf/usuario.conf $(DESTDIR)/etc/skel/.config/canaima-semilla/
 
 uninstall:
-	# Uninstalling shared data
-	rm -rf $(DESTDIR)/usr/share/canaima-semilla/
-	
-	# Uninstalling executables
-	rm -f $(DESTDIR)/usr/bin/canaima-semilla
 
-	# Uninstalling documentation
-	rm -rf $(DESTDIR)/usr/share/doc/canaima-semilla/
-
-	# Uninstalling manpages
-	for MANPAGE in manuales/*; \
-	do \
-		SECTION="$$(basename $${MANPAGE} | awk -F. '{ print $$2 }')"; \
-		rm -f $(DESTDIR)/usr/share/man/man$${SECTION}/$$(basename $${MANPAGE} .en.$${SECTION}).$${SECTION}; \
-	done
+	rm -rf $(DESTDIR)/usr/share/canaima-semilla
+	rm -rf $(DESTDIR)/usr/bin/canaima-semilla
+	rm -rf $(DESTDIR)/usr/bin/c-s
+	rm -rf $(DESTDIR)/usr/bin/manual-semilla
+	rm -rf $(DESTDIR)/etc/skel/.config/canaima-semilla/
+	rm -rf $(DESTDIR)/usr/share/applications/manual-semilla.desktop
 
 clean:
+
+	rm -rf documentos/_build/*
+	rm -rf documentos/canaima-semilla.1
 
 distclean:
 

@@ -1,27 +1,21 @@
 Source: canaima-semilla
 Section: misc
 Priority: optional
-Maintainer: Luis Alejandro Martínez Faneyth <lmartinez@cnti.gob.ve>
-Build-Depends: cdbs, debhelper (>= 7)
+Maintainer: Equipo de Desarrollo de Canaima GNU/Linux <desarrolladores@canaima.softwarelibre.gob.ve>
+Uploaders: José Miguel Parrella Romero <jparrella@onuva.com>, Carlos David Marrero <cdmarrero2040@gmail.com>, Orlando Andrés Fiol Carballo <ofiol@indesoft.org.ve>, Carlos Alejandro Guerrero Mora <guerrerocarlos@gmail.com>, Diego Alberto Aguilera Zambrano <diegoaguilera85@gmail.com>, Luis Alejandro Martínez Faneyth <martinez.faneyth@gmail.com>, Francisco Javier Vásquez Guerrero <franjvasquezg@gmail.com>
+Build-Depends: debhelper (>= 7.0.50~), cdbs, python-sphinx, texlive-latex-extra, python-docutils
 Standards-Version: 3.9.1
-Homepage: http://gitorious.org/canaima-gnu-linux/canaima-semilla
+Homepage: http://canaima.softwarelibre.gob.ve/
 Vcs-Git: git://gitorious.org/canaima-gnu-linux/canaima-semilla.git
+Vcs-Browser: http://gitorious.org/canaima-gnu-linux/canaima-semilla/trees/master
 
 Package: canaima-semilla
 Architecture: all
-Depends: debootstrap | cdebootstrap
-Recommends: cpio, gettext-base
-Suggests: dosfstools, genisoimage, memtest86+ | memtest86, mtools, parted, squashfs-tools | genext2fs | mtd-tools, sudo | fakeroot, syslinux | grub, uuid-runtime, win32-loader
-Conflicts: live-helper, live-build
-Replaces: live-helper, live-build
+Depends: live-build (>= 2.0.12), qemu, canaima-curiara, ${shlibs:Depends}, ${misc:Depends}
 Description: Generador de medios vivos para Canaima GNU/Linux
- Canaima Semilla es un paquete que permite generar medios vivos para
- el sistema operativo Canaima GNU/Linux.
+ Este paquete permite generar imágenes instalables de Distribuciones
+ basadas en la metadistribución Canaima GNU/Linux, partiendo de perfiles
+ predefinidos que definen las características (paquetes a incluir, scripts,
+ arte gráfico, entre otros) de los Sabores en cuestión.
  .
- Se le brinda a el usuario la opción de escoger la arquitectura (i386, amd64)
- y el medio a utilizar (USB, CD o DVD).
- .
- En el futuro, éste paquete también podrá generar sistemas nVivo para los
- diferentes sabores de la metadistribución Canaima GNU/Linux.
- .
- Éste desarrollo está basado en el Proyecto Debian Live.
+ Provee una interfaz sencilla para su utilización.
