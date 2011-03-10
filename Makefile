@@ -8,7 +8,7 @@ SCRIPTS =	"debian/preinst install" \
 		"debian/postrm remove" \
 		"scripts/canaima-semilla.sh" \
 		"scripts/funciones-semilla.sh" \
-		"scripts/manual-semilla.sh"
+		"scripts/manual-canaima-semilla.sh"
 
 all: build
 
@@ -38,16 +38,14 @@ build:
 install:
 
 	mkdir -p $(DESTDIR)/usr/bin/
-	mkdir -p $(DESTDIR)/usr/share/canaima-semilla/
-	mkdir -p $(DESTDIR)/etc/skel/.config/canaima-semilla/
+	mkdir -p $(DESTDIR)/usr/share/canaima-semilla/semillero/
 	mkdir -p $(DESTDIR)/usr/share/applications/
-	cp -r desktop/manual-semilla.desktop $(DESTDIR)/usr/share/applications/
+	cp -r desktop/manual-canaima-semilla.desktop $(DESTDIR)/usr/share/applications/
 	cp -r scripts/canaima-semilla.sh $(DESTDIR)/usr/bin/canaima-semilla
 	ln -s /usr/bin/canaima-semilla $(DESTDIR)/usr/bin/c-s
-	cp -r scripts/manual-semilla.sh $(DESTDIR)/usr/bin/manual-semilla
-	cp -r scripts plantillas $(DESTDIR)/usr/share/canaima-semilla/
+	cp -r scripts/manual-canaima-semilla.sh $(DESTDIR)/usr/bin/manual-canaima-semilla
+	cp -r scripts perfiles $(DESTDIR)/usr/share/canaima-semilla/
 	cp -r conf/variables.conf $(DESTDIR)/usr/share/canaima-semilla/
-	cp -r conf/usuario.conf $(DESTDIR)/etc/skel/.config/canaima-semilla/
 
 uninstall:
 

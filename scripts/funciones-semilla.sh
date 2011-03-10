@@ -54,26 +54,27 @@ if [ -e "${PLANTILLAS}${SABOR}/syslinux.png" ]; then
 	SABOR_SYSPLASH="config/binary_syslinux/splash.png"
 fi
 
-if [ -e "${PLANTILLAS}${SABOR}/*.binary" ]; then
+if [ -e ${PLANTILLAS}${SABOR}/*.binary ]; then
 	mkdir -p "${ISO_DIR}config/chroot_sources"
 	cp ${PLANTILLAS}${SABOR}/*.binary ${ISO_DIR}config/chroot_sources/
 fi
 
-if [ -e "${PLANTILLAS}${SABOR}/*.binary.gpg" ]; then
+if [ -e ${PLANTILLAS}${SABOR}/*.binary.gpg ]; then
 	mkdir -p "${ISO_DIR}config/chroot_sources"
 	cp ${PLANTILLAS}${SABOR}/*.binary.gpg ${ISO_DIR}config/chroot_sources/
 fi
 
-if [ -e "${PLANTILLAS}${SABOR}/*.chroot" ]; then
+if [ -e ${PLANTILLAS}${SABOR}/*.chroot ]; then
 	mkdir -p "${ISO_DIR}config/chroot_sources"
 	cp ${PLANTILLAS}${SABOR}/*.chroot ${ISO_DIR}config/chroot_sources/
 fi
 
-if [ -e "${PLANTILLAS}${SABOR}/*.chroot.gpg" ]; then
+if [ -e ${PLANTILLAS}${SABOR}/*.chroot.gpg ]; then
 	mkdir -p "${ISO_DIR}config/chroot_sources"
 	cp ${PLANTILLAS}${SABOR}/*.chroot.gpg ${ISO_DIR}config/chroot_sources/
 fi
 
+echo "${SABOR}" > ${ISO_DIR}config/sabor-configurado
 }
 
 function CHECK() {

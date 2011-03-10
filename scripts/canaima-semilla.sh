@@ -12,7 +12,7 @@
 # Este programa es software libre. Puede redistribuirlo y/o modificarlo bajo los
 # términos de la Licencia Pública General de GNU (versión 3).
 
-VARIABLES="/home/dev/canaima-semilla/conf/variables.conf"
+VARIABLES="/usr/share/canaima-semilla/conf/variables.conf"
 
 # Inicializando variables
 . ${VARIABLES}
@@ -82,15 +82,19 @@ SABOR)
 # Establecemos el sabor por defecto "popular", en caso de no especificar ninguno
 [ -z ${SABOR} ] && SABOR="popular" && ADVERTENCIA 'No especificaste un sabor, utilizando sabor "popular" por defecto.'
 
+rm -f ${ISO_DIR}config/sabor-configurado
+
 for SABORES in $( ls -F ${PLANTILLAS} | grep "/" ); do
 if [ "${SABORES}" == "${SABOR}/" ]; then
 	CONFIGURAR-SABOR
-else
-ERROR 'Sabor "'${SABOR}'" desconocido o no disponible. Abortando.'
 fi
 done
 
+if [ -e ${ISO_DIR}config/sabor-configurado ]; then
 EXITO "Sabor: ${SABOR}"
+else
+ERROR 'Sabor "'${SABOR}'" desconocido o no disponible. Abortando.'
+fi
 
 ;;
 
@@ -118,6 +122,11 @@ esac
 
 done
 
+
+SEMILLA_BOOTSTRAP=${MIRROR_DEBIAN}
+SEMILLA_CHROOT=${MIRROR_DEBIAN}
+SEMILLA_BINARY=${MIRROR_DEBIAN}
+
 cd ${ISO_DIR}
 
 ADVERTENCIA "Limpiando posibles residuos de construcciones anteriores ..."
@@ -125,7 +134,7 @@ rm -rf ${ISO_DIR}cache ${ISO_DIR}.stage ${ISO_DIR}auto ${ISO_DIR}binary.log
 lb clean
 
 ADVERTENCIA "Generando árbol de configuraciones ..."
-lb config --architecture="${ARQUITECTURA}" --distribution="${SABOR_DIST}" --apt="aptitude" --apt-recommends="false" --bootloader="syslinux" --binary-images="${MEDIO}" --bootstrap="debootstrap" --binary-indices="false" --includes="none" --username="usuario-nvivo" --hostname="canaima-${SABOR}" --mirror-chroot-security="none" --mirror-binary-security="none" --language="es" --bootappend-live="locale=es_VE.UTF-8 keyb=es quiet splash vga=791" --security="false" --volatile="false" --backports="false" --source="false" --iso-preparer="${PREPARADO_POR}" --iso-volume="canaima-${SABOR}" --iso-publisher="${PUBLICADO_POR}" --iso-application="${APLICACION}" --mirror-bootstrap="${SEMILLA_BOOTSTRAP}" --mirror-binary="${SEMILLA_BINARY}" --mirror-chroot="${SEMILLA_CHROOT}" --memtest="none" --linux-flavours="${SABOR_KERNEL}" --syslinux-menu="true" --syslinux-timeout="5" --archive-areas="main contrib non-free" --debian-installer="live" --packages="${SABOR_PAQUETES}" --syslinux-splash="${SABOR_SYSPLASH}" --win32-loader="false" --bootappend-install="locale=es_VE.UTF-8"
+lb config --architecture="${ARQUITECTURA}" --distribution="${SABOR_DIST}" --apt="aptitude" --apt-recommends="false" --bootloader="syslinux" --binary-images="${MEDIO}" --bootstrap="debootstrap" --binary-indices="false" --includes="none" --username="usuario-nvivo" --hostname="canaima-${SABOR}" --mirror-chroot-security="none" --mirror-binary-security="none" --language="es" --bootappend-live="locale=es_VE.UTF-8 keyb=es quiet splash vga=791" --security="false" --volatile="false" --backports="false" --source="false" --iso-preparer="${PREPARADO_POR}" --iso-volume="canaima-${SABOR}" --iso-publisher="${PUBLICADO_POR}" --iso-application="${APLICACION}" --mirror-bootstrap="${SEMILLA_BOOTSTRAP}" --mirror-binary="${SEMILLA_BINARY}" --mirror-chroot="${SEMILLA_CHROOT}" --memtest="none" --linux-flavours="${SABOR_KERNEL}" --syslinux-menu="true" --syslinux-timeout="5" --archive-areas="${COMP_MIRROR_DEBIAN}" --debian-installer="live" --packages="${SABOR_PAQUETES}" --syslinux-splash="${SABOR_SYSPLASH}" --win32-loader="false" --bootappend-install="locale=es_VE.UTF-8"
 
 ADVERTENCIA "Construyendo ..."
 lb build 2>&1 | tee binary.log
@@ -148,7 +157,7 @@ gui)
 
 --ayuda|--help|'')
 # Imprimiendo la ayuda
-echo "Canaima Desarrollador es una herramienta destinada a facilitar la creación de"
+man canaima-semilla
 ;;
 
 esac
