@@ -1,3 +1,11 @@
+canaima-semilla (2.0+1) testing; urgency=low
+
+  * [7e83d25] Agregando sabor de ejemplo, modificando algunas variables
+    de institucional y primera-base, y corrigiendo ubicación del archivo
+    de variables.
+
+ -- Luis Alejandro Martínez Faneyth <martinez.faneyth@gmail.com>  Thu, 10 Mar 2011 17:22:03 -0430
+
 canaima-semilla (2.0+0) testing; urgency=low
 
   * [b55fd11] Agregando sabor Canaima Primera Base
