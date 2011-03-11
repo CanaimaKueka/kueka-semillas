@@ -1,3 +1,9 @@
+canaima-semilla (2.0+2) testing; urgency=low
+
+  * [0a9fdf0] Corrigiendo nombre de .rst en el index
+
+ -- Luis Alejandro Martínez Faneyth <martinez.faneyth@gmail.com>  Fri, 11 Mar 2011 09:08:24 -0430
+
 canaima-semilla (2.0+1) testing; urgency=low
 
   * [7e83d25] Agregando sabor de ejemplo, modificando algunas variables
