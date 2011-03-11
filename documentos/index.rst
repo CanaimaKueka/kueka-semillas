@@ -24,7 +24,7 @@ Mediante una serie de sencillos pasos descritos en éste manual, usted podrá cr
    :maxdepth: 2
 
    man-canaima-semilla.rst
-   creando-sabor.rst
+   construir-sabor.rst
 
 ----------------------
 
