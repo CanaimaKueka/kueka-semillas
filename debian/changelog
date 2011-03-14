@@ -1,8 +1,9 @@
 canaima-semilla (2.0+3) testing; urgency=low
 
   * [d9b93c2] Corrigiendo bug en la función CHECK
+  * [4b4ec31] Corrigiendo error en el Makefile
 
- -- Luis Alejandro Martínez Faneyth <martinez.faneyth@gmail.com>  Mon, 14 Mar 2011 16:23:54 -0430
+ -- Luis Alejandro Martínez Faneyth <martinez.faneyth@gmail.com>  Mon, 14 Mar 2011 16:27:55 -0430
 
 canaima-semilla (2.0+2) testing; urgency=low
 
