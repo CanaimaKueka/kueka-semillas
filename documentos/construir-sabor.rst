@@ -16,7 +16,7 @@ Un perfil está compuesto de varios archivos con nombres específicos colocados 
 	- "APLICACION": Nombre de la Metadistribución.
 		Ejemplo: APLICACION="Canaima GNU/Linux"
 
-	- "MIRROR_DEBIAN": Mirror de Debian desde donde se extraerán los paquetes que contendrá la la imagen. Los repositorios extra se definen en los archivos *.binary y *.chroot definidos más adelante. Se pueden especificar mirrors locales o remotos.
+	- "MIRROR_DEBIAN": Mirror de Debian desde donde se extraerán los paquetes que contendrá la la imagen. Los repositorios extra se definen en los archivos \*.binary y \*.chroot definidos más adelante. Se pueden especificar mirrors locales o remotos.
 		Ejemplo: MIRROR_DEBIAN="http://universo.canaima.softwarelibre.gob.ve/"
 
 	- "COMP_MIRROR_DEBIAN": Componentes del MIRROR_DEBIAN a estar disponibles para la construcción de la imagen.
@@ -39,21 +39,21 @@ Un perfil está compuesto de varios archivos con nombres específicos colocados 
 
 5.- (Opcional) Un par de archivos para definir repositorios extra en la etapa de instalación de paquetes finales (BINARY):
 
-	- Uno de extensión *.binary (pudiendo tener cualquier nombre), que contenga una lista de repositorios extra necesarios para la instalación de paquetes no incluídos en MIRROR_DEBIAN y especificados en SABOR_PAQUETES.
+	- Uno de extensión \*.binary (pudiendo tener cualquier nombre), que contenga una lista de repositorios extra necesarios para la instalación de paquetes no incluídos en MIRROR_DEBIAN y especificados en SABOR_PAQUETES.
 		Ejemplo: canaima.binary
 			deb http://repositorio.canaima.softwarelibre.gob.ve/ pruebas usuarios
 			deb http://seguridad.canaima.softwarelibre.gob.ve/ seguridad usuarios
 
-	- Otro de extensión *.binary.gpg, conteniendo la (o las) llave(s) GPG válida(s) correspondientes a los repositorios listados en el archivo *.binary.
+	- Otro de extensión \*.binary.gpg, conteniendo la (o las) llave(s) GPG válida(s) correspondientes a los repositorios listados en el archivo \*.binary.
 
 6.- (Opcional) Un par de archivos para definir repositorios extra en la etapa de instalación del sistema base inicial (CHROOT):
 
-	- Uno de extensión *.chroot (pudiendo tener cualquier nombre), que contenga una lista de repositorios extra necesarios para la instalación de paquetes no incluídos en MIRROR_DEBIAN y especificados en SABOR_PAQUETES.
+	- Uno de extensión \*.chroot (pudiendo tener cualquier nombre), que contenga una lista de repositorios extra necesarios para la instalación de paquetes no incluídos en MIRROR_DEBIAN y especificados en SABOR_PAQUETES.
 		Ejemplo: canaima.chroot
 			deb http://repositorio.canaima.softwarelibre.gob.ve/ pruebas usuarios
 			deb http://seguridad.canaima.softwarelibre.gob.ve/ seguridad usuarios
 
-	- Otro de extensión *.chroot.gpg (con nombre igual al anterior), conteniendo la (o las) llave(s) GPG válida(s) correspondientes a los repositorios listados en el archivo *.chroot.
+	- Otro de extensión \*.chroot.gpg (con nombre igual al anterior), conteniendo la (o las) llave(s) GPG válida(s) correspondientes a los repositorios listados en el archivo \*.chroot.
 
 
 Se provee en la dirección de los perfiles (/usr/share/canaima-semilla/perfiles) un perfil de ejemplo, el cuál podrá ser utilizado como base para nuevos sabores. La ausencia de alguno de los archivos Opcionales causará que Canaima Semilla use los valores por defecto (Debian).

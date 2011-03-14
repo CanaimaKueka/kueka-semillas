@@ -44,7 +44,8 @@ install:
 	cp -r scripts/canaima-semilla.sh $(DESTDIR)/usr/bin/canaima-semilla
 	ln -s /usr/bin/canaima-semilla $(DESTDIR)/usr/bin/c-s
 	cp -r scripts/manual-canaima-semilla.sh $(DESTDIR)/usr/bin/manual-canaima-semilla
-	cp -r scripts perfiles $(DESTDIR)/usr/share/canaima-semilla/
+	cp -r scripts/funciones-semilla.sh $(DESTDIR)/usr/share/canaima-semilla/
+        cp -r perfiles $(DESTDIR)/usr/share/canaima-semilla/
 	cp -r conf/variables.conf $(DESTDIR)/usr/share/canaima-semilla/
 
 uninstall:

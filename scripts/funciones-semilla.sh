@@ -14,7 +14,6 @@
 
 function ERROR() {
 echo -e ${ROJO}${1}${FIN}
-exit 1
 }
 
 function ADVERTENCIA() {
@@ -99,4 +98,5 @@ ultimo_char_scr=${SCRIPTS#${SCRIPTS%?}}
 [ "${ultimo_char_iso}" != "/" ] && ISO_DIR="${ISO_DIR}/"
 [ "${ultimo_char_pla}" != "/" ] && PLANTILLAS="${PLANTILLAS}/"
 [ "${ultimo_char_scr}" != "/" ] && SCRIPTS="${SCRIPTS}/"
+echo "Iniciando Canaima Semilla ..."
 }
