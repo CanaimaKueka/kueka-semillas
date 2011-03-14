@@ -1,14 +1,14 @@
-=====================================
-Cómo construir un nuevo Sabor Canaima
-=====================================
+=========================================
+**Cómo construir un nuevo Sabor Canaima**
+=========================================
 
 Canaima Semilla facilita la creación de Sabores Canaima mediante el establecimiento de reglas o perfiles que definen los componentes que integran el sabor.
 Un perfil está compuesto de varios archivos con nombres específicos colocados dentro de una carpeta que lleve por nombre el nombre del sabor en minúsculas . La carpeta contendrá:
 
-1.- (Obligatorio) Un archivo llamado "sabor.conf" con las siguientes variables y sus valores:
+1.- (*Obligatorio*) Un archivo llamado "sabor.conf" con las siguientes variables y sus valores:
 
 	- "PUBLICADO_POR": Individuo o colectivo que publica la imagen.
-		Ejemplo: PUBLICADO_POR="Canaima GNU/Linux; http://canaima.softwarelibre.gob.ve/; desarrolladores@canaima.softwarelibre.gob.ve"
+		Ejemplo: PUBLICADO_POR="Canaima GNU/Linux; http://canaima.softwarelibre.gob.ve/"
 
 	- "SABOR_DIST": Distribución Debian en la que se basa el sabor.
 		Ejemplo: SABOR_DIST="squeeze"
@@ -25,19 +25,19 @@ Un perfil está compuesto de varios archivos con nombres específicos colocados 
 	- "SABOR_PAQUETES": Lista de paquetes disponibles en MIRROR_DEBIAN o en alguna lista de repositorios extra.
 		Ejemplo: SABOR_PAQUETES="canaima-base canaima-instalador-vivo canaima-blobs"
 
-2.- (Opcional) Una imagen PNG llamada "syslinux.png" de una dimensión no mayor a 1024x768 pixeles, la cuál servirá de fondo en el menú de inicio del Medio Vivo.
+2.- (*Opcional*) Una imagen PNG llamada "syslinux.png" de una dimensión no mayor a 1024x768 pixeles, la cuál servirá de fondo en el menú de inicio del Medio Vivo.
 
 .. image:: _static/syslinux.png
    :width: 640 px
 
-3.- (Opcional) Una imagen PNG llamada "banner-instalador.png" de una dimensión exacta de 800x75 pixeles, la cuál será el banner del dialogo del instalador del Medio Vivo.
+3.- (*Opcional*) Una imagen PNG llamada "banner-instalador.png" de una dimensión exacta de 800x75 pixeles, la cuál será el banner del dialogo del instalador del Medio Vivo.
 
 .. image:: _static/instalador.png
    :width: 800 px
 
-4.- (Opcional) Un archivo de configuración GTKRC llamado "gtkrc-instalador", el cuál albergará los parámetros GTK para modificar la apariencia del instalador. Ver el sabor de
+4.- (*Opcional*) Un archivo de configuración GTKRC llamado "gtkrc-instalador", el cuál albergará los parámetros GTK para modificar la apariencia del instalador. Ver el sabor de
 
-5.- (Opcional) Un par de archivos para definir repositorios extra en la etapa de instalación de paquetes finales (BINARY):
+5.- (*Opcional*) Un par de archivos para definir repositorios extra en la etapa de instalación de paquetes finales (BINARY):
 
 	- Uno de extensión \*.binary (pudiendo tener cualquier nombre), que contenga una lista de repositorios extra necesarios para la instalación de paquetes no incluídos en MIRROR_DEBIAN y especificados en SABOR_PAQUETES.
 		Ejemplo: canaima.binary
@@ -46,7 +46,7 @@ Un perfil está compuesto de varios archivos con nombres específicos colocados 
 
 	- Otro de extensión \*.binary.gpg, conteniendo la (o las) llave(s) GPG válida(s) correspondientes a los repositorios listados en el archivo \*.binary.
 
-6.- (Opcional) Un par de archivos para definir repositorios extra en la etapa de instalación del sistema base inicial (CHROOT):
+6.- (*Opcional*) Un par de archivos para definir repositorios extra en la etapa de instalación del sistema base inicial (CHROOT):
 
 	- Uno de extensión \*.chroot (pudiendo tener cualquier nombre), que contenga una lista de repositorios extra necesarios para la instalación de paquetes no incluídos en MIRROR_DEBIAN y especificados en SABOR_PAQUETES.
 		Ejemplo: canaima.chroot

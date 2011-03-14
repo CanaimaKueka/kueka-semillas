@@ -1,3 +1,9 @@
+canaima-semilla (2.0+3) testing; urgency=low
+
+  * [d9b93c2] Corrigiendo bug en la función CHECK
+
+ -- Luis Alejandro Martínez Faneyth <martinez.faneyth@gmail.com>  Mon, 14 Mar 2011 15:40:42 -0430
+
 canaima-semilla (2.0+2) testing; urgency=low
 
   * [0a9fdf0] Corrigiendo nombre de .rst en el index
