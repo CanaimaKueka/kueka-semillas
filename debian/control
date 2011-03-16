@@ -11,7 +11,7 @@ Vcs-Browser: http://gitorious.org/canaima-gnu-linux/canaima-semilla/trees/master
 
 Package: canaima-semilla
 Architecture: all
-Depends: live-build (>= 2.0.12), qemu, canaima-curiara, ${shlibs:Depends}, ${misc:Depends}
+Depends: live-build (>= 2.0.12+canaima0), canaima-curiara, ${shlibs:Depends}, ${misc:Depends}
 Description: Generador de medios vivos para Canaima GNU/Linux
  Este paquete permite generar imágenes instalables de Distribuciones
  basadas en la metadistribución Canaima GNU/Linux, partiendo de perfiles
