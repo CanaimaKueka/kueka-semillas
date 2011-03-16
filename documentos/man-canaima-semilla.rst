@@ -35,7 +35,7 @@ Herramienta para facilitar la creación de distribuciones basadas en Canaima GNU
 **CONSTRUIR**
 =============
 
-Crea una imagen instalable (ISO o IMG) basado en los perfiles de sabores existentes. Puede especificársele el tipo de Medio, la arquitectura a construir, y el sabor.
+Crea una imagen instalable (ISO o IMG) basado en los perfiles de sabores existentes. Puede especificársele el tipo de Medio, la arquitectura a construir, y el sabor. Las imágenes resultantes del proceso de construcción se guardan en el directorio /usr/share/canaima-semilla/semillero/.
 
 USO
 ---

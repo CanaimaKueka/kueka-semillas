@@ -58,7 +58,6 @@ Un perfil está compuesto de varios archivos con nombres específicos colocados 
 
 Se provee en la dirección de los perfiles (/usr/share/canaima-semilla/perfiles) un perfil de ejemplo, el cuál podrá ser utilizado como base para nuevos sabores. La ausencia de alguno de los archivos Opcionales causará que Canaima Semilla use los valores por defecto (Debian).
 
-
 Los perfiles se definen en la carpeta "/usr/share/canaima-semilla/perfiles", para la cual debes tener permisos de superusuario si deseas editarla. La mejor forma de crear un nuevo sabor, es duplicar la carpeta de ejemplo y comenzar a editar sus archivos hasta obtener el resultado esperado.
 
 **SUGERENCIAS**
@@ -66,5 +65,5 @@ Los perfiles se definen en la carpeta "/usr/share/canaima-semilla/perfiles", par
 
 - Optimizar la estructura de paquetes del sabor a construir. Lo ideal es que los paquetes se encuentren organizados y agrupados en metapaquetes, de forma tal de que con incluir unos pocos paquetes en SABOR_PAQUETES, todo el árbol de dependencias sea incluído.
 
-- No utilizar scripts de postinstlación. Toda configuración adcional que se desee realizar al medio vivo, debe ser incorporado en paquetes detro de su respectivo postinst.
+- No utilizar scripts de configuración. Toda configuración adcional que se desee realizar al medio vivo, debe ser incorporado en paquetes detro de su respectivo postinst.
 
