@@ -1,7 +1,7 @@
 #!/bin/bash -e
 #
 # ==============================================================================
-# PAQUETE: canaima-desarrollador
+# PAQUETE: canaima-semilla
 # ARCHIVO: preinst
 # DESCRIPCIÓN: Configura el sistema antes de la instalación del paquete.
 # COPYRIGHT:
@@ -15,7 +15,7 @@
 # Este programa es software libre. Puede redistribuirlo y/o modificarlo bajo los
 # términos de la Licencia Pública General de GNU (versión 3).
 
-PKG="canaima-desarrollador"
+PKG="canaima-semilla"
 
 case ${1} in
 
