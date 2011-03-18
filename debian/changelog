@@ -1,3 +1,9 @@
+canaima-semilla (2.0+9) testing; urgency=low
+
+  * [ed7177f] Mejorando preseed del instalador.
+
+ -- Luis Alejandro Martínez Faneyth <martinez.faneyth@gmail.com>  Fri, 18 Mar 2011 11:47:08 -0430
+
 canaima-semilla (2.0+8) testing; urgency=low
 
   * [e307f97] Mejorando preseed del instalador.
