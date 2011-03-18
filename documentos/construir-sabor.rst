@@ -55,6 +55,9 @@ Un perfil está compuesto de varios archivos con nombres específicos colocados 
 
 	- Otro de extensión \*.chroot.gpg (con nombre igual al anterior), conteniendo la (o las) llave(s) GPG válida(s) correspondientes a los repositorios listados en el archivo \*.chroot.
 
+7.- (*Opcional*) Un archivo llamado "preseed-debconf" en donde se incluirán los parámetros debconf que se quieran modificar en el modo nVivo del medio instalable.
+
+8.- (*Opcional*) Un archivo llamado "preseed-instalador" en donde se incluirán los parámetros debconf a modificar en el instalador.
 
 Se provee en la dirección de los perfiles (/usr/share/canaima-semilla/perfiles) un perfil de ejemplo, el cuál podrá ser utilizado como base para nuevos sabores. La ausencia de alguno de los archivos Opcionales causará que Canaima Semilla use los valores por defecto (Debian).
 

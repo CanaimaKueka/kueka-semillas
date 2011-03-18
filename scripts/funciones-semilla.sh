@@ -73,6 +73,11 @@ if [ -e ${PLANTILLAS}${SABOR}/*.chroot.gpg ]; then
 	cp ${PLANTILLAS}${SABOR}/*.chroot.gpg ${ISO_DIR}config/chroot_sources/
 fi
 
+if [ -e ${PLANTILLAS}${SABOR}/preseed-debconf.cfg ]; then
+	mkdir -p "${ISO_DIR}config/chroot_local-preseed"
+	cp ${PLANTILLAS}${SABOR}/preseed-debconf.cfg ${ISO_DIR}config/chroot_local-preseed
+fi
+
 echo "${SABOR}" > ${ISO_DIR}config/sabor-configurado
 }
 
