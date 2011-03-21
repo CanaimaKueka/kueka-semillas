@@ -1,3 +1,11 @@
+canaima-semilla (2.0+10) testing; urgency=low
+
+  * [cde1342] [ canaima-desarrollador ] Los siguientes archivos han sido
+    modificados/añadidos: preseed-instalador.cfg canaima-semilla.sh
+    funciones-semilla.sh
+
+ -- Luis Alejandro Martínez Faneyth <martinez.faneyth@gmail.com>  Mon, 21 Mar 2011 17:22:53 -0430
+
 canaima-semilla (2.0+9) testing; urgency=low
 
   * [ed7177f] Mejorando preseed del instalador.
