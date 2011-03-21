@@ -78,6 +78,15 @@ if [ -e ${PLANTILLAS}${SABOR}/preseed-debconf.cfg ]; then
 	cp ${PLANTILLAS}${SABOR}/preseed-debconf.cfg ${ISO_DIR}config/chroot_local-preseed
 fi
 
+mkdir -p "${ISO_DIR}config/chroot_local-hooks"
+mkdir -p "${ISO_DIR}config/binary_local-hooks"
+
+echo "#!/bin/bash -e" > "${ISO_DIR}config/binary_local-hooks/limpieza.sh"
+echo "[ -d /var/cache/apt/ ] && rm /var/cache/apt/*" >> "${ISO_DIR}config/binary_local-hooks/limpieza.sh"
+echo "[ -d /var/lib/apt/lists/ ] && rm  /var/lib/apt/lists/*" >> "${ISO_DIR}config/binary_local-hooks/limpieza.sh"
+
+cp "${ISO_DIR}config/binary_local-hooks/limpieza.sh" "${ISO_DIR}config/chroot_local-hooks/"
+
 echo "${SABOR}" > ${ISO_DIR}config/sabor-configurado
 }
 

@@ -134,11 +134,29 @@ rm -rf ${ISO_DIR}cache ${ISO_DIR}.stage ${ISO_DIR}auto ${ISO_DIR}binary.log
 lb clean
 
 ADVERTENCIA "Generando árbol de configuraciones ..."
-lb config --architecture="${ARQUITECTURA}" --distribution="${SABOR_DIST}" --apt="aptitude" --apt-recommends="false" --bootloader="syslinux" --binary-images="${MEDIO}" --bootstrap="debootstrap" --binary-indices="false" --includes="none" --username="usuario-nvivo" --hostname="canaima-${SABOR}" --mirror-chroot-security="none" --mirror-binary-security="none" --language="es" --bootappend-live="locale=es_VE.UTF-8 keyb=es quiet splash vga=791" --security="false" --volatile="false" --backports="false" --source="false" --iso-preparer="${PREPARADO_POR}" --iso-volume="canaima-${SABOR}" --iso-publisher="${PUBLICADO_POR}" --iso-application="${APLICACION}" --mirror-bootstrap="${SEMILLA_BOOTSTRAP}" --mirror-binary="${SEMILLA_BINARY}" --mirror-chroot="${SEMILLA_CHROOT}" --memtest="none" --linux-flavours="${SABOR_KERNEL}" --syslinux-menu="true" --syslinux-timeout="5" --archive-areas="${COMP_MIRROR_DEBIAN}" --debian-installer="live" --packages="${SABOR_PAQUETES}" --syslinux-splash="${SABOR_SYSPLASH}" --win32-loader="false" --bootappend-install="locale=es_VE.UTF-8"
-
+lb config --architecture="${ARQUITECTURA}" --distribution="${SABOR_DIST}" --apt="aptitude" --apt-recommends="false" --bootloader="syslinux" --binary-images="${MEDIO}" --bootstrap="debootstrap" --binary-indices="false" --includes="none" --username="usuario-nvivo" --hostname="canaima-${SABOR}" --mirror-chroot-security="none" --mirror-binary-security="none" --language="es" --bootappend-live="locale=es_VE.UTF-8 keyb=es quiet splash vga=791" --security="false" --volatile="false" --backports="false" --source="false" --iso-preparer="${PREPARADO_POR}" --iso-volume="canaima-${SABOR}" --iso-publisher="${PUBLICADO_POR}" --iso-application="${APLICACION}" --mirror-bootstrap="${SEMILLA_BOOTSTRAP}" --mirror-binary="${SEMILLA_BINARY}" --mirror-chroot="${SEMILLA_CHROOT}" --memtest="none" --linux-flavours="${SABOR_KERNEL}" --syslinux-menu="true" --syslinux-timeout="5" --archive-areas="${COMP_MIRROR_DEBIAN}" --debian-installer="live" --packages="${SABOR_PAQUETES}" --syslinux-splash="${SABOR_SYSPLASH}" --win32-loader="false" --bootappend-install="locale=es_VE.UTF-8" 
 ADVERTENCIA "Construyendo ..."
 lb build 2>&1 | tee binary.log
 
+if [ ${MEDIO} == "iso" ] && [ -e ${ISO_DIR}binary.iso ] ; then
+mv ${ISO_DIR}binary.iso canaima-${SABOR}_${ARQUITECTURA}.iso
+PESO=$( ls -lah ${ISO_DIR}binary.iso | awk '{print $5}' )
+EXITO "¡Enhorabuena! Se ha creado una imagen ISO de canaima-${SABOR}, que pesa ${PESO}."
+EXITO "Puedes encontrar la imagen \"canaima-${SABOR}_${ARQUITECTURA}.iso\" en el directorio /usr/share/canaima-semilla/semillero/"
+else
+ERROR "Ocurrió un error durante la generación de la imagen."
+ERROR "Envía un correo a desarrolladores@canaima.softwarelibre.gob.ve con el contenido del archivo ${ISO_DIR}binary.log"
+fi
+
+if [ ${MEDIO} == "usb" ]; then
+mv ${ISO_DIR}binary.img canaima-${SABOR}_${ARQUITECTURA}.img
+PESO=$( ls -lah ${ISO_DIR}binary.img | awk '{print $5}' )
+EXITO "¡Enhorabuena! Se ha creado una imagen IMG de canaima-${SABOR}, que pesa ${PESO}."
+EXITO "Puedes encontrar la imagen \"canaima-${SABOR}_${ARQUITECTURA}.img\" en el directorio /usr/share/canaima-semilla/semillero/"
+else
+ERROR "Ocurrió un error durante la generación de la imagen."
+ERROR "Envía un correo a desarrolladores@canaima.softwarelibre.gob.ve con el contenido del archivo ${ISO_DIR}binary.log"
+fi
 ;;
 
 instalar)
