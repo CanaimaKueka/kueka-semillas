@@ -130,7 +130,7 @@ SEMILLA_BINARY=${MIRROR_DEBIAN}
 cd ${ISO_DIR}
 
 ADVERTENCIA "Limpiando posibles residuos de construcciones anteriores ..."
-rm -rf ${ISO_DIR}cache ${ISO_DIR}.stage ${ISO_DIR}auto ${ISO_DIR}binary.log
+rm -rf ${ISO_DIR}.stage ${ISO_DIR}auto ${ISO_DIR}binary.log
 lb clean
 
 ADVERTENCIA "Generando árbol de configuraciones ..."
