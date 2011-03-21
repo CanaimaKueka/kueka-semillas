@@ -1,3 +1,10 @@
+canaima-semilla (2.0+11) testing; urgency=low
+
+  * [47d1073] [ canaima-desarrollador ] Los siguientes archivos han sido
+    modificados/añadidos: canaima-semilla.sh
+
+ -- Luis Alejandro Martínez Faneyth <martinez.faneyth@gmail.com>  Mon, 21 Mar 2011 18:05:32 -0430
+
 canaima-semilla (2.0+10) testing; urgency=low
 
   * [cde1342] [ canaima-desarrollador ] Los siguientes archivos han sido
