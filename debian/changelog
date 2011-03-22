@@ -1,3 +1,9 @@
+canaima-semilla (2.0+13) testing; urgency=low
+
+  * [5555101] Corrigiendo bug en el bootappend-live.
+
+ -- Luis Alejandro Martínez Faneyth <martinez.faneyth@gmail.com>  Tue, 22 Mar 2011 05:18:27 -0430
+
 canaima-semilla (2.0+12) testing; urgency=low
 
   * [cc77332] Remopiendo hooks para remover el cache y las listas APT,
