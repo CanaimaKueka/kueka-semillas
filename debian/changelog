@@ -1,3 +1,10 @@
+canaima-semilla (2.0+12) testing; urgency=low
+
+  * [cc77332] Remopiendo hooks para remover el cache y las listas APT,
+    Afinando la validación de la ISO, detalles menores.
+
+ -- Luis Alejandro Martínez Faneyth <martinez.faneyth@gmail.com>  Tue, 22 Mar 2011 01:33:04 -0430
+
 canaima-semilla (2.0+11) testing; urgency=low
 
   * [47d1073] [ canaima-desarrollador ] Los siguientes archivos han sido
