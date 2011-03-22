@@ -1,3 +1,9 @@
+canaima-semilla (2.0+19) testing; urgency=low
+
+  * [c963df8] Modificando preseed-instalador.cfg
+
+ -- Luis Alejandro Martínez Faneyth <martinez.faneyth@gmail.com>  Tue, 22 Mar 2011 15:35:08 -0430
+
 canaima-semilla (2.0+18) testing; urgency=low
 
   * [45ddbf2] Agregando un dpkg-reconfigure a canaima-base después de la
