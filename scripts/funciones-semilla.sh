@@ -29,7 +29,7 @@ function CONFIGURAR-SABOR() {
 if [ -e "${PLANTILLAS}${SABOR}/sabor.conf" ]; then
 	. "${PLANTILLAS}${SABOR}/sabor.conf"
 else
-	ERROR 'El sabor "'${SABOR}'" no posee archivo de configuración ${PLANTILLAS}${SABOR}/sabor.conf'
+	ERROR 'El sabor "'${SABOR}'" no posee archivo de configuración ${PLANTILLAS}${SABOR}/sabor.conf' && exit 1
 fi
 
 if [ -e "${PLANTILLAS}${SABOR}/preseed-instalador.cfg" ]; then
@@ -91,9 +91,9 @@ function CHECK() {
 #	- Paquetes: findutils
 #-------------------------------------------------------------#
 
-[ $( id -u ) != 0 ] && ERROR "¡Canaima Semilla debe ser ejecutado como root!"
+[ $( id -u ) != 0 ] && ERROR "¡Canaima Semilla debe ser ejecutado como root!" && exit 1
 
-[ ! -d ${ISO_DIR} ] && ERROR "¡El directorio de construcción de ISO's no existe!"
+[ ! -d ${ISO_DIR} ] && ERROR "¡El directorio de construcción de ISO's no existe!" && exit 1
 
 # Asegurando que las carpetas especificadas
 # terminen con un slash (/) al final
