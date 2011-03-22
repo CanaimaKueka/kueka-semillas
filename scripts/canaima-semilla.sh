@@ -34,9 +34,6 @@ construir)
 PARAMETROS=${@}
 # Removemos el ayudante
 PARAMETROS=${PARAMETROS#construir}
-# Insertamos variables vacías al principio, porque si no el ciclo
-# no pasa por ellas si el usuario no las introduce
-PARAMETROS='--medio="" --arquitectura="" --sabor="" '${PARAMETROS}
 
 # Para cada argumento ...
 for ARGUMENTO in ${PARAMETROS}; do
@@ -51,6 +48,15 @@ ARG_VALOR=${ARGUMENTO#--${ARG_VARIABLE}=}
 ARG_VARIABLE=$( echo ${ARG_VARIABLE} | tr '[:lower:]' '[:upper:]' )
 # Evaluamos la expresión para usar las variables
 eval "${ARG_VARIABLE}=${ARG_VALOR}"
+
+# Establecemos el sabor por defecto "popular", en caso de no especificar ninguno
+[ -z ${SABOR} ] && SABOR="popular" && ADVERTENCIA 'No especificaste un sabor, utilizando sabor "popular" por defecto.'
+
+# Establecemos la arquitectura del host, si no se especifica
+[ -z ${ARQUITECTURA} ] && ARQUITECTURA=$( uname -m ) && ADVERTENCIA 'No especificaste una arquitectura, utilizando "'${ARQUITECTURA}'" presente en el sistema.'
+
+# Establecemos medio "iso", en caso de no especificar ninguno
+[ -z ${MEDIO} ] && MEDIO="iso" && ADVERTENCIA 'Utilizando medio "iso"'
 
 # Case para validaciones diversas 
 case ${ARG_VARIABLE} in
@@ -76,11 +82,7 @@ esac
 
 SABOR)
 
-cd ${ISO_DIR}
-
-ADVERTENCIA "Limpiando posibles residuos de construcciones anteriores ..."
-rm -rf ${ISO_DIR}.stage ${ISO_DIR}auto ${ISO_DIR}binary.log ${ISO_DIR}config
-lb clean
+rm -rf ${ISO_DIR}config
 
 for SABORES in $( ls -F ${PLANTILLAS} | grep "/" ); do
 if [ "${SABORES}" == "${SABOR}/" ]; then
@@ -118,20 +120,15 @@ esac
 
 done
 
-# Establecemos el sabor por defecto "popular", en caso de no especificar ninguno
-[ -z ${SABOR} ] && SABOR="popular" && ADVERTENCIA 'No especificaste un sabor, utilizando sabor "popular" por defecto.'
-
-# Establecemos la arquitectura del host, si no se especifica
-[ -z ${ARQUITECTURA} ] && ARQUITECTURA="i386" && ADVERTENCIA 'No especificaste una arquitectura, utilizando "'${ARQUITECTURA}'" presente en el sistema.'
-
-# Establecemos medio "iso", en caso de no especificar ninguno
-[ -z ${MEDIO} ] && MEDIO="iso" && ADVERTENCIA 'Utilizando medio "iso"'
-
 SEMILLA_BOOTSTRAP=${MIRROR_DEBIAN}
 SEMILLA_CHROOT=${MIRROR_DEBIAN}
 SEMILLA_BINARY=${MIRROR_DEBIAN}
 
 cd ${ISO_DIR}
+
+ADVERTENCIA "Limpiando posibles residuos de construcciones anteriores ..."
+rm -rf ${ISO_DIR}.stage ${ISO_DIR}auto ${ISO_DIR}binary.log
+lb clean
 
 ADVERTENCIA "Generando árbol de configuraciones ..."
 lb config --architecture="${ARQUITECTURA}" --distribution="${SABOR_DIST}" --apt="aptitude" --apt-recommends="false" --bootloader="syslinux" --binary-images="${MEDIO}" --bootstrap="debootstrap" --binary-indices="false" --includes="none" --username="usuario-nvivo" --hostname="canaima-${SABOR}" --mirror-chroot-security="none" --mirror-binary-security="none" --language="es" --bootappend-live="locale=es_VE.UTF-8 keyb=es quiet splash vga=791 live-config.user-fullname='Usuario Canaima'" --security="false" --volatile="false" --backports="false" --source="false" --iso-preparer="${PREPARADO_POR}" --iso-volume="canaima-${SABOR}" --iso-publisher="${PUBLICADO_POR}" --iso-application="${APLICACION}" --mirror-bootstrap="${SEMILLA_BOOTSTRAP}" --mirror-binary="${SEMILLA_BINARY}" --mirror-chroot="${SEMILLA_CHROOT}" --memtest="none" --linux-flavours="${SABOR_KERNEL}" --syslinux-menu="true" --syslinux-timeout="5" --archive-areas="${COMP_MIRROR_DEBIAN}" --debian-installer="live" --packages="${SABOR_PAQUETES}" --syslinux-splash="${SABOR_SYSPLASH}" --win32-loader="false" --bootappend-install="locale=es_VE.UTF-8"
