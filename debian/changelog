@@ -1,3 +1,9 @@
+canaima-semilla (2.0+14) testing; urgency=low
+
+  * [ce1817d] Corrigiendo bug borrando la carpeta config.
+
+ -- Luis Alejandro Martínez Faneyth <martinez.faneyth@gmail.com>  Tue, 22 Mar 2011 05:39:22 -0430
+
 canaima-semilla (2.0+13) testing; urgency=low
 
   * [5555101] Corrigiendo bug en el bootappend-live.
