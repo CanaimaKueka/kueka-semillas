@@ -1,3 +1,10 @@
+canaima-semilla (2.0+15) testing; urgency=low
+
+  * [c43da2e] Corrigiendo bug cuando el usuario no introduce algún
+    parámetro.
+
+ -- Luis Alejandro Martínez Faneyth <martinez.faneyth@gmail.com>  Tue, 22 Mar 2011 05:53:24 -0430
+
 canaima-semilla (2.0+14) testing; urgency=low
 
   * [ce1817d] Corrigiendo bug borrando la carpeta config.
