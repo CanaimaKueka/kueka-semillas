@@ -35,9 +35,9 @@ PARAMETROS=${@}
 # Removemos el ayudante
 PARAMETROS=${PARAMETROS#construir}
 
-[ $( echo ${PARAMETROS} | grep -c "--arquitectura=" ) == 0 ] && PARAMETROS='--arquitectura="" '${PARAMETROS}
-[ $( echo ${PARAMETROS} | grep -c "--medio=" ) == 0 ] && PARAMETROS='--medio="" '${PARAMETROS}
-[ $( echo ${PARAMETROS} | grep -c "--sabor=" ) == 0 ] && PARAMETROS='--sabor="" '${PARAMETROS}
+[ $( echo ${PARAMETROS} | grep -c "\-\-arquitectura=" ) == 0 ] && PARAMETROS='--arquitectura="" '${PARAMETROS}
+[ $( echo ${PARAMETROS} | grep -c "\-\-medio=" ) == 0 ] && PARAMETROS='--medio="" '${PARAMETROS}
+[ $( echo ${PARAMETROS} | grep -c "\-\-sabor=" ) == 0 ] && PARAMETROS='--sabor="" '${PARAMETROS}
 
 # Para cada argumento ...
 for ARGUMENTO in ${PARAMETROS}; do
@@ -83,7 +83,7 @@ SABOR)
 # Establecemos el sabor por defecto "popular", en caso de no especificar ninguno
 [ -z ${SABOR} ] && SABOR="popular" && ADVERTENCIA 'No especificaste un sabor, utilizando sabor "popular" por defecto.'
 
-rm ${ISO_DIR}config/sabor-configurado
+rm -rf ${ISO_DIR}config
 
 for SABORES in $( ls -F ${PLANTILLAS} | grep "/" ); do
 if [ "${SABORES}" == "${SABOR}/" ]; then
@@ -131,7 +131,7 @@ SEMILLA_BINARY=${MIRROR_DEBIAN}
 cd ${ISO_DIR}
 
 ADVERTENCIA "Limpiando posibles residuos de construcciones anteriores ..."
-rm -rf ${ISO_DIR}.stage ${ISO_DIR}auto ${ISO_DIR}binary.log
+rm -rf ${ISO_DIR}.stage ${ISO_DIR}auto ${ISO_DIR}binary.log ${ISO_DIR}cache/stages_bootstrap/
 lb clean
 
 ADVERTENCIA "Generando árbol de configuraciones ..."
