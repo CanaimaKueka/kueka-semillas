@@ -35,6 +35,10 @@ PARAMETROS=${@}
 # Removemos el ayudante
 PARAMETROS=${PARAMETROS#construir}
 
+[ $( echo ${PARAMETROS} | grep -c "--arquitectura=" ) == 0 ] && PARAMETROS='--arquitectura="" '${PARAMETROS}
+[ $( echo ${PARAMETROS} | grep -c "--medio=" ) == 0 ] && PARAMETROS='--medio="" '${PARAMETROS}
+[ $( echo ${PARAMETROS} | grep -c "--sabor=" ) == 0 ] && PARAMETROS='--sabor="" '${PARAMETROS}
+
 # Para cada argumento ...
 for ARGUMENTO in ${PARAMETROS}; do
 
@@ -49,19 +53,13 @@ ARG_VARIABLE=$( echo ${ARG_VARIABLE} | tr '[:lower:]' '[:upper:]' )
 # Evaluamos la expresión para usar las variables
 eval "${ARG_VARIABLE}=${ARG_VALOR}"
 
-# Establecemos el sabor por defecto "popular", en caso de no especificar ninguno
-[ -z ${SABOR} ] && SABOR="popular" && ADVERTENCIA 'No especificaste un sabor, utilizando sabor "popular" por defecto.'
-
-# Establecemos la arquitectura del host, si no se especifica
-[ -z ${ARQUITECTURA} ] && ARQUITECTURA=$( uname -m ) && ADVERTENCIA 'No especificaste una arquitectura, utilizando "'${ARQUITECTURA}'" presente en el sistema.'
-
-# Establecemos medio "iso", en caso de no especificar ninguno
-[ -z ${MEDIO} ] && MEDIO="iso" && ADVERTENCIA 'Utilizando medio "iso"'
-
 # Case para validaciones diversas 
 case ${ARG_VARIABLE} in
 
 ARQUITECTURA)
+
+# Establecemos la arquitectura del host, si no se especifica
+[ -z ${ARQUITECTURA} ] && ARQUITECTURA=$( uname -m ) && ADVERTENCIA 'No especificaste una arquitectura, utilizando "'${ARQUITECTURA}'" presente en el sistema.'
 
 case ${ARQUITECTURA} in
 amd64|x64|64|x86_64)
@@ -82,7 +80,10 @@ esac
 
 SABOR)
 
-rm -rf ${ISO_DIR}config
+# Establecemos el sabor por defecto "popular", en caso de no especificar ninguno
+[ -z ${SABOR} ] && SABOR="popular" && ADVERTENCIA 'No especificaste un sabor, utilizando sabor "popular" por defecto.'
+
+rm ${ISO_DIR}config/sabor-configurado
 
 for SABORES in $( ls -F ${PLANTILLAS} | grep "/" ); do
 if [ "${SABORES}" == "${SABOR}/" ]; then
@@ -99,6 +100,9 @@ fi
 ;;
 
 MEDIO)
+
+# Establecemos medio "iso", en caso de no especificar ninguno
+[ -z ${MEDIO} ] && MEDIO="iso" && ADVERTENCIA 'Utilizando medio "iso"'
 
 case ${MEDIO} in
 usb|usb-hdd|img|USB)
