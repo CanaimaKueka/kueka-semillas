@@ -1,3 +1,10 @@
+canaima-semilla (2.0+21) testing; urgency=low
+
+  * [856002b] Reestructurando los preseed-instalador de los sabores
+    institucional y popular.
+
+ -- Luis Alejandro Martínez Faneyth <martinez.faneyth@gmail.com>  Tue, 22 Mar 2011 20:09:47 -0430
+
 canaima-semilla (2.0+20) testing; urgency=low
 
   * [3cf7383] Reestructurando los preseed-instalador de los sabores
