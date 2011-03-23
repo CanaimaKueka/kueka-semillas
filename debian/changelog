@@ -1,3 +1,10 @@
+canaima-semilla (2.0+23) testing; urgency=low
+
+  * [051c49c] Corrigiendo preseed de los sabores popular e
+    institucional.
+
+ -- Luis Alejandro Martínez Faneyth <martinez.faneyth@gmail.com>  Wed, 23 Mar 2011 16:20:55 -0430
+
 canaima-semilla (2.0+22) testing; urgency=low
 
   * [f297e23] Corrigiendo preseed de los sabores popular e
