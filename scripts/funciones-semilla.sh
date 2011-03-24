@@ -75,7 +75,12 @@ fi
 
 if [ -e ${PLANTILLAS}${SABOR}/preseed-debconf.cfg ]; then
 	mkdir -p "${ISO_DIR}config/chroot_local-preseed"
-	cp ${PLANTILLAS}${SABOR}/preseed-debconf.cfg ${ISO_DIR}config/chroot_local-preseed
+	cp ${PLANTILLAS}${SABOR}/preseed-debconf.cfg ${ISO_DIR}config/chroot_local-preseed/
+fi
+
+if [ -e ${PLANTILLAS}${SABOR}/chroot-local-hook.sh ]; then
+        mkdir -p "${ISO_DIR}config/chroot_local-hooks"
+        cp ${PLANTILLAS}${SABOR}/chroot-local-hook.sh ${ISO_DIR}config/chroot_local-hooks/
 fi
 
 echo "${SABOR}" > ${ISO_DIR}config/sabor-configurado
