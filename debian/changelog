@@ -1,3 +1,10 @@
+canaima-semilla (2.0+25) testing; urgency=low
+
+  * [4f914d2] Agregando reconfiguración de Cunaguaro y Guácharo en los
+    preseed de los sabores institucional y popular.
+
+ -- Luis Alejandro Martínez Faneyth <martinez.faneyth@gmail.com>  Thu, 24 Mar 2011 09:42:57 -0430
+
 canaima-semilla (2.0+24) testing; urgency=low
 
   * [166e55e] Modificando el preseed de los sabores institucional y
