@@ -1,3 +1,9 @@
+canaima-semilla (2.0+26) testing; urgency=low
+
+  * [830139a] Removiendo local hook para aceptar la licencia de Sun.
+
+ -- Luis Alejandro Martínez Faneyth <martinez.faneyth@gmail.com>  Sat, 26 Mar 2011 11:42:35 -0430
+
 canaima-semilla (2.0+25) testing; urgency=low
 
   * [4f914d2] Agregando reconfiguración de Cunaguaro y Guácharo en los
