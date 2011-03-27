@@ -1,3 +1,9 @@
+canaima-semilla (2.0+27) testing; urgency=low
+
+  * [f7897d3] Agregando dependencias a canaima-curiara o www-browser.
+
+ -- Luis Alejandro Martínez Faneyth <martinez.faneyth@gmail.com>  Sun, 27 Mar 2011 12:32:56 -0430
+
 canaima-semilla (2.0+26) testing; urgency=low
 
   * [830139a] Removiendo local hook para aceptar la licencia de Sun.
