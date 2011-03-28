@@ -1,3 +1,10 @@
+canaima-semilla (2.0+29) testing; urgency=low
+
+  * [6e722dc] Agregando apt-get clean y apt-get autoclean al script
+    chroot-local-hook.sh
+
+ -- Luis Alejandro Martínez Faneyth <martinez.faneyth@gmail.com>  Mon, 28 Mar 2011 02:54:57 -0430
+
 canaima-semilla (2.0+28) testing; urgency=low
 
   * [6e8601f] Agregando chroot-local-hook para borrar cosas
