@@ -1,3 +1,10 @@
+canaima-semilla (2.0+28) testing; urgency=low
+
+  * [6e8601f] Agregando chroot-local-hook para borrar cosas
+    innecesarias.
+
+ -- Luis Alejandro Martínez Faneyth <martinez.faneyth@gmail.com>  Sun, 27 Mar 2011 23:33:36 -0430
+
 canaima-semilla (2.0+27) testing; urgency=low
 
   * [f7897d3] Agregando dependencias a canaima-curiara o www-browser.
