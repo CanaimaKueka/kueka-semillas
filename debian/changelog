@@ -1,3 +1,10 @@
+canaima-semilla (2.0+30) testing; urgency=low
+
+  * [5f49f9a] Quitando canaima-blobs de las dependencias del sabor
+    popular.
+
+ -- Luis Alejandro Martínez Faneyth <martinez.faneyth@gmail.com>  Mon, 28 Mar 2011 06:05:47 -0430
+
 canaima-semilla (2.0+29) testing; urgency=low
 
   * [6e722dc] Agregando apt-get clean y apt-get autoclean al script
