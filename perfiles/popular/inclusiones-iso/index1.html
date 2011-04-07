@@ -1,0 +1,489 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>
+ Gu&iacute;a R&aacute;pida de Instalaci&oacute;n para Canaima GNU/Linux
+    </title>
+<meta name="generator" content="latex2html v2008">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+    <meta name="author" content="Sasha Solano" />
+    <meta name="author" content="Hector Colina" />
+    <meta name="author" content="Luis Alejandro Martí­nez Faneyth" />
+    <meta content="text/html; charset=utf-8" http-equiv="content-type" />
+    <link rel="stylesheet" type="text/css" href="html/style.css" />
+    <link rel="shortcut icon" type="image/x-icon" href="html/favicon.ico" />
+  </head>
+  <body>
+    <div id="orla"></div>
+    <div id="envolvente">
+      <div class="c1">
+        <img src="html/logo.png" alt="Canaima GNU/Linux" />
+      
+
+<h1>Gu&iacute;a R&aacute;pida de Instalaci&oacute;n para Canaima GNU/Linux</h1>
+</div>
+<p>
+   <br />
+</p>
+
+      <h3 id="H0">
+Tabla de Contenidos
+      </h3>
+      <ul>
+        <li>
+          <a href="#H1"><big>Licencia</big></a>
+        </li>
+        <li>
+          <a href="#H2"><big>Historial de Versiones</big></a>
+        </li>
+        <li>
+          <a href="#H3"><big>Software utilizado para elaborar este Tutorial</big></a>
+        </li>
+        <li>
+          <a href="#H4">Resumen</a>
+        </li>
+        <li>
+          <a href="#H5">Preparando su sistema
+          para la instalaci&oacute;n</a>
+        </li>
+        <li>
+          <a href="#H6">Iniciando la
+          instalaci&oacute;n</a>
+        </li>
+        <li>
+          <a href="#H7">Durante la
+          instalaci&oacute;n</a>
+        </li>
+        <li>
+          <a href="#H8">Configuraci&oacute;n de la
+          red</a>
+        </li>
+        <li>
+          <a href="#H9">Particionamiento</a>
+        </li>
+        <li>
+          <a href="#H10">Finalizando la
+          instalaci&oacute;n</a>
+        </li>
+        <li>
+          <a href="#H11">Sobre este
+          documento...</a>
+        </li>
+      </ul>
+      <h2 id="H1">
+ Licencia
+      </h2>
+      <p>
+        <br />
+      </p>
+      <blockquote>
+        Este documento ha sido liberado por su autor bajo
+        la licencia GNU Free Documentation License (GFDL), y su utilizaci&oacute;n, copia o
+        reproducci&oacute;n queda sujeta a los t&eacute;rminos de la licencia citada, que puede ser
+        consultada en el siguiente sitio web:
+      </blockquote>
+          <div class="c1"><b>GNU Free Documentation License: http://www.gnu.org/copyleft/fdl.html</b> </div>
+        
+      <blockquote>
+      <p>
+<b>GFDL Version 1.3, 3 November
+        2008</b>
+      </p>
+      <p>
+<b>Copyright &copy; 2000, 2001, 2002, 2007, 2008 Free
+        Software Foundation, Inc.</b>
+      </p>
+</blockquote>
+      
+      <blockquote>
+<b>Copyright &copy; 2011. Versi&oacute;n 3.0  Sasha Veronica Solano Grosjean
+        <span class="textbf">(Centro Nacional de Tecnologias de la Informaci&oacute;n)</span></b>
+      </blockquote>
+      <blockquote>
+Permission is granted to copy, distribute and/or
+        modify this document under the terms of the GNU Free Documentation License,
+        Version 1.2 or any later version published by the Free Software Foundation; with
+        no Invariant Sections, no Front-Cover Texts, and no Back-Cover Texts. A copy of
+        the license is included in the section entitled "GNU Free Documentation
+        License".
+      </blockquote>
+      <h2 id="H2">
+Historial de Versiones
+      </h2>
+      <p>
+        <br />
+      </p>
+      <blockquote>
+<b>Este documento ha ido creciendo con el tiempo con
+        el aporte de la Comunidad Canaima. La &uacute;ltima versi&oacute;n disponible de este
+        documento puede ser conseguida en:</b>
+      </blockquote>
+      <div class="c1">
+        <blockquote>
+<b><tt>http://canaima.softwarelibre.gob.ve/cms</tt></b>
+        </blockquote>
+      </div>
+      <blockquote>
+<b>Las siguientes son las versiones que han sido
+        generadas a lo largo del tiempo:</b>
+      </blockquote>
+      <ul>
+	<li>Versi&oacute;n 3.0 por Sasha Solano del CNTI, 8 de abril 2011 .
+        Agregadas notas y capturas de pantallas de la Versi&oacute;n 3.0 de Canaima GNU/Linux.
+        </li>
+        <li>Versi&oacute;n 2.0 por Hector Colina de la Fundaci&oacute;n Cenditel, 26 de mayo 2010 .
+        Agregadas notas m&aacute;s extensas, maquetaci&oacute;n y diagramaci&oacute;n en latex, capturas de
+        pantallas actualizadas y correciones ortogr&aacute;ficas menores.
+        </li>
+        <li>Versi&oacute;n 1.0, Cooperativa ONUVA RL, Septiembre del 2008, documento inicial.
+        </li>
+      </ul><br />
+      <h2 id="H3">
+Software utilizado para elaborar
+        este Tutorial
+      </h2>
+      <p>
+        <br />
+      </p>
+      <blockquote>
+<b>Este tutorial fue elaborado con el siguiente
+        software:</b>
+      </blockquote>
+      <ul>
+        <li>
+          <span class="logo,LaTeX">L<sup><small>A</small></sup>T<small>E</small>X</span>
+          suite con los paquetes utf8, lettrine, graphicx y fancyhdr
+        </li>
+        <li>vim con el plugin vim-latexsuite
+        </li>
+        <li>gimp para recortar im&aacute;genes
+        </li>
+        <li>Sistema Operativo Canaima 3.0
+        </li>
+      </ul>
+     
+      <h2 id="H4">
+        Resumen
+      </h2>
+      <div class="ABSTRACT">
+         <blockquote>
+          <p>Este documento contiene las instrucciones de instalaci&oacute;n del sistema operativo
+          <b>Canaima GNU/Linux 3.0 </b> para las arquitecturas  <b>Intel y AMD de 32 y 64 bits  </b>,
+          conocidas como <b>i386</b> y <b>amd64</b>. Canaima naci&oacute; como una distribuci&oacute;n GNU/Linux
+          Venezolana basada en Debian destinada a cubrir las necesidades ofim&aacute;ticas de
+          los usuarios finales de la Administraci&oacute;n P&uacute;blica Nacional (APN) y para dar
+          cumplimiento al decreto presidencial Nro. 3.390 sobre el uso de Tecnolog&iacute;as
+          Libres en la APN y la Gaceta Oficial N° 39.633 la resolución 025, la cual establece el uso <b>OBLIGATORIO de Canaima GNU/Linux </b> en los equipos de trabajo en la Administración Pública Nacional (APN).</p>
+        </p>No obstante, en la actualidad, <b>Canaima GNU/Linux</b>, se ha
+          consolidado como un proyecto comunitario, abierto, incluyente, que busca
+          generar fortalezas sociales, tecnol&oacute;gicas, educativas de cara a la
+          consolidaci&oacute;n de una naci&oacute;n soberana tecnol&oacute;gicamente.</p>
+         </blockquote>
+      </div>
+      <p>
+        <br />
+      </p>
+      <h2 id="H5">
+Preparando
+        su sistema para la instalaci&oacute;n
+      </h2>
+      <p>
+<b>Ciertos requisitos necesitan ser tomados en cuenta
+        antes de empezar a instalar Canaima GNU/Linux
+        3.0:</b>
+      </p>
+      <p>
+<b><span class="textbf">Elementos a tomar en
+        cuenta:</span></b>
+      </p>
+      <ul>
+        <li>Realice un respaldo de toda la informaci&oacute;n sensible de su computadora en un
+        medio de almacenamiento seguro tal como CD's, DVD's, memorias Flash, discos duros
+        externos.
+        </li>
+        <li>Si desea conservar otro sistema operativo en el mismo disco duro de su
+        computadora, debe realizar primero la instalaci&oacute;n del otro sistema operativo
+        teniendo especial cuidado al momento de crear las particiones; para ello, se
+        recomiendan dejar sin particionar un espacio m&iacute;nimo de 10 a 15 gb que ser&aacute;n
+        utilizados, posteriormente, por el instalador de Canaima GNU/Linux
+        </li>
+        <li>Es recomendable, pero no necesario, instalar Canaima GNU/Linux con una
+        conexi&oacute;n no restringida a Internet.
+        </li>
+        <li>El Equipo de Desarrollo de Canaima GNU/Linux 3.0 no presta soporte a
+        instalaciones en m&aacute;quinas virtuales. No obstante, si presenta alg&uacute;n problema
+        con este tipo de instalaci&oacute;n puede realizar su pregunta en las listas
+        respectivas. <a href="#foot1" id=
+        "tex2html1"><sup><span class="arabic">1</span></sup></a>
+        </li>
+        <li>La instalaci&oacute;n y uso de Canaima GNU/Linux 3.0 se hace a su propio riesgo, y
+        el producto se distribuye como est&aacute;, sin ning&uacute;n tipo de garant&iacute;as.
+        </li>
+        <li>Su computadora debe contar con una unidad lectora de CD interna o externa
+        para poder instalar Canaima GNU/Linux 3.0. <a href=
+        "#foot2" id="tex2html2"><sup><span class=
+        "arabic">2</span></sup></a>
+        </li>
+        <li>Es recomendable contar con al menos 512 MB. de memoria RAM para instalar y
+        utilizar Canaima GNU/Linux 3.0 de forma satisfactoria.
+        </li>
+        <li>Es recomendable contar con al menos 5 GB. de espacio en el disco duro de su
+        computadora para instalar y utilizar Canaima GNU/Linux 3.0 de para que este funcione adecuadamente.
+        </li>
+      </ul>
+      <h2 id="H6">
+Iniciando
+        la instalaci&oacute;n
+      </h2>
+      <p>
+     <b>Para iniciar la instalaci&oacute;n de Canaima GNU/Linux
+        3.0, introduzca el CD de instalaci&oacute;n en su unidad de CD/DVD y reinicie su equipo
+        con el disco introducido en la unidad. La configuraci&oacute;n de su computadora puede
+        requerir que modifique el BIOS o presione alguna tecla para poder iniciar el
+        sistema desde CD. En breves instantes aparecer&aacute; la pantalla de bienvenida del
+        Instalador de Canaima GNU/Linux 3.0 . Si desea hacer la instalaci&oacute;n deber&aacute; seleccionar las opciones:</b>
+      </p>
+      <ul>
+        
+	<li>
+          <b>Probar</b>:Esta opci&oacute;n le permitir&aacute;
+          evaluar Canaima GNU/Linux 3.0 en su computador sin necesidad de instalarlo
+        </li>
+	<li>
+          <b>Probar (Modo Seguro)</b>:Esta opci&oacute;n le permitir&aacute;
+          evaluar Canaima GNU/Linux 3.0 en su computador sin usar elementos gr&aacute;ficos y sin necesidad de instalarlo
+        </li>
+	 <li>
+          <b>Instalar Modo Texto</b>: Esta
+          Esta opci&oacute;n instala Canaima GNU/Linux, desde una ventana de instalaci&oacute;n en modo texto.
+        </li>
+	 <li>
+          <b>Rescatar Modo Texto:</b> Es una configuración básica de arranque para reparar un sistema roto, sin utiliza elementos gr&aacute;ficos y   est&aacute; dise&ntilde;ada para funcionar incluso en computadoras con tarjetas gr&aacute;ficas que no puedan iniciar 
+        </li>
+	<li>
+          <b>Instalar(modo gr&aacute;fico)</b>: Esta opci&oacute;n instalara Canaima GNU/Linux de una manera amigable con una intefaz gr&aacute;fica que solicitara unos datos básicos para la configuraci&oacute;n del equipo .
+        </li>
+        <li>
+          <b>Rescatar(Modo Grafico):</b>Esta opcion permite mediate una interfaz acceder temporalmente a un sistema instalado en el disco duro pero que por
+          alguna raz&oacute;n no puede ser iniciado.
+        </li>
+      </ul>
+      <div class="c1">
+
+        <table>
+          <caption align="bottom">
+            <strong>Figura:</strong> Pantalla de inicio Canaima GNU/Linux
+            3.0
+          </caption>
+          <tr>
+            <td>
+              <div class="c1"><img src="html/screen1.png" alt="Pantalla de inicio  Canaima GNU/Linux 3.0" /></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <h2 id="H7">
+Durante la
+        instalaci&oacute;n
+      </h2>
+      <blockquote><p>
+<b>El instalador de Canaima GNU/Linux 3.0 le har&aacute;
+        algunas preguntas sobre el sistema que est&aacute; instalando. El Equipo de Desarrollo
+        de Canaima GNU/Linux 3.0 ha preparado la instalaci&oacute;n para que sea lo m&aacute;s
+        sencilla posible. Por favor, preste atenci&oacute;n a las preguntas que le hace el
+        instalador para que su sistema est&eacute; correctamente ajustado, a
+        saber:</b>
+      </p><blockquote>
+      <ul>
+        <li>
+          <span class="textbf">Mapa de teclado:</span> seleccione el mapa de teclado que
+          utilizar&aacute; el sistema operativo. En Venezuela, usualmente encontrar&aacute; teclados
+          con mapa de teclado Espa&ntilde;ol, Latinoamericano o Ingl&eacute;s estadounidense.
+        </li>
+	<li>
+          <span class="textbf">Datos del administrador(Super Usuario):</span> el instalador le
+          preguntar&aacute; la contrase&ntilde;a del administrador dos (2) veces, para confirmar. Es
+          importante que sepa que por razones de seguridad no se mostrar&aacute; la contrase&ntilde;a
+          que usted escriba. <span class="textbf">El nombre del usuario administrador es
+          <span class="textit">root</span>.</span> Este nombre y contrase&ntilde;a es que
+          deber&aacute; usar cuando desee realizar tareas administrativas como instalar
+          software, actualizar el sistema, etc.
+        </li>
+	<li>
+          <span class="textbf">Datos del usuario:</span> el instalador crear&aacute; un usuario
+          no privilegiado por usted. Debe introducir su nombre completo, un nombre corto
+          de usuario y la contrase&ntilde;a del usuario dos (2) veces, para confirmar. Es
+          importante que sepa que por razones de seguridad no se mostrar&aacute; la contrase&ntilde;a
+          que usted escriba.
+        </li>
+	<li>
+          <span class="textbf">Particionamiento:</span> el instalador siempre le
+          preguntar&aacute; como desea particionar su sistema... <a href=
+          "#foot4" id="tex2html4"><sup><span class=
+          "arabic">4</span></sup></a>
+        </li>
+        <li>
+          <span class="textbf">Configuraci&oacute;n de la red:</span> si no est&aacute; conectado a
+          una red, o la red a la que est&aacute; conectado no dispone de autoconfiguraci&oacute;n con
+          DHCP, el instalador le preguntar&aacute; algunos datos sobre la red.
+        </li>
+        
+      </ul>
+      <p>
+<b>Respondiendo a estas cinco (5) preguntas, podr&aacute; tener su sistema Canaima GNU/Linux 3.0 instalado y listo para funcionar.</b>
+      </p>
+      <h2 id="H8">
+Configuraci&oacute;n de la red
+      </h2>
+<b>Si su red soporta
+      autoconfiguraci&oacute;n con DHCP <a href="#foot5" id=
+      "tex2html5"><sup><span class="arabic">5</span></sup></a> el instalador no le har&aacute;
+      ninguna pregunta sobre la configuraci&oacute;n de la red. Si no est&aacute; conectado a ninguna
+      red o si su red no soporta el protocolo anteriormente citado, el instalador le
+      preguntar&aacute; lo siguiente:</b>
+      <ul>
+        <li>
+          <span class="textbf">Nombre de equipo:</span> introduzca un nombre corto para
+          su computadora.
+        </li>
+        <li>
+          <span class="textbf">Nombre de dominio:</span> introduzca el nombre de su
+          dominio DNS <a href="#foot6" id=
+          "tex2html6"><sup><span class="arabic">6</span></sup></a>; si no lo tiene, puede
+          dejarlo en blanco.
+        </li>
+        <li>
+          <span class="textbf">Direcci&oacute;n IP:</span> introduzca una direcci&oacute;n IP v&aacute;lida
+          para su computadora. En redes caseras, sin conexi&oacute;n a internet, es com&uacute;n
+          utilizar direcciones como 193.068.1.1
+        </li>
+        <li>
+          <span class="textbf">M&aacute;scara de red:</span> introduzca la m&aacute;scara de red.
+          Para una direcci&oacute;n 193.068.1.1 deber&iacute;a usarse una direcci&oacute;n de m&aacute;scara de
+          red 255.255.255.0
+        </li>
+        <li>
+          <span class="textbf">Pasarela de enlace:</span> introduzca la pasarela de
+          enlace; en algunas ocasiones el instalador intentar&aacute; autocalcularla. Sino
+          tiene conexi&oacute;n a Internet, deje este campo en blanco
+        </li>
+        <li>
+          <span class="textbf">Servidores DNS:</span> introduzca el o los servidores DNS
+          de su red. Estos valores pueden ser provistos por el administrador de su red.
+          Sino tiene acceso a Internet deje este campo en blanco.
+        </li>
+      </ul>
+      <p>
+<b>El equipo de Desarrollo de Canaima GNU/Linux 2.0 no
+        puede proveer esta informaci&oacute;n. Tambi&eacute;n puede optar por no configurar la red si
+        no est&aacute; conectado a ninguna red; para hacer esto seleccione la opci&oacute;n No
+        configurar la red en este momento.</b>
+      </p>
+      <h2 id="H9">
+Particionamiento
+      </h2>
+      <p>
+Su sistema Canaima GNU/Linux 3.0 necesita al menos
+        dos (2) particiones, o secciones de su disco duro, para poder funcionar. Una
+        corresponde a la memoria virtual, conocida como memoria de intercambio o memoria
+        swap, y otra al sistema operativo y datos personales. Si usted no tiene otro
+        sistema operativo instalado en su computadora y no tiene necesidades especiales
+        de particionamiento, recomendamos que elija la opci&oacute;n de Particionado
+        autom&aacute;tico, Utilizar todo el disco, y Todos los ficheros en una partici&oacute;n ya
+        que &eacute;sta es la opci&oacute;n m&aacute;s sencilla y directa para instalar Canaima GNU/Linux
+        3.0. De otra forma, seleccione Particionado manual y siga las instrucciones del
+        instalador para particionar su disco. Una vez seleccionado el esquema de
+        particionamiento, el Instalador le preguntar&aacute; si est&aacute; seguro de aplicar los
+        cambios y luego formatear&aacute; las particiones
+        seleccionadas.
+      </p>
+      <p>
+        <br />
+      </p>
+      <h2 id="H10">
+Finalizando la instalaci&oacute;n
+      </h2>
+      <p>
+Una vez finalizados todos los pasos de la
+        instalaci&oacute;n, el DVD ser&aacute; autom&aacute;ticamente expulsado de la unidad y su
+        computadora se reiniciar&aacute; autom&aacute;ticamente. Retire el disco de la unidad y
+        permita que la computadora arranque normalmente. Al cabo de pocos segundos ver&aacute;
+        en pantalla el gestor de arranque que le muestra dos opciones de inicio, la
+        predeterminada arrancar&aacute; en cinco (5) segundos y una opci&oacute;n de rescate o modo
+        "single-user". Luego de unos instantes, su nuevo sistema operativo Canaima
+        GNU/Linux 3.0 arrancar&aacute; y podr&aacute; iniciar sesi&oacute;n con el usuario y clave
+        definidas durante la instalaci&oacute;n de Canaima GNU/Linux 3.0 (ver figura
+        2)
+      </p>
+      <div class="c1">
+        <table>
+          <caption align="bottom">
+            <strong>Figura 2:</strong> Escritorio por defecto de Canaima GNU/Linux 3.0
+          </caption>
+          <tr>
+            <td>
+              <div class="c1"><img src="html/screen2.png" alt="Escritorio por defecto de Canaima GNU/Linux 3.0" /></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <p>
+        <br />
+      </p>
+      <h2 id="H11">
+Sobre
+        este documento...
+      </h2><strong>Gu&iacute;a B&aacute;sica de Instalaci&oacute;n de Canaima 3.0</strong>
+      <p>
+        This document was generated using the <a href=
+        "http://www.latex2html.org/"><strong>LaTeX</strong>2<tt>HTML</tt></a> translator
+        Version 2008 (1.71)
+      </p>
+      <p>
+        Copyright &copy; 1993, 1994, 1995, 1996, Nikos Drakos, Computer Based Learning Unit,
+        University of Leeds.<br />
+        Copyright &copy; 1997, 1998, 1999, <a href="http://www.maths.mq.edu.au/~ross/">Ross
+        Moore</a>, Mathematics Department, Macquarie University, Sydney.
+      </p>
+
+      <p>
+        The translation was initiated by on 2010-05-26<br />
+      </p>
+
+<hr />
+
+<DL>
+<DT id="foot1">... respectivas. <A
+ HREF="#tex2html1"><SUP><SPAN CLASS="arabic">1</SPAN></SUP></A></DT>
+<DD>Puede inscribirse en la lista de soporte de Canaima GNU/Linux en la siguiente direcci&oacute;n: <a href="http://canaima.softwarelibre.gob.ve/cgi-bin/mailman/listinfo/soporte">http://canaima.softwarelibre.gob.ve/cgi-bin/mailman/listinfo/soporte</a>
+</DD>
+<br />
+<DT id="foot3">... red. <A
+ HREF="#tex2html3"><SUP><SPAN CLASS="arabic">3</SPAN></SUP></A></DT>
+<DD>V&#195;&#169;ase m&#195;&#161;s adelante una explicaci&oacute;n de los par&aacute;metros respectivos
+</DD>
+<br />
+<DT id="foot4">... sistema... <A
+ HREF="#tex2html4"><SUP><SPAN CLASS="arabic">4</SPAN></SUP></A></DT>
+<DD>V&eacute;ase m&aacute;s adelante una explicaci&oacute;n m&aacute;s detallada
+</DD>
+<br />
+<DT id="foot5">... DHCP <A
+ HREF="#tex2html5"><SUP><SPAN CLASS="arabic">5</SPAN></SUP></A></DT>
+<DD>Dynamic Host Configuration Protocol o Protocolo de configuraci&oacute;n din&aacute;mica de host es un protocolo que permite la configuraci&oacute;n autom&aacute;tica de dispositivos de red.
+</DD>
+<br />
+<DT id="foot6">... DNS <A
+ HREF="#tex2html6"><SUP><SPAN CLASS="arabic">6</SPAN></SUP></A></DT>
+<DD>Domain Name Server o servidor de nombre de dominio
+
+
+</DD>
+</DL>
+
+    </div>
+  </body>
+</html>
+
