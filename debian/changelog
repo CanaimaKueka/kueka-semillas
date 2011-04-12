@@ -1,3 +1,10 @@
+canaima-semilla (2.0+33) testing; urgency=low
+
+  * [d9dcae2] Quitado presembrado del hostname y del idioma por defecto
+    del teclado.
+
+ -- Luis Alejandro Martínez Faneyth <martinez.faneyth@gmail.com>  Tue, 12 Apr 2011 14:35:19 -0430
+
 canaima-semilla (2.0+32) testing; urgency=low
 
   * [5a0f9f0] Corrigiendo permisos de algunos scripts.
