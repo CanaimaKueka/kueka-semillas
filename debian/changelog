@@ -1,3 +1,9 @@
+canaima-semilla (2.0+40) testing; urgency=low
+
+  * [8ea6f65] Agregando comando de instalación del BURG.
+
+ -- Luis Alejandro Martínez Faneyth <martinez.faneyth@gmail.com>  Fri, 15 Apr 2011 17:01:26 -0430
+
 canaima-semilla (2.0+39) testing; urgency=low
 
   * [40ebeda] Mejorando script de post-configuración de la instalación
