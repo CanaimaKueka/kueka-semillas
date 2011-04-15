@@ -47,12 +47,12 @@ if [ -e "${PLANTILLAS}${SABOR}/gtkrc-instalador" ]; then
 	cp ${PLANTILLAS}${SABOR}/gtkrc-instalador ${ISO_DIR}config/binary_debian-installer-includes/usr/share/themes/Clearlooks/gtk-2.0/gtkrc
 fi
 
-if [ -e "${PLANTILLAS}${SABOR}/inclusiones-iso" ]; then
+if [ -d "${PLANTILLAS}${SABOR}/inclusiones-iso" ]; then
         mkdir -p "${ISO_DIR}config/binary_local-includes"
         cp -r ${PLANTILLAS}${SABOR}/inclusiones-iso/* ${ISO_DIR}config/binary_local-includes/
 fi
 
-if [ -e "${PLANTILLAS}${SABOR}/inclusiones-fs" ]; then
+if [ -d "${PLANTILLAS}${SABOR}/inclusiones-fs" ]; then
         mkdir -p "${ISO_DIR}config/chroot_local-includes"
         cp -r ${PLANTILLAS}${SABOR}/inclusiones-fs/* ${ISO_DIR}config/chroot_local-includes/
 fi
