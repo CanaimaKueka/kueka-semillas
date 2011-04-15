@@ -1,3 +1,9 @@
+canaima-semilla (2.0+34) testing; urgency=low
+
+  * [86cf035] Quitando dependencia a www-browser:x
+
+ -- Luis Alejandro Martínez Faneyth <martinez.faneyth@gmail.com>  Fri, 15 Apr 2011 01:34:38 -0430
+
 canaima-semilla (2.0+33) testing; urgency=low
 
   * [d9dcae2] Quitado presembrado del hostname y del idioma por defecto
