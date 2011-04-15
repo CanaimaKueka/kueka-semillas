@@ -1,3 +1,9 @@
+canaima-semilla (2.0+41) testing; urgency=low
+
+  * [4b67fc5] Corrigiendo error en nombre de variable.
+
+ -- Luis Alejandro Martínez Faneyth <martinez.faneyth@gmail.com>  Fri, 15 Apr 2011 18:02:58 -0430
+
 canaima-semilla (2.0+40) testing; urgency=low
 
   * [8ea6f65] Agregando comando de instalación del BURG.
