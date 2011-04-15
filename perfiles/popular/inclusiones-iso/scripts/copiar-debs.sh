@@ -4,11 +4,11 @@ MOUNTPOINT="/target"
 
 mkdir -p ${MOUNTPOINT}/root/debs/
 
-cp ${MOUNTPOINT}/media/cdrom/pool/main/g/gettext/gettext-base*.deb  ${MOUNTPOINT}/root/debs/
-cp ${MOUNTPOINT}/media/cdrom/pool/main/b/burg/burg*.deb ${MOUNTPOINT}/root/debs/
-cp ${MOUNTPOINT}/media/cdrom/pool/main/b/burg-themes/burg*.deb ${MOUNTPOINT}/root/debs/
+cp /cdrom/pool/main/g/gettext/gettext-base*.deb  ${MOUNTPOINT}/root/debs/
+cp /cdrom/pool/main/b/burg/burg*.deb ${MOUNTPOINT}/root/debs/
+cp /cdrom/pool/main/b/burg-themes/burg*.deb ${MOUNTPOINT}/root/debs/
 
-PARTICION=$( mount | grep "/target " | awk '{print $1}' )
+PARTICION=$( mount | grep "/target " | cut -d ' ' -f1 )
 DRIVE=${PARTITION%?}
 
 echo "#!/bin/bash" > ${MOUNTPOINT}/root/instalar-debs.sh
