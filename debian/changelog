@@ -1,3 +1,10 @@
+canaima-semilla (2.0+39) testing; urgency=low
+
+  * [40ebeda] Mejorando script de post-configuración de la instalación
+    (preseed).
+
+ -- Luis Alejandro Martínez Faneyth <martinez.faneyth@gmail.com>  Fri, 15 Apr 2011 15:55:11 -0430
+
 canaima-semilla (2.0+38) testing; urgency=low
 
   * [af51d5d] Modificando ubicación del script de preseed.
