@@ -1,3 +1,12 @@
+canaima-semilla (2.0+37) testing; urgency=low
+
+  * [9876f84] Merge branches 'master' and 'upstream' of
+    gitorious.org:canaima-gnu-linux/canaima-semilla
+  * [5d5d035] Cambiando bash por sh en el preseed. No está disponible en
+    ese momento.
+
+ -- Luis Alejandro Martínez Faneyth <martinez.faneyth@gmail.com>  Fri, 15 Apr 2011 11:21:17 -0430
+
 canaima-semilla (2.0+36) testing; urgency=low
 
   * [98df683] bump
