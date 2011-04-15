@@ -23,6 +23,7 @@ echo "DEBIAN_FRONTEND=noninteractive dpkg -i /root/debs/burg-common*.deb" >> ${M
 echo "DEBIAN_FRONTEND=noninteractive dpkg -i /root/debs/burg-emu*.deb" >> ${MOUNTPOINT}/root/instalar-debs.sh
 echo "DEBIAN_FRONTEND=noninteractive dpkg -i /root/debs/burg-pc*.deb" >> ${MOUNTPOINT}/root/instalar-debs.sh
 echo "DEBIAN_FRONTEND=noninteractive dpkg -i /root/debs/burg*.deb" >> ${MOUNTPOINT}/root/instalar-debs.sh
+echo "burg-install --force ${DRIVE}" >> ${MOUNTPOINT}/root/instalar-debs.sh
 echo "aptitude purge canaima-instalador-vivo --assume-yes" >> ${MOUNTPOINT}/root/instalar-debs.sh
 echo "dpkg-reconfigure cunaguaro guacharo canaima-estilo-visual canaima-plymouth canaima-escritorio-gnome canaima-chat canaima-bienvenido canaima-escritorio-gnome canaima-base" >> ${MOUNTPOINT}/root/instalar-debs.sh
 echo "update-burg" >> ${MOUNTPOINT}/root/instalar-debs.sh
