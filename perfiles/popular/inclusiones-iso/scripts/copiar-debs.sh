@@ -9,7 +9,7 @@ cp /cdrom/pool/main/b/burg/burg*.deb ${MOUNTPOINT}/root/debs/
 cp /cdrom/pool/main/b/burg-themes/burg*.deb ${MOUNTPOINT}/root/debs/
 
 PARTICION=$( mount | grep "/target " | cut -d ' ' -f1 )
-DRIVE=${PARTITION%?}
+DRIVE=${PARTICION%?}
 
 echo "#!/bin/bash" > ${MOUNTPOINT}/root/instalar-debs.sh
 echo "" >> ${MOUNTPOINT}/root/instalar-debs.sh
