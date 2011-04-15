@@ -10,4 +10,7 @@ rm -rf /var/lib/apt/lists/repositorio*
 rm -rf /var/lib/apt/lists/seguridad*
 rm -rf /var/lib/apt/lists/universo*
 
+[ -e /usr/share/icons/gnome/icon-theme.cache ] && rm -rf /usr/share/icons/gnome/icon-theme.cache
+[ -e /usr/share/icons/canaima-iconos/icon-theme.cache ] && rm -rf /usr/share/icons/canaima-iconos/icon-theme.cache
+
 
