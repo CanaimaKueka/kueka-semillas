@@ -1,3 +1,10 @@
+canaima-semilla (2.0+42) testing; urgency=low
+
+  * [503858f] Agregando funcionalidad para incluir paquetes en el /pool
+    de la ISO para instalaciones off-line.
+
+ -- Luis Alejandro Martínez Faneyth <martinez.faneyth@gmail.com>  Thu, 28 Apr 2011 12:00:28 -0430
+
 canaima-semilla (2.0+41) testing; urgency=low
 
   * [4b67fc5] Corrigiendo error en nombre de variable.
