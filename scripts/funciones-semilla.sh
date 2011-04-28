@@ -93,6 +93,7 @@ if [ -e ${PLANTILLAS}${SABOR}/chroot-local-hook.sh ]; then
         cp ${PLANTILLAS}${SABOR}/chroot-local-hook.sh ${ISO_DIR}config/chroot_local-hooks/
 fi
 
+echo ${SABOR_PAQUETES_ISOPOOL} > ${ISO_DIR}config/binary_local-packageslists/paquetes-pool.list
 echo "${SABOR}" > ${ISO_DIR}config/sabor-configurado
 }
 
