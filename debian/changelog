@@ -1,3 +1,9 @@
+canaima-semilla (2.0+44) testing; urgency=low
+
+  * [aef299a] Modificando paquetes a incluirse en /pool.
+
+ -- Luis Alejandro Martínez Faneyth <martinez.faneyth@gmail.com>  Thu, 28 Apr 2011 17:31:04 -0430
+
 canaima-semilla (2.0+43) testing; urgency=low
 
   * [cc1f472] Modificando preseed del instalador.
