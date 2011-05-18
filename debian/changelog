@@ -1,3 +1,10 @@
+canaima-semilla (2.0+45) testing; urgency=low
+
+  * [2b6dd0c] Cambiando la dependencia de construcción de texlive-latex-
+    extra a texlive, es más completo.
+
+ -- Luis Alejandro Martínez Faneyth <martinez.faneyth@gmail.com>  Wed, 18 May 2011 01:13:55 -0430
+
 canaima-semilla (2.0+44) testing; urgency=low
 
   * [aef299a] Modificando paquetes a incluirse en /pool.
