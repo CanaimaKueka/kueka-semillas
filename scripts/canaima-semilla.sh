@@ -106,13 +106,18 @@ MEDIO)
 
 case ${MEDIO} in
 usb|usb-hdd|img|USB)
-MEDIO="usb"
+MEDIO="usb-hdd"
 EXITO "Medio: Dispositivos de almacenamiento extraíble (USB)"
 ;;
 iso|ISO|CD|DVD)
 MEDIO="iso"
 EXITO "Medio: Dispositivos de almacenamiento extraíble (CD/DVD)"
 ;;
+iso-hybrid|hibrido|mixto)
+MEDIO="iso-hybrid"
+EXITO "Medio: "
+;;
+
 *)
 ERROR 'Medio "'${MEDIO}'" no reconocido por Canaima. Abortando.'
 ;;
@@ -147,14 +152,17 @@ if [ ${MEDIO} == "iso" ] && [ -e ${ISO_DIR}binary.iso ]; then
 	mv ${ISO_DIR}binary.iso canaima-${SABOR}_${ARQUITECTURA}.iso
 	EXITO "¡Enhorabuena! Se ha creado una imagen ISO de canaima-${SABOR}, que pesa ${PESO}."
 	EXITO "Puedes encontrar la imagen \"canaima-${SABOR}_${ARQUITECTURA}.iso\" en el directorio /usr/share/canaima-semilla/semillero/"
+	exit 0
 elif [ ${MEDIO} == "usb" ] && [ -e ${ISO_DIR}binary.img ]; then
 	PESO=$( ls -lah ${ISO_DIR}binary.img | awk '{print $5}' )
 	mv ${ISO_DIR}binary.img canaima-${SABOR}_${ARQUITECTURA}.img
 	EXITO "¡Enhorabuena! Se ha creado una imagen IMG de canaima-${SABOR}, que pesa ${PESO}."
 	EXITO "Puedes encontrar la imagen \"canaima-${SABOR}_${ARQUITECTURA}.img\" en el directorio /usr/share/canaima-semilla/semillero/"
+	exit 0
 else
 	ERROR "Ocurrió un error durante la generación de la imagen."
 	ERROR "Envía un correo a desarrolladores@canaima.softwarelibre.gob.ve con el contenido del archivo ${ISO_DIR}binary.log"
+	exit 1
 fi
 
 ;;
@@ -179,5 +187,3 @@ man canaima-semilla
 ;;
 
 esac
-
-exit 0
