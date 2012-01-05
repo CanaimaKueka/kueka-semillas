@@ -1,3 +1,9 @@
+canaima-semilla (2.0+51) testing; urgency=low
+
+  * [a8e75e3] Corrigiendo error en el scriptt principal
+
+ -- Luis Alejandro Martínez Faneyth <martinez.faneyth@gmail.com>  Thu, 05 Jan 2012 09:49:46 -0430
+
 canaima-semilla (2.0+50) testing; urgency=low
 
   * [a726ab6] Agregando funcionalidad para deshabilitar el instalador
