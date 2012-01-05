@@ -61,7 +61,7 @@ INSTALADOR)
 
 [ -z ${INSTALADOR} ] && INSTALADOR="no" && ADVERTENCIA 'No se incluirá el instalador.'
 
-case ${} in
+case ${INSTALADOR} in
 si|yes)
 INSTALADOR="--debian-installer=live"
 ;;
