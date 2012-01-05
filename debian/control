@@ -3,7 +3,7 @@ Section: misc
 Priority: optional
 Maintainer: Equipo de Desarrollo de Canaima GNU/Linux <desarrolladores@canaima.softwarelibre.gob.ve>
 Uploaders: Luis Alejandro Martínez Faneyth <martinez.faneyth@gmail.com>
-Build-Depends: debhelper (>= 7.0.50~), cdbs, python-sphinx, texlive, python-docutils, texlive-latex-extra
+Build-Depends: debhelper (>= 7.0.50~), python-sphinx, texlive, python-docutils, texlive-latex-extra
 Standards-Version: 3.9.1
 Homepage: http://canaima.softwarelibre.gob.ve/
 Vcs-Git: git://gitorious.org/canaima-gnu-linux/canaima-semilla.git
