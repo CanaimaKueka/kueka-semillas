@@ -38,6 +38,7 @@ PARAMETROS=${PARAMETROS#construir}
 [ $( echo ${PARAMETROS} | grep -c "\-\-arquitectura=" ) == 0 ] && PARAMETROS='--arquitectura="" '${PARAMETROS}
 [ $( echo ${PARAMETROS} | grep -c "\-\-medio=" ) == 0 ] && PARAMETROS='--medio="" '${PARAMETROS}
 [ $( echo ${PARAMETROS} | grep -c "\-\-sabor=" ) == 0 ] && PARAMETROS='--sabor="" '${PARAMETROS}
+[ $( echo ${PARAMETROS} | grep -c "\-\-instalador=" ) == 0 ] && PARAMETROS='--instalador="" '${PARAMETROS}
 
 # Para cada argumento ...
 for ARGUMENTO in ${PARAMETROS}; do
@@ -55,6 +56,21 @@ eval "${ARG_VARIABLE}=${ARG_VALOR}"
 
 # Case para validaciones diversas 
 case ${ARG_VARIABLE} in
+
+INSTALADOR)
+
+[ -z ${INSTALADOR} ] && INSTALADOR="no" && ADVERTENCIA 'No se incluirá el instalador.'
+
+case ${} in
+si|yes)
+INSTALADOR="--debian-installer=live"
+;;
+no)
+INSTALADOR="--debian-installer=false"
+;;
+esac
+
+;;
 
 ARQUITECTURA)
 
@@ -102,7 +118,7 @@ fi
 MEDIO)
 
 # Establecemos medio "iso", en caso de no especificar ninguno
-[ -z ${MEDIO} ] && MEDIO="iso" && ADVERTENCIA 'Utilizando medio "iso"'
+[ -z ${MEDIO} ] && MEDIO="iso-hybrid" && ADVERTENCIA 'Utilizando medio "iso-hybrid" '
 
 case ${MEDIO} in
 usb|usb-hdd|img|USB)
@@ -140,7 +156,7 @@ rm -rf ${ISO_DIR}.stage ${ISO_DIR}auto ${ISO_DIR}binary.log ${ISO_DIR}cache/stag
 lb clean
 
 ADVERTENCIA "Generando árbol de configuraciones ..."
-lb config --architecture="${ARQUITECTURA}" --distribution="${SABOR_DIST}" --apt="aptitude" --apt-recommends="false" --bootloader="syslinux" --binary-images="${MEDIO}" --bootstrap="debootstrap" --binary-indices="false" --includes="none" --username="usuario-nvivo" --hostname="canaima-${SABOR}" --mirror-chroot-security="none" --mirror-binary-security="none" --language="es" --bootappend-live="locale=es_VE.UTF-8 keyb=es quiet splash vga=791 live-config.user-fullname=Canaima" --security="false" --volatile="false" --backports="false" --source="false" --iso-preparer="${PREPARADO_POR}" --iso-volume="canaima-${SABOR}" --iso-publisher="${PUBLICADO_POR}" --iso-application="${APLICACION}" --mirror-bootstrap="${SEMILLA_BOOTSTRAP}" --mirror-binary="${SEMILLA_BINARY}" --mirror-chroot="${SEMILLA_CHROOT}" --memtest="none" --linux-flavours="${SABOR_KERNEL}" --syslinux-menu="true" --syslinux-timeout="5" --archive-areas="${COMP_MIRROR_DEBIAN}" --debian-installer="live" --packages="${SABOR_PAQUETES}" --syslinux-splash="${SABOR_SYSPLASH}" --win32-loader="false" --bootappend-install="locale=es_VE.UTF-8"
+lb config --architecture="${ARQUITECTURA}" --distribution="${SABOR_DIST}" --apt="aptitude" --apt-recommends="false" --bootloader="syslinux" --binary-images="${MEDIO}" --bootstrap="debootstrap" --binary-indices="false" --includes="none" --username="usuario-nvivo" --hostname="canaima-${SABOR}" --mirror-chroot-security="none" --mirror-binary-security="none" --language="es" --bootappend-live="locale=es_VE.UTF-8 keyb=es quiet splash vga=791 live-config.user-fullname=Canaima" --security="false" --volatile="false" --backports="false" --source="false" --iso-preparer="${PREPARADO_POR}" --iso-volume="canaima-${SABOR}" --iso-publisher="${PUBLICADO_POR}" --iso-application="${APLICACION}" --mirror-bootstrap="${SEMILLA_BOOTSTRAP}" --mirror-binary="${SEMILLA_BINARY}" --mirror-chroot="${SEMILLA_CHROOT}" --memtest="none" --linux-flavours="${SABOR_KERNEL}" --syslinux-menu="true" --syslinux-timeout="5" --archive-areas="${COMP_MIRROR_DEBIAN}" ${INSTALADOR} --packages="${SABOR_PAQUETES}" --syslinux-splash="${SABOR_SYSPLASH}" --win32-loader="false" --bootappend-install="locale=es_VE.UTF-8"
 
 sed -i 's/LB_SYSLINUX_MENU_LIVE_ENTRY=.*/LB_SYSLINUX_MENU_LIVE_ENTRY="Probar"/g' config/binary
 
