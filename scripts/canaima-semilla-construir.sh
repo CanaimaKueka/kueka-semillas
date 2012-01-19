@@ -115,6 +115,11 @@ SEMILLA_BOOTSTRAP=${MIRROR_DEBIAN}
 SEMILLA_CHROOT=${MIRROR_DEBIAN}
 SEMILLA_BINARY=${MIRROR_DEBIAN}
 
+if [ ! -d ${ISO_DIR} ]; then
+	ADVERTENCIA "${ISO_DIR} no existe, creando"
+	mkdir -p ${ISO_DIR}
+fi
+
 cd ${ISO_DIR}
 
 ADVERTENCIA "Limpiando posibles residuos de construcciones anteriores ..."
