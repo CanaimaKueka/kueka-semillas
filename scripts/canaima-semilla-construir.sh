@@ -1,9 +1,9 @@
-#!/bin/bash -e
+#!/bin/sh -e
 #
 # ==============================================================================
 # PAQUETE: canaima-semilla-construir
 # ARCHIVO: canaima-semilla-construir.sh
-# DESCRIPCIÓN: Script de bash principal del paquete canaima-desarrollador
+# DESCRIPCIÓN: Script de sh principal del paquete canaima-desarrollador
 # COPYRIGHT:
 #  © 2010 Luis Alejandro Martínez Faneyth <martinez.faneyth@gmail.com>
 #  © 2012 Niv Sardi <xaiki@debian.org>
@@ -74,7 +74,7 @@ fi
 rm -rf ${ISO_DIR}config
 
 if [ -d "${PLANTILLAS}/$sabor" ]; then
-	CONFIGURAR-SABOR $sabor
+	CONFIGURAR_SABOR $sabor
 else
 	ADVERTENCIA "no se encontro ninguna plantilla para el sabor: $sabor"
 fi

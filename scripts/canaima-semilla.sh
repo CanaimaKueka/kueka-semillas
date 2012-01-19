@@ -1,9 +1,9 @@
-#!/bin/bash -e
+#!/bin/sh -e
 #
 # ==============================================================================
 # PAQUETE: canaima-semilla
 # ARCHIVO: canaima-semilla.sh
-# DESCRIPCIÓN: Script de bash principal del paquete canaima-desarrollador
+# DESCRIPCIÓN: Script de sh principal del paquete canaima-desarrollador
 # COPYRIGHT:
 #  (C) 2010 Luis Alejandro Martínez Faneyth <martinez.faneyth@gmail.com>
 # LICENCIA: GPL3

@@ -1,9 +1,9 @@
-#!/bin/bash -e
+#!/bin/sh -e
 #
 # ==============================================================================
 # PAQUETE: canaima-semilla
 # ARCHIVO: canaima-semilla.sh
-# DESCRIPCIÓN: Script de bash principal del paquete canaima-desarrollador
+# DESCRIPCIÓN: libreria de sh principal del paquete canaima-desarrollador
 # COPYRIGHT:
 #  (C) 2010 Luis Alejandro Martínez Faneyth <martinez.faneyth@gmail.com>
 # LICENCIA: GPL3
@@ -12,19 +12,19 @@
 # Este programa es software libre. Puede redistribuirlo y/o modificarlo bajo los
 # términos de la Licencia Pública General de GNU (versión 3).
 
-function ERROR() {
-echo -e ${ROJO}${1}${FIN}
+ERROR() {
+/bin/echo -e ${ROJO}${1}${FIN}
 }
 
-function ADVERTENCIA() {
-echo -e ${AMARILLO}${1}${FIN}
+ADVERTENCIA() {
+/bin/echo -e ${AMARILLO}${1}${FIN}
 }
 
-function EXITO() {
-echo -e ${VERDE}${1}${FIN}
+EXITO() {
+/bin/echo -e ${VERDE}${1}${FIN}
 }
 
-function CONFIGURAR-SABOR() {
+CONFIGURAR_SABOR() {
 [ -z $1 ] && ERROR 'Nececito un argumento' && exit 1
 
 if [ -e "${PLANTILLAS}${1}/sabor.conf" ]; then
@@ -102,7 +102,7 @@ fi
 echo "${1}" > ${ISO_DIR}config/sabor-configurado
 }
 
-function CHECK() {
+CHECK() {
 #-------------------------------------------------------------#
 # Nombre de la Función: CHECK
 # Propósito: Comprobar que ciertos parámetros se cumplan al
