@@ -16,26 +16,29 @@ for v in ./conf/variables.conf /usr/share/canaima-semilla/variables.conf; do
 	[ -f $v ] && export VARIABLES=$v && break
 done
 
-for f in ./scripts/funciones-semilla.sh /usr/share/canaima-semilla/scripts/funciones-semilla.sh; do
-	[ -f $f ] && export FUNCIONES=$f && break
-done
-
 # Inicializando variables
 . ${VARIABLES}
+
+for f in ./scripts/funciones-semilla.sh ${SCRIPTS}funciones-semilla.sh; do
+	[ -f $f ] && export FUNCIONES=$f && break
+done
 
 # Cargando funciones
 . ${FUNCIONES}
 
 # Comprobaciones varias
 CHECK
+
+# Permite probar desde el directorio de instalación.
 b=`basename $0`
-PATH=`echo $0 |sed s/$b$//`:$PATH
+PATH=`echo $0 |sed s/$b$//`:$SCRIPTS:$PATH
 
 action=$1; shift 1 || true;
 # Case encargado de interpretar los parámetros introducidos a
 # canaima-semilla y ejecutar la función correspondiente
 handler=${PKG}-${action}
-[ -e ${handler} ] || handler="$handler.sh"
+which $handler || handler="$handler.sh"
+which $handler || ALERT "No se pudo encontrar un handler para $action"
 
 case ${action} in
 	construir) $handler $@ ;;

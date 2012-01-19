@@ -7,6 +7,7 @@ SCRIPTS =	"debian/preinst install" \
 		"debian/prerm remove" \
 		"debian/postrm remove" \
 		"scripts/canaima-semilla.sh" \
+		"scripts/canaima-semilla-construir.sh" \
 		"scripts/funciones-semilla.sh" \
 		"scripts/manual-canaima-semilla.sh"
 
@@ -38,6 +39,7 @@ build:
 install:
 
 	mkdir -p $(DESTDIR)/usr/bin/
+	mkdir -p $(DESTDIR)/usr/lib/canaima-semilla/
 	mkdir -p $(DESTDIR)/usr/share/canaima-semilla/semillero/
 	mkdir -p $(DESTDIR)/usr/share/canaima-semilla/scripts/
 	mkdir -p $(DESTDIR)/usr/share/applications/
@@ -46,6 +48,7 @@ install:
 	ln -s /usr/bin/canaima-semilla $(DESTDIR)/usr/bin/c-s
 	cp -r scripts/manual-canaima-semilla.sh $(DESTDIR)/usr/bin/manual-canaima-semilla
 	cp -r scripts/funciones-semilla.sh $(DESTDIR)/usr/share/canaima-semilla/scripts/
+	cp -r scripts/canaima-semilla-construir.sh $(DESTDIR)/usr/share/canaima-semilla/scripts/
 	cp -r perfiles $(DESTDIR)/usr/share/canaima-semilla/
 	cp -r conf/variables.conf $(DESTDIR)/usr/share/canaima-semilla/
 
