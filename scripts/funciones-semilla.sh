@@ -64,25 +64,22 @@ if [ -e "${PLANTILLAS}${1}/syslinux.png" ]; then
 	SABOR_SYSPLASH="config/binary_syslinux/splash.png"
 fi
 
-if [ -e ${PLANTILLAS}${1}/*.binary ]; then
-	mkdir -p "${ISO_DIR}config/chroot_sources"
-	cp ${PLANTILLAS}${1}/*.binary ${ISO_DIR}config/chroot_sources/
-fi
-
-if [ -e ${PLANTILLAS}${1}/*.binary.gpg ]; then
-	mkdir -p "${ISO_DIR}config/chroot_sources"
-	cp ${PLANTILLAS}${1}/*.binary.gpg ${ISO_DIR}config/chroot_sources/
-fi
-
-if [ -e ${PLANTILLAS}${1}/*.chroot ]; then
-	mkdir -p "${ISO_DIR}config/chroot_sources"
-	cp ${PLANTILLAS}${1}/*.chroot ${ISO_DIR}config/chroot_sources/
-fi
-
-if [ -e ${PLANTILLAS}${1}/*.chroot.gpg ]; then
-	mkdir -p "${ISO_DIR}config/chroot_sources"
-	cp ${PLANTILLAS}${1}/*.chroot.gpg ${ISO_DIR}config/chroot_sources/
-fi
+# damn you daniel bauman
+for i in "binary     list.binary" \
+	"binary.gpg  key.binary"  \
+	"chroot      list.chroot" \
+	"chroot.gpg  key.chroot"; do
+	echo $i | while read ext dext; do
+		if [ -e ${PLANTILLAS}${1}/*.${ext} ]; then
+			mkdir -p "${ISO_DIR}config/archives"
+			for l in `ls ${PLANTILLAS}${1}/*.${ext}`; do
+				b=`basename $l | sed s/\.${ext}$//`
+				cp $l ${ISO_DIR}config/archives/$b.$dext
+				echo "$l\t->\t$b.$dext"
+			done
+		fi
+	done
+done
 
 if [ -e ${PLANTILLAS}${1}/preseed-debconf.cfg ]; then
 	mkdir -p "${ISO_DIR}config/chroot_local-preseed"
