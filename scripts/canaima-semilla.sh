@@ -59,9 +59,8 @@ fi
 
 #ARQUITECTURA
 if [ -z ${arch} ]; then
-	eval `dpkg-architecture`
-	arch=${DEB_BUILD_ARCH}
-	ADVERTENCIA 'No especificaste una arquitectura, utilizando $arch presente en el sistema.'
+	arch=`dpkg --print-architecture`
+	ADVERTENCIA "No especificaste una arquitectura, utilizando \"$arch\" presente en el sistema."
 fi
 
 SABOR_KERNEL=$arch
@@ -69,7 +68,7 @@ SABOR_KERNEL=$arch
 case ${arch} in
 	i386)  SABOR_KERNEL=686;;
 	amd64) SABOR_KERNEL=amd64;;
-	*)     ERROR 'Arquitectura "'${ARQUITECTURA}'" no soportada en Canaima. Abortando.';;
+	*)     ERROR "Arquitectura \"$arch\" no soportada en Canaima. Abortando.";;
 esac
 
 #SABOR
