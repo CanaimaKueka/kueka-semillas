@@ -64,8 +64,14 @@ esac
 
 #SABOR
 if [ -z ${sabor} ]; then
-	sabor="popular"
-	ADVERTENCIA 'No especificaste un sabor, utilizando sabor "popular" por defecto.'
+	if [ -z ${SABOR} ]; then
+		sabor="popular"
+		ADVERTENCIA 'No especificaste un sabor, utilizando sabor "popular" por defecto.'
+	else
+		sabor=${SABOR}
+	fi
+elif [ -n ${SABOR} -a ${sabor} != ${SABOR} ]; then
+	ADVERTENCIA "La configuración tiene el sabor '$SABOR', pero la linea de comando especifico '$sabor', preferiendo '$sabor'."
 fi
 
 if [ -f ${ISO_DIR}config ]; then
