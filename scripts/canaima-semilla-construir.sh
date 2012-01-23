@@ -181,17 +181,23 @@ sed -i 's/LB_SYSLINUX_MENU_LIVE_ENTRY=.*/LB_SYSLINUX_MENU_LIVE_ENTRY="Probar"/g'
 ADVERTENCIA "Construyendo ..."
 lb build 2>&1 | tee binary.log
 
-case ${medio} in
+img_name=binary
+case ${MEDIO} in
+	iso-hybrid)
+	     ext="iso"; img_name="$name-hybrid";;
 	iso) ext="iso";;
 	usb) ext="img";;
 	*)   ERROR "Algo fallo";;
 esac
 
+final=${ISO_DIR}$img_name.${ext}
 
-if [ -e ${ISO_DIR}binary.${ext} ]; then
-	PESO=$( ls -lah ${ISO_DIR}binary.${ext} | awk '{print $5}' )
+echo "--> $MEDIO --> $final"
+
+if [ -e ${final} ]; then
+	PESO=$( ls -lah ${final} | awk '{print $5}' )
 	dest="${DISTRO}-${sabor}_${arch}.${ext}"
-	mv ${ISO_DIR}binary.${ext} ${dest}
+	mv ${final} ${dest}
 	EXITO "¡Enhorabuena! Se ha creado una imagen \"${TYPO_MEDIO}\" de ${DISTRO}-${sabor}, que pesa ${PESO}."
 	EXITO "Puedes encontrar la imagen \"$dest\" en el directorio ${ISO_DIR}"
 	exit 0
