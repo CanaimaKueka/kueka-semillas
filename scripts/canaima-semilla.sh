@@ -30,83 +30,62 @@ case ${action} in
 
 # En caso de que queramos construir una ISO
 construir)
+TEMP=`getopt -o a:m:s:iI --long arquitectura:,medio:,sabor:,instalador,no-instalador -n $0 -- "$@"`
 
-# Capturamos todos los parámetros de entrada
-PARAMETROS=${@}
-# Removemos el ayudante
-PARAMETROS=${PARAMETROS#construir}
+if [ $? != 0 ] ; then echo "Terminating..." >&2 ; exit 1 ; fi
+eval set -- "$TEMP"
 
-[ $( echo ${PARAMETROS} | grep -c "\-\-arquitectura=" ) == 0 ] && PARAMETROS='--arquitectura="" '${PARAMETROS}
-[ $( echo ${PARAMETROS} | grep -c "\-\-medio=" ) == 0 ] && PARAMETROS='--medio="" '${PARAMETROS}
-[ $( echo ${PARAMETROS} | grep -c "\-\-sabor=" ) == 0 ] && PARAMETROS='--sabor="" '${PARAMETROS}
-[ $( echo ${PARAMETROS} | grep -c "\-\-instalador=" ) == 0 ] && PARAMETROS='--instalador="" '${PARAMETROS}
+while true; do
+	case "$1" in
+		-a|--arquitectura) ARQUITECTURA=$2;       shift 2;;
+		-m|--medio)        MEDIO=$2;      shift 2;;
+		-s|--sabor)        SABOR=$2;      shift 2;;
+		-i|--instalador)      INSTALADOR=1;  shift 1;;
+		-I|--no-instalador)   INSTALADOR=""; shift 1;;
+		;;
+                --) shift ; break ;;
+                *) echo "Internal error!" ; exit 1 ;;
+	esac
+done
 
-# Para cada argumento ...
-for ARGUMENTO in ${PARAMETROS}; do
+#INSTALADOR
+if [ ${INSTALADOR} == "1" ]; then
+	INSTALADOR="--debian-installer=live"
+else
+	INSTALADOR="--debian-installer=false"
+	ADVERTENCIA 'No se incluirá el instalador.'
+	INSTALADOR
+fi
 
-# Removemos los guiones y la igualdad para aislar el nombre de la variable
-# en ${ARG_VARIABLE}
-ARG_VARIABLE=${ARGUMENTO#--}
-ARG_VARIABLE=${ARG_VARIABLE%=*}
-# Removemos la variable para aislar el valor de la variable
-ARG_VALOR=${ARGUMENTO#--${ARG_VARIABLE}=}
-# Convertiomos la variable en mayúscula
-ARG_VARIABLE=$( echo ${ARG_VARIABLE} | tr '[:lower:]' '[:upper:]' )
-# Evaluamos la expresión para usar las variables
-eval "${ARG_VARIABLE}=${ARG_VALOR}"
+#ARQUITECTURA
+if [ -z ${ARQUITECTURA} ]; then
+	eval `dpkg-architecture`
+	arch=${DEB_BUILD_ARCH}
+	ADVERTENCIA 'No especificaste una arquitectura, utilizando ${ARQUITECTURA} presente en el sistema.'
+fi
 
-# Case para validaciones diversas 
-case ${ARG_VARIABLE} in
-
-INSTALADOR)
-
-[ -z ${INSTALADOR} ] && INSTALADOR="no" && ADVERTENCIA 'No se incluirá el instalador.'
-
-case ${INSTALADOR} in
-si|yes)
-INSTALADOR="--debian-installer=live"
-;;
-no)
-INSTALADOR="--debian-installer=false"
-;;
-esac
-
-;;
-
-ARQUITECTURA)
-
-# Establecemos la arquitectura del host, si no se especifica
-[ -z ${ARQUITECTURA} ] && ARQUITECTURA=$( uname -m ) && ADVERTENCIA 'No especificaste una arquitectura, utilizando "'${ARQUITECTURA}'" presente en el sistema.'
+SABOR_KERNEL=${ARQUITECTURA}
 
 case ${ARQUITECTURA} in
-amd64|x64|64|x86_64)
-ARQUITECTURA="amd64"
-SABOR_KERNEL="amd64"
-EXITO "Arquitectura: amd64"
-;;
-i386|486|686|i686)
-ARQUITECTURA="i386"
-SABOR_KERNEL="686"
-EXITO "Arquitectura: i386"
-;;
-*)
-ERROR 'Arquitectura "'${ARQUITECTURA}'" no soportada en Canaima. Abortando.'
-;;
+	i386)  SABOR_KERNEL=686;;
+	amd64) SABOR_KERNEL=amd64;;
+	*)     ERROR 'Arquitectura "'${ARQUITECTURA}'" no soportada en Canaima. Abortando.';;
 esac
 ;;
 
-SABOR)
-
-# Establecemos el sabor por defecto "popular", en caso de no especificar ninguno
-[ -z ${SABOR} ] && SABOR="popular" && ADVERTENCIA 'No especificaste un sabor, utilizando sabor "popular" por defecto.'
+#SABOR
+if [ -z ${SABOR} ]; then
+	SABOR="popular"
+	ADVERTENCIA 'No especificaste un sabor, utilizando sabor "popular" por defecto.'
+fi
 
 rm -rf ${ISO_DIR}config
 
-for SABORES in $( ls -F ${PLANTILLAS} | grep "/" ); do
-if [ "${SABORES}" == "${SABOR}/" ]; then
-	CONFIGURAR-SABOR
+if [ -d "${PLANTILLAS}/${SABOR}" ]; then
+	CONFIGURAR-SABOR ${SABOR}
+else
+	ADVERTENCIA "no se encontro ninguna plantilla para el sabor: ${SABOR}"
 fi
-done
 
 if [ -e ${ISO_DIR}config/sabor-configurado ]; then
 EXITO "Sabor: ${SABOR}"
@@ -119,29 +98,27 @@ fi
 MEDIO)
 
 # Establecemos medio "iso", en caso de no especificar ninguno
-[ -z ${MEDIO} ] && MEDIO="iso-hybrid" && ADVERTENCIA 'Utilizando medio "iso-hybrid" '
+if [ -z ${MEDIO} ]; then
+	MEDIO="iso-hybrid"
+	ADVERTENCIA "No especificaste un medio, utilizando sabor $medio por defecto."
+fi
 
 case ${MEDIO} in
-usb|usb-hdd|img|USB)
-MEDIO="usb-hdd"
-EXITO "Medio: Dispositivos de almacenamiento extraíble (USB)"
-;;
-iso|ISO|CD|DVD)
-MEDIO="iso"
-EXITO "Medio: Dispositivos de almacenamiento extraíble (CD/DVD)"
-;;
-iso-hybrid|hibrido|mixto)
-MEDIO="iso-hybrid"
-EXITO "Medio: "
-;;
-
-*)
-ERROR 'Medio "'${MEDIO}'" no reconocido por Canaima. Abortando.'
-;;
-esac
-
-;;
-
+	usb|usb-hdd|img|USB)
+		MEDIO="usb-hdd"
+		TYPO_MEDIO="Dispositivos de almacenamiento extraíble (USB)"
+		;;
+	iso|ISO|CD|DVD)
+		MEDIO="iso"
+		TYPO_MEDIO="Dispositivos de almacenamiento extraíble (CD/DVD)"
+		;;
+	iso-hybrid|hibrido|mixto)
+		MEDIO="iso-hybrid"
+		TYPO_MEDIO="Dispositivo de almacenamiento extraíble (CD/DVD) con multi-arquitectura"
+		;;
+	*)
+		ERROR 'Medio "'${MEDIO}'" no reconocido por Canaima. Abortando.'
+		;;
 esac
 
 done
@@ -197,17 +174,19 @@ sed -i 's/LB_SYSLINUX_MENU_LIVE_ENTRY=.*/LB_SYSLINUX_MENU_LIVE_ENTRY="Probar"/g'
 ADVERTENCIA "Construyendo ..."
 lb build 2>&1 | tee binary.log
 
-if [ ${MEDIO} == "iso" ] && [ -e ${ISO_DIR}binary.iso ]; then
-	PESO=$( ls -lah ${ISO_DIR}binary.iso | awk '{print $5}' )
-	mv ${ISO_DIR}binary.iso canaima-${SABOR}_${ARQUITECTURA}.iso
-	EXITO "¡Enhorabuena! Se ha creado una imagen ISO de canaima-${SABOR}, que pesa ${PESO}."
-	EXITO "Puedes encontrar la imagen \"canaima-${SABOR}_${ARQUITECTURA}.iso\" en el directorio /usr/share/canaima-semilla/semillero/"
-	exit 0
-elif [ ${MEDIO} == "usb" ] && [ -e ${ISO_DIR}binary.img ]; then
-	PESO=$( ls -lah ${ISO_DIR}binary.img | awk '{print $5}' )
-	mv ${ISO_DIR}binary.img canaima-${SABOR}_${ARQUITECTURA}.img
-	EXITO "¡Enhorabuena! Se ha creado una imagen IMG de canaima-${SABOR}, que pesa ${PESO}."
-	EXITO "Puedes encontrar la imagen \"canaima-${SABOR}_${ARQUITECTURA}.img\" en el directorio /usr/share/canaima-semilla/semillero/"
+case ${MEDIO} in
+	iso) ext="iso";;
+	usb) ext="img";;
+	*)   ERROR "Algo fallo";;
+esac
+
+
+if [ -e ${ISO_DIR}binary.${ext} ]; then
+	PESO=$( ls -lah ${ISO_DIR}binary.${ext} | awk '{print $5}' )
+	dest="${DISTRO}-${sabor}_${arch}.${ext}"
+	mv ${ISO_DIR}binary.${ext} ${dest}
+	EXITO "¡Enhorabuena! Se ha creado una imagen \"${TYPO_MEDIO}\" de ${DISTRO}-${sabor}, que pesa ${PESO}."
+	EXITO "Puedes encontrar la imagen \"$dest\" en el directorio ${ISO_DIR}"
 	exit 0
 else
 	ERROR "Ocurrió un error durante la generación de la imagen."
