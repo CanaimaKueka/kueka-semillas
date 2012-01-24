@@ -12,7 +12,13 @@
 # Este programa es software libre. Puede redistribuirlo y/o modificarlo bajo los
 # términos de la Licencia Pública General de GNU (versión 3).
 
-VARIABLES="/usr/share/canaima-semilla/variables.conf"
+for v in ./conf/variables.conf /usr/share/canaima-semilla/variables.conf; do
+	[ -f $v ] && export VARIABLES=$v && break
+done
+
+for f in ./scripts/funciones-semilla.sh /usr/share/canaima-semilla/scripts/funciones-semilla.sh; do
+	[ -f $f ] && export FUNCIONES=$f && break
+done
 
 # Inicializando variables
 . ${VARIABLES}
