@@ -37,11 +37,11 @@ eval set -- "$TEMP"
 
 while true; do
 	case "$1" in
-		-a|--arquitectura) ARQUITECTURA=$2;       shift 2;;
-		-m|--medio)        MEDIO=$2;      shift 2;;
-		-s|--sabor)        SABOR=$2;      shift 2;;
-		-i|--instalador)      INSTALADOR=1;  shift 1;;
-		-I|--no-instalador)   INSTALADOR=""; shift 1;;
+		-a|--arquitectura) arch=$2;       shift 2;;
+		-m|--medio)        medio=$2;      shift 2;;
+		-s|--sabor)        sabor=$2;      shift 2;;
+		-i|--instalador)      install=1;  shift 1;;
+		-I|--no-instalador)   install=""; shift 1;;
 		;;
                 --) shift ; break ;;
                 *) echo "Internal error!" ; exit 1 ;;
@@ -49,7 +49,7 @@ while true; do
 done
 
 #INSTALADOR
-if [ ${INSTALADOR} == "1" ]; then
+if [ ${install} == "1" ]; then
 	INSTALADOR="--debian-installer=live"
 else
 	INSTALADOR="--debian-installer=false"
@@ -58,24 +58,23 @@ else
 fi
 
 #ARQUITECTURA
-if [ -z ${ARQUITECTURA} ]; then
+if [ -z ${arch} ]; then
 	eval `dpkg-architecture`
 	arch=${DEB_BUILD_ARCH}
-	ADVERTENCIA 'No especificaste una arquitectura, utilizando ${ARQUITECTURA} presente en el sistema.'
+	ADVERTENCIA 'No especificaste una arquitectura, utilizando $arch presente en el sistema.'
 fi
 
-SABOR_KERNEL=${ARQUITECTURA}
+SABOR_KERNEL=$arch
 
-case ${ARQUITECTURA} in
+case ${arch} in
 	i386)  SABOR_KERNEL=686;;
 	amd64) SABOR_KERNEL=amd64;;
 	*)     ERROR 'Arquitectura "'${ARQUITECTURA}'" no soportada en Canaima. Abortando.';;
 esac
-;;
 
 #SABOR
-if [ -z ${SABOR} ]; then
-	SABOR="popular"
+if [ -z ${sabor} ]; then
+	sabor="popular"
 	ADVERTENCIA 'No especificaste un sabor, utilizando sabor "popular" por defecto.'
 fi
 
@@ -84,29 +83,25 @@ if [ -f ${ISO_DIR}config ]; then
 fi
 rm -rf ${ISO_DIR}config
 
-if [ -d "${PLANTILLAS}/${SABOR}" ]; then
-	CONFIGURAR-SABOR ${SABOR}
+if [ -d "${PLANTILLAS}/$sabor" ]; then
+	CONFIGURAR-SABOR $sabor
 else
-	ADVERTENCIA "no se encontro ninguna plantilla para el sabor: ${SABOR}"
+	ADVERTENCIA "no se encontro ninguna plantilla para el sabor: $sabor"
 fi
 
 if [ -e ${ISO_DIR}config/sabor-configurado ]; then
-EXITO "Sabor: ${SABOR}"
+EXITO "Sabor: ${sabor}"
 else
-ERROR 'Sabor "'${SABOR}'" desconocido o no disponible. Abortando.'
+ERROR 'Sabor "'${sabor}'" desconocido o no disponible. Abortando.'
 fi
 
-;;
-
-MEDIO)
-
 # Establecemos medio "iso", en caso de no especificar ninguno
-if [ -z ${MEDIO} ]; then
-	MEDIO="iso-hybrid"
+if [ -z ${medio} ]; then
+	medio="iso-hybrid"
 	ADVERTENCIA "No especificaste un medio, utilizando sabor $medio por defecto."
 fi
 
-case ${MEDIO} in
+case ${medio} in
 	usb|usb-hdd|img|USB)
 		MEDIO="usb-hdd"
 		TYPO_MEDIO="Dispositivos de almacenamiento extraíble (USB)"
@@ -124,7 +119,7 @@ case ${MEDIO} in
 		;;
 esac
 
-done
+EXITO "Medio: ${TYPO_MEDIO}"
 
 SEMILLA_BOOTSTRAP=${MIRROR_DEBIAN}
 SEMILLA_CHROOT=${MIRROR_DEBIAN}
@@ -177,7 +172,7 @@ sed -i 's/LB_SYSLINUX_MENU_LIVE_ENTRY=.*/LB_SYSLINUX_MENU_LIVE_ENTRY="Probar"/g'
 ADVERTENCIA "Construyendo ..."
 lb build 2>&1 | tee binary.log
 
-case ${MEDIO} in
+case ${medio} in
 	iso) ext="iso";;
 	usb) ext="img";;
 	*)   ERROR "Algo fallo";;
