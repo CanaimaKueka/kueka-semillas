@@ -30,13 +30,14 @@ case ${action} in
 
 # En caso de que queramos construir una ISO
 construir)
-TEMP=`getopt -o a:m:s:iI --long arquitectura:,medio:,sabor:,instalador,no-instalador -n $0 -- "$@"`
+TEMP=`getopt -o c:a:m:s:iI --long conf:,arquitectura:,medio:,sabor:,instalador,no-instalador -n $0 -- "$@"`
 
 if [ $? != 0 ] ; then echo "Terminating..." >&2 ; exit 1 ; fi
 eval set -- "$TEMP"
 
 while true; do
 	case "$1" in
+		-c|--conf) echo "Cargando $2"; . $2; shift 2;;
 		-a|--arquitectura) arch=$2;       shift 2;;
 		-m|--medio)        medio=$2;      shift 2;;
 		-s|--sabor)        sabor=$2;      shift 2;;
