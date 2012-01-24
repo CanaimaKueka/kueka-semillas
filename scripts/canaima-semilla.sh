@@ -35,6 +35,8 @@ TEMP=`getopt -o c:a:m:s:iI --long conf:,arquitectura:,medio:,sabor:,instalador,n
 if [ $? != 0 ] ; then echo "Terminating..." >&2 ; exit 1 ; fi
 eval set -- "$TEMP"
 
+install=1
+
 while true; do
 	case "$1" in
 		-c|--conf) echo "Cargando $2"; . $2; shift 2;;
@@ -50,13 +52,13 @@ while true; do
 done
 
 #INSTALADOR
-if [ ${install} == "1" ]; then
-	INSTALADOR="--debian-installer=live"
-else
-	INSTALADOR="--debian-installer=false"
-	ADVERTENCIA 'No se incluirá el instalador.'
-	INSTALADOR
-fi
+case ${install} in
+	1) INSTALADOR="--debian-installer=live";;
+	*)
+		INSTALADOR="--debian-installer=false"
+		ADVERTENCIA 'No se incluirá el instalador.'
+		;;
+esac
 
 #ARQUITECTURA
 if [ -z ${arch} ]; then
