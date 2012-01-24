@@ -23,9 +23,10 @@ VARIABLES="/usr/share/canaima-semilla/variables.conf"
 # Comprobaciones varias
 CHECK
 
+action=$1; shift 1 || true;
 # Case encargado de interpretar los parámetros introducidos a
 # canaima-semilla y ejecutar la función correspondiente
-case ${1} in
+case ${action} in
 
 # En caso de que queramos construir una ISO
 construir)
