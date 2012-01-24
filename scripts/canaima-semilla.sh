@@ -208,23 +208,19 @@ else
 fi
 ;;
 
-instalar)
+	instalar)
 # En Desarrollo
 # aptitude install ${SABOR_PAQUETES}
-;;
-
-probar)
+		;;
+	probar)
 # En Desarrollo
 # qemu ISO
-;;
-
-gui)
+		;;
+	gui)
 # En Desarrollo
-;;
-
---ayuda|--help|'')
+		;;
+	--ayuda|--help|'')
 # Imprimiendo la ayuda
-man canaima-semilla
-;;
-
+		man canaima-semilla
+		;;
 esac
