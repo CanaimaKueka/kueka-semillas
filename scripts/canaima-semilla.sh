@@ -79,6 +79,9 @@ if [ -z ${SABOR} ]; then
 	ADVERTENCIA 'No especificaste un sabor, utilizando sabor "popular" por defecto.'
 fi
 
+if [ -f ${ISO_DIR}config ]; then
+	mv ${ISO_DIR}config ${ISO_DIR}config.bak
+fi
 rm -rf ${ISO_DIR}config
 
 if [ -d "${PLANTILLAS}/${SABOR}" ]; then
