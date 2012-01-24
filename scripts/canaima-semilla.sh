@@ -188,7 +188,6 @@ case ${medio} in
 	*)   ERROR "Algo fallo";;
 esac
 
-
 if [ -e ${ISO_DIR}binary.${ext} ]; then
 	PESO=$( ls -lah ${ISO_DIR}binary.${ext} | awk '{print $5}' )
 	dest="${DISTRO}-${sabor}_${arch}.${ext}"
@@ -201,7 +200,6 @@ else
 	ERROR "Envía un correo a desarrolladores@canaima.softwarelibre.gob.ve con el contenido del archivo ${ISO_DIR}binary.log"
 	exit 1
 fi
-
 ;;
 
 instalar)
