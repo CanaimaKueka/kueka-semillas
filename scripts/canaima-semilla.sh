@@ -140,13 +140,11 @@ lb config --architecture="${arch}" \
 	--bootloader="syslinux" \
 	--binary-images="${MEDIO}" \
 	--bootstrap="debootstrap" \
-	--binary-indices="false" \
 	--includes="none" \
 	--username="usuario-nvivo" \
 	--hostname="${DISTRO}-${sabor}" \
 	--mirror-chroot-security="none" \
 	--mirror-binary-security="none" \
-	--language="es" \
 	--bootappend-live="locale=${LOCALE} keyb=es quiet splash vga=791 live-config.user-fullname=${DISTRO}" \
 	--security="false" \
 	--volatile="false" \
@@ -161,13 +159,17 @@ lb config --architecture="${arch}" \
 	--mirror-chroot="${SEMILLA_CHROOT}" \
 	--memtest="none" \
 	--linux-flavours="${SABOR_KERNEL}" \
-	--syslinux-menu="true" \
-	--syslinux-timeout="5" \
 	--archive-areas="${COMP_MIRROR_DEBIAN}" ${INSTALADOR} \
 	--packages="${SABOR_PAQUETES}" \
-	--syslinux-splash="${SABOR_SYSPLASH}" \
 	--win32-loader="false" \
-	--bootappend-install="locale=${LOCALE}"
+	--bootappend-install="locale=${LOCALE}" \
+	${NULL}
+
+# 	--binary-indices="false" \
+# 	--language="es" \
+#	--syslinux-menu="true" \
+#	--syslinux-timeout="5" \
+#	--syslinux-splash="${SABOR_SYSPLASH}" \
 
 sed -i 's/LB_SYSLINUX_MENU_LIVE_ENTRY=.*/LB_SYSLINUX_MENU_LIVE_ENTRY="Probar"/g' config/binary
 
