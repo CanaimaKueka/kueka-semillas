@@ -25,72 +25,73 @@ echo -e ${VERDE}${1}${FIN}
 }
 
 function CONFIGURAR-SABOR() {
+[ -z ${1} ] && ERROR 'Nececito un argumento' && exit 1
 
-if [ -e "${PLANTILLAS}${SABOR}/sabor.conf" ]; then
-	. "${PLANTILLAS}${SABOR}/sabor.conf"
+if [ -e "${PLANTILLAS}${1}/sabor.conf" ]; then
+	. "${PLANTILLAS}${1}/sabor.conf"
 else
-	ERROR 'El sabor "'${SABOR}'" no posee archivo de configuración ${PLANTILLAS}${SABOR}/sabor.conf' && exit 1
+	ERROR 'El sabor "'${1}'" no posee archivo de configuración ${PLANTILLAS}${1}/sabor.conf' && exit 1
 fi
 
-if [ -e "${PLANTILLAS}${SABOR}/preseed-instalador.cfg" ]; then
+if [ -e "${PLANTILLAS}${1}/preseed-instalador.cfg" ]; then
 	mkdir -p "${ISO_DIR}config/binary_debian-installer"
-	cp ${PLANTILLAS}${SABOR}/preseed-instalador.cfg ${ISO_DIR}config/binary_debian-installer/preseed.cfg
+	cp ${PLANTILLAS}${1}/preseed-instalador.cfg ${ISO_DIR}config/binary_debian-installer/preseed.cfg
 fi
 
-if [ -e "${PLANTILLAS}${SABOR}/banner-instalador.png" ]; then
+if [ -e "${PLANTILLAS}${1}/banner-instalador.png" ]; then
 	mkdir -p "${ISO_DIR}config/binary_debian-installer-includes/usr/share/graphics"
-	cp ${PLANTILLAS}${SABOR}/banner-instalador.png ${ISO_DIR}config/binary_debian-installer-includes/usr/share/graphics/logo_debian.png
+	cp ${PLANTILLAS}${1}/banner-instalador.png ${ISO_DIR}config/binary_debian-installer-includes/usr/share/graphics/logo_debian.png
 fi
 
-if [ -e "${PLANTILLAS}${SABOR}/gtkrc-instalador" ]; then
+if [ -e "${PLANTILLAS}${1}/gtkrc-instalador" ]; then
 	mkdir -p "${ISO_DIR}config/binary_debian-installer-includes/usr/share/themes/Clearlooks/gtk-2.0"
-	cp ${PLANTILLAS}${SABOR}/gtkrc-instalador ${ISO_DIR}config/binary_debian-installer-includes/usr/share/themes/Clearlooks/gtk-2.0/gtkrc
+	cp ${PLANTILLAS}${1}/gtkrc-instalador ${ISO_DIR}config/binary_debian-installer-includes/usr/share/themes/Clearlooks/gtk-2.0/gtkrc
 fi
 
-if [ -d "${PLANTILLAS}${SABOR}/inclusiones-iso" ]; then
+if [ -d "${PLANTILLAS}${1}/inclusiones-iso" ]; then
         mkdir -p "${ISO_DIR}config/binary_local-includes"
-        cp -r ${PLANTILLAS}${SABOR}/inclusiones-iso/* ${ISO_DIR}config/binary_local-includes/
+        cp -r ${PLANTILLAS}${1}/inclusiones-iso/* ${ISO_DIR}config/binary_local-includes/
 fi
 
-if [ -d "${PLANTILLAS}${SABOR}/inclusiones-fs" ]; then
+if [ -d "${PLANTILLAS}${1}/inclusiones-fs" ]; then
         mkdir -p "${ISO_DIR}config/chroot_local-includes"
-        cp -r ${PLANTILLAS}${SABOR}/inclusiones-fs/* ${ISO_DIR}config/chroot_local-includes/
+        cp -r ${PLANTILLAS}${1}/inclusiones-fs/* ${ISO_DIR}config/chroot_local-includes/
 fi
 
-if [ -e "${PLANTILLAS}${SABOR}/syslinux.png" ]; then
+if [ -e "${PLANTILLAS}${1}/syslinux.png" ]; then
 	mkdir -p "${ISO_DIR}config/binary_syslinux"
-	cp ${PLANTILLAS}${SABOR}/syslinux.png ${ISO_DIR}config/binary_syslinux/splash.png
+	cp ${PLANTILLAS}${1}/syslinux.png ${ISO_DIR}config/binary_syslinux/splash.png
 	SABOR_SYSPLASH="config/binary_syslinux/splash.png"
 fi
 
-if [ -e ${PLANTILLAS}${SABOR}/*.binary ]; then
+if [ -e ${PLANTILLAS}${1}/*.binary ]; then
 	mkdir -p "${ISO_DIR}config/chroot_sources"
-	cp ${PLANTILLAS}${SABOR}/*.binary ${ISO_DIR}config/chroot_sources/
+	cp ${PLANTILLAS}${1}/*.binary ${ISO_DIR}config/chroot_sources/
 fi
 
-if [ -e ${PLANTILLAS}${SABOR}/*.binary.gpg ]; then
+if [ -e ${PLANTILLAS}${1}/*.binary.gpg ]; then
 	mkdir -p "${ISO_DIR}config/chroot_sources"
-	cp ${PLANTILLAS}${SABOR}/*.binary.gpg ${ISO_DIR}config/chroot_sources/
+	cp ${PLANTILLAS}${1}/*.binary.gpg ${ISO_DIR}config/chroot_sources/
 fi
 
-if [ -e ${PLANTILLAS}${SABOR}/*.chroot ]; then
+if [ -e ${PLANTILLAS}${1}/*.chroot ]; then
 	mkdir -p "${ISO_DIR}config/chroot_sources"
-	cp ${PLANTILLAS}${SABOR}/*.chroot ${ISO_DIR}config/chroot_sources/
+	cp ${PLANTILLAS}${1}/*.chroot ${ISO_DIR}config/chroot_sources/
 fi
 
-if [ -e ${PLANTILLAS}${SABOR}/*.chroot.gpg ]; then
+if [ -e ${PLANTILLAS}${1}/*.chroot.gpg ]; then
 	mkdir -p "${ISO_DIR}config/chroot_sources"
-	cp ${PLANTILLAS}${SABOR}/*.chroot.gpg ${ISO_DIR}config/chroot_sources/
+	cp ${PLANTILLAS}${1}/*.chroot.gpg ${ISO_DIR}config/chroot_sources/
 fi
 
-if [ -e ${PLANTILLAS}${SABOR}/preseed-debconf.cfg ]; then
+if [ -e ${PLANTILLAS}${1}/preseed-debconf.cfg ]; then
 	mkdir -p "${ISO_DIR}config/chroot_local-preseed"
-	cp ${PLANTILLAS}${SABOR}/preseed-debconf.cfg ${ISO_DIR}config/chroot_local-preseed/
+	cp ${PLANTILLAS}${1}/preseed-debconf.cfg ${ISO_DIR}config/chroot_local-preseed/
 fi
 
-if [ -e ${PLANTILLAS}${SABOR}/chroot-local-hook.sh ]; then
+if [ -e ${PLANTILLAS}${1}/chroot-local-hook.sh ]; then
         mkdir -p "${ISO_DIR}config/chroot_local-hooks"
-        cp ${PLANTILLAS}${SABOR}/chroot-local-hook.sh ${ISO_DIR}config/chroot_local-hooks/
+        cp ${PLANTILLAS}${1}/chroot-local-hook.sh ${ISO_DIR}config/chroot_local-hooks/
 fi
 
 if [ -n "${SABOR_PAQUETES_ISOPOOL}" ]; then
@@ -98,7 +99,7 @@ if [ -n "${SABOR_PAQUETES_ISOPOOL}" ]; then
 	echo ${SABOR_PAQUETES_ISOPOOL} > ${ISO_DIR}config/binary_local-packageslists/paquetes-pool.list
 fi
 
-echo "${SABOR}" > ${ISO_DIR}config/sabor-configurado
+echo "${1}" > ${ISO_DIR}config/sabor-configurado
 }
 
 function CHECK() {
