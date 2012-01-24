@@ -133,6 +133,13 @@ ADVERTENCIA "Limpiando posibles residuos de construcciones anteriores ..."
 rm -rf ${ISO_DIR}.stage ${ISO_DIR}auto ${ISO_DIR}binary.log ${ISO_DIR}cache/stages_bootstrap/
 lb clean
 
+if [ ! -z "$SABOR_PAQUETES" ]; then
+	mkdir -p config/package-lists
+	echo ${SABOR_PAQUETES} | xargs -n1 > config/package-lists/${DISTRO}-${sabor}.list
+#	pkglist_arg="--package-lists=${DISTRO}-${sabor}"
+else
+	ADVERTENCIA "No tiene paquetes especificos, esta seguro ?"
+fi
 ADVERTENCIA "Generando árbol de configuraciones ..."
 lb config --architecture="${arch}" \
 	--distribution="${SABOR_DIST}" \
@@ -160,7 +167,6 @@ lb config --architecture="${arch}" \
 	--memtest="none" \
 	--linux-flavours="${SABOR_KERNEL}" \
 	--archive-areas="${COMP_MIRROR_DEBIAN}" ${INSTALADOR} \
-	--packages="${SABOR_PAQUETES}" \
 	--win32-loader="false" \
 	--bootappend-install="locale=${LOCALE}" \
 	${NULL}
