@@ -25,12 +25,12 @@ echo -e ${VERDE}${1}${FIN}
 }
 
 function CONFIGURAR-SABOR() {
-[ -z ${1} ] && ERROR 'Nececito un argumento' && exit 1
+[ -z $1 ] && ERROR 'Nececito un argumento' && exit 1
 
 if [ -e "${PLANTILLAS}${1}/sabor.conf" ]; then
 	. "${PLANTILLAS}${1}/sabor.conf"
 else
-	ERROR 'El sabor "'${1}'" no posee archivo de configuración ${PLANTILLAS}${1}/sabor.conf' && exit 1
+	ERROR "El sabor $1 no posee archivo de configuración ${PLANTILLAS}${1}/sabor.conf" && exit 1
 fi
 
 if [ -e "${PLANTILLAS}${1}/preseed-instalador.cfg" ]; then
