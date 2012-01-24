@@ -157,7 +157,40 @@ rm -rf ${ISO_DIR}.stage ${ISO_DIR}auto ${ISO_DIR}binary.log ${ISO_DIR}cache/stag
 lb clean
 
 ADVERTENCIA "Generando árbol de configuraciones ..."
-lb config --architecture="${ARQUITECTURA}" --distribution="${SABOR_DIST}" --apt="aptitude" --apt-recommends="false" --bootloader="syslinux" --binary-images="${MEDIO}" --bootstrap="debootstrap" --binary-indices="false" --includes="none" --username="usuario-nvivo" --hostname="canaima-${SABOR}" --mirror-chroot-security="none" --mirror-binary-security="none" --language="es" --bootappend-live="locale=es_VE.UTF-8 keyb=es quiet splash vga=791 live-config.user-fullname=Canaima" --security="false" --volatile="false" --backports="false" --source="false" --iso-preparer="${PREPARADO_POR}" --iso-volume="canaima-${SABOR}" --iso-publisher="${PUBLICADO_POR}" --iso-application="${APLICACION}" --mirror-bootstrap="${SEMILLA_BOOTSTRAP}" --mirror-binary="${SEMILLA_BINARY}" --mirror-chroot="${SEMILLA_CHROOT}" --memtest="none" --linux-flavours="${SABOR_KERNEL}" --syslinux-menu="true" --syslinux-timeout="5" --archive-areas="${COMP_MIRROR_DEBIAN}" ${INSTALADOR} --packages="${SABOR_PAQUETES}" --syslinux-splash="${SABOR_SYSPLASH}" --win32-loader="false" --bootappend-install="locale=es_VE.UTF-8"
+lb config --architecture="${arch}" \
+	--distribution="${SABOR_DIST}" \
+	--apt="aptitude" --apt-recommends="false" \
+	--bootloader="syslinux" \
+	--binary-images="${MEDIO}" \
+	--bootstrap="debootstrap" \
+	--binary-indices="false" \
+	--includes="none" \
+	--username="usuario-nvivo" \
+	--hostname="${DISTRO}-${sabor}" \
+	--mirror-chroot-security="none" \
+	--mirror-binary-security="none" \
+	--language="es" \
+	--bootappend-live="locale=${LOCALE} keyb=es quiet splash vga=791 live-config.user-fullname=${DISTRO}" \
+	--security="false" \
+	--volatile="false" \
+	--backports="false" \
+	--source="false" \
+	--iso-preparer="${PREPARADO_POR}" \
+	--iso-volume="${DISTRO}-${sabor}" \
+	--iso-publisher="${PUBLICADO_POR}" \
+	--iso-application="${APLICACION}" \
+	--mirror-bootstrap="${SEMILLA_BOOTSTRAP}" \
+	--mirror-binary="${SEMILLA_BINARY}" \
+	--mirror-chroot="${SEMILLA_CHROOT}" \
+	--memtest="none" \
+	--linux-flavours="${SABOR_KERNEL}" \
+	--syslinux-menu="true" \
+	--syslinux-timeout="5" \
+	--archive-areas="${COMP_MIRROR_DEBIAN}" ${INSTALADOR} \
+	--packages="${SABOR_PAQUETES}" \
+	--syslinux-splash="${SABOR_SYSPLASH}" \
+	--win32-loader="false" \
+	--bootappend-install="locale=${LOCALE}"
 
 sed -i 's/LB_SYSLINUX_MENU_LIVE_ENTRY=.*/LB_SYSLINUX_MENU_LIVE_ENTRY="Probar"/g' config/binary
 
