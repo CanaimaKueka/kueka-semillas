@@ -33,7 +33,7 @@ LOCALES = $(shell find locale -mindepth 1 -maxdepth 1 -type d | sed 's|locale/po
 #       - gen-wiki: genera código wiki para github y googlecode a partir de fuentes rest. Usa PYTHON.
 #       - gen-html: genera el manual HTML a partir de las fuentes rest. Usa SPHINX.
 PYTHON = $(shell which python)
-SHELL = $(shell which sh)
+SHELLBIN = $(shell which sh)
 RST2MAN = $(shell which rst2man)
 SPHINX = $(shell which sphinx-build)
 MSGFMT = $(shell which msgfmt)
@@ -49,10 +49,10 @@ LIVEBUILD = $(shell which live-build)
 # Dependencias de tareas de mantenimiento
 # generatepot: generates POT template from php sources. Uses XGETTEXT.
 # updatepos: updates PO files from POT files. Uses MSGMERGE.
-# snapshot: makes a new development snapshot. Uses SHELL and GIT.
-# release: makes a new release. Uses SHELL, GIT, PYTHON, MD5SUM, TAR and GBP.
+# snapshot: makes a new development snapshot. Uses SHELLBIN and GIT.
+# release: makes a new release. Uses SHELLBIN, GIT, PYTHON, MD5SUM, TAR and GBP.
 PYTHON = $(shell which python)
-SHELL = $(shell which sh)
+SHELLBIN = $(shell which sh)
 GIT = $(shell which git)
 MSGMERGE = $(shell which msgmerge)
 XGETTEXT = $(shell which xgettext)
@@ -76,7 +76,7 @@ gen-doc: gen-wiki gen-html gen-man
 gen-predoc: clean-predoc
 
 	@echo "Preprocesando documentación ..."
-	@$(SHELL) tools/predoc.sh build
+	@$(SHELLBIN) tools/predoc.sh build
 
 gen-wiki: check-buildep gen-predoc clean-wiki
 
@@ -207,7 +207,7 @@ gen-test:
 	@for SCRIPT in $(SCRIPTS); \
 	do \
 		printf "." \
-		$(SHELL) -n $${SCRIPT}; \
+		$(SHELLBIN) -n $${SCRIPT}; \
 		$(BASHISMS) -f -x $${SCRIPT} || true; \
 	done
 	@printf "]\n"
@@ -215,23 +215,23 @@ gen-test:
 snapshot: check-maintdep prepare gen-html gen-wiki gen-po clean
 
 	@$(MAKE) clean
-	@$(SHELL) tools/snapshot.sh
+	@$(SHELLBIN) tools/snapshot.sh
 
 release: check-maintdep
 
-	@$(SHELL) tools/release.sh
+	@$(SHELLBIN) tools/release.sh
 
 deb-test-snapshot: check-maintdep
 
-	@$(SHELL) tools/buildpackage.sh test-snapshot
+	@$(SHELLBIN) tools/buildpackage.sh test-snapshot
 
 deb-test-release: check-maintdep
 
-	@$(SHELL) tools/buildpackage.sh test-release
+	@$(SHELLBIN) tools/buildpackage.sh test-release
 
 deb-final-release: check-maintdep
 
-	@$(SHELL) tools/buildpackage.sh final-release
+	@$(SHELLBIN) tools/buildpackage.sh final-release
 
 # CLEAN TASKS ------------------------------------------------------------------------------
 
@@ -240,7 +240,7 @@ clean: clean-img clean-mo clean-man clean-predoc
 clean-predoc:
 
 	@echo "Cleaning preprocessed documentation files ..."
-	@$(SHELL) tools/predoc.sh clean
+	@$(SHELLBIN) tools/predoc.sh clean
 	@rm -rf documentation/rest/index.rest
 
 clean-img:
@@ -304,7 +304,7 @@ check-maintdep:
 	@echo
 
 	@printf "Checking if we have a shell ... "
-	@if [ -z $(SHELL) ]; then \
+	@if [ -z $(SHELLBIN) ]; then \
 		echo "[ABSENT]"; \
 		echo "If you are using Debian, Ubuntu or Canaima, please install the \"bash\" package."; \
 		exit 1; \
@@ -426,7 +426,7 @@ check-buildep:
 	@echo
 
 	@printf "Checking if we have a shell... "
-	@if [ -z $(SHELL) ]; then \
+	@if [ -z $(SHELLBIN) ]; then \
 		echo "[ABSENT]"; \
 		echo "If you are using Debian, Ubuntu or Canaima, please install the \"bash\" package."; \
 		exit 1; \
