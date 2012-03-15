@@ -1,0 +1,7 @@
+#!/bin/bash
+
+cd /usr/share/canaima-semilla-gui/scripts/
+if [ -e /usr/share/canaima-semilla-gui/scripts/ ]
+then
+	python bienvenido.py
+fi
