@@ -237,6 +237,8 @@ deb-final-release: check-maintdep
 
 clean: clean-img clean-mo clean-man clean-predoc
 
+clean-all: clean-img clean-mo clean-html clean-wiki clean-man clean-predoc
+
 clean-predoc:
 
 	@echo "Cleaning preprocessed documentation files ..."
@@ -248,10 +250,10 @@ clean-img:
 	@printf "Cleaning generated images [PNG,ICO] ["
 	@for THEME in $(THEMES); do \
 		for IMAGE in $(IMAGES); do \
-			rm -rf themes/$${THEME}/images/$${IMAGE}.png; \
+			rm -rf documentation/rest/_static/$${IMAGE}.png; \
 			printf "."; \
 		done; \
-		rm -rf themes/$${THEME}/images/favicon.ico; \
+		rm -rf documentation/rest/_static/favicon.ico; \
 	done
 	@printf "]\n"
 
@@ -279,7 +281,7 @@ clean-wiki:
 clean-man:
 
 	@echo "Cleaning generated man pages ..."
-	@rm -rf documentation/man/aguilas.1
+	@rm -rf documentation/man/canaima-semilla.1
 
 # CHECK DEPENDENCIES ---------------------------------------------------------------------------------------------
 

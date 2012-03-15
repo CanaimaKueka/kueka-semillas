@@ -2,24 +2,6 @@
 **Contenido**
 =============
 
-Licencia
-========
-
-Copyright 2012 Luis Martínez
-
-Copyright 2012 Carlos Espinoza
-
-Copyright 2012 Nixon Molina
-
-**Aviso legal**
-
-Este documento se distribuye bajo los términos de la Licencia Pública General GNU tal como la publica la Free Software Foundation; en la versión 3 de la Licencia, o (a su elección) cualquier versión posterior.
-Puede encontrar una copia de esta licencia en este manual o en el archivo incluido con el código fuente de este programa.
-
-**Retroalimentación**
-
-Para informar de un fallo o hacer cualquier sugerencia concerniente a Canaima Semilla o esta documentación, envie un correo a la siguiente dirección: ``<desarrolladores@canaima.softwarelibre.gob.ve>``.
-
 Uso de la línea de comandos
 ===========================
 
@@ -36,11 +18,8 @@ Modo de uso
 	c-s construir --medio="iso|usb" --arquitectura="i386|amd64" --sabor="institucional|popular|primera-base|sabor1|sabor2" [--ayuda]
 
 + ``--medio``:  Tipo de imagen que será generada. Coloca "iso" para una imagen ISO grabable en CD/DVD o "usb" para una imagen IMG grabable en dispositivos USB.
-
 + ``--arquitectura``:  Arquitectura soportada por la imagen resultante. Canaima GNU/Linux soporta i386 y amd64.
-
 + ``--sabor``:  Sabor Canaima contenido en la imagen instalable. Debe estar definida en el directorio de los perfiles para poder funcionar.
-
 + ``--ayuda``:  Muestra la documentación para el ayudante.
 
 Creación de perfiles
@@ -138,7 +117,7 @@ Canaima Semilla puede crear imágenes instalables (ISO o IMG) basado en los perf
    :align: center
    :alt: The Pythagorean Theorem Illustrated
 
-2.1  The Pythagorean Theorem Illustrated
+   2.1  The Pythagorean Theorem Illustrated
 
 Opciones
 
@@ -295,8 +274,7 @@ Crear Carpeta La cual será creada con el nombre del sabor en letras minúsculas
 
 .. figure:: _static/paso1.png
    :align: center
-   :alt: Ejemplo de una ventana para crear la carpeta contenedora del
-   sabor
+   :alt: Ejemplo de una ventana para crear la carpeta contenedora del sabor
 
    5.2 Ejemplo de una ventana para crear la carpeta contenedora del sabor
 
@@ -306,8 +284,7 @@ Crear Carpeta La cual será creada con el nombre del sabor en letras minúsculas
 
 .. figure:: _static/paso1-2.png
    :align: center
-   :alt: Ejemplo de una ventana con la carpeta del sabor creada con
-   éxito
+   :alt: Ejemplo de una ventana con la carpeta del sabor creada con éxito
 
    5.3Ejemplo de una ventana con la carpeta del sabor creada con éxito
 
@@ -354,8 +331,7 @@ Para validar los paquetes que seran introducidos en Paquetes disponibles en el M
 
 .. figure:: _static/paso2-3.png
    :align: center
-   :alt: Ejemplo de una ventana con el archivo "sabor.config" creado con
-   éxito
+   :alt: Ejemplo de una ventana con el archivo "sabor.config" creado con éxito
 
    5.7Ejemplo de una ventana con el archivo "sabor.config" creado con éxito
 

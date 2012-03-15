@@ -39,7 +39,7 @@ DATE=$( date +%d-%m-%Y )
 VERSION=$( cat ${VERSIONFILE} | grep "VERSION = " | sed 's/VERSION = //g;s/+.*//g' )
 URL="http://code.google.com/p/canaima-semilla"
 DESCRIPTION="Generador de medios vivos instalables basado en live-build"
-DESCRIPTIONLINES="---------------------------------------"
+DESCRIPTIONLINES="----------------------------------------------------------"
 COMMONINTRO=$( cat ${DOCDIR}/common.index.in | sed ':a;N;$!ba;s/\n/______/g' )
 RSTLIST=$( ls ${RESTDIR}/*.rest | sed "s|${RESTDIR}/|@@@@@@|g" | sed ':a;N;$!ba;s|\n||g' )
 LINKLIST=$( ls ${RESTDIR}/*.rest | sed "s|${RESTDIR}/|######|g;s|.rest|%%%%%%|g;" | sed ':a;N;$!ba;s|\n||g' )
