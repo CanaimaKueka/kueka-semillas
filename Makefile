@@ -184,7 +184,7 @@ gen-pot: check-maintdep
 
 	@echo "Actualizando plantilla de traducción ..."
 	@rm $(POTLIST)
-	@for FILE in $(SHS); do \
+	@for FILE in $(SCRIPTS); do \
 		echo "../../.$${FILE}" >> $(POTLIST); \
 	done
 	@cd locale/pot/canaima-semilla/ && $(XGETTEXT) --msgid-bugs-address="$(MAILIST)" \

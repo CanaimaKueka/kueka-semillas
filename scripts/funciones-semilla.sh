@@ -13,19 +13,19 @@
 # términos de la Licencia Pública General de GNU (versión 3).
 
 ERROR() {
-/bin/echo -e ${ROJO}${1}${FIN}
+/bin/echo -e "${ROJO}$( gettext -s "${1}")${FIN}"
 }
 
 ADVERTENCIA() {
-/bin/echo -e ${AMARILLO}${1}${FIN}
+/bin/echo -e "${AMARILLO}$( gettext -s "${1}")${FIN}"
 }
 
 EXITO() {
-/bin/echo -e ${VERDE}${1}${FIN}
+/bin/echo -e "${VERDE}$( gettext -s "${1}")${FIN}"
 }
 
 CONFIGURAR_SABOR() {
-[ -z $1 ] && ERROR 'Nececito un argumento' && exit 1
+[ -z $1 ] && ERROR "Necesito un argumento" && exit 1
 
 if [ -e "${PLANTILLAS}${1}/sabor.conf" ]; then
 	. "${PLANTILLAS}${1}/sabor.conf"
