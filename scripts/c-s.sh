@@ -2,38 +2,65 @@
 #
 # ==============================================================================
 # PAQUETE: canaima-semilla
-# ARCHIVO: canaima-semilla.sh
-# DESCRIPCIÓN: Script de sh principal del paquete canaima-desarrollador
+# ARCHIVO: c-s.sh
+# DESCRIPCIÓN: script principal de shell para la aplicación Canaima Semilla
+# USO: 
 # COPYRIGHT:
-#  (C) 2010 Luis Alejandro Martínez Faneyth <martinez.faneyth@gmail.com>
+#  (C) 2010 Luis Alejandro Martínez Faneyth <luis@huntingbears.com.ve>
+#  (C) 2012 Niv Sardi <xaiki@debian.org>
 # LICENCIA: GPL3
 # ==============================================================================
 #
-# Este programa es software libre. Puede redistribuirlo y/o modificarlo bajo los
-# términos de la Licencia Pública General de GNU (versión 3).
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# COPYING file for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+# CODE IS POETRY
 
-for v in ./conf/variables.conf /usr/share/canaima-semilla/variables.conf; do
-	[ -f $v ] && export VARIABLES=$v && break
-done
+# Determinando directorios de trabajo
+BINDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+if [ "${BINDIR}" == "/usr/bin"]; then
+	LIBFILE="/usr/share/canaima-semilla/scripts/lib.sh"
+        VARFILE="/etc/canaima-semilla/variables.conf"
+else
+        LIBFILE="$( dirname "${BINDIR}" )/scripts/lib.sh"
+        VARFILE="$( dirname "${BINDIR}" )/variables.conf"
+fi
 
 # Inicializando variables
-. ${VARIABLES}
-
-for f in ./scripts/funciones-semilla.sh ${SCRIPTS}funciones-semilla.sh; do
-	[ -f $f ] && export FUNCIONES=$f && break
+# Un archivo variables.conf en ${ISO_DIR} sobreescribe la configuración por defecto
+for VARIABLES in ${VARFILE} ./variables.conf; do
+	if [ -f ${VARIABLES} ]; then
+		. ${VARIABLES}
+	fi
 done
 
-# Cargando funciones
-. ${FUNCIONES}
+# Inicializando funciones
+# Un archivo lib.sh en ${ISO_DIR} sobreescribe la configuración por defecto
+for LIBRARIES in ${LIBFILE} ./lib.sh; do
+	if [ -f ${LIBRARIES} ]; then
+		. ${LIBRARIES}
+	fi
+done
 
 # Comprobaciones varias
 CHECK
 
 # Permite probar desde el directorio de instalación.
-b=`basename $0`
-PATH=`echo $0 |sed s/$b$//`:$SCRIPTS:$PATH
+#b=`basename $0`
+#PATH=`echo $0 |sed s/$b$//`:$SCRIPTS:$PATH
 
-action=$1; shift 1 || true;
+ACTION=${1}; shift 1 || true
+
 # Case encargado de interpretar los parámetros introducidos a
 # canaima-semilla y ejecutar la función correspondiente
 handler=${PKG}-${action}

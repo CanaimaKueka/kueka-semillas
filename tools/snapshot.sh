@@ -107,7 +107,8 @@ NEWVERSION="${REPLY}"
 
 echo "DEVELOPMENT RELEASE v${NEWVERSION}+${SNAPSHOT} (${DATE})" > ${NEWCHANGES}
 cat ${CHANGES} | sed -n 1,${OLDCOMMITLINE}p | sed 's/commit.*//g;s/Author:.*//g;s/Date:.*//g;s/Merge.*//g;/^$/d;' >> ${NEWCHANGES}
-sed -i 's/New development snapshot.*//g' ${NEWCHANGES}
+sed -i 's/New development snapshot.*//g;s/    //g;/^$/d;' ${NEWCHANGES}
+sed -i 's/Signed-off-by:.*//g;s/    //g;/^$/d;' ${NEWCHANGES}
 echo "" >> ${NEWCHANGES}
 cat ${CHANGELOG} >> ${NEWCHANGES}
 mv ${NEWCHANGES} ${CHANGELOG}

@@ -12,18 +12,6 @@
 # Este programa es software libre. Puede redistribuirlo y/o modificarlo bajo los
 # términos de la Licencia Pública General de GNU (versión 3).
 
-ERROR() {
-/bin/echo -e "${ROJO}$( gettext -s "${1}")${FIN}"
-}
-
-ADVERTENCIA() {
-/bin/echo -e "${AMARILLO}$( gettext -s "${1}")${FIN}"
-}
-
-EXITO() {
-/bin/echo -e "${VERDE}$( gettext -s "${1}")${FIN}"
-}
-
 CONFIGURAR_SABOR() {
 [ -z $1 ] && ERROR "Necesito un argumento" && exit 1
 

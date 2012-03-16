@@ -21,7 +21,7 @@ PODATE = $(shell date +%F\ %R%z)
 
 # Listas de Archivos
 SCRIPTS = $(shell find ./scripts -type f -iname "*.sh")
-SVGS = $(shell ls documentation/html/_static/ | grep "\.svg" | sed 's/\.svg//g')
+IMAGES = $(shell ls documentation/rest/images/ | grep "\.svg" | sed 's/\.svg//g')
 LOCALES = $(shell find locale -mindepth 1 -maxdepth 1 -type d | sed 's|locale/pot||g;s|locale/||g')
 
 # Dependencias de Construcción
@@ -78,7 +78,7 @@ gen-predoc: clean-predoc
 	@echo "Preprocesando documentación ..."
 	@$(SHELLBIN) tools/predoc.sh build
 
-gen-wiki: check-buildep gen-predoc clean-wiki
+gen-wiki: check-buildep gen-img gen-predoc clean-wiki
 
 	@echo "Generando documentación desde las fuentes [RST > WIKI]"
 	@cp documentation/githubwiki.index documentation/rest/Home.md
@@ -92,7 +92,7 @@ gen-wiki: check-buildep gen-predoc clean-wiki
 	@mv documentation/rest/contents.tmp documentation/rest/contents.rest
 	@rm -rf documentation/rest/index.rest
 
-gen-html: check-buildep gen-predoc clean-html
+gen-html: check-buildep gen-img gen-predoc clean-html
 
 	@echo "Generando documentación desde las fuentes [RST > HTML]"
 	@cp documentation/sphinx.index documentation/rest/index.rest
@@ -106,14 +106,14 @@ gen-man: check-buildep gen-predoc clean-man
 
 gen-img: check-buildep clean-img
 
-	@printf "Generando imágenes desde las fuentes [SVG > PNG,ICO] ["
+	@printf "Generando imágenes desde las fuentes [SVG > JPG,ICO] ["
 	@for IMAGE in $(IMAGES); do \
-		$(CONVERT) -background None documentation/html/_static/$${IMAGE}.svg \
-			documentation/html/_static/$${IMAGE}.png; \
+		$(CONVERT) -background None documentation/rest/images/$${IMAGE}.svg \
+			documentation/rest/images/$${IMAGE}.jpg; \
 		printf "."; \
 	done;
-	@$(ICOTOOL) -c -o documentation/html/_static/favicon.ico \
-		documentation/html/_static/favicon.png
+	@$(ICOTOOL) -c -o documentation/rest/images/favicon.ico \
+		documentation/rest/images/favicon.jpg
 	@printf "]\n"
 
 gen-mo: check-buildep clean-mo
@@ -247,14 +247,12 @@ clean-predoc:
 
 clean-img:
 
-	@printf "Cleaning generated images [PNG,ICO] ["
-	@for THEME in $(THEMES); do \
-		for IMAGE in $(IMAGES); do \
-			rm -rf documentation/rest/_static/$${IMAGE}.png; \
-			printf "."; \
-		done; \
-		rm -rf documentation/rest/_static/favicon.ico; \
+	@printf "Cleaning generated images [JPG,ICO] ["
+	@for IMAGE in $(IMAGES); do \
+		rm -rf documentation/rest/images/$${IMAGE}.jpg; \
+		printf "."; \
 	done
+	@rm -rf documentation/rest/images/favicon.ico
 	@printf "]\n"
 
 clean-mo:

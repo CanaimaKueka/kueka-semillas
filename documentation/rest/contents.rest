@@ -2,22 +2,26 @@
 **Contenido**
 =============
 
-Uso de la línea de comandos
-===========================
+La creación de *ímagenes ISO* o *medios vivos* se realiza a través de perfiles de *sabores* o *distribuciones derivadas*. Cualquier persona puede crear distribuciones basadas en Canaima, Ubuntu o Debian, a través de la configuración de perfiles o la utilización de perfiles preestablecidos.
+
+Canaima Semilla posee una interfaz en modo texto, accesible a través de la línea de comandos (terminal) y diseñada para entornos de servidores o para usuarios experimentados. La interfaz gráfica, permite una experiencia más intuitiva para quienes se inician en el uso de la herramienta.
+
+Uso de la interfaz en modo texto
+================================
 
 Creación de imágenes
 --------------------
 
-Crea una imagen instalable (ISO o IMG) basado en los perfiles de sabores existentes. Puede especificársele el tipo de medio, la arquitectura a construir, y el nombre del sabor. Las imágenes resultantes del proceso de construcción se guardan en el directorio ``/usr/share/canaima-semilla/semillero/``.
+Crea una imagen instalable basada en alguno de los perfiles existentes. Puede especificársele el tipo de medio, la arquitectura a construir, y el nombre del sabor. Las imágenes resultantes del proceso de construcción se guardan en el directorio ``/usr/share/canaima-semilla/semillero/``.
 
 Modo de uso
 ~~~~~~~~~~~
 
 ::
 
-	c-s construir --medio="iso|usb" --arquitectura="i386|amd64" --sabor="institucional|popular|primera-base|sabor1|sabor2" [--ayuda]
+	c-s construir [--medio="iso|usb|mixto"] [--arquitectura="i386|amd64|sparc|"] [--sabor="..."] [--ayuda]
 
-+ ``--medio``:  Tipo de imagen que será generada. Coloca "iso" para una imagen ISO grabable en CD/DVD o "usb" para una imagen IMG grabable en dispositivos USB.
++ ``--medio``:  Tipo de imagen que será generada. Coloca "iso" para una imagen ISO grabable en CD/DVD, "usb" para una imagen IMG grabable en dispositivos USB o "mixto" para una imagen que puede ser grabado tanto en medios ópticos como dispositivos USB.
 + ``--arquitectura``:  Arquitectura soportada por la imagen resultante. Canaima GNU/Linux soporta i386 y amd64.
 + ``--sabor``:  Sabor Canaima contenido en la imagen instalable. Debe estar definida en el directorio de los perfiles para poder funcionar.
 + ``--ayuda``:  Muestra la documentación para el ayudante.
@@ -50,12 +54,12 @@ Un perfil está compuesto de varios archivos con nombres específicos colocados 
 
 2.- (*Opcional*) Una imagen PNG llamada "syslinux.png" de una dimensión no mayor a 1024x768 pixeles, la cuál servirá de fondo en el menú de inicio del Medio Vivo.
 
-.. figure:: _static/syslinux.png
+.. figure:: images/syslinux.png
    :width: 640 px
 
 3.- (*Opcional*) Una imagen PNG llamada "banner-instalador.png" de una dimensión exacta de 800x75 pixeles, la cuál será el banner del dialogo del instalador del Medio Vivo.
 
-.. figure:: _static/instalador.png
+.. figure:: images/instalador.png
    :width: 800 px
 
 4.- (*Opcional*) Un archivo de configuración GTKRC llamado "gtkrc-instalador", el cuál albergará los parámetros GTK para modificar la apariencia del instalador. Ver el sabor de
@@ -97,7 +101,7 @@ Uso de la interfaz gráfica
 
 A través de la interfaz gráfica y mediante una serie de sencillos pasos, podrás crear una imagen instalable de los sabores existentes, o si lo prefieres, crear tu propio Sabor Canaima.
 
-.. figure:: _static/portada.png
+.. figure:: images/portada.png
    :align: center
    :alt: Interfaz Gráfica de Canaima Semilla
 
@@ -113,7 +117,7 @@ Creación de imágenes
 
 Canaima Semilla puede crear imágenes instalables (ISO o IMG) basado en los perfiles de sabores existentes. Puede especificársele el tipo de medio, la arquitectura a construir, y el sabor. Las imágenes resultantes del proceso de construcción se guardan en el directorio ``/usr/share/canaima-semilla/semillero/``.
 
-.. figure:: _static/0.png
+.. figure:: images/0.png
    :align: center
    :alt: The Pythagorean Theorem Illustrated
 
@@ -131,7 +135,7 @@ Para crear una imagen instalable debe seleccionar todos los parámetros establec
 
 En este paso debe seleccionar el tipo de imagen que desea generar CD/DVD o USB.
 
-.. figure:: _static/1.png
+.. figure:: images/1.png
    :align: center
    :alt: The Pythagorean Theorem Illustrated
 
@@ -141,7 +145,7 @@ En este paso debe seleccionar el tipo de imagen que desea generar CD/DVD o USB.
 
 En este paso debe seleccionar el tipo de arquitectura soportada por la imagen 32 Bits(i386) o 64 Bits (amd64).
 
-.. figure:: _static/2.png
+.. figure:: images/2.png
    :align: center
    :alt: The Pythagorean Theorem Illustrated
 
@@ -155,7 +159,7 @@ En este paso debe seleccionar el tipo de arquitectura soportada por la imagen 32
 
 En este paso debe ver los sabores existente en la ventana desplegable y elegir cual desea crear.
 
-.. figure:: _static/3.png
+.. figure:: images/3.png
    :align: center
    :alt: The Pythagorean Theorem Illustrated
 
@@ -173,7 +177,7 @@ En este paso debe hacer click en Boton Generar para crear la ISO'S con los param
 
    Es importante tener en cuenta que, si no posee una conexión a internet no podrá crear la imagen.
 
-.. figure:: _static/4.png
+.. figure:: images/4.png
    :align: center
    :alt: The Pythagorean Theorem Illustrated
 
@@ -188,7 +192,7 @@ Finalizado
 Las imágenes resultantes del proceso de construcción se guardan en el
 directorio /usr/share/canaima-semilla/semillero/.
 
-.. figure:: _static/5.png
+.. figure:: images/5.png
    :align: center
    :alt: The Pythagorean Theorem Illustrated
 
@@ -201,7 +205,7 @@ En caso de que desee cancelar la creación de la imagen solo debe seguir los sig
 
 1. Hacer click en el botón de Cancelar. Se desplegara una ventana emergente de decisión, si esta seguro que desea cancelar la construcción de la ISO'S hacer click en “SI”.
 
-.. figure:: _static/cancelar1.png
+.. figure:: images/cancelar1.png
    :align: center
    :alt: The Pythagorean Theorem Illustrated
 
@@ -209,7 +213,7 @@ En caso de que desee cancelar la creación de la imagen solo debe seguir los sig
 
 2. Se desplegará un ventana emergente que indicara que la ISO'S que estaba creando ha sido cancela de forma correcta.
 
-.. figure:: _static/cancelar2.png
+.. figure:: images/cancelar2.png
    :align: center
    :alt: The Pythagorean Theorem Illustrated
 
@@ -217,7 +221,7 @@ En caso de que desee cancelar la creación de la imagen solo debe seguir los sig
 
 . Al hacer click en aceptar, el botón Generar volverá a estar activo para poder crear nuevas imágenes.
 
-.. figure:: _static/cancelar3.png
+.. figure:: images/cancelar3.png
    :align: center
    :alt: The Pythagorean Theorem Illustrated
 
@@ -228,7 +232,7 @@ Diagnóstico de errores
 
 En caso de que ocurra un error en la construcción de la imagen saldra un ventana con el siguiente mensaje:
 
-.. figure:: _static/error.png
+.. figure:: images/error.png
    :align: center
    :alt: The Pythagorean Theorem Illustrated
 
@@ -238,7 +242,7 @@ Para informar sobre el problema ocurrido debe seguir los siguientes pasos:
 
 1. Debe ir a la siguiente dirección /usr/share/canaima-semilla/semillero/ y encontrar un archivo llamado binary.log que contiene todos los procesos de construcción de la imagen.
 
-.. figure:: _static/binary.png
+.. figure:: images/binary.png
    :align: center
    :alt: The Pythagorean Theorem Illustrated
 
@@ -259,7 +263,7 @@ Un perfil está compuesto de varios archivos con nombres específicos colocados 
 
 Al iniciar Canaima Semilla, muestra la ventana Bienvenido, una vez allí debe seleccionar "Construir Nuevo Sabor"
 
-.. figure:: _static/paso0.png
+.. figure:: images/paso0.png
    :align: center
    :alt: Ejemplo de la ventana Bienvenido
 
@@ -272,7 +276,7 @@ Paso 1
 
 Crear Carpeta La cual será creada con el nombre del sabor en letras minúsculas.
 
-.. figure:: _static/paso1.png
+.. figure:: images/paso1.png
    :align: center
    :alt: Ejemplo de una ventana para crear la carpeta contenedora del sabor
 
@@ -282,7 +286,7 @@ Crear Carpeta La cual será creada con el nombre del sabor en letras minúsculas
 
    Para que la carpeta pueda ser creada debe dar clic en el boton "Siguiente>", de lo contrario la carpeta no se creará.
 
-.. figure:: _static/paso1-2.png
+.. figure:: images/paso1-2.png
    :align: center
    :alt: Ejemplo de una ventana con la carpeta del sabor creada con éxito
 
@@ -295,7 +299,7 @@ Paso 2
 
 Crear un archivo llamado “sabor.conf”,el cual contiene una serie de parámetros que deben especificarse para poder crear el nuevo sabor.
 
-.. figure:: _static/paso2.png
+.. figure:: images/paso2.png
    :align: center
    :alt: Ejemplo de una ventana para configurar el archivo sabor.config
 
@@ -313,13 +317,13 @@ Opciones
 
 Para validar los paquetes que seran introducidos en Paquetes disponibles en el Mirror y Paquetes Extra se debe escribir el paquete en letras minúsculas dentro campo de texto y dar clic en el botón "Validar" y así visualizarlo en el cuadro de texto.
 
-.. figure:: _static/paso2-1.png
+.. figure:: images/paso2-1.png
    :align: center
    :alt: Validando un paquete existente para el archivo sabor.config
 
    5.5Validando un paquete existente para el archivo sabor.config
 
-.. figure:: _static/paso2-2.png
+.. figure:: images/paso2-2.png
    :align: center
    :alt: Validando un paquete no existente para el archivo sabor.config
 
@@ -329,7 +333,7 @@ Para validar los paquetes que seran introducidos en Paquetes disponibles en el M
 
    Una vez especificados los parámetros del archivo "sabor.config" se debe dar clic en el botón "Siguiente>", para que los cambios se efectuen, de lo contrario no se efectuarán.
 
-.. figure:: _static/paso2-3.png
+.. figure:: images/paso2-3.png
    :align: center
    :alt: Ejemplo de una ventana con el archivo "sabor.config" creado con éxito
 
@@ -342,13 +346,13 @@ En este paso se crea un archivo de extensión "\*.binary" (pudiendo tener cualqu
 
 El primer paso para crear el archivo "\*.binary" es especificarle un nombre y luego validar cada uno de los repositorios que desee incluir, especificando la rama y la sección del repositorio con el fin de verificarlos. Por último debe dar clic en "Siguiente>" para aplicar los cambios efectuados y continuar.
 
-.. figure:: _static/paso3-1.png
+.. figure:: images/paso3-1.png
    :align: center
    :alt: Ejemplo de ventana configurando el archivo ".binary"
 
    5.8Ejemplo de ventana configurando el archivo ".binary"
 
-.. figure:: _static/paso3-2.png
+.. figure:: images/paso3-2.png
    :align: center
    :alt: Ejemplo de ventana con el archivo ".binary" creado con éxito
 
@@ -363,7 +367,7 @@ instalador del Medio Vivo, que servirán a la hora de instalar su distribución.
 + Imagen PNG llamada “syslinux.png” de una dimensión no mayor a 1024x768 pixeles, la cuál servirá de fondo en el menú de inicio del Medio Vivo.
 + Imagen PNG llamada “banner-instalador.png” de una dimensión exacta de 800x75 pixeles, la cuál será el banner del dialogo del instalador del Medio Vivo.
 
-.. figure:: _static/paso4-1.png
+.. figure:: images/paso4-1.png
    :align: center
    :alt: Ejemplo de ventana insertando las imágenes
 
@@ -379,7 +383,7 @@ Si selecciona NO el proceso continuará de manera correcta al Paso 5, donde se c
 
 Si selecciona SI se validarán los paramétros para incluir las imágenes en el nuevo sabor. para que los mismos sean efectuados, de lo contrario las imágenes no se alamacenarán en la carpeta del nuevo sabor.
 
-.. figure:: _static/paso4-3.png
+.. figure:: images/paso4-3.png
    :align: center
    :alt: Ejemplo de ventana para elegir la inclusión de las imágenes
 
@@ -389,7 +393,7 @@ Si selecciona SI se validarán los paramétros para incluir las imágenes en el 
 
    Es importante seleccionar "SI", si desea incliur las imágenes para que los cambios sean efectuados, de lo contrario las imágenes no se alamacenarán en la carpeta del nuevo sabor.
 
-.. figure:: _static/paso4-2.png
+.. figure:: images/paso4-2.png
    :align: center
    :alt: Ejemplo de ventana insertando las imágenes
 
@@ -400,7 +404,7 @@ Paso 5
 
 Por último se mostrará una ventana que permite crear las imagenes ISO, del sabor que usted ha construido y asi poder obtener una imagen grabable del mismo. Debe elegir el Medio (i386 ó amd64) y la Arquitectura (iso ó usb) con la que desea que se cree la imagen.
 
-.. figure:: _static/paso5.png
+.. figure:: images/paso5.png
    :align: center
    :alt: Ejemplo de la ventana para constriur el sabor que se creó
 
