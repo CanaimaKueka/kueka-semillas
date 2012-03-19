@@ -13,11 +13,6 @@
 # Este programa es software libre. Puede redistribuirlo y/o modificarlo bajo los
 # términos de la Licencia Pública General de GNU (versión 3).
 
-# Inicializando variables
-. ${VARIABLES}
-
-# Cargando funciones
-. ${FUNCIONES}
 
 TEMP=`getopt -o c:a:m:s:iI --long conf:,arquitectura:,medio:,sabor:,instalador,no-instalador -n $0 -- "$@"`
 

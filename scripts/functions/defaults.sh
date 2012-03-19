@@ -2,7 +2,8 @@
 #
 # ==============================================================================
 # PAQUETE: canaima-semilla
-# ARCHIVO: c-s.sh
+# ARCHIVO: .sh
+# TIPO: función
 # DESCRIPCIÓN: script principal de shell para la aplicación Canaima Semilla
 # USO: 
 # COPYRIGHT:
@@ -26,62 +27,29 @@
 #
 # CODE IS POETRY
 
-# Determinando directorio de ejecución
-BINDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+CS="canaima-semilla"
 
-# Asignando directorios de trabajo
-if [ "${BINDIR}" == "/usr/bin" ]; then
-	BASEDIR="/usr/share/canaima-semilla/"
-	CONFDIR="/etc/canaima-semilla/"
-else
-	BASEDIR="$( dirname "${BINDIR}" )/"
-	CONFDIR="${BASEDIR}"
-fi
+IDSTRING="${CS}; http://code.google.com/p/canaima-semilla/"
 
-# Cargando valores predeterminados
-. "${BASEDIR}scripts/functions/defaults.sh"
+DISTRIBUTION="${DISTRIBUTION:-$( lsb_release -s -i )}"
 
-# Corriendo rutinas de inicio
-. "${BASEDIR}scripts/functions/init.sh"
+LOCALE="${LOCALE:-${LC_ALL}}"
 
-ACTION=${1}
-shift || true
+CONFIG="${VARFILE:-${CONFDIR}variables.conf}"
 
-# Delegando acciones a los módulos/comandos
-case ${ACTION} in
-	-h|--ayuda|--help)
-		if [ -x "$( which man 2>/dev/null )" ]; then
-			man canaima-semilla
-			exit 0
-		else
-			USO
-			exit 0
-		fi
-	;;
+LIBRARY="${FUNCTIONS:-${BASEDIR}scripts/functions.sh}"
 
-	-u|--uso|--usage|'')
-		USO
-		exit 0
-	;;
+FUNCTIONDIR="${FUNCTIONDIR:-${BASEDIR}scripts/functions/}"
 
-	-v|--version|--about)
-		VERSION
-		exit 0
-	;;
+MODULEDIR="${MODULEDIR:-${BASEDIR}scripts/modules/}"
 
-	build|construir)
-		HANDLER "build.sh" "${BINDIR}" "${BASEDIR}" "${CONFDIR}"
-	;;
+PROFILES="${PROFILES:-${BASEDIR}profiles/}"
 
-	profile|perfil)
-		HANDLER "profile.sh"
-	;;
+SCRIPTS="${SCRIPTS:-${BASEDIR}scripts/}"
 
-	test|probar)
-		HANDLER "test.sh"
-	;;
+ISODIR="${ISODIR:-${BASEDIR}semillero/}"
 
-	*)
-		HANDLER "${ACTION}.sh"
-	;;
-esac
+
+
+
+
