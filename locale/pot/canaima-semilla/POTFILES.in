@@ -1,4 +1,8 @@
-../../../scripts/funciones-semilla.sh
-../../../scripts/canaima-semilla.sh
-../../../scripts/canaima-semilla-construir.sh
-../../../scripts/manual-canaima-semilla.sh
+../../../scripts/modules/build.sh
+../../../scripts/c-s.sh
+../../../scripts/functions/config.sh
+../../../scripts/functions/color.sh
+../../../scripts/functions/misc.sh
+../../../scripts/functions/defaults.sh
+../../../scripts/functions/init.sh
+../../../scripts/functions.sh

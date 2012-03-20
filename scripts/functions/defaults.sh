@@ -27,13 +27,15 @@
 #
 # CODE IS POETRY
 
-CS="canaima-semilla"
+DATE="$( date +%Y%m%d%H%M%S )"
 
-IDSTRING="${CS}; http://code.google.com/p/canaima-semilla/"
+CS_PKG="canaima-semilla"
 
-DISTRIBUTION="${DISTRIBUTION:-$( lsb_release -s -i )}"
+CS_NAME="Canaima Semilla"
 
-LOCALE="${LOCALE:-${LC_ALL}}"
+LB_VERSION="$( dpkg-query --show --showformat='${Version}\n' live-build )"
+
+IDSTRING="${CS_NAME}; http://code.google.com/p/canaima-semilla/"
 
 CONFIG="${VARFILE:-${CONFDIR}variables.conf}"
 
@@ -49,6 +51,49 @@ SCRIPTS="${SCRIPTS:-${BASEDIR}scripts/}"
 
 ISODIR="${ISODIR:-${BASEDIR}semillero/}"
 
+AUTHOR_NAME="${AUTHOR_NAME:-Equipo de desarrollo de Canaima GNU/Linux}"
+AUTHOR_EMAIL="${AUTHOR_EMAIL:-desarrolladores@canaima.softwarelibre.gob.ve}"
+AUTHOR_URL="${AUTHOR_URL:-http://canaima.softwarelibre.gob.ve/}"
+
+META_DISTRO="${META_DISTRO:-$( echo "$( lsb_release -s -i )" | tr '[:upper:]' '[:lower:]' )}"
+META_CODENAME="${META_CODENAME:-$( echo "$( lsb_release -s -c )" | tr '[:upper:]' '[:lower:]' )}"
+
+case ${META_DISTRO} in
+	debian)
+		META_REPO="${META_REPO:-http://ftp.us.debian.org/debian/}"
+		META_REPOSECTIONS="${META_REPOSECTIONS:-main contrib non-free}"
+	;;
+
+	canaima)
+		META_REPO="${META_REPO:-http://universo.canaima.softwarelibre.gob.ve/}"
+		META_REPOSECTIONS="${META_REPOSECTIONS:-main contrib non-free}"
+	;;
+
+	ubuntu)
+		META_REPO="${META_REPO:-http://archive.ubuntu.com/ubuntu/}"
+		META_REPOSECTIONS="${META_REPOSECTIONS:-main restricted}"
+	;;
+
+	*)
+		META_REPO="${META_REPO:-http://universo.canaima.softwarelibre.gob.ve/}"
+		META_REPOSECTIONS="${META_REPOSECTIONS:-main contrib non-free}"
+	;;
+esac
+
+OS_PACKAGES="${OS_PACKAGES:-gnome-core xorg}"
+OS_BOOTLOADER="${OS_BOOTLOADER:-grub}"
+OS_LOCALE="${OS_LOCALE:-${LC_ALL}}"
+OS_INCLUDES="${OS_INCLUDES:-}"
+OS_HOOKS="${OS_HOOKS:-}"
+
+IMG_POOL_PACKAGES="${IMG_POOL_PACKAGES:-}"
+IMG_SYSLINUX_SPLASH=""
+IMG_DEBIAN_INSTALLER=""
+IMG_DEBIAN_INSTALLER_BANNER=""
+IMG_DEBIAN_INSTALLER_PRESEED=""
+IMG_DEBIAN_INSTALLER_GTK=""
+IMG_INCLUDES="${OS_INCLUDES:-}"
+IMG_HOOKS="${OS_HOOKS:-}"
 
 
 

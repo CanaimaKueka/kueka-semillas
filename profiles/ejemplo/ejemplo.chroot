@@ -1,3 +1,0 @@
-deb http://www.repositorio1.com/ rama componente1 componente2
-deb http://www.repositorio2.com/ rama componente1
-deb http://www.repositorio3.com/ rama componente1 componente2 componente3

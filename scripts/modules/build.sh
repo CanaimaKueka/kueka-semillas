@@ -13,128 +13,214 @@
 # Este programa es software libre. Puede redistribuirlo y/o modificarlo bajo los
 # términos de la Licencia Pública General de GNU (versión 3).
 
+ACTION="${1}"
+shift || true
+BINDIR="${1}"
+shift || true
 
-TEMP=`getopt -o c:a:m:s:iI --long conf:,arquitectura:,medio:,sabor:,instalador,no-instalador -n $0 -- "$@"`
+# Asignando directorios de trabajo
+if [ "${BINDIR}" == "/usr/bin" ]; then
+        BASEDIR="/usr/share/canaima-semilla/"
+        CONFDIR="/etc/canaima-semilla/"
+else
+        BASEDIR="$( dirname "${BINDIR}" )/"
+        CONFDIR="${BASEDIR}"
+fi
 
-if [ $? != 0 ] ; then echo "Terminating..." >&2 ; exit 1 ; fi
-eval set -- "$TEMP"
+# Cargando valores predeterminados
+. "${BASEDIR}scripts/functions/defaults.sh"
 
-install=1
+# Corriendo rutinas de inicio
+. "${BASEDIR}scripts/functions/init.sh"
+
+if [ "${ACTION}" == "construir" ]; then
+	SHORTOPTS="c:a:m:s:i"
+	LONGOPTS="conf:,arquitectura:,medio:,sabor:,sin-instalador"
+elif [ "${ACTION}" == "build" ]; then
+	SHORTOPTS="c:a:m:s:i"
+	LONGOPTS="conf:,arquitectura:,medio:,sabor:,sin-instalador"
+else
+	ERROR "Error interno"
+	exit 1
+fi
+
+OPTIONS="$( getopt --shell="sh" --name="${0}" --options="${SHORTOPTS}" --longoptions="${LONGOPTS}" -- "${@}" )"
+
+if [ $? != 0 ]; then
+	ERROR "Ocurrió un problema interpretando los parámetros."
+	exit 1
+fi
+
+eval set -- "${OPTIONS}"
 
 while true; do
-	case "$1" in
-		-c|--conf) echo "Cargando $2"; . $2; shift 2;;
-		-a|--arquitectura) arch=$2;       shift 2;;
-		-m|--medio)        medio=$2;      shift 2;;
-		-s|--sabor)        sabor=$2;      shift 2;;
-		-i|--instalador)      install=1;  shift 1;;
-		-I|--no-instalador)   install=""; shift 1;;
-                --) shift ; break ;;
-                *) echo "Internal error!" ; exit 1 ;;
+	case "${1}" in
+		-c|--config)
+			EXTRACONF="${2}"
+			shift 2 || true
+		;;
+
+		-a|--arquitectura|--arch)
+			ARCH="${2}"
+			shift 2 || true
+		;;
+
+		-m|--medio|--)
+			MEDIO="${2}"
+			shift 2 || true
+		;;
+
+		-s|--sabor|--profile)
+			SABOR="${2}"
+			shift 2 || true
+		;;
+
+		-i|--instalador-debian|--debian-installer)
+			INSTALADOR=1
+			shift 1
+		;;
+
+		-I|--no-instalador-debian|--no-debian-installer)
+			INSTALADOR=0
+			shift 1
+		;;
+
+                --)
+			shift
+			break
+		;;
+
+                *)
+			ERROR "Ocurrió un problema interpretando los parámetros."
+			exit 1
+		;;
 	esac
 done
 
-#INSTALADOR
-case ${install} in
-	1) INSTALADOR="--debian-installer=live";;
-	*)
-		INSTALADOR="--debian-installer=false"
-		ADVERTENCIA 'No se incluirá el instalador.'
-		;;
-esac
+PCONF="${ISODIR}config"
+PCONFBKP="${ISODIR}config.${DATE}.backup"
 
-#ARQUITECTURA
-if [ -z ${arch} ]; then
-	arch=`dpkg --print-architecture`
-	ADVERTENCIA "No especificaste una arquitectura, utilizando \"$arch\" presente en el sistema."
+if [ -d "${PCONF}" ]; then
+        mv "${PCONF}" "${PCONFBKP}"
 fi
 
-SABOR_KERNEL=$arch
+ADVERTENCIA "Limpiando residuos de construcciones anteriores ..."
+rm -rf 	${ISODIR}.stage \
+	${ISODIR}auto \
+	${ISODIR}binary.log \
+	${ISODIR}cache/stages_bootstrap
 
-case ${arch} in
-	i386)  SABOR_KERNEL=686;;
-	amd64) SABOR_KERNEL=amd64;;
-	*)     ERROR "Arquitectura \"$arch\" no soportada en Canaima. Abortando.";;
-esac
-
-#SABOR
-if [ -z ${sabor} ]; then
-	if [ -z ${SABOR} ]; then
-		sabor="popular"
-		ADVERTENCIA 'No especificaste un sabor, utilizando sabor "popular" por defecto.'
-	else
-		sabor=${SABOR}
-	fi
-elif [ -n ${SABOR} -a ${sabor} != ${SABOR} ]; then
-	ADVERTENCIA "La configuración tiene el sabor '$SABOR', pero la linea de comando especifico '$sabor', preferiendo '$sabor'."
-fi
-
-if [ -f ${ISO_DIR}config ]; then
-	mv ${ISO_DIR}config ${ISO_DIR}config.bak
-fi
-rm -rf ${ISO_DIR}config
-
-if [ -d "${PLANTILLAS}/$sabor" ]; then
-	CONFIGURAR_SABOR $sabor
-else
-	ADVERTENCIA "no se encontro ninguna plantilla para el sabor: $sabor"
-fi
-
-if [ -e ${ISO_DIR}config/sabor-configurado ]; then
-EXITO "Sabor: ${sabor}"
-else
-ERROR 'Sabor "'${sabor}'" desconocido o no disponible. Abortando.'
-fi
-
-# Establecemos medio "iso", en caso de no especificar ninguno
-if [ -z ${medio} ]; then
-	medio="iso-hybrid"
-	ADVERTENCIA "No especificaste un medio, utilizando sabor $medio por defecto."
-fi
-
-case ${medio} in
-	usb|usb-hdd|img|USB)
-		MEDIO="usb-hdd"
-		TYPO_MEDIO="Dispositivos de almacenamiento extraíble (USB)"
-		;;
-	iso|ISO|CD|DVD)
-		MEDIO="iso"
-		TYPO_MEDIO="Dispositivos de almacenamiento extraíble (CD/DVD)"
-		;;
-	iso-hybrid|hibrido|mixto)
-		MEDIO="iso-hybrid"
-		TYPO_MEDIO="Dispositivo de almacenamiento extraíble (CD/DVD) con multi-arquitectura"
-		;;
-	*)
-		ERROR 'Medio "'${MEDIO}'" no reconocido por Canaima. Abortando.'
-		;;
-esac
-
-EXITO "Medio: ${TYPO_MEDIO}"
-
-SEMILLA_BOOTSTRAP=${MIRROR_DEBIAN}
-SEMILLA_CHROOT=${MIRROR_DEBIAN}
-SEMILLA_BINARY=${MIRROR_DEBIAN}
-
-if [ ! -d ${ISO_DIR} ]; then
-	ADVERTENCIA "${ISO_DIR} no existe, creando"
-	mkdir -p ${ISO_DIR}
-fi
-
-cd ${ISO_DIR}
-
-ADVERTENCIA "Limpiando posibles residuos de construcciones anteriores ..."
-rm -rf ${ISO_DIR}.stage ${ISO_DIR}auto ${ISO_DIR}binary.log ${ISO_DIR}cache/stages_bootstrap/
 lb clean
 
-if [ ! -z "$SABOR_PAQUETES" ]; then
-	mkdir -p config/package-lists
-	echo ${SABOR_PAQUETES} | xargs -n1 > config/package-lists/${DISTRO}-${sabor}.list
-#	pkglist_arg="--package-lists=${DISTRO}-${sabor}"
-else
-	ADVERTENCIA "No tiene paquetes especificos, esta seguro ?"
+# INSTALADOR
+case ${INSTALADOR} in
+	1)
+		INSTALADOR="live"
+	;;
+
+	*)
+		INSTALADOR="false"
+		ADVERTENCIA "No se incluirá el Instalador Debian."
+	;;
+esac
+
+# ARQUITECTURA
+if [ -z "${ARCH}" ]; then
+	ARCH="$( dpkg --print-architecture )"
+	ADVERTENCIA "No especificaste una arquitectura, utilizando \"${ARCH}\" presente en el sistema."
 fi
+
+case ${ARCH} in
+	amd64|x64|64|x86_64)
+		ARCH="amd64"
+		KERNEL_ARCH="amd64"
+		EXITO "Arquitectura: amd64"
+	;;
+
+	i386|486|686|i686)
+		ARCH="i386"
+		KERNEL_ARCH="686"
+		EXITO "Arquitectura: i386"
+	;;
+
+	*)
+		ERROR "Arquitectura \"${ARCH}\" no soportada por ${CS_NAME}. Abortando."
+		exit 1
+	;;
+esac
+
+# MEDIO
+if [ -z "${MEDIO}" ]; then
+	MEDIO="iso-hybrid"
+	ADVERTENCIA "No especificaste un tipo de formato para la imagen, utilizando medio \"${MEDIO}\" por defecto."
+fi
+
+case ${MEDIO} in
+	usb|usb-hdd|img|USB)
+		MEDIO="usb-hdd"
+		MEDIO_S="Imagen para dispositivos de almacenamiento extraíble (USB)"
+		EXITO "Medio: ${MEDIO_S}"
+	;;
+
+	iso|ISO|CD|DVD)
+		MEDIO="iso"
+		MEDIO_S="Imagen para dispositivos ópticos de almacenamiento (CD/DVD)"
+		EXITO "Medio: ${MEDIO_S}"
+	;;
+
+	iso-hybrid|hibrido|mixto|hybrid)
+		MEDIO="iso-hybrid"
+		MEDIO_S="Imagen mixta para dispositivos de almacenamiento (CD/DVD/USB)"
+		EXITO "Medio: ${MEDIO_S}"
+	;;
+
+	*)
+		ERROR "Tipo de formato \"${MEDIO}\" no reconocido por ${CS_NAME}. Abortando."
+		exit 1
+	;;
+esac
+
+# SABOR
+if [ -z "${SABOR}" ]; then
+	SABOR="popular"
+	ADVERTENCIA "No especificaste un sabor, utilizando sabor \"popular\" por defecto."
+fi
+
+PCONFFILE="${PROFILES}${SABOR}/profile.conf"
+PCONFIGURED="${ISODIR}config/profile-configured"
+
+if [ -d "${PROFILES}${SABOR}" ]; then
+	if [ -f "${PCONFFILE}" ]; then
+		. "${PCONFFILE}"
+
+		if [ -f "${EXTRACONF}" ]; then
+			. "${EXTRACONF}"
+		fi
+
+		CS_BUILD_CONFIG "${SABOR}" "${ACTION}"
+	else
+		ERROR "El perfil \"${SABOR}\" no posee configuración en \"${PCONFFILE}\""
+		exit 1
+	fi
+else
+	ERROR "El perfil \"${SABOR}\" no existe dentro de la carpeta de perfiles \"${PROFILES}\"."
+	exit 1
+fi
+
+if [ -f "${PCONFIGURED}" ]; then
+	EXITO "Sabor: ${SABOR}"
+	rm -rf "${PCONFIGURED}"
+else
+	ERROR "El perfil \"${SABOR}\" no logró configurarse correctamente. Abortando."
+	exit 1
+fi
+
+CS_BOOTSTRAP="${MIRROR_DEBIAN}"
+CS_CHROOT="${MIRROR_DEBIAN}"
+CS_BINARY="${MIRROR_DEBIAN}"
+
 ADVERTENCIA "Generando árbol de configuraciones ..."
+cd ${ISODIR}
 lb config --architecture="${arch}" \
 	--distribution="${SABOR_DIST}" \
 	--apt="aptitude" --apt-recommends="false" \
@@ -164,6 +250,42 @@ lb config --architecture="${arch}" \
 	--win32-loader="false" \
 	--bootappend-install="locale=${LOCALE}" \
 	${NULL}
+
+	--architecture="${ARCH}" \
+	--distribution="${SABOR_DIST}" \
+	--apt="aptitude" \
+	--apt-recommends="false" \
+	--bootloader="syslinux" \
+	--binary-images="${MEDIO}" \
+	--bootstrap="debootstrap" \
+	--binary-indices="false" \
+	--includes="none" \
+	--username="canaima" \
+	--hostname="${DISTRIBUTION}-${SABOR}" \
+	--mirror-chroot-security="none" \
+	--mirror-binary-security="none" \
+	--language="es" \
+	--bootappend-live="locale=es_VE.UTF-8 keyb=es quiet splash vga=791 live-config.user-fullname=Canaima" \
+	--security="false" \
+	--volatile="false" \
+	--backports="false" \
+	--source="false" \
+	--iso-preparer="${PREPARADO_POR}" \
+	--iso-volume="canaima-${SABOR}" \
+	--iso-publisher="${PUBLICADO_POR}" \
+	--iso-application="${APLICACION}" \
+	--mirror-bootstrap="${SEMILLA_BOOTSTRAP}" \
+	--mirror-binary="${SEMILLA_BINARY}" \
+	--mirror-chroot="${SEMILLA_CHROOT}" \
+	--memtest="none" \
+	--linux-flavours="${SABOR_KERNEL}" \
+	--syslinux-menu="true" \
+	--syslinux-timeout="5" \
+	--archive-areas="${COMP_MIRROR_DEBIAN}" ${INSTALADOR} \
+	--packages="${SABOR_PAQUETES}" \
+	--syslinux-splash="${SABOR_SYSPLASH}" \
+	--win32-loader="false" \
+	--bootappend-install="locale=es_VE.UTF-8"
 
 # 	--binary-indices="false" \
 # 	--language="es" \

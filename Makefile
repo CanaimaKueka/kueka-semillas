@@ -109,11 +109,13 @@ gen-img: check-buildep clean-img
 	@printf "Generando imágenes desde las fuentes [SVG > JPG,ICO] ["
 	@for IMAGE in $(IMAGES); do \
 		$(CONVERT) -background None documentation/rest/images/$${IMAGE}.svg \
+			documentation/rest/images/$${IMAGE}.png; \
+		$(CONVERT) -background None documentation/rest/images/$${IMAGE}.png \
 			documentation/rest/images/$${IMAGE}.jpg; \
 		printf "."; \
 	done;
 	@$(ICOTOOL) -c -o documentation/rest/images/favicon.ico \
-		documentation/rest/images/favicon.jpg
+		documentation/rest/images/favicon.png
 	@printf "]\n"
 
 gen-mo: check-buildep clean-mo
@@ -250,6 +252,7 @@ clean-img:
 	@printf "Cleaning generated images [JPG,ICO] ["
 	@for IMAGE in $(IMAGES); do \
 		rm -rf documentation/rest/images/$${IMAGE}.jpg; \
+		rm -rf documentation/rest/images/$${IMAGE}.png; \
 		printf "."; \
 	done
 	@rm -rf documentation/rest/images/favicon.ico

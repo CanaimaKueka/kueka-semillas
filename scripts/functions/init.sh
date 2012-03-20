@@ -3,7 +3,7 @@
 
 # Inicializando variables
 # Un archivo variables.conf en ${ISODIR} sobreescribe la configuración por defecto
-for FILE in ${CONFIG} ${ISODIR}/variables.conf; do
+for FILE in ${CONFIG} ${ISODIR}variables.conf; do
 	if [ -f "${FILE}" ]; then
 		. "${FILE}"
 	fi
@@ -11,7 +11,7 @@ done
 
 # Inicializando funciones
 # Un archivo lib.sh en ${ISODIR} sobreescribe la configuración por defecto
-for FILE in ${LIBRARY} ${ISODIR}/functions.sh; do
+for FILE in ${LIBRARY} ${ISODIR}functions.sh; do
 	if [ -f "${FILE}" ]; then
 		. "${FILE}"
 	fi

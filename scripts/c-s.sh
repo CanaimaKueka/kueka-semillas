@@ -70,18 +70,22 @@ case ${ACTION} in
 	;;
 
 	build|construir)
-		HANDLER "build.sh" "${BINDIR}" "${BASEDIR}" "${CONFDIR}"
+		HANDLER "build.sh" "${ACTION}" "${BINDIR}" "${@}"
 	;;
 
 	profile|perfil)
-		HANDLER "profile.sh"
+		HANDLER "profile.sh" "${ACTION}" "${BINDIR}" "${@}"
 	;;
 
 	test|probar)
-		HANDLER "test.sh"
+		HANDLER "test.sh" "${ACTION}" "${BINDIR}" "${@}"
+	;;
+
+	burn|quemar)
+		HANDLER "burn.sh" "${ACTION}" "${BINDIR}" "${@}"
 	;;
 
 	*)
-		HANDLER "${ACTION}.sh"
+		HANDLER "${ACTION}.sh" "${ACTION}" "${BINDIR}" "${@}"
 	;;
 esac

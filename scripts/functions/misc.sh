@@ -2,18 +2,27 @@
 
 function HANDLER() {
 
-	if [ -z "${1}" ]; then
-		ERROR "La función \"${FUNCNAME}\" necesita un argumento."
+	MODULE="${1}"
+	shift || true
+	ACTION="${1}"
+	shift || true
+	BINDIR="${1}"
+	shift || true
+
+	if [ -z "${MODULE}" ]; then
+		ERROR "La función \"${FUNCNAME}\" necesita el nombre de un módulo como primer argumento."
 	fi
 
-	MODULE=${1}
+	if [ -z "${BINDIR}" ]; then
+		ERROR "La función \"${FUNCNAME}\" necesita el nombre de un directorio como segundo argumento."
+	fi
 
 	if [ -x "${MODULEDIR}${MODULE}" ]; then
-		exec "${MODULEDIR}${MODULE}" "$@"
+		exec "${MODULEDIR}${MODULE}" "${ACTION}" "${BINDIR}" "${@}"
 	elif [ -x "/usr/share/canaima-semilla/scripts/modules/${MODULE}" ]; then
-		exec "/usr/share/canaima-semilla/scripts/modules/${MODULE}" "$@"
+		exec "/usr/share/canaima-semilla/scripts/modules/${MODULE}" "${ACTION}" "${BINDIR}" "${@}"
 	elif [ -x "$( which "${MODULE}" 2>/dev/null )" ]; then
-		exec "${MODULE}" "$@"
+		exec "${MODULE}" "${ACTION}" "${BINDIR}" "${@}"
 	else
 		ERROR "No se ha encontrado \"${MODULE}\", en la carpeta de módulos \"${MODULEDIR}\"."
 		ERROR "Por favor reinstala canaima-semilla o verifica que has escrito bien el comando."

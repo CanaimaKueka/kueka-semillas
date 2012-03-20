@@ -1,0 +1,526 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>1. Contenido &mdash; Documentación para Canaima Semilla</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '2.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/translations.js"></script>
+    <link rel="shortcut icon" href="_static/favicon.ico"/>
+    <link rel="top" title="Documentación para Canaima Semilla" href="index.html" />
+    <link rel="prev" title="Canaima Semilla" href="index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navegación</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="Índice General"
+             accesskey="I">índice</a></li>
+        <li class="right" >
+          <a href="index.html" title="Canaima Semilla"
+             accesskey="P">anterior</a> |</li>
+        <li><a href="index.html">Documentación para Canaima Semilla</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="contenido">
+<h1>1. <strong>Contenido</strong><a class="headerlink" href="#contenido" title="Enlazar permanentemente con este título">¶</a></h1>
+<p>La creación de <em>ímagenes ISO</em> o <em>medios vivos</em> se realiza a través de perfiles de <em>sabores</em> o <em>distribuciones derivadas</em>. Cualquier persona puede crear distribuciones basadas en Canaima, Ubuntu o Debian, a través de la configuración de perfiles o la utilización de perfiles preestablecidos.</p>
+<p>Canaima Semilla posee una interfaz en modo texto, accesible a través de la línea de comandos (terminal) y diseñada para entornos de servidores o para usuarios experimentados. La interfaz gráfica, permite una experiencia más intuitiva para quienes se inician en el uso de la herramienta.</p>
+<div class="section" id="uso-de-la-interfaz-en-modo-texto">
+<h2>1.1. Uso de la interfaz en modo texto<a class="headerlink" href="#uso-de-la-interfaz-en-modo-texto" title="Enlazar permanentemente con este título">¶</a></h2>
+<div class="section" id="creacion-de-imagenes">
+<h3>1.1.1. Creación de imágenes<a class="headerlink" href="#creacion-de-imagenes" title="Enlazar permanentemente con este título">¶</a></h3>
+<p>Crea una imagen instalable basada en alguno de los perfiles existentes. Puede especificársele el tipo de medio, la arquitectura a construir, y el nombre del sabor. Las imágenes resultantes del proceso de construcción se guardan en el directorio <tt class="docutils literal"><span class="pre">/usr/share/canaima-semilla/semillero/</span></tt>.</p>
+<div class="section" id="modo-de-uso">
+<h4>1.1.1.1. Modo de uso<a class="headerlink" href="#modo-de-uso" title="Enlazar permanentemente con este título">¶</a></h4>
+<div class="highlight-python"><pre>c-s construir [--medio="iso|usb|mixto"] [--arquitectura="i386|amd64|sparc|"] [--sabor="..."] [--ayuda]</pre>
+</div>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">--medio</span></tt>:  Tipo de imagen que será generada. Coloca &#8220;iso&#8221; para una imagen ISO grabable en CD/DVD, &#8220;usb&#8221; para una imagen IMG grabable en dispositivos USB o &#8220;mixto&#8221; para una imagen que puede ser grabado tanto en medios ópticos como dispositivos USB.</li>
+<li><tt class="docutils literal"><span class="pre">--arquitectura</span></tt>:  Arquitectura soportada por la imagen resultante. Canaima GNU/Linux soporta i386 y amd64.</li>
+<li><tt class="docutils literal"><span class="pre">--sabor</span></tt>:  Sabor Canaima contenido en la imagen instalable. Debe estar definida en el directorio de los perfiles para poder funcionar.</li>
+<li><tt class="docutils literal"><span class="pre">--ayuda</span></tt>:  Muestra la documentación para el ayudante.</li>
+</ul>
+</div>
+</div>
+<div class="section" id="creacion-de-perfiles">
+<h3>1.1.2. Creación de perfiles<a class="headerlink" href="#creacion-de-perfiles" title="Enlazar permanentemente con este título">¶</a></h3>
+<p>Canaima Semilla facilita la creación de Sabores Canaima mediante el establecimiento de reglas o perfiles que definen los componentes que integran el sabor.
+Un perfil está compuesto de varios archivos con nombres específicos colocados dentro de una carpeta que lleve por nombre el nombre del sabor en minúsculas . La carpeta contendrá:</p>
+<p>1.- (<em>Obligatorio</em>) Un archivo llamado &#8220;sabor.conf&#8221; con las siguientes variables y sus valores:</p>
+<blockquote>
+<div><ul>
+<li><dl class="first docutils">
+<dt>&#8220;PUBLICADO_POR&#8221;: Individuo o colectivo que publica la imagen.</dt>
+<dd><p class="first last">Ejemplo: PUBLICADO_POR=&#8221;Canaima GNU/Linux; <a class="reference external" href="http://canaima.softwarelibre.gob.ve/">http://canaima.softwarelibre.gob.ve/</a>&#8220;</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>&#8220;SABOR_DIST&#8221;: Distribución Debian en la que se basa el sabor.</dt>
+<dd><p class="first last">Ejemplo: SABOR_DIST=&#8221;squeeze&#8221;</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>&#8220;APLICACION&#8221;: Nombre de la Metadistribución.</dt>
+<dd><p class="first last">Ejemplo: APLICACION=&#8221;Canaima GNU/Linux&#8221;</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>&#8220;MIRROR_DEBIAN&#8221;: Mirror de Debian desde donde se extraerán los paquetes que contendrá la la imagen. Los repositorios extra se definen en los archivos *.binary y *.chroot definidos más adelante. Se pueden especificar mirrors locales o remotos.</dt>
+<dd><p class="first last">Ejemplo: MIRROR_DEBIAN=&#8221;<a class="reference external" href="http://universo.canaima.softwarelibre.gob.ve/">http://universo.canaima.softwarelibre.gob.ve/</a>&#8220;</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>&#8220;COMP_MIRROR_DEBIAN&#8221;: Componentes del MIRROR_DEBIAN a estar disponibles para la construcción de la imagen.</dt>
+<dd><p class="first last">Ejemplo: COMP_MIRROR_DEBIAN=&#8221;main contrib non-free&#8221;</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>&#8220;SABOR_PAQUETES&#8221;: Lista de paquetes disponibles en MIRROR_DEBIAN o en alguna lista de repositorios extra.</dt>
+<dd><p class="first last">Ejemplo: SABOR_PAQUETES=&#8221;canaima-base canaima-instalador-vivo canaima-blobs&#8221;</p>
+</dd>
+</dl>
+</li>
+</ul>
+</div></blockquote>
+<p>2.- (<em>Opcional</em>) Una imagen PNG llamada &#8220;syslinux.png&#8221; de una dimensión no mayor a 1024x768 pixeles, la cuál servirá de fondo en el menú de inicio del Medio Vivo.</p>
+<div class="figure">
+<img alt="_images/syslinux.png" src="_images/syslinux.png" style="width: 640px;" />
+</div>
+<p>3.- (<em>Opcional</em>) Una imagen PNG llamada &#8220;banner-instalador.png&#8221; de una dimensión exacta de 800x75 pixeles, la cuál será el banner del dialogo del instalador del Medio Vivo.</p>
+<div class="figure">
+<img alt="_images/instalador.png" src="_images/instalador.png" style="width: 800px;" />
+</div>
+<p>4.- (<em>Opcional</em>) Un archivo de configuración GTKRC llamado &#8220;gtkrc-instalador&#8221;, el cuál albergará los parámetros GTK para modificar la apariencia del instalador. Ver el sabor de</p>
+<p>5.- (<em>Opcional</em>) Un par de archivos para definir repositorios extra en la etapa de instalación de paquetes finales (BINARY):</p>
+<blockquote>
+<div><ul>
+<li><dl class="first docutils">
+<dt>Uno de extensión *.binary (pudiendo tener cualquier nombre), que contenga una lista de repositorios extra necesarios para la instalación de paquetes no incluídos en MIRROR_DEBIAN y especificados en SABOR_PAQUETES.</dt>
+<dd><dl class="first last docutils">
+<dt>Ejemplo: canaima.binary</dt>
+<dd><p class="first last">deb <a class="reference external" href="http://repositorio.canaima.softwarelibre.gob.ve/">http://repositorio.canaima.softwarelibre.gob.ve/</a> pruebas usuarios
+deb <a class="reference external" href="http://seguridad.canaima.softwarelibre.gob.ve/">http://seguridad.canaima.softwarelibre.gob.ve/</a> seguridad usuarios</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</li>
+<li><p class="first">Otro de extensión *.binary.gpg, conteniendo la (o las) llave(s) GPG válida(s) correspondientes a los repositorios listados en el archivo *.binary.</p>
+</li>
+</ul>
+</div></blockquote>
+<p>6.- (<em>Opcional</em>) Un par de archivos para definir repositorios extra en la etapa de instalación del sistema base inicial (CHROOT):</p>
+<blockquote>
+<div><ul>
+<li><dl class="first docutils">
+<dt>Uno de extensión *.chroot (pudiendo tener cualquier nombre), que contenga una lista de repositorios extra necesarios para la instalación de paquetes no incluídos en MIRROR_DEBIAN y especificados en SABOR_PAQUETES.</dt>
+<dd><dl class="first last docutils">
+<dt>Ejemplo: canaima.chroot</dt>
+<dd><p class="first last">deb <a class="reference external" href="http://repositorio.canaima.softwarelibre.gob.ve/">http://repositorio.canaima.softwarelibre.gob.ve/</a> pruebas usuarios
+deb <a class="reference external" href="http://seguridad.canaima.softwarelibre.gob.ve/">http://seguridad.canaima.softwarelibre.gob.ve/</a> seguridad usuarios</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</li>
+<li><p class="first">Otro de extensión *.chroot.gpg (con nombre igual al anterior), conteniendo la (o las) llave(s) GPG válida(s) correspondientes a los repositorios listados en el archivo *.chroot.</p>
+</li>
+</ul>
+</div></blockquote>
+<p>7.- (<em>Opcional</em>) Un archivo llamado &#8220;preseed-debconf&#8221; en donde se incluirán los parámetros debconf que se quieran modificar en el modo nVivo del medio instalable.</p>
+<p>8.- (<em>Opcional</em>) Un archivo llamado &#8220;preseed-instalador&#8221; en donde se incluirán los parámetros debconf a modificar en el instalador.</p>
+<p>Se provee en la dirección de los perfiles (/usr/share/canaima-semilla/perfiles) un perfil de ejemplo, el cuál podrá ser utilizado como base para nuevos sabores. La ausencia de alguno de los archivos Opcionales causará que Canaima Semilla use los valores por defecto (Debian).</p>
+<p>Los perfiles se definen en la carpeta &#8220;/usr/share/canaima-semilla/perfiles&#8221;, para la cual debes tener permisos de superusuario si deseas editarla. La mejor forma de crear un nuevo sabor, es duplicar la carpeta de ejemplo y comenzar a editar sus archivos hasta obtener el resultado esperado.</p>
+</div>
+<div class="section" id="sugerencias">
+<h3>1.1.3. Sugerencias<a class="headerlink" href="#sugerencias" title="Enlazar permanentemente con este título">¶</a></h3>
+<ul class="simple">
+<li>Optimizar la estructura de paquetes del sabor a construir. Lo ideal es que los paquetes se encuentren organizados y agrupados en metapaquetes, de forma tal de que con incluir unos pocos paquetes en SABOR_PAQUETES, todo el árbol de dependencias sea incluído.</li>
+<li>No utilizar scripts de configuración. Toda configuración adcional que se desee realizar al medio vivo, debe ser incorporado en paquetes detro de su respectivo postinst.</li>
+</ul>
+</div>
+</div>
+<div class="section" id="uso-de-la-interfaz-grafica">
+<h2>1.2. Uso de la interfaz gráfica<a class="headerlink" href="#uso-de-la-interfaz-grafica" title="Enlazar permanentemente con este título">¶</a></h2>
+<p>A través de la interfaz gráfica y mediante una serie de sencillos pasos, podrás crear una imagen instalable de los sabores existentes, o si lo prefieres, crear tu propio Sabor Canaima.</p>
+<div class="figure align-center">
+<img alt="Interfaz Gráfica de Canaima Semilla" src="_images/portada.png" />
+<p class="caption"><strong>Figura 1.1. Interfaz Gráfica de Canaima Semilla</strong></p>
+</div>
+<p>Debe seleccionar alguna de las opciones:</p>
+<ul class="simple">
+<li>Crear ISO&#8217;S</li>
+<li>Construir Nuevo Sabor</li>
+</ul>
+<div class="section" id="id1">
+<h3>1.2.1. Creación de imágenes<a class="headerlink" href="#id1" title="Enlazar permanentemente con este título">¶</a></h3>
+<p>Canaima Semilla puede crear imágenes instalables (ISO o IMG) basado en los perfiles de sabores existentes. Puede especificársele el tipo de medio, la arquitectura a construir, y el sabor. Las imágenes resultantes del proceso de construcción se guardan en el directorio <tt class="docutils literal"><span class="pre">/usr/share/canaima-semilla/semillero/</span></tt>.</p>
+<div class="figure align-center">
+<img alt="The Pythagorean Theorem Illustrated" src="_images/0.png" />
+<p class="caption">2.1  The Pythagorean Theorem Illustrated</p>
+</div>
+<p>Opciones</p>
+<ul class="simple">
+<li>Medio:  Tipo de imagen que será generada. Coloca “iso” para una imagen ISO grabable en CD/DVD o “usb” para una imagen IMG grabable en dispositivos USB.</li>
+<li>Arquitectura:  Arquitectura soportada por la imagen resultante. Canaima GNU/Linux soporta i386 y amd64.</li>
+<li>Sabor:  Sabor Canaima contenido en la imagen instalable. Debe estar definida en el directorio de los perfiles para poder funcionar.</li>
+</ul>
+<p>Para crear una imagen instalable debe seleccionar todos los parámetros establecidos:</p>
+<ol class="arabic simple">
+<li>Seleccione el Medio que desea crear:</li>
+</ol>
+<p>En este paso debe seleccionar el tipo de imagen que desea generar CD/DVD o USB.</p>
+<div class="figure align-center">
+<img alt="The Pythagorean Theorem Illustrated" src="_images/1.png" />
+<p class="caption">2.2 The Pythagorean Theorem Illustrated</p>
+</div>
+<ol class="arabic simple" start="2">
+<li>Seleccione la Arquitectura:</li>
+</ol>
+<p>En este paso debe seleccionar el tipo de arquitectura soportada por la imagen 32 Bits(i386) o 64 Bits (amd64).</p>
+<div class="figure align-center">
+<img alt="The Pythagorean Theorem Illustrated" src="_images/2.png" />
+<p class="caption">2.3The Pythagorean Theorem Illustrated</p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Nota</p>
+<p class="last">Si su computador presenta una arquitectura i386 no podra crear imagenes amd64.</p>
+</div>
+<ol class="arabic simple" start="3">
+<li>Seleccione alguno de los sabores existentes:</li>
+</ol>
+<p>En este paso debe ver los sabores existente en la ventana desplegable y elegir cual desea crear.</p>
+<div class="figure align-center">
+<img alt="The Pythagorean Theorem Illustrated" src="_images/3.png" />
+<p class="caption">2.4The Pythagorean Theorem Illustrated</p>
+</div>
+<p>Desea crear el sabor seleccionado: Generar</p>
+<p>En este paso debe hacer click en Boton Generar para crear la ISO&#8217;S con los parametros seleccionados.</p>
+<div class="admonition note">
+<p class="first admonition-title">Nota</p>
+<p class="last">Debe tener en cuenta que si no selecciona todos los parámetros no podrá generar la imagen.</p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Nota</p>
+<p class="last">Es importante tener en cuenta que, si no posee una conexión a internet no podrá crear la imagen.</p>
+</div>
+<div class="figure align-center">
+<img alt="The Pythagorean Theorem Illustrated" src="_images/4.png" />
+<p class="caption">2.5 The Pythagorean Theorem Illustrated</p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Nota</p>
+<p class="last">Los procesos que generan la imagen pueden llevar un tiempo, le recomendamos tomarse un buen café Venezolano mientras se construye la imagen.</p>
+</div>
+<p>Finalizado</p>
+<p>Las imágenes resultantes del proceso de construcción se guardan en el
+directorio /usr/share/canaima-semilla/semillero/.</p>
+<div class="figure align-center">
+<img alt="The Pythagorean Theorem Illustrated" src="_images/5.png" />
+<p class="caption">2.6The Pythagorean Theorem Illustrated</p>
+</div>
+<div class="section" id="abortar-creacion-de-imagenes">
+<h4>1.2.1.1. Abortar creación de imágenes<a class="headerlink" href="#abortar-creacion-de-imagenes" title="Enlazar permanentemente con este título">¶</a></h4>
+<p>En caso de que desee cancelar la creación de la imagen solo debe seguir los siguientes pasos:</p>
+<ol class="arabic simple">
+<li>Hacer click en el botón de Cancelar. Se desplegara una ventana emergente de decisión, si esta seguro que desea cancelar la construcción de la ISO&#8217;S hacer click en “SI”.</li>
+</ol>
+<div class="figure align-center">
+<img alt="The Pythagorean Theorem Illustrated" src="_images/cancelar1.png" />
+<p class="caption">3.1The Pythagorean Theorem Illustrated</p>
+</div>
+<ol class="arabic simple" start="2">
+<li>Se desplegará un ventana emergente que indicara que la ISO&#8217;S que estaba creando ha sido cancela de forma correcta.</li>
+</ol>
+<div class="figure align-center">
+<img alt="The Pythagorean Theorem Illustrated" src="_images/cancelar2.png" />
+<p class="caption">3.2The Pythagorean Theorem Illustrated</p>
+</div>
+<p>. Al hacer click en aceptar, el botón Generar volverá a estar activo para poder crear nuevas imágenes.</p>
+<div class="figure align-center">
+<img alt="The Pythagorean Theorem Illustrated" src="_images/cancelar3.png" />
+<p class="caption">3.3 The Pythagorean Theorem Illustrated</p>
+</div>
+</div>
+<div class="section" id="diagnostico-de-errores">
+<h4>1.2.1.2. Diagnóstico de errores<a class="headerlink" href="#diagnostico-de-errores" title="Enlazar permanentemente con este título">¶</a></h4>
+<p>En caso de que ocurra un error en la construcción de la imagen saldra un ventana con el siguiente mensaje:</p>
+<div class="figure align-center">
+<img alt="The Pythagorean Theorem Illustrated" src="_images/error.png" />
+<p class="caption">4.1 The Pythagorean Theorem Illustrated</p>
+</div>
+<p>Para informar sobre el problema ocurrido debe seguir los siguientes pasos:</p>
+<ol class="arabic simple">
+<li>Debe ir a la siguiente dirección /usr/share/canaima-semilla/semillero/ y encontrar un archivo llamado binary.log que contiene todos los procesos de construcción de la imagen.</li>
+</ol>
+<div class="figure align-center">
+<img alt="The Pythagorean Theorem Illustrated" src="_images/binary.png" />
+<p class="caption">4.2 The Pythagorean Theorem Illustrated</p>
+</div>
+<ol class="arabic simple" start="2">
+<li>Ingrese en su dirección de correo electrónico y mande ese archivo a la siguiente dirección <tt class="docutils literal"><span class="pre">&lt;desarrolladores&#64;canaima.softwarelibre.gob.ve&gt;</span></tt>.</li>
+</ol>
+</div>
+</div>
+<div class="section" id="id2">
+<h3>1.2.2. Creación de perfiles<a class="headerlink" href="#id2" title="Enlazar permanentemente con este título">¶</a></h3>
+<p>Canaima Semilla facilita la creación de nuevas distribuciones del Sistema Operativo Canaima conocidas como Sabores Canaima, mediante el establecimiento de reglas o perfiles que definen los componentes que integran el sabor.</p>
+<p>Un perfil está compuesto de varios archivos con nombres específicos colocados dentro de una carpeta.</p>
+<p>Al iniciar Canaima Semilla, muestra la ventana Bienvenido, una vez allí debe seleccionar &#8220;Construir Nuevo Sabor&#8221;</p>
+<div class="figure align-center">
+<img alt="Ejemplo de la ventana Bienvenido" src="_images/paso0.png" />
+<p class="caption">5.1Ejemplo de la ventana Bienvenido</p>
+</div>
+<p>A continuación se enumeran los pasos para crear una una nueva distribución:</p>
+<div class="section" id="paso-1">
+<h4>1.2.2.1. Paso 1<a class="headerlink" href="#paso-1" title="Enlazar permanentemente con este título">¶</a></h4>
+<p>Crear Carpeta La cual será creada con el nombre del sabor en letras minúsculas.</p>
+<div class="figure align-center">
+<img alt="Ejemplo de una ventana para crear la carpeta contenedora del sabor" src="_images/paso1.png" />
+<p class="caption">5.2 Ejemplo de una ventana para crear la carpeta contenedora del sabor</p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Nota</p>
+<p class="last">Para que la carpeta pueda ser creada debe dar clic en el boton &#8220;Siguiente&gt;&#8221;, de lo contrario la carpeta no se creará.</p>
+</div>
+<div class="figure align-center">
+<img alt="Ejemplo de una ventana con la carpeta del sabor creada con éxito" src="_images/paso1-2.png" />
+<p class="caption">5.3Ejemplo de una ventana con la carpeta del sabor creada con éxito</p>
+</div>
+<p>Ésta carpeta debe contener algunos archivos que se usaran al momento de crear la imagen de la distribución.</p>
+</div>
+<div class="section" id="paso-2">
+<h4>1.2.2.2. Paso 2<a class="headerlink" href="#paso-2" title="Enlazar permanentemente con este título">¶</a></h4>
+<p>Crear un archivo llamado “sabor.conf”,el cual contiene una serie de parámetros que deben especificarse para poder crear el nuevo sabor.</p>
+<div class="figure align-center">
+<img alt="Ejemplo de una ventana para configurar el archivo sabor.config" src="_images/paso2.png" />
+<p class="caption">5.4Ejemplo de una ventana para configurar el archivo sabor.config</p>
+</div>
+<p>Opciones</p>
+<ul class="simple">
+<li>Publicado por:  Individuo o colectivo que publica la imagen.</li>
+<li>Distribución Debian:  Distribución Debian en la que se basa el sabor.</li>
+<li>Nombre de la Metadistribución:  Distribución de la cual se parte para crear la nuevas distribuciones, en nuestro caso es Canaima GNU/Linux.</li>
+<li>Mirror Debian:  Mirror de Debian desde donde se extraerán los paquetes que contendrá la la imagen. Los repositorios extra se definen en el archivo *.binary definido más adelante.</li>
+<li>Componentes del Mirror:  Componentes del Mirror Debian a estar disponibles para la construcción de la imagen.</li>
+<li>Paquetes a incluir:  Lista de paquetes disponibles en Mirror Debian o en alguna lista de repositorios extra, que serán incluidos en el nuevo sabor.</li>
+<li>Paquetes Extra:  Lista de paquetes no disponibles en Mirror Debian. Este parámetro es opcional y los paquetes aqui incluidos se les debe especificar los repositorios que los contienen en el archivo *.binary definido mas adelante.</li>
+</ul>
+<p>Para validar los paquetes que seran introducidos en Paquetes disponibles en el Mirror y Paquetes Extra se debe escribir el paquete en letras minúsculas dentro campo de texto y dar clic en el botón &#8220;Validar&#8221; y así visualizarlo en el cuadro de texto.</p>
+<div class="figure align-center">
+<img alt="Validando un paquete existente para el archivo sabor.config" src="_images/paso2-1.png" />
+<p class="caption">5.5Validando un paquete existente para el archivo sabor.config</p>
+</div>
+<div class="figure align-center">
+<img alt="Validando un paquete no existente para el archivo sabor.config" src="_images/paso2-2.png" />
+<p class="caption">5.6Validando un paquete no existente para el archivo sabor.config</p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Nota</p>
+<p class="last">Una vez especificados los parámetros del archivo &#8220;sabor.config&#8221; se debe dar clic en el botón &#8220;Siguiente&gt;&#8221;, para que los cambios se efectuen, de lo contrario no se efectuarán.</p>
+</div>
+<div class="figure align-center">
+<img alt="Ejemplo de una ventana con el archivo &quot;sabor.config&quot; creado con éxito" src="_images/paso2-3.png" />
+<p class="caption">5.7Ejemplo de una ventana con el archivo &#8220;sabor.config&#8221; creado con éxito</p>
+</div>
+</div>
+<div class="section" id="paso-3">
+<h4>1.2.2.3. Paso 3<a class="headerlink" href="#paso-3" title="Enlazar permanentemente con este título">¶</a></h4>
+<p>En este paso se crea un archivo de extensión &#8220;*.binary&#8221; (pudiendo tener cualquier nombre), que contenga la lista de repositorios extra necesarios para la instalación de paquetes no incluídos en Mirror Debian, pero que han sido especificados en Paquetes Extra del archivo &#8220;sabor.conf&#8221;.</p>
+<p>El primer paso para crear el archivo &#8220;*.binary&#8221; es especificarle un nombre y luego validar cada uno de los repositorios que desee incluir, especificando la rama y la sección del repositorio con el fin de verificarlos. Por último debe dar clic en &#8220;Siguiente&gt;&#8221; para aplicar los cambios efectuados y continuar.</p>
+<div class="figure align-center">
+<img alt="Ejemplo de ventana configurando el archivo &quot;.binary&quot;" src="_images/paso3-1.png" />
+<p class="caption">5.8Ejemplo de ventana configurando el archivo &#8221;.binary&#8221;</p>
+</div>
+<div class="figure align-center">
+<img alt="Ejemplo de ventana con el archivo &quot;.binary&quot; creado con éxito" src="_images/paso3-2.png" />
+<p class="caption">5.9Ejemplo de ventana con el archivo &#8221;.binary&#8221; creado con éxito</p>
+</div>
+</div>
+<div class="section" id="paso-4">
+<h4>1.2.2.4. Paso 4<a class="headerlink" href="#paso-4" title="Enlazar permanentemente con este título">¶</a></h4>
+<p>En este paso se insertarán dos imágenes opcionales, una para el fondo del menú de inicio del Medio Vivo y otra para el banner del dialogo del
+instalador del Medio Vivo, que servirán a la hora de instalar su distribución. Estas imágenes deben tener nombres y medidas especificas para poder ser introducidas en la carpeta del nuevo sabor.</p>
+<ul class="simple">
+<li>Imagen PNG llamada “syslinux.png” de una dimensión no mayor a 1024x768 pixeles, la cuál servirá de fondo en el menú de inicio del Medio Vivo.</li>
+<li>Imagen PNG llamada “banner-instalador.png” de una dimensión exacta de 800x75 pixeles, la cuál será el banner del dialogo del instalador del Medio Vivo.</li>
+</ul>
+<div class="figure align-center">
+<img alt="Ejemplo de ventana insertando las imágenes" src="_images/paso4-1.png" />
+<p class="caption">5.10Ejemplo de ventana insertando las imágenes</p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Nota</p>
+<p class="last">Una vez introducidas de manera correcta las rutas de las imágenes, se debe dar clic en el botón &#8220;Siguiente&gt;&#8221;.</p>
+</div>
+<p>Introducir las imágenes al nuevo sabor es opcional, por lo que puede elegir si desea o no introducirlas.</p>
+<p>Si selecciona NO el proceso continuará de manera correcta al Paso 5, donde se contruye la imagen.</p>
+<p>Si selecciona SI se validarán los paramétros para incluir las imágenes en el nuevo sabor. para que los mismos sean efectuados, de lo contrario las imágenes no se alamacenarán en la carpeta del nuevo sabor.</p>
+<div class="figure align-center">
+<img alt="Ejemplo de ventana para elegir la inclusión de las imágenes" src="_images/paso4-3.png" />
+<p class="caption">5.11Ejemplo de ventana para elegir la inclusión de las imágenes</p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Nota</p>
+<p class="last">Es importante seleccionar &#8220;SI&#8221;, si desea incliur las imágenes para que los cambios sean efectuados, de lo contrario las imágenes no se alamacenarán en la carpeta del nuevo sabor.</p>
+</div>
+<div class="figure align-center">
+<img alt="Ejemplo de ventana insertando las imágenes" src="_images/paso4-2.png" />
+<p class="caption">5.12Ejemplo de ventana insertando las imágenes</p>
+</div>
+</div>
+<div class="section" id="paso-5">
+<h4>1.2.2.5. Paso 5<a class="headerlink" href="#paso-5" title="Enlazar permanentemente con este título">¶</a></h4>
+<p>Por último se mostrará una ventana que permite crear las imagenes ISO, del sabor que usted ha construido y asi poder obtener una imagen grabable del mismo. Debe elegir el Medio (i386 ó amd64) y la Arquitectura (iso ó usb) con la que desea que se cree la imagen.</p>
+<div class="figure align-center">
+<img alt="Ejemplo de la ventana para constriur el sabor que se creó" src="_images/paso5.png" />
+<p class="caption">5.13Ejemplo de la ventana para constriur el sabor que se creó</p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Nota</p>
+<p class="last">Si desea crear la imagen del nuevo sabor debe seleccionar &#8220;Generar&#8221;, de lo contario seleccione &#8220;Salir&#8221;</p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Nota</p>
+<p class="last">Es importante tener en cuenta que, si no posee una conexión a internet no podrá crear la imagen del nuevo sabor.</p>
+</div>
+</div>
+</div>
+<div class="section" id="acerca-de-canaima-semilla">
+<h3>1.2.3. Acerca de Canaima Semilla<a class="headerlink" href="#acerca-de-canaima-semilla" title="Enlazar permanentemente con este título">¶</a></h3>
+<p>Copyright 2012 Luis Martínez</p>
+<p>Copyright 2012 Carlos Espinoza</p>
+<p>Copyright 2012 Nixon Molina</p>
+<div class="section" id="aviso-legal">
+<h4>1.2.3.1. Aviso legal<a class="headerlink" href="#aviso-legal" title="Enlazar permanentemente con este título">¶</a></h4>
+<p>Este documento se distribuye bajo los términos de la Licencia Pública General GNU tal como la publica la Free Software Foundation; en la versión 3 de la Licencia, o (a su elección) cualquier versión posterior.
+Puede encontrar una copia de esta licencia en este manual o en el archivo incluido con el código fuente de este programa.</p>
+</div>
+<div class="section" id="retroalimentacion">
+<h4>1.2.3.2. Retroalimentación<a class="headerlink" href="#retroalimentacion" title="Enlazar permanentemente con este título">¶</a></h4>
+<p>Para informar de un fallo o hacer cualquier sugerencia concerniente a Canaima Semilla o esta documentación, envie un correo a la siguiente dirección: <tt class="docutils literal"><span class="pre">&lt;desarrolladores&#64;canaima.softwarelibre.gob.ve&gt;</span></tt>.</p>
+</div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Contenidos</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">1. <strong>Contenido</strong></a><ul>
+<li><a class="reference internal" href="#uso-de-la-interfaz-en-modo-texto">1.1. Uso de la interfaz en modo texto</a><ul>
+<li><a class="reference internal" href="#creacion-de-imagenes">1.1.1. Creación de imágenes</a><ul>
+<li><a class="reference internal" href="#modo-de-uso">1.1.1.1. Modo de uso</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#creacion-de-perfiles">1.1.2. Creación de perfiles</a></li>
+<li><a class="reference internal" href="#sugerencias">1.1.3. Sugerencias</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#uso-de-la-interfaz-grafica">1.2. Uso de la interfaz gráfica</a><ul>
+<li><a class="reference internal" href="#id1">1.2.1. Creación de imágenes</a><ul>
+<li><a class="reference internal" href="#abortar-creacion-de-imagenes">1.2.1.1. Abortar creación de imágenes</a></li>
+<li><a class="reference internal" href="#diagnostico-de-errores">1.2.1.2. Diagnóstico de errores</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id2">1.2.2. Creación de perfiles</a><ul>
+<li><a class="reference internal" href="#paso-1">1.2.2.1. Paso 1</a></li>
+<li><a class="reference internal" href="#paso-2">1.2.2.2. Paso 2</a></li>
+<li><a class="reference internal" href="#paso-3">1.2.2.3. Paso 3</a></li>
+<li><a class="reference internal" href="#paso-4">1.2.2.4. Paso 4</a></li>
+<li><a class="reference internal" href="#paso-5">1.2.2.5. Paso 5</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#acerca-de-canaima-semilla">1.2.3. Acerca de Canaima Semilla</a><ul>
+<li><a class="reference internal" href="#aviso-legal">1.2.3.1. Aviso legal</a></li>
+<li><a class="reference internal" href="#retroalimentacion">1.2.3.2. Retroalimentación</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Tema anterior</h4>
+  <p class="topless"><a href="index.html"
+                        title="Capítulo anterior"><strong>Canaima Semilla</strong></a></p>
+  <h3>Esta página</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/contents.txt"
+           rel="nofollow">Enseñar el código</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Búsqueda rápida</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Ir a" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navegación</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="Índice General"
+             >índice</a></li>
+        <li class="right" >
+          <a href="index.html" title="Canaima Semilla"
+             >anterior</a> |</li>
+        <li><a href="index.html">Documentación para Canaima Semilla</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 20-03-2012, Luis Alejandro Martínez Faneyth.
+      Actualizado por última vez en Mar 20, 2012.
+      Creado con <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.
+    </div>
+  </body>
+</html>

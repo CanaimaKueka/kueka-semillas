@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh -e
 #
 # ====================================================================
 # PACKAGE: aguilas
@@ -39,15 +39,15 @@ ROJO="\e[1;31m"
 AMARILLO="\e[1;33m"
 FIN="\e[0m"
 
-function ERROR() {
+ERROR() {
 echo -e ${ROJO}${1}${FIN}
 }
 
-function WARNING() {
+WARNING() {
 echo -e ${AMARILLO}${1}${FIN}
 }
 
-function SUCCESS() {
+SUCCESS() {
 echo -e ${VERDE}${1}${FIN}
 }
 

@@ -14,17 +14,11 @@
 
 function CS_BUILD_CONFIG() {
 
-	if [ -z "${1}" ]; then
-		ERROR "La función \"${FUNCNAME}\" necesita un argumento."
-	fi
+        PROFILE="${1}"
+	shift || true
 
-        PROFILE=${1}
-
-	if [ -e "${PROFILES}${PROFILE}/sabor.conf" ]; then
-		. "${PLANTILLAS}${1}/sabor.conf"
-	else
-		ERROR "El perfil \"${PROFILE}\" no existe o no posee configuración en ${PROFILES}${PROFILE}/sabor.conf"
-		exit 1
+	if [ -z "${PROFILE}" ]; then
+		ERROR "La función \"${FUNCNAME}\" necesita un nombre de perfil válido como argumento."
 	fi
 
 	if [ -e "${PROFILES}${PROFILE}/preseed-instalador.cfg" ]; then
@@ -83,6 +77,14 @@ fi
 if [ -e ${PLANTILLAS}${1}/chroot-local-hook.sh ]; then
         mkdir -p "${ISO_DIR}config/chroot_local-hooks"
         cp ${PLANTILLAS}${1}/chroot-local-hook.sh ${ISO_DIR}config/chroot_local-hooks/
+fi
+
+if [ ! -z "$SABOR_PAQUETES" ]; then
+        mkdir -p config/package-lists
+        echo ${SABOR_PAQUETES} | xargs -n1 > config/package-lists/${DISTRO}-${sabor}.list
+#       pkglist_arg="--package-lists=${DISTRO}-${sabor}"
+else
+        ADVERTENCIA "No tiene paquetes especificos, esta seguro ?"
 fi
 
 if [ -n "${SABOR_PAQUETES_ISOPOOL}" ]; then
