@@ -34,21 +34,21 @@ CHANGES="$( tempfile )"
 NEWCHANGES="$( tempfile )"
 DATE=$( date +%D )
 SNAPSHOT=$( date +%Y%m%d%H%M%S )
-VERDE="\e[1;32m"
-ROJO="\e[1;31m"
-AMARILLO="\e[1;33m"
-FIN="\e[0m"
+VERDE="\033[1;32m"
+ROJO="\033[1;31m"
+AMARILLO="\033[1;33m"
+FIN="\033[0m"
 
 ERROR() {
-echo -e ${ROJO}${1}${FIN}
+	printf "${ROJO}${1}${FIN}"
 }
 
 WARNING() {
-echo -e ${AMARILLO}${1}${FIN}
+	printf "${AMARILLO}${1}${FIN}"
 }
 
 SUCCESS() {
-echo -e ${VERDE}${1}${FIN}
+	printf "${VERDE}${1}${FIN}"
 }
 
 git config --global user.name "Luis Alejandro Martínez Faneyth"
@@ -91,7 +91,7 @@ WARNING "Committing changes ..."
 git add .
 git commit -a
 
-if [ $? == 1 ]; then
+if [ "$?" == "1" ]; then
 	ERROR "Empty commit message, aborting."
 	exit 1
 fi
