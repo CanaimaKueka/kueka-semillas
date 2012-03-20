@@ -1,2 +1,44 @@
+DEVELOPMENT RELEASE v+20120320183640 (03/20/12)
+Agregando documentación autogenerada
+Agregando plantillas para syslinux
+Creando funciones y módulos básicos
+Generación dinámica de imágenes
+Removiendo carpeta debian de rama de desarrollo
+Renombrando algunos scripts
+Agregando locales
+Generando documentación
+Correcting Makefile
+Importando desarrollo de la Interfaz Gráfica por Nixon Molina y Carlos Espinoza.
+Fusionando documentación e imágenes de la Interfaz Gráfica con la aplicación principal.
+Mejorando Makefile y agregando herramientas para el mantenimiento de la aplicación.
+WIP
+Better handeling of SABOR FAILOVER
+... fuck daniel bauman... chroot_sources is now archives
+everything has changed name.. great, ok so now we map:
+binary list.binary
+binary.gpg key.binary
+chroot list.chroot
+chroot.gpg key.chroot
+n0 bash
+create semilla if doesn't exist
+install canaima-semilla-construir
+move chunk of code from canaima-semilla to canaima-semilla-construir
+indentation: cosmetics
+cosmetics: ${1} is really to ugly..
+make everything executable from source
+cosmetics
+lb_fixup, --packages disappeared, build a package-lists instead
+lb_fixup: move all options that aren't supported by new lb out of the way
+default to include installer, and re-work installer code'
+add -c|--conf option, to conditionally load VARIABLES overrides
+simplify canaima-semilla.sh
+bugfix: $ARQUITECTURA disapeared, use $arch
+cosmetics: rename getopt argument to short-form and lowercase
+if lb/config exits, move it to .bak before proceding
+make CONFIGURAR-SABOR take an argument
+use getopt to simplify canaima-semilla.sh
+cosmetics: split fat big line, into many smalls
+don't use ${1} but name it, and shift $\@
+
 DEVELOPMENT RELEASE v2.0+51 (12/16/11)
 
