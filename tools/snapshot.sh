@@ -1,9 +1,9 @@
 #!/bin/sh -e
 #
 # ====================================================================
-# PACKAGE: aguilas
+# PACKAGE: canaima-semilla
 # FILE: tools/snapshot.sh
-# DESCRIPTION:  Makes a new development snapshot of Aguilas.
+# DESCRIPTION:  Makes a new development snapshot of Canaima Semilla.
 # USAGE: ./tools/snapshot.sh
 # COPYRIGHT:
 # (C) 2012 Luis Alejandro Martínez Faneyth <luis@huntingbears.com.ve>
@@ -40,15 +40,15 @@ AMARILLO="\033[1;33m"
 FIN="\033[0m"
 
 ERROR() {
-	printf "${ROJO}${1}${FIN}"
+	printf "${ROJO}${1}${FIN}\n"
 }
 
 WARNING() {
-	printf "${AMARILLO}${1}${FIN}"
+	printf "${AMARILLO}${1}${FIN}\n"
 }
 
 SUCCESS() {
-	printf "${VERDE}${1}${FIN}"
+	printf "${VERDE}${1}${FIN}\n"
 }
 
 git config --global user.name "Luis Alejandro Martínez Faneyth"
