@@ -1,9 +1,9 @@
-#!/bin/bash
+#!/bin/sh -e
 #
 # ====================================================================
-# PACKAGE: aguilas
+# PACKAGE: canaima-semilla
 # FILE: tools/release.sh
-# DESCRIPTION:  Makes a new stable release of Aguilas.
+# DESCRIPTION:  Makes a new stable release of Canaima Semilla.
 # USAGE: ./tools/release.sh
 # COPYRIGHT:
 # (C) 2012 Luis Alejandro Martínez Faneyth <luis@huntingbears.com.ve>
@@ -36,21 +36,21 @@ CHANGES="$( tempfile )"
 DEVERSION="$( tempfile )"
 NEWCHANGES="$( tempfile )"
 DATE=$( date +%D )
-VERDE="\e[1;32m"
-ROJO="\e[1;31m"
-AMARILLO="\e[1;33m"
-FIN="\e[0m"
+VERDE="\033[1;32m"
+ROJO="\033[1;31m"
+AMARILLO="\033[1;33m"
+FIN="\033[0m"
 
-function ERROR() {
-echo -e ${ROJO}${1}${FIN}
+ERROR() {
+	printf "${ROJO}${1}${FIN}\n"
 }
 
-function WARNING() {
-echo -e ${AMARILLO}${1}${FIN}
+WARNING() {
+	printf "${AMARILLO}${1}${FIN}\n"
 }
 
-function SUCCESS() {
-echo -e ${VERDE}${1}${FIN}
+SUCCESS() {
+	printf "${VERDE}${1}${FIN}\n"
 }
 
 git config --global user.name "Luis Alejandro Martínez Faneyth"

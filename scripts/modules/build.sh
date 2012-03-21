@@ -1,12 +1,12 @@
 #!/bin/sh -e
 #
 # ==============================================================================
-# PAQUETE: canaima-semilla-construir
-# ARCHIVO: canaima-semilla-construir.sh
+# PACKAGE: canaima-semilla
+# FILE: scripts/modules/build.sh
 # DESCRIPCIÓN: Script de sh principal del paquete canaima-desarrollador
 # COPYRIGHT:
-#  © 2010 Luis Alejandro Martínez Faneyth <martinez.faneyth@gmail.com>
-#  © 2012 Niv Sardi <xaiki@debian.org>
+# (C) 2010 Luis Alejandro Martínez Faneyth <luis@huntingbears.com.ve>
+# (C) 2012 Niv Sardi <xaiki@debian.org>
 # LICENCIA: GPL3
 # ==============================================================================
 #
@@ -76,12 +76,12 @@ while true; do
 		;;
 
 		-i|--instalador-debian|--debian-installer)
-			INSTALADOR=1
+			INSTALADOR="live"
 			shift 1
 		;;
 
 		-I|--no-instalador-debian|--no-debian-installer)
-			INSTALADOR=0
+			INSTALADOR="false"
 			shift 1
 		;;
 
@@ -101,7 +101,22 @@ PCONF="${ISODIR}config"
 PCONFBKP="${ISODIR}config.${DATE}.backup"
 
 if [ -d "${PCONF}" ]; then
-        mv "${PCONF}" "${PCONFBKP}"
+	mv "${PCONF}" "${PCONFBKP}"
+fi
+ 
+# SABOR
+if [ -z "${SABOR}" ]; then
+	SABOR="popular"
+	ADVERTENCIA "No especificaste un sabor, utilizando sabor \"popular\" por defecto."
+fi
+
+PCONFFILE="${PROFILES}${SABOR}/profile.conf"
+PCONFIGURED="${ISODIR}config/profile-configured"
+
+if [ -d "${PROFILES}${SABOR}" ]; then
+	if [ -f "${PCONFFILE}" ]; then
+		. "${PCONFFILE}"
+	fi
 fi
 
 ADVERTENCIA "Limpiando residuos de construcciones anteriores ..."
@@ -113,16 +128,24 @@ rm -rf 	${ISODIR}.stage \
 lb clean
 
 # INSTALADOR
-case ${INSTALADOR} in
-	1)
-		INSTALADOR="live"
-	;;
-
-	*)
-		INSTALADOR="false"
-		ADVERTENCIA "No se incluirá el Instalador Debian."
-	;;
-esac
+if [ "${IMG_DEBIAN_INSTALLER}" = "live" ] && [ "${INSTALADOR}" = "false" ]; then
+	ADVERTENCIA "El perfil incluye el instalador, pero la línea de comandos lo excluye."
+	ADVERTENCIA "Prefiriendo la linea de comandos sobre el perfil."
+	INSTALADOR="false"
+elif [ "${IMG_DEBIAN_INSTALLER}" = "false" ] && [ "${INSTALADOR}" = "live" ]; then
+	ADVERTENCIA "El perfil excluye el instalador, pero la línea de comandos lo incluye."
+	ADVERTENCIA "Prefiriendo la linea de comandos sobre el perfil."
+	INSTALADOR="live"
+elif [ "${IMG_DEBIAN_INSTALLER}" = "false" ] && [ "${INSTALADOR}" = "false" ]; then
+	ADVERTENCIA "No se incluirá el instalador."
+	INSTALADOR="false"
+elif [ "${IMG_DEBIAN_INSTALLER}" = "live" ] && [ "${INSTALADOR}" = "live" ]; then
+	ADVERTENCIA "Se incluye el instalador."
+	INSTALADOR="live"
+else
+	ADVERTENCIA "No se incluirá el instalador."
+	INSTALADOR="false"
+fi
 
 # ARQUITECTURA
 if [ -z "${ARCH}" ]; then
@@ -157,7 +180,11 @@ fi
 
 case ${MEDIO} in
 	usb|usb-hdd|img|USB)
-		MEDIO="usb-hdd"
+		if dpkg --compare-versions "${LB_VERSION}" ge 3.0; then
+			MEDIO="hdd"
+		else
+			MEDIO="usb-hdd"
+		fi
 		MEDIO_S="Imagen para dispositivos de almacenamiento extraíble (USB)"
 		EXITO "Medio: ${MEDIO_S}"
 	;;
@@ -180,19 +207,8 @@ case ${MEDIO} in
 	;;
 esac
 
-# SABOR
-if [ -z "${SABOR}" ]; then
-	SABOR="popular"
-	ADVERTENCIA "No especificaste un sabor, utilizando sabor \"popular\" por defecto."
-fi
-
-PCONFFILE="${PROFILES}${SABOR}/profile.conf"
-PCONFIGURED="${ISODIR}config/profile-configured"
-
 if [ -d "${PROFILES}${SABOR}" ]; then
 	if [ -f "${PCONFFILE}" ]; then
-		. "${PCONFFILE}"
-
 		if [ -f "${EXTRACONF}" ]; then
 			. "${EXTRACONF}"
 		fi
@@ -215,9 +231,11 @@ else
 	exit 1
 fi
 
-CS_BOOTSTRAP="${MIRROR_DEBIAN}"
-CS_CHROOT="${MIRROR_DEBIAN}"
-CS_BINARY="${MIRROR_DEBIAN}"
+if dpkg --compare-versions "${LB_VERSION}" ge 3.0; then
+
+else
+
+fi
 
 ADVERTENCIA "Generando árbol de configuraciones ..."
 cd ${ISODIR}

@@ -91,18 +91,18 @@ WARNING "Committing changes ..."
 git add .
 git commit -a
 
-if [ "$?" == "1" ]; then
+if [ ${?} -eq 1 ]; then
 	ERROR "Empty commit message, aborting."
 	exit 1
 fi
 
 git log > ${CHANGES}
 
-OLDVERSION=$( cat ${VERSION} | grep "VERSION" | sed 's/VERSION = //g' )
-OLDCOMMIT=$( cat ${VERSION} | grep "COMMIT" | sed 's/COMMIT = //g' )
-OLDCOMMITLINE=$( cat ${CHANGES}  | grep -n "${OLDCOMMIT}" | awk -F: '{print $1}' )
+OLDVERSION="$( cat ${VERSION} | grep "VERSION" | sed 's/VERSION = //g' )"
+OLDCOMMIT="$( cat ${VERSION} | grep "COMMIT" | sed 's/COMMIT = //g' )"
+OLDCOMMITLINE="$( cat ${CHANGES}  | grep -n "${OLDCOMMIT}" | awk -F: '{print $1}' )"
 
-read -p "Enter new version (last version was ${OLDVERSION}): "
+read -p "Enter new version (last version was ${OLDVERSION}): " REPLY
 NEWVERSION="${REPLY}"
 
 echo "DEVELOPMENT RELEASE v${NEWVERSION}+${SNAPSHOT} (${DATE})" > ${NEWCHANGES}
@@ -114,7 +114,7 @@ cat ${CHANGELOG} >> ${NEWCHANGES}
 mv ${NEWCHANGES} ${CHANGELOG}
 rm ${CHANGES}
 
-LASTCOMMIT=$( git rev-parse HEAD )
+LASTCOMMIT="$( git rev-parse HEAD )"
 
 echo "VERSION = ${NEWVERSION}+${SNAPSHOT}" > ${VERSION}
 echo "COMMIT = ${LASTCOMMIT}" >> ${VERSION}
