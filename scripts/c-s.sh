@@ -69,22 +69,6 @@ case ${ACTION} in
 		exit 0
 	;;
 
-	build|construir)
-		HANDLER "build.sh" "${ACTION}" "${BINDIR}" "${@}"
-	;;
-
-	profile|perfil)
-		HANDLER "profile.sh" "${ACTION}" "${BINDIR}" "${@}"
-	;;
-
-	test|probar)
-		HANDLER "test.sh" "${ACTION}" "${BINDIR}" "${@}"
-	;;
-
-	burn|quemar)
-		HANDLER "burn.sh" "${ACTION}" "${BINDIR}" "${@}"
-	;;
-
 	*)
 		HANDLER "${ACTION}.sh" "${ACTION}" "${BINDIR}" "${@}"
 	;;

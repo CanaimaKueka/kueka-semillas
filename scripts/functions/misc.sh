@@ -17,14 +17,14 @@ function HANDLER() {
 		ERROR "La función \"${FUNCNAME}\" necesita el nombre de un directorio como segundo argumento."
 	fi
 
-	if [ -x "${MODULEDIR}${MODULE}" ]; then
-		exec "${MODULEDIR}${MODULE}" "${ACTION}" "${BINDIR}" "${@}"
+	if [ -x "${MODULES}${MODULE}" ]; then
+		exec "${MODULES}${MODULE}" "${ACTION}" "${BINDIR}" "${@}"
 	elif [ -x "/usr/share/canaima-semilla/scripts/modules/${MODULE}" ]; then
 		exec "/usr/share/canaima-semilla/scripts/modules/${MODULE}" "${ACTION}" "${BINDIR}" "${@}"
 	elif [ -x "$( which "${MODULE}" 2>/dev/null )" ]; then
 		exec "${MODULE}" "${ACTION}" "${BINDIR}" "${@}"
 	else
-		ERROR "No se ha encontrado \"${MODULE}\", en la carpeta de módulos \"${MODULEDIR}\"."
+		ERROR "No se ha encontrado \"${MODULE}\", en la carpeta de módulos \"${MODULES}\"."
 		ERROR "Por favor reinstala canaima-semilla o verifica que has escrito bien el comando."
 		exit 1
 	fi

@@ -192,7 +192,7 @@ gen-pot: check-maintdep
 	@cd locale/pot/canaima-semilla/ && $(XGETTEXT) --msgid-bugs-address="$(MAILIST)" \
 		--package-version="$(VERSION)" --package-name="$(PACKAGE)" \
 		--copyright-holder="$(AUTHOR)" --no-wrap --from-code=utf-8 \
-		--language=Shell -s -j -o messages.pot -f POTFILES.in
+		--language=Shell -kERROR -kADVERTENCIA -kEXITO -s -j -o messages.pot -f POTFILES.in
 	@sed -i -e 's/# SOME DESCRIPTIVE TITLE./# $(POTITLE)./' \
 		-e 's/# Copyright (C) YEAR Luis Alejandro Martínez Faneyth/# Copyright (C) $(YEAR) $(AUTHOR)/' \
 		-e 's/same license as the PACKAGE package./same license as the $(PACKAGE) package./' \

@@ -34,11 +34,11 @@ fi
 . "${BASEDIR}scripts/functions/init.sh"
 
 if [ "${ACTION}" == "construir" ]; then
-	SHORTOPTS="c:a:m:s:i"
-	LONGOPTS="conf:,arquitectura:,medio:,sabor:,sin-instalador"
+	SHORTOPTS="c:a:m:s:iId"
+	LONGOPTS="config:,arquitectura:,medio:,sabor:,instalador-debian,no-instalador-debian,debug"
 elif [ "${ACTION}" == "build" ]; then
-	SHORTOPTS="c:a:m:s:i"
-	LONGOPTS="conf:,arquitectura:,medio:,sabor:,sin-instalador"
+	SHORTOPTS="c:a:m:s:iId"
+	LONGOPTS="config:,architecture:,image:,profile:,debian-installer,no-debian-installer,debug"
 else
 	ERROR "Error interno"
 	exit 1
@@ -60,12 +60,12 @@ while true; do
 			shift 2 || true
 		;;
 
-		-a|--arquitectura|--arch)
+		-a|--arquitectura|--architecture)
 			ARCH="${2}"
 			shift 2 || true
 		;;
 
-		-m|--medio|--)
+		-m|--medio|--image)
 			MEDIO="${2}"
 			shift 2 || true
 		;;
@@ -77,12 +77,17 @@ while true; do
 
 		-i|--instalador-debian|--debian-installer)
 			INSTALADOR="live"
-			shift 1
+			shift 1 || true
 		;;
 
 		-I|--no-instalador-debian|--no-debian-installer)
 			INSTALADOR="false"
-			shift 1
+			shift 1 || true
+		;;
+
+		-d|--debug)
+			DEBUG="true"
+			shift 1 || true
 		;;
 
                 --)
@@ -97,21 +102,27 @@ while true; do
 	esac
 done
 
-PCONF="${ISODIR}config"
-PCONFBKP="${ISODIR}config.${DATE}.backup"
+cd ${ISOS}
 
-if [ -d "${PCONF}" ]; then
-	mv "${PCONF}" "${PCONFBKP}"
-fi
- 
-# SABOR
 if [ -z "${SABOR}" ]; then
-	SABOR="popular"
-	ADVERTENCIA "No especificaste un sabor, utilizando sabor \"popular\" por defecto."
+	SABOR="${DEFAULT_PROFILE}"
+	ADVERTENCIA "No especificaste un sabor, utilizando sabor '%s' por defecto." "${SABOR}"
 fi
 
+if [ -z "${ARCH}" ]; then
+	ARCH="$( dpkg --print-architecture )"
+	ADVERTENCIA "No especificaste una arquitectura, utilizando '%s' presente en el sistema." "${ARCH}"
+fi
+
+if [ -z "${MEDIO}" ]; then
+	MEDIO="iso-hybrid"
+	ADVERTENCIA "No especificaste un tipo de formato para la imagen, utilizando medio '%s' por defecto." "${MEDIO}"
+fi
+
+PCONF="${ISOS}config"
+PCONFBKP="${ISOS}config.${DATE}.backup"
 PCONFFILE="${PROFILES}${SABOR}/profile.conf"
-PCONFIGURED="${ISODIR}config/profile-configured"
+PCONFIGURED="${ISOS}config/profile-configured"
 
 if [ -d "${PROFILES}${SABOR}" ]; then
 	if [ -f "${PCONFFILE}" ]; then
@@ -119,11 +130,17 @@ if [ -d "${PROFILES}${SABOR}" ]; then
 	fi
 fi
 
+if [ -d "${PCONF}" ]; then
+	mv "${PCONF}" "${PCONFBKP}"
+fi
+
+cd ${ISOS}
+
 ADVERTENCIA "Limpiando residuos de construcciones anteriores ..."
-rm -rf 	${ISODIR}.stage \
-	${ISODIR}auto \
-	${ISODIR}binary.log \
-	${ISODIR}cache/stages_bootstrap
+rm -rf 	${ISOS}.stage \
+	${ISOS}auto \
+	${ISOS}binary.log \
+	${ISOS}cache/stages_bootstrap
 
 lb clean
 
@@ -147,37 +164,51 @@ else
 	INSTALADOR="false"
 fi
 
-# ARQUITECTURA
-if [ -z "${ARCH}" ]; then
-	ARCH="$( dpkg --print-architecture )"
-	ADVERTENCIA "No especificaste una arquitectura, utilizando \"${ARCH}\" presente en el sistema."
-fi
+# METADISTRIBUCIÓN 
+case ${META_DISTRO} in
+	debian)
+		META_MODE="debian"
+		EXITO "Metadistribución: Debian"
+	;;
 
+	canaima)
+		META_MODE="canaima"
+		EXITO "Metadistribución: Canaima"
+	;;
+
+	ubuntu)
+		META_MODE="ubuntu"
+		EXITO "Metadistribución: Ubuntu"
+	;;
+
+	''|*)
+		META_MODE="debian"
+		META_DISTRO="debian"
+		ADVERTENCIA "Metadistribución '%s' no soportada por %s. Utilizando Debian." "${META_DISTRO}" "${CS_NAME}"
+	;;
+esac
+
+#ARQUITECTURA
 case ${ARCH} in
-	amd64|x64|64|x86_64)
+	amd64)
 		ARCH="amd64"
 		KERNEL_ARCH="amd64"
 		EXITO "Arquitectura: amd64"
 	;;
 
-	i386|486|686|i686)
+	i386)
 		ARCH="i386"
 		KERNEL_ARCH="686"
 		EXITO "Arquitectura: i386"
 	;;
 
 	*)
-		ERROR "Arquitectura \"${ARCH}\" no soportada por ${CS_NAME}. Abortando."
+		ERROR "Arquitectura '%s' no soportada por %s. Abortando." "${ARCH}" "${CS_NAME}"
 		exit 1
 	;;
 esac
 
 # MEDIO
-if [ -z "${MEDIO}" ]; then
-	MEDIO="iso-hybrid"
-	ADVERTENCIA "No especificaste un tipo de formato para la imagen, utilizando medio \"${MEDIO}\" por defecto."
-fi
-
 case ${MEDIO} in
 	usb|usb-hdd|img|USB)
 		if dpkg --compare-versions "${LB_VERSION}" ge 3.0; then
@@ -185,24 +216,30 @@ case ${MEDIO} in
 		else
 			MEDIO="usb-hdd"
 		fi
+		MEDIO_LBNAME="binary.img"
+		MEDIO_CSNAME="${META_DISTRO}-${SABOR}_${ARCH}.img"
 		MEDIO_S="Imagen para dispositivos de almacenamiento extraíble (USB)"
-		EXITO "Medio: ${MEDIO_S}"
+		EXITO "Medio: %s" "${MEDIO_S}"
 	;;
 
 	iso|ISO|CD|DVD)
 		MEDIO="iso"
+		MEDIO_LBNAME="binary.iso"
+		MEDIO_CSNAME="${META_DISTRO}-${SABOR}_${ARCH}.iso"
 		MEDIO_S="Imagen para dispositivos ópticos de almacenamiento (CD/DVD)"
-		EXITO "Medio: ${MEDIO_S}"
+		EXITO "Medio: %s" "${MEDIO_S}"
 	;;
 
 	iso-hybrid|hibrido|mixto|hybrid)
 		MEDIO="iso-hybrid"
+		MEDIO_LBNAME="binary-hybrid.iso"
+		MEDIO_CSNAME="${META_DISTRO}-${SABOR}_${ARCH}.iso"
 		MEDIO_S="Imagen mixta para dispositivos de almacenamiento (CD/DVD/USB)"
-		EXITO "Medio: ${MEDIO_S}"
+		EXITO "Medio: %s" "${MEDIO_S}"
 	;;
 
 	*)
-		ERROR "Tipo de formato \"${MEDIO}\" no reconocido por ${CS_NAME}. Abortando."
+		ERROR "Tipo de formato '%s' no reconocido por %s. Abortando." "${MEDIO}" "${CS_NAME}"
 		exit 1
 	;;
 esac
@@ -215,129 +252,134 @@ if [ -d "${PROFILES}${SABOR}" ]; then
 
 		CS_BUILD_CONFIG "${SABOR}" "${ACTION}"
 	else
-		ERROR "El perfil \"${SABOR}\" no posee configuración en \"${PCONFFILE}\""
+		ERROR "El perfil '%s' no posee configuración en '%s'" "${SABOR}" "${PCONFFILE}"
 		exit 1
 	fi
 else
-	ERROR "El perfil \"${SABOR}\" no existe dentro de la carpeta de perfiles \"${PROFILES}\"."
+	ERROR "El perfil '%s' no existe dentro de la carpeta de perfiles '%s'." "${SABOR}" "${PCONFFILE}"
 	exit 1
 fi
 
 if [ -f "${PCONFIGURED}" ]; then
-	EXITO "Sabor: ${SABOR}"
+	EXITO "Sabor: %s" "${SABOR}"
 	rm -rf "${PCONFIGURED}"
 else
-	ERROR "El perfil \"${SABOR}\" no logró configurarse correctamente. Abortando."
+	ERROR "El perfil '%s' no logró configurarse correctamente. Abortando." "${SABOR}"
 	exit 1
 fi
 
-if dpkg --compare-versions "${LB_VERSION}" ge 3.0; then
-
-else
-
-fi
-
 ADVERTENCIA "Generando árbol de configuraciones ..."
-cd ${ISODIR}
-lb config --architecture="${arch}" \
-	--distribution="${SABOR_DIST}" \
-	--apt="aptitude" --apt-recommends="false" \
+cd ${ISOS}
+
+if dpkg --compare-versions "${LB_VERSION}" ge 3.0; then
+	lb config \
+	--architecture="${ARCH}" \
+	--linux-flavours="${KERNEL_ARCH}" \
+	--distribution="${META_DISTRO}" \
+	--mode="${META_MODE}" \
+	--language="${OS_LANG}" \
+	--apt="aptitude" \
+	--apt-recommends="false" \
+	--apt-indices="none" \
+	--apt-secure="false" \
 	--bootloader="syslinux" \
 	--binary-images="${MEDIO}" \
 	--bootstrap="debootstrap" \
 	--includes="none" \
-	--username="usuario-nvivo" \
-	--hostname="${DISTRO}-${sabor}" \
+	--hostname="${META_DISTRO}-${SABOR}" \
+	--username="${META_DISTRO}" \
+	--archive-areas="${META_REPOSECTIONS}"
+	--parent-mirror-bootstrap="${META_REPO}" \
+	--parent-mirror-chroot="${META_REPO}" \
+	--parent-mirror-binary="${META_REPO}" \
+	--parent-mirror-debian-installer="${META_REPO}" \
+	--mirror-bootstrap="${META_REPO}" \
+	--mirror-chroot="${META_REPO}" \
+	--mirror-binary="${META_REPO}" \
+	--mirror-debian-installer="${META_REPO}" \
+	--parent-mirror-chroot-security="none" \
+	--parent-mirror-chroot-volatile="none" \
+	--parent-mirror-chroot-backports="none" \
+	--parent-mirror-binary-security="none" \
+	--parent-mirror-binary-volatile="none" \
+	--parent-mirror-binary-backports="none" \
 	--mirror-chroot-security="none" \
+	--mirror-chroot-volatile="none" \
+	--mirror-chroot-backports="none" \
 	--mirror-binary-security="none" \
-	--bootappend-live="locale=${LOCALE} keyb=es quiet splash vga=791 live-config.user-fullname=${DISTRO}" \
+	--mirror-binary-volatile="none" \
+	--mirror-binary-backports="none" \
 	--security="false" \
 	--volatile="false" \
 	--backports="false" \
 	--source="false" \
-	--iso-preparer="${PREPARADO_POR}" \
-	--iso-volume="${DISTRO}-${sabor}" \
-	--iso-publisher="${PUBLICADO_POR}" \
-	--iso-application="${APLICACION}" \
-	--mirror-bootstrap="${SEMILLA_BOOTSTRAP}" \
-	--mirror-binary="${SEMILLA_BINARY}" \
-	--mirror-chroot="${SEMILLA_CHROOT}" \
+	--iso-preparer="${IDSTRING}" \
+	--iso-volume="${META_DISTRO}-${SABOR} (${DATE})" \
+	--iso-publisher="${AUTHOR_NAME}; ${AUTHOR_EMAIL}; ${AUTHOR_URL}" \
+	--iso-application="${META_DISTRO} Live" \
 	--memtest="none" \
-	--linux-flavours="${SABOR_KERNEL}" \
-	--archive-areas="${COMP_MIRROR_DEBIAN}" ${INSTALADOR} \
+	--debian-installer="${INSTALADOR}" \
 	--win32-loader="false" \
+	--bootappend-live="locale=${LOCALE} keyb=${OS_LANG} quiet splash vga=791 live-config.user-fullname=${META_DISTRO}" \
 	--bootappend-install="locale=${LOCALE}" \
 	${NULL}
-
+else
+	lb config \
 	--architecture="${ARCH}" \
-	--distribution="${SABOR_DIST}" \
+	--linux-flavours="${KERNEL_ARCH}" \
+	--distribution="${META_DISTRO}" \
+	--mode="${META_MODE}" \
+	--language="${OS_LANG}" \
 	--apt="aptitude" \
 	--apt-recommends="false" \
+	--apt-secure="false" \
 	--bootloader="syslinux" \
+	--syslinux-menu="true" \
+	--syslinux-timeout="5" \
+	--syslinux-splash="${IMG_SYSLINUX_SPLASH}" \
 	--binary-images="${MEDIO}" \
 	--bootstrap="debootstrap" \
 	--binary-indices="false" \
 	--includes="none" \
-	--username="canaima" \
-	--hostname="${DISTRIBUTION}-${SABOR}" \
+	--username="${META_DISTRO}" \
+	--hostname="${META_DISTRO}-${SABOR}" \
+	--archive-areas="${META_REPOSECTIONS}"
+	--mirror-chroot="${META_REPO}" \
+	--mirror-binary="${META_REPO}" \
+	--mirror-debian-installer="${META_REPO}" \
 	--mirror-chroot-security="none" \
+        --mirror-chroot-volatile="none" \
+	--mirror-chroot-backports="none" \
 	--mirror-binary-security="none" \
-	--language="es" \
-	--bootappend-live="locale=es_VE.UTF-8 keyb=es quiet splash vga=791 live-config.user-fullname=Canaima" \
+	--mirror-binary-volatile="none" \
+	--mirror-binary-backports="none" \
 	--security="false" \
 	--volatile="false" \
 	--backports="false" \
 	--source="false" \
-	--iso-preparer="${PREPARADO_POR}" \
-	--iso-volume="canaima-${SABOR}" \
-	--iso-publisher="${PUBLICADO_POR}" \
-	--iso-application="${APLICACION}" \
-	--mirror-bootstrap="${SEMILLA_BOOTSTRAP}" \
-	--mirror-binary="${SEMILLA_BINARY}" \
-	--mirror-chroot="${SEMILLA_CHROOT}" \
-	--memtest="none" \
-	--linux-flavours="${SABOR_KERNEL}" \
-	--syslinux-menu="true" \
-	--syslinux-timeout="5" \
-	--archive-areas="${COMP_MIRROR_DEBIAN}" ${INSTALADOR} \
-	--packages="${SABOR_PAQUETES}" \
-	--syslinux-splash="${SABOR_SYSPLASH}" \
+	--iso-preparer="${IDSTRING}" \
+	--iso-volume="${META_DISTRO}-${SABOR} (${DATE})" \
+	--iso-publisher="${AUTHOR_NAME}; ${AUTHOR_EMAIL}; ${AUTHOR_URL}" \
+	--iso-application="${META_DISTRO} Live" \
+	--debian-installer="${INSTALADOR}" \
 	--win32-loader="false" \
-	--bootappend-install="locale=es_VE.UTF-8"
-
-# 	--binary-indices="false" \
-# 	--language="es" \
-#	--syslinux-menu="true" \
-#	--syslinux-timeout="5" \
-#	--syslinux-splash="${SABOR_SYSPLASH}" \
-
-sed -i 's/LB_SYSLINUX_MENU_LIVE_ENTRY=.*/LB_SYSLINUX_MENU_LIVE_ENTRY="Probar"/g' config/binary
+	--memtest="none" \
+	--bootappend-live="locale=${OS_LOCALE} keyb=${OS_LANG} quiet splash vga=791 live-config.user-fullname=${META_DISTRO}" \
+	--bootappend-install="locale=${OS_LOCALE}"
+	${NULL}
+fi
 
 ADVERTENCIA "Construyendo ..."
-lb build 2>&1 | tee binary.log
+lb build 2>&1 | tee "${ISOS}${LOGFILE}"
 
-img_name=binary
-case ${MEDIO} in
-	iso-hybrid)
-	     ext="iso"; img_name="$name-hybrid";;
-	iso) ext="iso";;
-	usb) ext="img";;
-	*)   ERROR "Algo fallo";;
-esac
-
-final=${ISO_DIR}$img_name.${ext}
-
-echo "--> $MEDIO --> $final"
-
-if [ -e ${final} ]; then
-	PESO=$( ls -lah ${final} | awk '{print $5}' )
-	dest="${DISTRO}-${sabor}_${arch}.${ext}"
-	mv ${final} ${dest}
-	EXITO "¡Enhorabuena! Se ha creado una imagen \"${TYPO_MEDIO}\" de ${DISTRO}-${sabor}, que pesa ${PESO}."
-	EXITO "Puedes encontrar la imagen \"$dest\" en el directorio ${ISO_DIR}"
+if [ -e "${ISOS}${MEDIO_LBNAME}" ]; then
+	PESO="$( ls -lah "${ISOS}${MEDIO_LBNAME}" | awk '{print $5}' )"
+	mv "${ISOS}${MEDIO_LBNAME}" "${ISOS}${MEDIO_CSNAME}"
+	EXITO "¡Felicitaciones! Has creado una imagen '%s' para %s-%s, con un peso de %s." "${MEDIO}" "${META_DISTRO}" "${SABOR}" "${PESO}"
+	EXITO "Puedes encontrar la imagen '%s' en el directorio %s" "${MEDIO_CSNAME}" "${ISOS}"
 	exit 0
 else
 	ERROR "Ocurrió un error durante la generación de la imagen."
-	ERROR "Envía un correo a desarrolladores@canaima.softwarelibre.gob.ve con el contenido del archivo ${ISO_DIR}binary.log"
+	ERROR "Envía un correo a desarrolladores@canaima.softwarelibre.gob.ve con el contenido del archivo '%s'" "${ISOS}${LOGFILE}"
 	exit 1
 fi

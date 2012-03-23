@@ -47,20 +47,35 @@ BLINK="\033[5m"
 END="\033[0m"
 
 ERROR() {
-	if [ -n ${1} ]; then
-		/bin/echo -e "${LRED}${1}${END}"
+
+	MESSAGE="${1}"
+	shift || true
+
+	if [ -n "${MESSAGE}" ]; then
+		printf "${LRED}${MESSAGE}${END}\n" ${@}
+		echo "[ERROR] ${MESSAGE}" >> "${ISOS}${LOGFILE}"
 	fi
 }
 
 ADVERTENCIA() {
-	if [ -n ${1} ]; then
-		/bin/echo -e "${YELLOW}${1}${END}"
+
+	MESSAGE="${1}"
+	shift || true
+
+	if [ -n "${MESSAGE}" ]; then
+		printf "${YELLOW}${MESSAGE}${END}\n" ${@}
+		echo "[ADVERTENCIA] ${MESSAGE}" >> "${ISOS}${LOGFILE}"
 	fi
 }
 
 EXITO() {
-	if [ -n ${1} ]; then
-		/bin/echo -e "${LGREEN}${1}${END}"
+
+	MESSAGE="${1}"
+	shift || true
+
+	if [ -n "${MESSAGE}" ]; then
+		printf "${LGREEN}${MESSAGE}${END}\n" ${@}
+		echo "[EXITO] ${MESSAGE}" >> "${ISOS}${LOGFILE}"
 	fi
 }
 

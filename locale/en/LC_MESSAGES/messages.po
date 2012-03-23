@@ -8,8 +8,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: aguilas\n"
-"Report-Msgid-Bugs-To: aguilas-list@googlegroups.com\n"
-"POT-Creation-Date: 2012-02-23 15:01-0430\n"
+"Report-Msgid-Bugs-To: desarrolladores@canaima.softwarelibre.gob.ve\n"
+"POT-Creation-Date: 2012-03-23 18:37-0430\n"
 "PO-Revision-Date: 2012-01-20 19:38-0400\n"
 "Last-Translator: Luis Alejandro Martínez Faneyth <luis@huntingbears.com.ve>\n"
 "Language-Team: Aguilas Translation Team <aguilas-list@googlegroups.com>\n"
@@ -18,3 +18,163 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
+#: ../../../scripts/modules/build.sh:206
+msgid "Arquitectura '%s' no soportada por %s. Abortando."
+msgstr ""
+
+#: ../../../scripts/modules/build.sh:196
+msgid "Arquitectura: amd64"
+msgstr ""
+
+#: ../../../scripts/modules/build.sh:202
+msgid "Arquitectura: i386"
+msgstr ""
+
+#: ../../../scripts/functions/init.sh:26
+msgid "Canaima Semilla debe ser ejecutado como usuario root."
+msgstr ""
+
+#: ../../../scripts/modules/build.sh:372
+msgid "Construyendo ..."
+msgstr ""
+
+#: ../../../scripts/functions/init.sh:31
+msgid "El archivo de configuración '%s' no existe o no es ejecutable."
+msgstr ""
+
+#: ../../../scripts/functions/init.sh:61
+msgid "El directorio de construcción de imágenes '%s' no existe."
+msgstr ""
+
+#: ../../../scripts/functions/init.sh:41
+msgid "El directorio que contiene las funciones '%s' no existe."
+msgstr ""
+
+#: ../../../scripts/functions/init.sh:46
+msgid "El directorio que contiene los módulos '%s' no existe."
+msgstr ""
+
+#: ../../../scripts/functions/init.sh:51
+msgid "El directorio que contiene los perfiles '%s' no existe."
+msgstr ""
+
+#: ../../../scripts/functions/init.sh:56
+msgid "El directorio que contiene los scripts '%s' no existe."
+msgstr ""
+
+#: ../../../scripts/modules/build.sh:259
+msgid "El perfil '%s' no existe dentro de la carpeta de perfiles '%s'."
+msgstr ""
+
+#: ../../../scripts/modules/build.sh:267
+msgid "El perfil '%s' no logró configurarse correctamente. Abortando."
+msgstr ""
+
+#: ../../../scripts/modules/build.sh:255
+msgid "El perfil '%s' no posee configuración en '%s'"
+msgstr ""
+
+#: ../../../scripts/modules/build.sh:153
+msgid "El perfil excluye el instalador, pero la línea de comandos lo incluye."
+msgstr ""
+
+#: ../../../scripts/modules/build.sh:149
+msgid "El perfil incluye el instalador, pero la línea de comandos lo excluye."
+msgstr ""
+
+#: ../../../scripts/modules/build.sh:383
+msgid "Envía un correo a desarrolladores@canaima.softwarelibre.gob.ve con el contenido del archivo '%s'"
+msgstr ""
+
+#: ../../../scripts/modules/build.sh:43
+msgid "Error interno"
+msgstr ""
+
+#: ../../../scripts/modules/build.sh:271
+msgid "Generando árbol de configuraciones ..."
+msgstr ""
+
+#: ../../../scripts/functions/config.sh:21
+msgid "La función '%s' necesita un nombre de perfil válido como argumento."
+msgstr ""
+
+#: ../../../scripts/functions/init.sh:36
+msgid "La librería de funciones principales '%s' no existe o no es ejecutable."
+msgstr ""
+
+#: ../../../scripts/modules/build.sh:139
+msgid "Limpiando residuos de construcciones anteriores ..."
+msgstr ""
+
+#: ../../../scripts/modules/build.sh:222 ../../../scripts/modules/build.sh:230
+#: ../../../scripts/modules/build.sh:238
+msgid "Medio: %s"
+msgstr ""
+
+#: ../../../scripts/modules/build.sh:187
+msgid "Metadistribución '%s' no soportada por %s. Utilizando Debian."
+msgstr ""
+
+#: ../../../scripts/modules/build.sh:176
+msgid "Metadistribución: Canaima"
+msgstr ""
+
+#: ../../../scripts/modules/build.sh:171
+msgid "Metadistribución: Debian"
+msgstr ""
+
+#: ../../../scripts/modules/build.sh:181
+msgid "Metadistribución: Ubuntu"
+msgstr ""
+
+#: ../../../scripts/modules/build.sh:109
+msgid "No especificaste un sabor, utilizando sabor '%s' por defecto."
+msgstr ""
+
+#: ../../../scripts/modules/build.sh:119
+msgid "No especificaste un tipo de formato para la imagen, utilizando medio '%s' por defecto."
+msgstr ""
+
+#: ../../../scripts/modules/build.sh:114
+msgid "No especificaste una arquitectura, utilizando '%s' presente en el sistema."
+msgstr ""
+
+#: ../../../scripts/modules/build.sh:157 ../../../scripts/modules/build.sh:163
+msgid "No se incluirá el instalador."
+msgstr ""
+
+#: ../../../scripts/modules/build.sh:382
+msgid "Ocurrió un error durante la generación de la imagen."
+msgstr ""
+
+#: ../../../scripts/modules/build.sh:50 ../../../scripts/modules/build.sh:99
+msgid "Ocurrió un problema interpretando los parámetros."
+msgstr ""
+
+#: ../../../scripts/functions/misc.sh:28
+msgid "Por favor reinstala canaima-semilla o verifica que has escrito bien el comando."
+msgstr ""
+
+#: ../../../scripts/modules/build.sh:150 ../../../scripts/modules/build.sh:154
+msgid "Prefiriendo la linea de comandos sobre el perfil."
+msgstr ""
+
+#: ../../../scripts/modules/build.sh:379
+msgid "Puedes encontrar la imagen '%s' en el directorio %s"
+msgstr ""
+
+#: ../../../scripts/modules/build.sh:264
+msgid "Sabor: %s"
+msgstr ""
+
+#: ../../../scripts/modules/build.sh:160
+msgid "Se incluye el instalador."
+msgstr ""
+
+#: ../../../scripts/modules/build.sh:242
+msgid "Tipo de formato '%s' no reconocido por %s. Abortando."
+msgstr ""
+
+#: ../../../scripts/modules/build.sh:378
+msgid "¡Felicitaciones! Has creado una imagen '%s' para %s-%s, con un peso de %s."
+msgstr ""

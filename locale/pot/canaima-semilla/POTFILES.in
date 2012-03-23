@@ -1,8 +1,8 @@
-../../../scripts/functions/color.sh
+../../../scripts/modules/build.sh
+../../../scripts/library.sh
+../../../scripts/c-s.sh
 ../../../scripts/functions/config.sh
+../../../scripts/functions/color.sh
+../../../scripts/functions/misc.sh
 ../../../scripts/functions/defaults.sh
 ../../../scripts/functions/init.sh
-../../../scripts/functions/misc.sh
-../../../scripts/modules/build.sh
-../../../scripts/functions.sh
-../../../scripts/c-s.sh
