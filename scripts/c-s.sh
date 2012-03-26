@@ -1,10 +1,10 @@
 #!/bin/sh -e
 #
 # ==============================================================================
-# PAQUETE: canaima-semilla
-# ARCHIVO: c-s.sh
-# DESCRIPCIÓN: script principal de shell para la aplicación Canaima Semilla
-# USO: 
+# PACKAGE: canaima-semilla
+# FILE: c-s.sh
+# DESCRIPTION: script principal de shell para la aplicación Canaima Semilla
+# USAGE: 
 # COPYRIGHT:
 #  (C) 2010 Luis Alejandro Martínez Faneyth <luis@huntingbears.com.ve>
 #  (C) 2012 Niv Sardi <xaiki@debian.org>
@@ -54,13 +54,13 @@ case ${ACTION} in
 			man canaima-semilla
 			exit 0
 		else
-			USO
+			USAGE
 			exit 0
 		fi
 	;;
 
 	-u|--uso|--usage|'')
-		USO
+		USAGE
 		exit 0
 	;;
 

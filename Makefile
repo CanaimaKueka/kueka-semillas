@@ -6,7 +6,7 @@ SHELL = sh -e
 AUTHOR = Luis Alejandro Martínez Faneyth
 EMAIL = luis@huntingbears.com.ve
 MAILIST = desarrolladores@canaima.softwarelibre.gob.ve
-PACKAGE = CanaimaSemilla
+PACKAGE = Canaima Semilla
 CHARSET = UTF-8
 VERSION = $(shell cat VERSION | grep "VERSION" | sed 's/VERSION = //g;s/+.*//g')
 YEAR = $(shell date +%Y)

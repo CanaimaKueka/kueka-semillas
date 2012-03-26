@@ -1,16 +1,16 @@
 # Plantilla de Traducción para Canaima Semilla.
 # Copyright (C) 2012 Luis Alejandro Martínez Faneyth
-# This file is distributed under the same license as the CanaimaSemilla package.
+# This file is distributed under the same license as the Canaima Semilla package.
 #
 # Translators:
 # Luis Alejandro Martínez Faneyth <luis@huntingbears.com.ve>, 2012
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: CanaimaSemilla 3.0\n"
+"Project-Id-Version: Canaima Semilla 3.0\n"
 "Report-Msgid-Bugs-To: desarrolladores@canaima.softwarelibre.gob.ve\n"
-"POT-Creation-Date: 2012-03-23 18:37-0430\n"
-"PO-Revision-Date: 2012-03-23 18:37-0430\n"
+"POT-Creation-Date: 2012-03-26 11:59-0430\n"
+"PO-Revision-Date: 2012-03-26 11:59-0430\n"
 "Last-Translator: Luis Alejandro Martínez Faneyth <luis@huntingbears.com.ve>\n"
 "Language-Team: Equipo de Traducción de Canaima Semilla <desarrolladores@canaima.softwarelibre.gob.ve>\n"
 "Language: English\n"
@@ -18,15 +18,21 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../../../scripts/modules/build.sh:206
+#: ../../../scripts/functions/color.sh:55
+#: ../../../scripts/functions/color.sh:67
+#: ../../../scripts/functions/color.sh:79
+msgid "-s"
+msgstr ""
+
+#: ../../../scripts/modules/build.sh:206 ../../../scripts/modules/build.sh:224
 msgid "Arquitectura '%s' no soportada por %s. Abortando."
 msgstr ""
 
-#: ../../../scripts/modules/build.sh:196
+#: ../../../scripts/modules/build.sh:196 ../../../scripts/modules/build.sh:214
 msgid "Arquitectura: amd64"
 msgstr ""
 
-#: ../../../scripts/modules/build.sh:202
+#: ../../../scripts/modules/build.sh:202 ../../../scripts/modules/build.sh:220
 msgid "Arquitectura: i386"
 msgstr ""
 
@@ -34,7 +40,7 @@ msgstr ""
 msgid "Canaima Semilla debe ser ejecutado como usuario root."
 msgstr ""
 
-#: ../../../scripts/modules/build.sh:372
+#: ../../../scripts/modules/build.sh:372 ../../../scripts/modules/build.sh:397
 msgid "Construyendo ..."
 msgstr ""
 
@@ -62,27 +68,27 @@ msgstr ""
 msgid "El directorio que contiene los scripts '%s' no existe."
 msgstr ""
 
-#: ../../../scripts/modules/build.sh:259
+#: ../../../scripts/modules/build.sh:259 ../../../scripts/modules/build.sh:277
 msgid "El perfil '%s' no existe dentro de la carpeta de perfiles '%s'."
 msgstr ""
 
-#: ../../../scripts/modules/build.sh:267
+#: ../../../scripts/modules/build.sh:267 ../../../scripts/modules/build.sh:284
 msgid "El perfil '%s' no logró configurarse correctamente. Abortando."
 msgstr ""
 
-#: ../../../scripts/modules/build.sh:255
+#: ../../../scripts/modules/build.sh:255 ../../../scripts/modules/build.sh:273
 msgid "El perfil '%s' no posee configuración en '%s'"
 msgstr ""
 
-#: ../../../scripts/modules/build.sh:153
+#: ../../../scripts/modules/build.sh:153 ../../../scripts/modules/build.sh:171
 msgid "El perfil excluye el instalador, pero la línea de comandos lo incluye."
 msgstr ""
 
-#: ../../../scripts/modules/build.sh:149
+#: ../../../scripts/modules/build.sh:149 ../../../scripts/modules/build.sh:167
 msgid "El perfil incluye el instalador, pero la línea de comandos lo excluye."
 msgstr ""
 
-#: ../../../scripts/modules/build.sh:383
+#: ../../../scripts/modules/build.sh:383 ../../../scripts/modules/build.sh:435
 msgid "Envía un correo a desarrolladores@canaima.softwarelibre.gob.ve con el contenido del archivo '%s'"
 msgstr ""
 
@@ -90,8 +96,16 @@ msgstr ""
 msgid "Error interno"
 msgstr ""
 
-#: ../../../scripts/modules/build.sh:271
+#: ../../../scripts/modules/build.sh:271 ../../../scripts/modules/build.sh:288
 msgid "Generando árbol de configuraciones ..."
+msgstr ""
+
+#: ../../../scripts/functions/misc.sh:17
+msgid "La función '%s' necesita el nombre de un directorio como segundo argumento."
+msgstr ""
+
+#: ../../../scripts/functions/misc.sh:13
+msgid "La función '%s' necesita el nombre de un módulo como primer argumento."
 msgstr ""
 
 #: ../../../scripts/functions/config.sh:21
@@ -102,52 +116,59 @@ msgstr ""
 msgid "La librería de funciones principales '%s' no existe o no es ejecutable."
 msgstr ""
 
-#: ../../../scripts/modules/build.sh:139
+#: ../../../scripts/modules/build.sh:139 ../../../scripts/modules/build.sh:157
 msgid "Limpiando residuos de construcciones anteriores ..."
 msgstr ""
 
 #: ../../../scripts/modules/build.sh:222 ../../../scripts/modules/build.sh:230
-#: ../../../scripts/modules/build.sh:238
+#: ../../../scripts/modules/build.sh:238 ../../../scripts/modules/build.sh:240
+#: ../../../scripts/modules/build.sh:248 ../../../scripts/modules/build.sh:256
 msgid "Medio: %s"
 msgstr ""
 
-#: ../../../scripts/modules/build.sh:187
+#: ../../../scripts/modules/build.sh:187 ../../../scripts/modules/build.sh:205
 msgid "Metadistribución '%s' no soportada por %s. Utilizando Debian."
 msgstr ""
 
-#: ../../../scripts/modules/build.sh:176
+#: ../../../scripts/modules/build.sh:176 ../../../scripts/modules/build.sh:194
 msgid "Metadistribución: Canaima"
 msgstr ""
 
-#: ../../../scripts/modules/build.sh:171
+#: ../../../scripts/modules/build.sh:171 ../../../scripts/modules/build.sh:189
 msgid "Metadistribución: Debian"
 msgstr ""
 
-#: ../../../scripts/modules/build.sh:181
+#: ../../../scripts/modules/build.sh:181 ../../../scripts/modules/build.sh:199
 msgid "Metadistribución: Ubuntu"
 msgstr ""
 
-#: ../../../scripts/modules/build.sh:109
+#: ../../../scripts/modules/build.sh:109 ../../../scripts/modules/build.sh:127
 msgid "No especificaste un sabor, utilizando sabor '%s' por defecto."
 msgstr ""
 
-#: ../../../scripts/modules/build.sh:119
+#: ../../../scripts/modules/build.sh:119 ../../../scripts/modules/build.sh:137
 msgid "No especificaste un tipo de formato para la imagen, utilizando medio '%s' por defecto."
 msgstr ""
 
-#: ../../../scripts/modules/build.sh:114
+#: ../../../scripts/modules/build.sh:114 ../../../scripts/modules/build.sh:132
 msgid "No especificaste una arquitectura, utilizando '%s' presente en el sistema."
 msgstr ""
 
+#: ../../../scripts/functions/misc.sh:27
+msgid "No se ha encontrado '%s', en la carpeta de módulos '%s'."
+msgstr ""
+
 #: ../../../scripts/modules/build.sh:157 ../../../scripts/modules/build.sh:163
+#: ../../../scripts/modules/build.sh:175 ../../../scripts/modules/build.sh:181
 msgid "No se incluirá el instalador."
 msgstr ""
 
-#: ../../../scripts/modules/build.sh:382
+#: ../../../scripts/modules/build.sh:382 ../../../scripts/modules/build.sh:434
 msgid "Ocurrió un error durante la generación de la imagen."
 msgstr ""
 
 #: ../../../scripts/modules/build.sh:50 ../../../scripts/modules/build.sh:99
+#: ../../../scripts/modules/build.sh:115
 msgid "Ocurrió un problema interpretando los parámetros."
 msgstr ""
 
@@ -156,25 +177,26 @@ msgid "Por favor reinstala canaima-semilla o verifica que has escrito bien el co
 msgstr ""
 
 #: ../../../scripts/modules/build.sh:150 ../../../scripts/modules/build.sh:154
+#: ../../../scripts/modules/build.sh:168 ../../../scripts/modules/build.sh:172
 msgid "Prefiriendo la linea de comandos sobre el perfil."
 msgstr ""
 
-#: ../../../scripts/modules/build.sh:379
+#: ../../../scripts/modules/build.sh:379 ../../../scripts/modules/build.sh:431
 msgid "Puedes encontrar la imagen '%s' en el directorio %s"
 msgstr ""
 
-#: ../../../scripts/modules/build.sh:264
+#: ../../../scripts/modules/build.sh:264 ../../../scripts/modules/build.sh:282
 msgid "Sabor: %s"
 msgstr ""
 
-#: ../../../scripts/modules/build.sh:160
+#: ../../../scripts/modules/build.sh:160 ../../../scripts/modules/build.sh:178
 msgid "Se incluye el instalador."
 msgstr ""
 
-#: ../../../scripts/modules/build.sh:242
+#: ../../../scripts/modules/build.sh:242 ../../../scripts/modules/build.sh:260
 msgid "Tipo de formato '%s' no reconocido por %s. Abortando."
 msgstr ""
 
-#: ../../../scripts/modules/build.sh:378
+#: ../../../scripts/modules/build.sh:378 ../../../scripts/modules/build.sh:430
 msgid "¡Felicitaciones! Has creado una imagen '%s' para %s-%s, con un peso de %s."
 msgstr ""

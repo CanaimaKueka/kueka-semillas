@@ -1,14 +1,14 @@
 #!/bin/sh -e
 #
 # ==============================================================================
-# PAQUETE: canaima-semilla
-# ARCHIVO: c-s.sh
-# DESCRIPCIÓN: script principal de shell para la aplicación Canaima Semilla
-# USO: 
+# PACKAGE: canaima-semilla
+# FILE: c-s.sh
+# DESCRIPTION: script principal de shell para la aplicación Canaima Semilla
+# USAGE: 
 # COPYRIGHT:
 #  (C) 2010 Luis Alejandro Martínez Faneyth <luis@huntingbears.com.ve>
 #  (C) 2012 Niv Sardi <xaiki@debian.org>
-# LICENCIA: GPL3
+# LICENSE: GPL3
 # ==============================================================================
 #
 # This program is free software: you can redistribute it and/or modify
@@ -52,8 +52,9 @@ ERROR() {
 	shift || true
 
 	if [ -n "${MESSAGE}" ]; then
-		printf "${LRED}${MESSAGE}${END}\n" ${@}
-		echo "[ERROR] ${MESSAGE}" >> "${ISOS}${LOGFILE}"
+		LOCALIZED="$( gettext -s "${MESSAGE}" )"
+		printf "${LRED}${LOCALIZED}${END}\n" ${@}
+		echo "[ERROR] ${LOCALIZED}" >> "${ISOS}${LOGFILE}"
 	fi
 }
 
@@ -63,8 +64,9 @@ ADVERTENCIA() {
 	shift || true
 
 	if [ -n "${MESSAGE}" ]; then
-		printf "${YELLOW}${MESSAGE}${END}\n" ${@}
-		echo "[ADVERTENCIA] ${MESSAGE}" >> "${ISOS}${LOGFILE}"
+		LOCALIZED="$( gettext -s "${MESSAGE}" )"
+		printf "${YELLOW}${LOCALIZED}${END}\n" ${@}
+		echo "[ADVERTENCIA] ${LOCALIZED}" >> "${ISOS}${LOGFILE}"
 	fi
 }
 
@@ -74,8 +76,9 @@ EXITO() {
 	shift || true
 
 	if [ -n "${MESSAGE}" ]; then
-		printf "${LGREEN}${MESSAGE}${END}\n" ${@}
-		echo "[EXITO] ${MESSAGE}" >> "${ISOS}${LOGFILE}"
+		LOCALIZED="$( gettext -s "${MESSAGE}" )"
+		printf "${LGREEN}${LOCALIZED}${END}\n" ${@}
+		echo "[EXITO] ${LOCALIZED}" >> "${ISOS}${LOGFILE}"
 	fi
 }
 
