@@ -1,3 +1,9 @@
+DEVELOPMENT RELEASE v3.0+20120327230826 (03/27/12)
+Creación de la función CS_LOAD_PROFILE, para validar la configuración del perfil.
+Separación de las constantes de colores de las funciones de mensajes.
+Reorganización de la plantilla del perfil por defecto.
+Actualización de documentación y traducciones.
+
 DEVELOPMENT RELEASE v3.0+20120326115954 (03/26/12)
 Agregando soporte para localización en scripts de bash
 Arreglando detalles estéticos
