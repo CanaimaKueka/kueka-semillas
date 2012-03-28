@@ -34,11 +34,11 @@ fi
 . "${BASEDIR}scripts/functions/init.sh"
 
 if [ "${ACTION}" == "construir" ]; then
-	SHORTOPTS="c:a:m:s:iId"
-	LONGOPTS="config:,arquitectura:,medio:,sabor:,instalador-debian,no-instalador-debian,debug"
+	SHORTOPTS="f:a:m:s:inbcd"
+	LONGOPTS="archivo-config:,arquitectura:,medio:,sabor:,instalador,sin-instalador,solo-construir,solo-configurar,debug"
 elif [ "${ACTION}" == "build" ]; then
-	SHORTOPTS="c:a:m:s:iId"
-	LONGOPTS="config:,architecture:,image:,profile:,debian-installer,no-debian-installer,debug"
+	SHORTOPTS="f:a:m:s:inbcd"
+	LONGOPTS="config-file:,architecture:,image:,profile:,installer,no-installer,build-only,config-only,debug"
 else
 	ERROR "Error interno"
 	exit 1
@@ -59,7 +59,7 @@ INSTALADOR="true"
 
 while true; do
 	case "${1}" in
-		-f|--config-file|--archivo-config)
+		-f|--archivo-config|--config-file)
 			EXTRACONF="${2}"
 			shift 2 || true
 		;;
@@ -89,13 +89,13 @@ while true; do
 			shift 1 || true
 		;;
 
-		-b|--build-only|--solo-construir)
+		-b|--solo-construir|--build-only)
 			BUILDONLY="true"
 			CONFIGONLY="false"
 			shift 1 || true
 		;;
 
-		-o|--config-only|--solo-configurar)
+		-c|--solo-configurar|--config-only)
 			CONFIGONLY="true"
 			BUILDONLY="false"
 			shift 1 || true
@@ -123,18 +123,19 @@ cd "${ISOS}"
 if ${CONFIGONLY}; then
 
 	if [ -z "${SABOR}" ]; then
-		SABOR="${DEFAULT_PROFILE}"
-		ADVERTENCIA "No especificaste un sabor, utilizando sabor '%s' por defecto." "${SABOR}"
+		SABOR="default"
+		PROFILES="${TEMPLATES}profile/"
+		MENSAJE "No especificaste un sabor, utilizando sabor '%s' por defecto." "${SABOR}"
 	fi
 
 	if [ -z "${ARCH}" ]; then
 		ARCH="$( dpkg --print-architecture )"
-		ADVERTENCIA "No especificaste una arquitectura, utilizando '%s' presente en el sistema." "${ARCH}"
+		MENSAJE "No especificaste una arquitectura, utilizando '%s' presente en el sistema." "${ARCH}"
 	fi
 
 	if [ -z "${MEDIO}" ]; then
 		MEDIO="iso-hybrid"
-		ADVERTENCIA "No especificaste un tipo de formato para la imagen, utilizando medio '%s' por defecto." "${MEDIO}"
+		MENSAJE "No especificaste un tipo de formato para la imagen, utilizando medio '%s' por defecto." "${MEDIO}"
 	fi
 
 	PCONF="${ISOS}config"
@@ -144,11 +145,18 @@ if ${CONFIGONLY}; then
 
 	if [ -d "${PROFILES}${SABOR}" ]; then
 		if [ -f "${PCONFFILE}" ]; then
-			. "${PCONFFILE}"
+			CS_LOAD_PROFILE "${PCONFFILE}"
+		else
+			ERROR "El perfil '%s' no posee configuración en '%s'" "${SABOR}" "${PCONFFILE}"
+			exit 1
 		fi
+	else
+		ERROR "El perfil '%s' no existe dentro de la carpeta de perfiles '%s'." "${SABOR}" "${PCONFFILE}"
+		exit 1
 	fi
 
 	if [ -d "${PCONF}" ]; then
+		MENSAJE "Respaldando árbol de configuraciones previo en '%s'." "${PCONFBKP}"
 		mv "${PCONF}" "${PCONFBKP}"
 	fi
 
@@ -181,30 +189,6 @@ if ${CONFIGONLY}; then
 		ADVERTENCIA "No se incluirá el instalador."
 		INSTALADOR="false"
 	fi
-
-	# METADISTRIBUCIÓN 
-	case ${META_DISTRO} in
-		debian)
-			META_MODE="debian"
-			EXITO "Metadistribución: Debian"
-		;;
-
-		canaima)
-			META_MODE="canaima"
-			EXITO "Metadistribución: Canaima"
-		;;
-
-		ubuntu)
-			META_MODE="ubuntu"
-			EXITO "Metadistribución: Ubuntu"
-		;;
-
-		''|*)
-			META_MODE="debian"
-			META_DISTRO="debian"
-			ADVERTENCIA "Metadistribución '%s' no soportada por %s. Utilizando Debian." "${META_DISTRO}" "${CS_NAME}"
-		;;
-	esac
 
 	#ARQUITECTURA
 	case ${ARCH} in
@@ -268,7 +252,7 @@ if ${CONFIGONLY}; then
 				. "${EXTRACONF}"
 			fi
 
-			CS_BUILD_CONFIG "${SABOR}" "${ACTION}"
+			CS_CONFIG_PROFILE "${SABOR}"
 		else
 			ERROR "El perfil '%s' no posee configuración en '%s'" "${SABOR}" "${PCONFFILE}"
 			exit 1

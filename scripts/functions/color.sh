@@ -1,30 +1,4 @@
 #!/bin/sh -e
-#
-# ==============================================================================
-# PACKAGE: canaima-semilla
-# FILE: c-s.sh
-# DESCRIPTION: script principal de shell para la aplicación Canaima Semilla
-# USAGE: 
-# COPYRIGHT:
-#  (C) 2010 Luis Alejandro Martínez Faneyth <luis@huntingbears.com.ve>
-#  (C) 2012 Niv Sardi <xaiki@debian.org>
-# LICENSE: GPL3
-# ==============================================================================
-#
-# This program is free software: you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation, either version 3 of the License, or
-# (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-# COPYING file for more details.
-#
-# You should have received a copy of the GNU General Public License
-# along with this program. If not, see <http://www.gnu.org/licenses/>.
-#
-# CODE IS POETRY
 
 RED="\033[0;31m"
 LRED="\033[1;31m"
@@ -45,40 +19,4 @@ WHITE="\033[1;37m"
 UNDERSCORE="\033[4m"
 BLINK="\033[5m"
 END="\033[0m"
-
-ERROR() {
-
-	MESSAGE="${1}"
-	shift || true
-
-	if [ -n "${MESSAGE}" ]; then
-		LOCALIZED="$( gettext -s "${MESSAGE}" )"
-		printf "${LRED}${LOCALIZED}${END}\n" ${@}
-		echo "[ERROR] ${LOCALIZED}" >> "${ISOS}${LOGFILE}"
-	fi
-}
-
-ADVERTENCIA() {
-
-	MESSAGE="${1}"
-	shift || true
-
-	if [ -n "${MESSAGE}" ]; then
-		LOCALIZED="$( gettext -s "${MESSAGE}" )"
-		printf "${YELLOW}${LOCALIZED}${END}\n" ${@}
-		echo "[ADVERTENCIA] ${LOCALIZED}" >> "${ISOS}${LOGFILE}"
-	fi
-}
-
-EXITO() {
-
-	MESSAGE="${1}"
-	shift || true
-
-	if [ -n "${MESSAGE}" ]; then
-		LOCALIZED="$( gettext -s "${MESSAGE}" )"
-		printf "${LGREEN}${LOCALIZED}${END}\n" ${@}
-		echo "[EXITO] ${LOCALIZED}" >> "${ISOS}${LOGFILE}"
-	fi
-}
 
