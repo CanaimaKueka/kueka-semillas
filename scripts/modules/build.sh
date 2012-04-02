@@ -1,4 +1,4 @@
-#!/bin/sh -e
+	#!/bin/sh -e
 #
 # ==============================================================================
 # PACKAGE: canaima-semilla
@@ -53,9 +53,9 @@ fi
 
 eval set -- "${OPTIONS}"
 
-CONFIGONLY="true"
-BUILDONLY="true"
-INSTALADOR="true"
+CONFIGONLY="${CONFIGONLY:-true}"
+BUILDONLY="${BUILDONLY:-true}"
+INSTALADOR="${INSTALADOR:-true}"
 
 while true; do
 	case "${1}" in
@@ -118,9 +118,9 @@ while true; do
 	esac
 done
 
-cd "${ISOS}"
-
 if ${CONFIGONLY}; then
+
+	cd "${ISOS}"
 
 	if [ -z "${SABOR}" ]; then
 		SABOR="default"
@@ -138,10 +138,11 @@ if ${CONFIGONLY}; then
 		MENSAJE "No especificaste un tipo de formato para la imagen, utilizando medio '%s' por defecto." "${MEDIO}"
 	fi
 
-	PCONF="${ISOS}config"
-	PCONFBKP="${ISOS}config.${DATE}.backup"
-	PCONFFILE="${PROFILES}${SABOR}/profile.conf"
-	PCONFIGURED="${ISOS}config/profile-configured"
+	PCONF="${PCONF:-${ISOS}config}"
+	PHISTORY="${PHISTORY:-${ISOS}history}"
+	PCONFBKP="${PCONFBKP:-${ISOS}history/config.${DATE}.backup}"
+	PCONFFILE="${PCONFFILE:-${PROFILES}${SABOR}/profile.conf}"
+	PCONFIGURED="${PCONFIGURED:-${ISOS}config/c-s/build-data.conf}"
 
 	if [ -d "${PROFILES}${SABOR}" ]; then
 		if [ -f "${PCONFFILE}" ]; then
@@ -157,6 +158,7 @@ if ${CONFIGONLY}; then
 
 	if [ -d "${PCONF}" ]; then
 		MENSAJE "Respaldando árbol de configuraciones previo en '%s'." "${PCONFBKP}"
+		mkdir -p "${PHISTORY}"
 		mv "${PCONF}" "${PCONFBKP}"
 	fi
 
@@ -369,53 +371,72 @@ if ${CONFIGONLY}; then
 		--bootappend-install="locale=${OS_LOCALE}"
 		${NULL}
 	fi
+	
+
+
 fi
 
 if ${BUILDONLY}; then
-	cd "${ISOS}"
 
-	if [ ! -e "${ISOS}config/profile-configured" ]; then
-		ADVERTENCIA "El directorio de construcción no fué configurado por ${CS_NAME}, ¡Buena Suerte!"
+	if [ -f "${ISOS}config/c-s/build-data.conf" ]; then
+		. "${ISOS}config/c-s/build-data.conf"
+	else
+		ADVERTENCIA "El contenedor de construcción parece haber sido configurado manualmente."
+		ADVERTENCIA "Puede que algunas características de %s no estén disponibles." "${CS_NAME}"
+		
+		if 	[ -f "${ISOS}config/common" ] && \
+			[ -f "${ISOS}config/binary" ] && \
+			[ -f "${ISOS}config/chroot" ] && \
+			[ -f "${ISOS}config/bootstrap" ]; then
+
+			. "${ISOS}config/bootstrap"
+			. "${ISOS}config/chroot"
+			. "${ISOS}config/binary"
+			. "${ISOS}config/common"
+
+			ARCH="${LB_ARCHITECTURES}"
+			MEDIO="${LB_BINARY_IMAGES}"
+			META_DISTRO="${LB_MODE}"
+
+			case ${MEDIO} in
+				usb-hdd|hdd)
+					MEDIO_LBNAME="binary.img"
+					MEDIO_CSNAME="${META_DISTRO}-flavour_${ARCH}.img"
+				;;
+
+				iso)
+					MEDIO_LBNAME="binary.iso"
+					MEDIO_CSNAME="${META_DISTRO}-flavour_${ARCH}.iso"
+				;;
+
+				iso-hybrid)
+					MEDIO_LBNAME="binary-hybrid.iso"
+					MEDIO_CSNAME="${META_DISTRO}-flavour_${ARCH}.iso"
+				;;
+			esac
+		else
+			ERROR "%s no pudo encontrar una configuración apropiada en %s." "${CS_NAME}" "${ISOS}config"
+			exit 1
+		fi
 	fi
 
-	ADVERTENCIA "Construyendo ..."
+	cd "${ISOS}"
+	echo ""
+	ADVERTENCIA "[--- INICIANDO CONSTRUCCIÓN ---]"
+	echo ""
 	lb build 2>&1 | tee "${ISOS}${LOGFILE}"
 
-	. "${ISOS}config/bootstrap"
-	. "${ISOS}config/binary"
-	. "${ISOS}config/common"
+	if [ -e "${ISOS}${MEDIO_LBNAME}" ] && [ -n "${MEDIO_CSNAME}" ] && [ -n "${MEDIO_LBNAME}" ]; then
 
-	ARCH="${LB_ARCHITECTURES}"
-	MEDIO="${LB_BINARY_IMAGES}"
-	META_DISTRO="${LB_MODE}"
-	SABOR="${LB_DISTRIBUTION}"
+		PESO="$( echo "scale=2;$( stat --format=%s "${ISOS}${MEDIO_LBNAME}" )/1048576" | bc )MB"
+		mv "${ISOS}${MEDIO_LBNAME}" "${ISOS}${MEDIO_CSNAME}"
 
-	case ${MEDIO} in
-		usb-hdd|hdd)
-			MEDIO_LBNAME="binary.img"
-			MEDIO_CSNAME="${META_DISTRO}-${SABOR}_${ARCH}.img"
-		;;
-
-		iso)
-			MEDIO_LBNAME="binary.iso"
-			MEDIO_CSNAME="${META_DISTRO}-${SABOR}_${ARCH}.iso"
-		;;
-
-		iso-hybrid)
-			MEDIO_LBNAME="binary-hybrid.iso"
-			MEDIO_CSNAME="${META_DISTRO}-${SABOR}_${ARCH}.iso"
-		;;
-	esac
-fi
-
-if [ -e "${ISOS}${MEDIO_LBNAME}" ]; then
-	PESO="$( ls -lah "${ISOS}${MEDIO_LBNAME}" | awk '{print $5}' )"
-	mv "${ISOS}${MEDIO_LBNAME}" "${ISOS}${MEDIO_CSNAME}"
-	EXITO "¡Felicitaciones! Has creado una imagen '%s' para %s-%s, con un peso de %s." "${MEDIO}" "${META_DISTRO}" "${SABOR}" "${PESO}"
-	EXITO "Puedes encontrar la imagen '%s' en el directorio %s" "${MEDIO_CSNAME}" "${ISOS}"
-	exit 0
-else
-	ERROR "Ocurrió un error durante la generación de la imagen."
-	ERROR "Envía un correo a desarrolladores@canaima.softwarelibre.gob.ve con el contenido del archivo '%s'" "${ISOS}${LOGFILE}"
-	exit 1
+		EXITO "Se ha creado una imagen %s con un peso de %s." "${MEDIO}" "${PESO}"
+		EXITO "Puedes encontrar la imagen '%s' en el directorio %s" "${MEDIO_CSNAME}" "${ISOS}"
+		exit 0
+	else
+		ERROR "Ocurrió un error durante la generación de la imagen."
+		ERROR "Si deseas asistencia, puedes enviar un correo a %s con el contenido del archivo '%s'" "${CS_LOG_MAIL}" "${ISOS}${LOGFILE}"
+		exit 1
+	fi
 fi
