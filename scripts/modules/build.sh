@@ -278,7 +278,7 @@ if ${CONFIGONLY}; then
 		lb config \
 		--architecture="${ARCH}" \
 		--linux-flavours="${KERNEL_ARCH}" \
-		--distribution="${META_DISTRO}" \
+		--distribution="${META_CODENAME}" \
 		--mode="${META_MODE}" \
 		--language="${OS_LANG}" \
 		--apt="aptitude" \
@@ -323,8 +323,8 @@ if ${CONFIGONLY}; then
 		--memtest="none" \
 		--debian-installer="${INSTALADOR}" \
 		--win32-loader="false" \
-		--bootappend-live="locale=${LOCALE} keyb=${OS_LANG} quiet splash vga=791 live-config.user-fullname=${META_DISTRO}" \
-		--bootappend-install="locale=${LOCALE}" \
+		--bootappend-live="locale=${OS_LOCALE} keyb=${OS_LANG} quiet splash vga=791 live-config.user-fullname=${META_DISTRO}" \
+		--bootappend-install="locale=${OS_LOCALE}" \
 		${NULL}
 	else
 		lb config \

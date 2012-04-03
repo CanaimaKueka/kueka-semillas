@@ -47,26 +47,41 @@ CS_LOAD_PROFILE() {
 	fi
 
 	case ${META_DISTRO} in
-        	debian)
-                	META_MODE="${META_MODE:-debian}"
-                	META_REPO="${META_REPO:-http://ftp.us.debian.org/debian/}"
-	               	META_REPOSECTIONS="${META_REPOSECTIONS:-main contrib non-free}"
-		
-			if [ "${META_CODENAME}" = "${CODENAME}" ]; then
+		debian)
+			META_MODE="${META_MODE:-debian}"
 
-        ;;
+			if [ -z "${META_REPO}" ] || [ "${META_REPO}" = "none" ]; then
+				META_REPO="${META_REPO:-http://ftp.us.debian.org/debian/}"
+			fi
 
-        canaima)
-                META_MODE="${META_MODE:-debian}"
-                META_REPO="${META_REPO:-http://universo.canaima.softwarelibre.gob.ve/}"
-                META_REPOSECTIONS="${META_REPOSECTIONS:-main contrib non-free}"
-        ;;
+			if [ -z "${META_REPOSECTIONS}" ] || [ "${META_REPOSECTIONS}" = "none" ]; then
+				META_REPOSECTIONS="${META_REPOSECTIONS:-main contrib non-free}"
+			fi
+		;;
 
-        ubuntu)
-                META_MODE="${META_MODE:-ubuntu}"
-                META_REPO="${META_REPO:-http://archive.ubuntu.com/ubuntu/}"
-                META_REPOSECTIONS="${META_REPOSECTIONS:-main restricted}"
-        ;;
+		canaima)
+			META_MODE="${META_MODE:-debian}"
+
+			if [ -z "${META_REPO}" ] || [ "${META_REPO}" = "none" ]; then
+				META_REPO="${META_REPO:-http://paquetes.canaima.softwarelibre.gob.ve/}"
+			fi
+
+			if [ -z "${META_REPOSECTIONS}" ] || [ "${META_REPOSECTIONS}" = "none" ]; then
+				META_REPOSECTIONS="${META_REPOSECTIONS:-main contrib extra privativo}"
+			fi
+		;;
+
+		ubuntu)
+			META_MODE="${META_MODE:-ubuntu}"
+
+			if [ -z "${META_REPO}" ] || [ "${META_REPO}" = "none" ]; then
+				META_REPO="${META_REPO:-http://archive.ubuntu.com/ubuntu/}"
+			fi
+
+			if [ -z "${META_REPOSECTIONS}" ] || [ "${META_REPOSECTIONS}" = "none" ]; then
+				META_REPOSECTIONS="${META_REPOSECTIONS:-main restricted}"
+			fi
+		;;
 
 		'')
 			ERROR "Debe especificar una Metadistribución. Abortando."
@@ -77,7 +92,7 @@ CS_LOAD_PROFILE() {
 			ERROR "Metadistribución '%s' no soportada por %s. Abortando." "${META_DISTRO}" "${CS_NAME}"
 			exit 1
 		;;
-esac
+	esac
 
 OS_PACKAGES="${OS_PACKAGES:-gnome-core xorg}"
 OS_BOOTLOADER="${OS_BOOTLOADER:-grub}"
@@ -94,37 +109,6 @@ IMG_DEBIAN_INSTALLER_PRESEED="${IMG_DEBIAN_INSTALLER_PRESEED:-${PROFILES}${DEFAU
 IMG_DEBIAN_INSTALLER_GTK="${IMG_DEBIAN_INSTALLER_GTK:-${PROFILES}${DEFAULT_PROFILE}/DEBIAN_INSTALLER/gtkrc}"
 IMG_INCLUDES="${IMG_INCLUDES:-${PROFILES}${DEFAULT_PROFILE}/IMG_INCLUDES/}"
 IMG_HOOKS="${IMG_HOOKS:-${PROFILES}${DEFAULT_PROFILE}/IMG_HOOKS/}"
-
-	# METADISTRIBUCIÓN 
-	case ${META_DISTRO} in
-		debian|Debian)
-			META_MODE="debian"
-			EXITO "Metadistribución: Debian"
-		;;
-
-		canaima|Canaima)
-			META_MODE="debian"
-			EXITO "Metadistribución: Canaima"
-		;;
-
-		ubuntu|Ubuntu)
-			META_MODE="ubuntu"
-			EXITO "Metadistribución: Ubuntu"
-		;;
-
-		'')
-			ERROR "Debe especificar una Metadistribución. Abortando."
-			exit 1
-		;;
-
-		*)
-			ERROR "Metadistribución '%s' no soportada por %s. Abortando." "${META_DISTRO}" "${CS_NAME}"
-			exit 1
-		;;
-	esac
-
-
-	
 
 }
 
