@@ -9,14 +9,18 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Canaima Semilla 3.0\n"
 "Report-Msgid-Bugs-To: desarrolladores@canaima.softwarelibre.gob.ve\n"
-"POT-Creation-Date: 2012-03-27 23:08-0430\n"
-"PO-Revision-Date: 2012-03-27 23:08-0430\n"
+"POT-Creation-Date: 2012-04-03 17:34-0430\n"
+"PO-Revision-Date: 2012-04-03 17:34-0430\n"
 "Last-Translator: Luis Alejandro Martínez Faneyth <luis@huntingbears.com.ve>\n"
 "Language-Team: Equipo de Traducción de Canaima Semilla <desarrolladores@canaima.softwarelibre.gob.ve>\n"
 "Language: English\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+
+#: ../../../scripts/modules/build.sh:418
+msgid "%s no pudo encontrar una configuración apropiada en %s."
+msgstr ""
 
 #: ../../../scripts/functions/color.sh:55
 #: ../../../scripts/functions/color.sh:67
@@ -29,17 +33,17 @@ msgid "-s"
 msgstr ""
 
 #: ../../../scripts/modules/build.sh:206 ../../../scripts/modules/build.sh:224
-#: ../../../scripts/modules/build.sh:208
+#: ../../../scripts/modules/build.sh:208 ../../../scripts/modules/build.sh:210
 msgid "Arquitectura '%s' no soportada por %s. Abortando."
 msgstr ""
 
 #: ../../../scripts/modules/build.sh:196 ../../../scripts/modules/build.sh:214
-#: ../../../scripts/modules/build.sh:198
+#: ../../../scripts/modules/build.sh:198 ../../../scripts/modules/build.sh:200
 msgid "Arquitectura: amd64"
 msgstr ""
 
 #: ../../../scripts/modules/build.sh:202 ../../../scripts/modules/build.sh:220
-#: ../../../scripts/modules/build.sh:204
+#: ../../../scripts/modules/build.sh:204 ../../../scripts/modules/build.sh:206
 msgid "Arquitectura: i386"
 msgstr ""
 
@@ -54,15 +58,21 @@ msgstr ""
 
 #: ../../../scripts/functions/config.sh:72
 #: ../../../scripts/functions/config.sh:116
+#: ../../../scripts/functions/config.sh:104
 msgid "Debe especificar una Metadistribución. Abortando."
 msgstr ""
 
 #: ../../../scripts/functions/config.sh:28
+#: ../../../scripts/functions/config.sh:31
 msgid "El archivo de configuraciones '%s' no existe."
 msgstr ""
 
 #: ../../../scripts/functions/init.sh:31
 msgid "El archivo de configuración '%s' no existe o no es ejecutable."
+msgstr ""
+
+#: ../../../scripts/modules/build.sh:384
+msgid "El contenedor de construcción parece haber sido configurado manualmente."
 msgstr ""
 
 #: ../../../scripts/functions/init.sh:61
@@ -87,26 +97,28 @@ msgstr ""
 
 #: ../../../scripts/modules/build.sh:259 ../../../scripts/modules/build.sh:277
 #: ../../../scripts/modules/build.sh:154 ../../../scripts/modules/build.sh:261
+#: ../../../scripts/modules/build.sh:155 ../../../scripts/modules/build.sh:263
 msgid "El perfil '%s' no existe dentro de la carpeta de perfiles '%s'."
 msgstr ""
 
 #: ../../../scripts/modules/build.sh:267 ../../../scripts/modules/build.sh:284
-#: ../../../scripts/modules/build.sh:268
+#: ../../../scripts/modules/build.sh:268 ../../../scripts/modules/build.sh:270
 msgid "El perfil '%s' no logró configurarse correctamente. Abortando."
 msgstr ""
 
 #: ../../../scripts/modules/build.sh:255 ../../../scripts/modules/build.sh:273
 #: ../../../scripts/modules/build.sh:150 ../../../scripts/modules/build.sh:257
+#: ../../../scripts/modules/build.sh:151 ../../../scripts/modules/build.sh:259
 msgid "El perfil '%s' no posee configuración en '%s'"
 msgstr ""
 
 #: ../../../scripts/modules/build.sh:153 ../../../scripts/modules/build.sh:171
-#: ../../../scripts/modules/build.sh:179
+#: ../../../scripts/modules/build.sh:179 ../../../scripts/modules/build.sh:181
 msgid "El perfil excluye el instalador, pero la línea de comandos lo incluye."
 msgstr ""
 
 #: ../../../scripts/modules/build.sh:149 ../../../scripts/modules/build.sh:167
-#: ../../../scripts/modules/build.sh:175
+#: ../../../scripts/modules/build.sh:175 ../../../scripts/modules/build.sh:177
 msgid "El perfil incluye el instalador, pero la línea de comandos lo excluye."
 msgstr ""
 
@@ -120,7 +132,7 @@ msgid "Error interno"
 msgstr ""
 
 #: ../../../scripts/modules/build.sh:271 ../../../scripts/modules/build.sh:288
-#: ../../../scripts/modules/build.sh:272
+#: ../../../scripts/modules/build.sh:272 ../../../scripts/modules/build.sh:274
 msgid "Generando árbol de configuraciones ..."
 msgstr ""
 
@@ -134,7 +146,13 @@ msgstr ""
 
 #: ../../../scripts/functions/config.sh:21
 #: ../../../scripts/functions/config.sh:137
+#: ../../../scripts/functions/config.sh:24
+#: ../../../scripts/functions/config.sh:245
 msgid "La función '%s' necesita un nombre de perfil válido como argumento."
+msgstr ""
+
+#: ../../../scripts/functions/config.sh:228
+msgid "La imagen seleccionada para la portada de arranque (%s) es muy grande (%s px)."
 msgstr ""
 
 #: ../../../scripts/functions/init.sh:36
@@ -142,7 +160,7 @@ msgid "La librería de funciones principales '%s' no existe o no es ejecutable."
 msgstr ""
 
 #: ../../../scripts/modules/build.sh:139 ../../../scripts/modules/build.sh:157
-#: ../../../scripts/modules/build.sh:165
+#: ../../../scripts/modules/build.sh:165 ../../../scripts/modules/build.sh:167
 msgid "Limpiando residuos de construcciones anteriores ..."
 msgstr ""
 
@@ -150,11 +168,14 @@ msgstr ""
 #: ../../../scripts/modules/build.sh:238 ../../../scripts/modules/build.sh:240
 #: ../../../scripts/modules/build.sh:248 ../../../scripts/modules/build.sh:256
 #: ../../../scripts/modules/build.sh:224 ../../../scripts/modules/build.sh:232
+#: ../../../scripts/modules/build.sh:226 ../../../scripts/modules/build.sh:234
+#: ../../../scripts/modules/build.sh:242
 msgid "Medio: %s"
 msgstr ""
 
 #: ../../../scripts/functions/config.sh:77
 #: ../../../scripts/functions/config.sh:121
+#: ../../../scripts/functions/config.sh:109
 msgid "Metadistribución '%s' no soportada por %s. Abortando."
 msgstr ""
 
@@ -193,14 +214,19 @@ msgstr ""
 msgid "No se ha encontrado '%s', en la carpeta de módulos '%s'."
 msgstr ""
 
+#: ../../../scripts/functions/config.sh:46
+msgid "No se ha especificado una Metadistribución. Utilizando '%s' presente en el sistema."
+msgstr ""
+
 #: ../../../scripts/modules/build.sh:157 ../../../scripts/modules/build.sh:163
 #: ../../../scripts/modules/build.sh:175 ../../../scripts/modules/build.sh:181
 #: ../../../scripts/modules/build.sh:183 ../../../scripts/modules/build.sh:189
+#: ../../../scripts/modules/build.sh:185 ../../../scripts/modules/build.sh:191
 msgid "No se incluirá el instalador."
 msgstr ""
 
 #: ../../../scripts/modules/build.sh:382 ../../../scripts/modules/build.sh:434
-#: ../../../scripts/modules/build.sh:418
+#: ../../../scripts/modules/build.sh:418 ../../../scripts/modules/build.sh:438
 msgid "Ocurrió un error durante la generación de la imagen."
 msgstr ""
 
@@ -216,27 +242,48 @@ msgstr ""
 #: ../../../scripts/modules/build.sh:150 ../../../scripts/modules/build.sh:154
 #: ../../../scripts/modules/build.sh:168 ../../../scripts/modules/build.sh:172
 #: ../../../scripts/modules/build.sh:176 ../../../scripts/modules/build.sh:180
+#: ../../../scripts/modules/build.sh:178 ../../../scripts/modules/build.sh:182
 msgid "Prefiriendo la linea de comandos sobre el perfil."
 msgstr ""
 
+#: ../../../scripts/modules/build.sh:385
+msgid "Puede que algunas características de %s no estén disponibles."
+msgstr ""
+
 #: ../../../scripts/modules/build.sh:379 ../../../scripts/modules/build.sh:431
-#: ../../../scripts/modules/build.sh:415
+#: ../../../scripts/modules/build.sh:415 ../../../scripts/modules/build.sh:435
 msgid "Puedes encontrar la imagen '%s' en el directorio %s"
 msgstr ""
 
 #: ../../../scripts/modules/build.sh:264 ../../../scripts/modules/build.sh:282
-#: ../../../scripts/modules/build.sh:266
+#: ../../../scripts/modules/build.sh:266 ../../../scripts/modules/build.sh:268
 msgid "Sabor: %s"
 msgstr ""
 
+#: ../../../scripts/modules/build.sh:434
+msgid "Se ha creado una imagen %s con un peso de %s."
+msgstr ""
+
 #: ../../../scripts/modules/build.sh:160 ../../../scripts/modules/build.sh:178
-#: ../../../scripts/modules/build.sh:186
+#: ../../../scripts/modules/build.sh:186 ../../../scripts/modules/build.sh:188
 msgid "Se incluye el instalador."
 msgstr ""
 
+#: ../../../scripts/modules/build.sh:439
+msgid "Si deseas asistencia, puedes enviar un correo a %s con el contenido del archivo '%s'"
+msgstr ""
+
 #: ../../../scripts/modules/build.sh:242 ../../../scripts/modules/build.sh:260
-#: ../../../scripts/modules/build.sh:244
+#: ../../../scripts/modules/build.sh:244 ../../../scripts/modules/build.sh:246
 msgid "Tipo de formato '%s' no reconocido por %s. Abortando."
+msgstr ""
+
+#: ../../../scripts/functions/config.sh:229
+msgid "Utilice otra imagen menor o igual a 640x480 px."
+msgstr ""
+
+#: ../../../scripts/modules/build.sh:425
+msgid "[--- INICIANDO CONSTRUCCIÓN ---]"
 msgstr ""
 
 #: ../../../scripts/modules/build.sh:378 ../../../scripts/modules/build.sh:430

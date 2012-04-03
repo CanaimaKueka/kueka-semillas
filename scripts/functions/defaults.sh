@@ -6,7 +6,6 @@ CS_PKG="canaima-semilla"
 CS_NAME="Canaima Semilla"
 CS_LOG_MAIL="desarrolladores@canaima.softwarelibre.gob.ve"
 LB_VERSION="$( dpkg-query --show --showformat='${Version}\n' live-build )"
-IDSTRING="${CS_NAME}; http://code.google.com/p/canaima-semilla/"
 
 DEBIAN_CODENAMES="lenny squeeze wheezy sid"
 UBUNTU_CODENAMES="lenny squeeze wheezy sid"

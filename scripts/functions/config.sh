@@ -14,6 +14,9 @@
 
 CS_LOAD_PROFILE() {
 
+	SABOR="${1}"
+	shift || true
+
 	PCONFFILE="${1}"
 	shift || true
 
@@ -40,15 +43,21 @@ CS_LOAD_PROFILE() {
 
 	if [ -z "${META_DISTRO}" ] || [ "${META_DISTRO}" = "none" ]; then
 		META_DISTRO="$( echo "$( lsb_release -s -i )" | tr '[:upper:]' '[:lower:]' )"
+		ADVERTENCIA "No se ha especificado una Metadistribución. Utilizando '%s' presente en el sistema." "${META_DISTRO}"
 	fi
 
-	if [ -z "${META_CODENAME}" ] || [ "${META_CODENAME}" = "none" ]; then
-		META_CODENAME="$( echo "$( lsb_release -s -i )" | tr '[:upper:]' '[:lower:]' )"
-	fi
+	CS_ISO_PREPARER="${CS_ISO_PREPARER:-${CS_NAME}; http://code.google.com/p/canaima-semilla/}"
+	CS_ISO_VOLUME="${CS_ISO_VOLUME:-${META_DISTRO}-${SABOR} (${DATE})}"	
+	CS_ISO_PUBLISHER="${CS_ISO_PUBLISHER:-${AUTHOR_NAME}; ${AUTHOR_EMAIL}; ${AUTHOR_URL}}"	
+	CS_ISO_APPLICATION="${CS_ISO_APPLICATION:-${META_DISTRO} Live}"	
 
 	case ${META_DISTRO} in
 		debian)
 			META_MODE="${META_MODE:-debian}"
+
+			if [ -z "${META_CODENAME}" ] || [ "${META_CODENAME}" = "none" ]; then
+				META_CODENAME="squeeze"
+			fi
 
 			if [ -z "${META_REPO}" ] || [ "${META_REPO}" = "none" ]; then
 				META_REPO="${META_REPO:-http://ftp.us.debian.org/debian/}"
@@ -62,17 +71,25 @@ CS_LOAD_PROFILE() {
 		canaima)
 			META_MODE="${META_MODE:-debian}"
 
+			if [ -z "${META_CODENAME}" ] || [ "${META_CODENAME}" = "none" ]; then
+				META_CODENAME="auyantepui"
+			fi
+
 			if [ -z "${META_REPO}" ] || [ "${META_REPO}" = "none" ]; then
 				META_REPO="${META_REPO:-http://paquetes.canaima.softwarelibre.gob.ve/}"
 			fi
 
 			if [ -z "${META_REPOSECTIONS}" ] || [ "${META_REPOSECTIONS}" = "none" ]; then
-				META_REPOSECTIONS="${META_REPOSECTIONS:-main contrib extra privativo}"
+				META_REPOSECTIONS="${META_REPOSECTIONS:-main nativos adelantos privativos}"
 			fi
 		;;
 
 		ubuntu)
 			META_MODE="${META_MODE:-ubuntu}"
+	
+			if [ -z "${META_CODENAME}" ] || [ "${META_CODENAME}" = "none" ]; then
+				META_CODENAME="karmic"
+			fi
 
 			if [ -z "${META_REPO}" ] || [ "${META_REPO}" = "none" ]; then
 				META_REPO="${META_REPO:-http://archive.ubuntu.com/ubuntu/}"
@@ -94,22 +111,129 @@ CS_LOAD_PROFILE() {
 		;;
 	esac
 
-OS_PACKAGES="${OS_PACKAGES:-gnome-core xorg}"
-OS_BOOTLOADER="${OS_BOOTLOADER:-grub}"
-OS_LOCALE="${OS_LOCALE:-${LC_ALL}}"
-OS_LANG="${OS_LANG:-$( echo "${OS_LOCALE}" | sed 's/_.*//g' )}"
-OS_INCLUDES="${OS_INCLUDES:-${PROFILES}${DEFAULT_PROFILE}/OS_INCLUDES/}"
-OS_HOOKS="${OS_HOOKS:-${PROFILES}${DEFAULT_PROFILE}/OS_HOOKS/}"
+	if [ -z "${OS_PACKAGES}" ] || [ "${OS_PACKAGES}" = "none" ]; then
+		OS_PACKAGES="gnome-core xorg";
+	fi
 
-IMG_POOL_PACKAGES="${IMG_POOL_PACKAGES:-grub grub-pc}"
-IMG_SYSLINUX_SPLASH="${IMG_SYSLINUX_SPLASH:-${TEMPLATES}profiles/${DEFAULT_PROFILE}/syslinux.png}"
-IMG_DEBIAN_INSTALLER="${IMG_DEBIAN_INSTALLER:-false}"
-IMG_DEBIAN_INSTALLER_BANNER="${IMG_DEBIAN_INSTALLER_BANNER:-${PROFILES}${DEFAULT_PROFILE}/DEBIAN_INSTALLER/banner.png}"
-IMG_DEBIAN_INSTALLER_PRESEED="${IMG_DEBIAN_INSTALLER_PRESEED:-${PROFILES}${DEFAULT_PROFILE}/DEBIAN_INSTALLER/preseed.cfg}"
-IMG_DEBIAN_INSTALLER_GTK="${IMG_DEBIAN_INSTALLER_GTK:-${PROFILES}${DEFAULT_PROFILE}/DEBIAN_INSTALLER/gtkrc}"
-IMG_INCLUDES="${IMG_INCLUDES:-${PROFILES}${DEFAULT_PROFILE}/IMG_INCLUDES/}"
-IMG_HOOKS="${IMG_HOOKS:-${PROFILES}${DEFAULT_PROFILE}/IMG_HOOKS/}"
+	if [ -z "${IMG_POOL_PACKAGES}" ] || [ "${IMG_POOL_PACKAGES}" = "none" ]; then
+		IMG_POOL_PACKAGES="grub grub-pc";
+	fi
 
+	if [ -z "${OS_LOCALE}" ] || [ "${OS_LOCALE}" = "none" ]; then
+		OS_LOCALE="${LC_ALL}";
+	fi
+
+	if [ -z "${OS_LANG}" ] || [ "${OS_LANG}" = "none" ]; then
+		OS_LANG="$( echo "${OS_LOCALE}" | sed 's/_.*//g' )"
+	fi
+
+	if [ -z "${OS_INCLUDES}" ] || [ "${OS_INCLUDES}" = "profile" ]; then
+		if [ -d "${PROFILES}${SABOR}/OS_INCLUDES/" ]; then
+			OS_INCLUDES="${PROFILES}${SABOR}/OS_INCLUDES/"
+		else
+			unset OS_INCLUDES
+		fi
+	else
+		if [ ! -d "${OS_INCLUDES}" ] || [ "$( ls -1 "${OS_INCLUDES}" | wc -l )" != "0" ]; then
+			unset OS_INCLUDES
+		fi
+	fi
+
+	if [ -z "${OS_HOOKS}" ] || [ "${OS_HOOKS}" = "profile" ]; then
+		if [ -d "${PROFILES}${SABOR}/OS_HOOKS/" ]; then
+			OS_HOOKS="${PROFILES}${SABOR}/OS_HOOKS/"
+		else
+			unset OS_HOOKS
+		fi
+	else
+		if [ ! -d "${OS_HOOKS}" ] || [ "$( ls -1 "${OS_HOOKS}" | wc -l )" != "0" ]; then
+			unset OS_HOOKS
+		fi
+	fi
+
+	if [ -z "${IMG_INCLUDES}" ] || [ "${IMG_INCLUDES}" = "profile" ]; then
+		if [ -d "${PROFILES}${SABOR}/IMG_INCLUDES/" ]; then
+			IMG_INCLUDES="${PROFILES}${SABOR}/IMG_INCLUDES/"
+		else
+			unset IMG_INCLUDES
+		fi
+	else
+		if [ ! -d "${IMG_INCLUDES}" ] || [ "$( ls -1 "${IMG_INCLUDES}" | wc -l )" != "0" ]; then
+			unset IMG_INCLUDES
+		fi
+	fi
+
+	if [ -z "${IMG_HOOKS}" ] || [ "${IMG_HOOKS}" = "profile" ]; then
+		if [ -d "${PROFILES}${SABOR}/IMG_HOOKS/" ]; then
+			IMG_HOOKS="${PROFILES}${SABOR}/IMG_HOOKS/"
+		else
+			unset IMG_HOOKS
+		fi
+	else
+		if [ ! -d "${IMG_HOOKS}" ] || [ "$( ls -1 "${IMG_HOOKS}" | wc -l )" != "0" ]; then
+			unset IMG_HOOKS
+		fi
+	fi
+
+	if [ "${IMG_DEBIAN_INSTALLER}" = "true" ]; then
+		if [ -z "${IMG_DEBIAN_INSTALLER_BANNER}" ] || [ "${IMG_DEBIAN_INSTALLER_BANNER}" = "profile" ]; then
+			if [ -f "${PROFILES}${SABOR}/DEBIAN_INSTALLER/banner.png" ]; then
+				IMG_DEBIAN_INSTALLER_BANNER="${PROFILES}${SABOR}/DEBIAN_INSTALLER/banner.png"
+			elif [ -f "${TEMPLATES}default/DEBIAN_INSTALLER/banner.png" ]
+				IMG_DEBIAN_INSTALLER_BANNER="${TEMPLATES}default/DEBIAN_INSTALLER/banner.png"
+			fi
+		else
+			if [ ! -f "${IMG_DEBIAN_INSTALLER_BANNER}" ]; then
+				IMG_DEBIAN_INSTALLER_BANNER="${TEMPLATES}default/DEBIAN_INSTALLER/banner.png"
+			fi
+		fi
+
+		if [ -z "${IMG_DEBIAN_INSTALLER_PRESEED}" ] || [ "${IMG_DEBIAN_INSTALLER_PRESEED}" = "profile" ]; then
+			if [ -f "${PROFILES}${SABOR}/DEBIAN_INSTALLER/preseed.cfg" ]; then
+				IMG_DEBIAN_INSTALLER_PRESEED="${PROFILES}${SABOR}/DEBIAN_INSTALLER/preseed.cfg"
+			elif [ -f "${TEMPLATES}default/DEBIAN_INSTALLER/preseed.cfg" ]
+				IMG_DEBIAN_INSTALLER_PRESEED="${TEMPLATES}default/DEBIAN_INSTALLER/preseed.cfg"
+			fi
+		else
+			if [ ! -f "${IMG_DEBIAN_INSTALLER_PRESEED}" ]; then
+				IMG_DEBIAN_INSTALLER_PRESEED="${TEMPLATES}default/DEBIAN_INSTALLER/preseed.cfg"
+			fi
+		fi
+
+		if [ -z "${IMG_DEBIAN_INSTALLER_GTK}" ] || [ "${IMG_DEBIAN_INSTALLER_GTK}" = "profile" ]; then
+			if [ -f "${PROFILES}${SABOR}/DEBIAN_INSTALLER/gtkrc" ]; then
+				IMG_DEBIAN_INSTALLER_GTK="${PROFILES}${SABOR}/DEBIAN_INSTALLER/gtkrc"
+			elif [ -f "${TEMPLATES}default/DEBIAN_INSTALLER/gtkrc" ]
+				IMG_DEBIAN_INSTALLER_GTK="${TEMPLATES}default/DEBIAN_INSTALLER/gtkrc"
+			fi
+		else
+			if [ ! -f "${IMG_DEBIAN_INSTALLER_GTK}" ]; then
+				IMG_DEBIAN_INSTALLER_GTK="${TEMPLATES}default/DEBIAN_INSTALLER/gtkrc"
+			fi
+		fi
+	else
+		IMG_DEBIAN_INSTALLER="false"
+	fi
+
+	if [ -z "${IMG_SYSLINUX_SPLASH}" ] || [ "${IMG_SYSLINUX_SPLASH}" = "profile" ]; then
+		if [ -f "${PROFILES}${SABOR}/syslinux.png" ]; then
+			IMG_SYSLINUX_SPLASH_SIZE="$( identify "${PROFILES}${SABOR}/syslinux.png" | awk '{print $3}' )"
+			IMG_SYSLINUX_SPLASH_HSIZE="${PNG_SIZE%x*}"
+			IMG_SYSLINUX_SPLASH_VSIZE="${PNG_SIZE#${HSIZE}x}"
+
+			if [ ${IMG_SYSLINUX_SPLASH_HSIZE} -le 640 ] && [ ${IMG_SYSLINUX_SPLASH_VSIZE} -le 480 ]; then
+				IMG_SYSLINUX_SPLASH="${PROFILES}${SABOR}/syslinux.png"
+				MENSAJE "Utilizando la imagen para la portada de arranque presente en el perfil [%s]" "${PROFILES}${SABOR}/syslinux.png"
+			else
+				ERROR "La imagen seleccionada para la portada de arranque (%s) es muy grande (%s px)." "${PROFILES}${SABOR}/syslinux.png" "${IMG_SYSLINUX_SPLASH_SIZE}"
+				ERROR "Utilice otra imagen menor o igual a 640x480 px."
+				exit 1
+			fi
+		elif [ -f "${TEMPLATES}default/syslinux.png" ]
+			IMG_SYSLINUX_SPLASH="${TEMPLATES}default/syslinux.png"
+			MENSAJE "No se encontró una portada de arranque en el perfil, seleccionando imagen por defecto [%s]" "${TEMPLATES}default/syslinux.png"
+		fi
+	fi
 }
 
 CS_CONFIG_PROFILE() {

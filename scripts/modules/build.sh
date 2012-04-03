@@ -146,7 +146,7 @@ if ${CONFIGONLY}; then
 
 	if [ -d "${PROFILES}${SABOR}" ]; then
 		if [ -f "${PCONFFILE}" ]; then
-			CS_LOAD_PROFILE "${PCONFFILE}"
+			CS_LOAD_PROFILE "${SABOR}" "${PCONFFILE}"
 		else
 			ERROR "El perfil '%s' no posee configuración en '%s'" "${SABOR}" "${PCONFFILE}"
 			exit 1
@@ -316,10 +316,10 @@ if ${CONFIGONLY}; then
 		--volatile="false" \
 		--backports="false" \
 		--source="false" \
-		--iso-preparer="${IDSTRING}" \
-		--iso-volume="${META_DISTRO}-${SABOR} (${DATE})" \
-		--iso-publisher="${AUTHOR_NAME}; ${AUTHOR_EMAIL}; ${AUTHOR_URL}" \
-		--iso-application="${META_DISTRO} Live" \
+		--iso-preparer="${CS_ISO_PREPARER}" \
+		--iso-volume="${CS_ISO_VOLUME}" \
+		--iso-publisher="${CS_ISO_PUBLISHER}" \
+		--iso-application="${CS_ISO_APPLICATION}" \
 		--memtest="none" \
 		--debian-installer="${INSTALADOR}" \
 		--win32-loader="false" \
@@ -330,7 +330,7 @@ if ${CONFIGONLY}; then
 		lb config \
 		--architecture="${ARCH}" \
 		--linux-flavours="${KERNEL_ARCH}" \
-		--distribution="${META_DISTRO}" \
+		--distribution="${META_CODENAME}" \
 		--mode="${META_MODE}" \
 		--language="${OS_LANG}" \
 		--apt="aptitude" \
@@ -360,10 +360,10 @@ if ${CONFIGONLY}; then
 		--volatile="false" \
 		--backports="false" \
 		--source="false" \
-		--iso-preparer="${IDSTRING}" \
-		--iso-volume="${META_DISTRO}-${SABOR} (${DATE})" \
-		--iso-publisher="${AUTHOR_NAME}; ${AUTHOR_EMAIL}; ${AUTHOR_URL}" \
-		--iso-application="${META_DISTRO} Live" \
+		--iso-preparer="${CS_ISO_PREPARER}" \
+		--iso-volume="${CS_ISO_VOLUME}" \
+		--iso-publisher="${CS_ISO_PUBLISHER}" \
+		--iso-application="${CS_ISO_APPLICATION}" \
 		--debian-installer="${INSTALADOR}" \
 		--win32-loader="false" \
 		--memtest="none" \
