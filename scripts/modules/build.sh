@@ -1,4 +1,4 @@
-	#!/bin/sh -e
+#!/bin/sh -e
 #
 # ==============================================================================
 # PACKAGE: canaima-semilla
@@ -59,11 +59,6 @@ INSTALADOR="${INSTALADOR:-true}"
 
 while true; do
 	case "${1}" in
-		-f|--archivo-config|--config-file)
-			EXTRACONF="${2}"
-			shift 2 || true
-		;;
-
 		-a|--arquitectura|--architecture)
 			ARCH="${2}"
 			shift 2 || true
@@ -79,14 +74,14 @@ while true; do
 			shift 2 || true
 		;;
 
-		-i|--instalador|--installer)
-			INSTALADOR="true"
-			shift 1 || true
+		-f|--archivo-config|--config-file)
+			EXTRACONF="${2}"
+			shift 2 || true
 		;;
 
-		-n|--sin-instalador|--no-installer)
-			INSTALADOR="false"
-			shift 1 || true
+		-d|--dir-construir|--build-dir)
+			BUILDDIR="${2}"
+			shift 2 || true
 		;;
 
 		-b|--solo-construir|--build-only)
@@ -101,8 +96,19 @@ while true; do
 			shift 1 || true
 		;;
 
-		-d|--debug)
-			DEBUG="true"
+		-p|--var-dump|--mostrar-variables)
+			CS_VARDUMP="true"
+			shift 1 || true
+		;;
+
+		-v|--verbose|--expresivo)
+			CS_VERBOSE="true"
+			shift 1 || true
+		;;
+
+
+		-q|--quiet|--silencioso)
+			CS_QUIET="true"
 			shift 1 || true
 		;;
 
@@ -118,13 +124,22 @@ while true; do
 	esac
 done
 
-if ${CONFIGONLY}; then
+if [ -n "${BUILDDIR}" ]; then
+	if [ -e "${BUILDDIR}" ]; then
+		ISOS="${BUILDDIR}"
+		MENSAJE "Utilizando %s para construir la imagen." "${BUILDDIR}"
+	else
+		ERROR "El directorio '%s' establecido a través de la opción --dir-construir no existe." "${BUILDDIR}"
+		exit 1
+	fi
+fi
+
+if ${CONFIGONLY} || ${VARDUMP}; then
 
 	cd "${ISOS}"
 
 	if [ -z "${SABOR}" ]; then
-		SABOR="default"
-		PROFILES="${TEMPLATES}profile/"
+		SABOR="popular"
 		MENSAJE "No especificaste un sabor, utilizando sabor '%s' por defecto." "${SABOR}"
 	fi
 
@@ -142,7 +157,8 @@ if ${CONFIGONLY}; then
 	PHISTORY="${PHISTORY:-${ISOS}history}"
 	PCONFBKP="${PCONFBKP:-${ISOS}history/config.${DATE}.backup}"
 	PCONFFILE="${PCONFFILE:-${PROFILES}${SABOR}/profile.conf}"
-	PCONFIGURED="${PCONFIGURED:-${ISOS}config/c-s/build-data.conf}"
+	PCONFIGDATA="${PCONFIGURED:-${ISOS}config/c-s/config-data.conf}"
+	PBUILDDATA="${PCONFIGURED:-${ISOS}config/c-s/build-data.conf}"
 
 	if [ -d "${PROFILES}${SABOR}" ]; then
 		if [ -f "${PCONFFILE}" ]; then
@@ -152,7 +168,7 @@ if ${CONFIGONLY}; then
 			exit 1
 		fi
 	else
-		ERROR "El perfil '%s' no existe dentro de la carpeta de perfiles '%s'." "${SABOR}" "${PCONFFILE}"
+		ERROR "El perfil '%s' no existe dentro de la carpeta de perfiles '%s'." "${SABOR}" "${PROFILES}"
 		exit 1
 	fi
 
@@ -172,27 +188,7 @@ if ${CONFIGONLY}; then
 
 	lb clean
 
-	# INSTALADOR
-	if [ "${IMG_DEBIAN_INSTALLER}" = "live" ] && [ "${INSTALADOR}" = "false" ]; then
-		ADVERTENCIA "El perfil incluye el instalador, pero la línea de comandos lo excluye."
-		ADVERTENCIA "Prefiriendo la linea de comandos sobre el perfil."
-		INSTALADOR="false"
-	elif [ "${IMG_DEBIAN_INSTALLER}" = "false" ] && [ "${INSTALADOR}" = "live" ]; then
-		ADVERTENCIA "El perfil excluye el instalador, pero la línea de comandos lo incluye."
-		ADVERTENCIA "Prefiriendo la linea de comandos sobre el perfil."
-		INSTALADOR="live"
-	elif [ "${IMG_DEBIAN_INSTALLER}" = "false" ] && [ "${INSTALADOR}" = "false" ]; then
-		ADVERTENCIA "No se incluirá el instalador."
-		INSTALADOR="false"
-	elif [ "${IMG_DEBIAN_INSTALLER}" = "live" ] && [ "${INSTALADOR}" = "live" ]; then
-		ADVERTENCIA "Se incluye el instalador."
-		INSTALADOR="live"
-	else
-		ADVERTENCIA "No se incluirá el instalador."
-		INSTALADOR="false"
-	fi
-
-	#ARQUITECTURA
+	# ARQUITECTURA
 	case ${ARCH} in
 		amd64)
 			ARCH="amd64"
@@ -221,25 +217,22 @@ if ${CONFIGONLY}; then
 				MEDIO="usb-hdd"
 			fi
 			MEDIO_LBNAME="binary.img"
-			MEDIO_CSNAME="${META_DISTRO}-${SABOR}_${ARCH}.img"
-			MEDIO_S="Imagen para dispositivos de almacenamiento extraíble (USB)"
-			EXITO "Medio: %s" "${MEDIO_S}"
+			MEDIO_CSNAME="${META_DISTRO}-${SABOR}~${DATE}_${ARCH}.img"
+			EXITO "Medio: Imagen para dispositivos de almacenamiento extraíble (USB)."
 		;;
 
 		iso|ISO|CD|DVD)
 			MEDIO="iso"
 			MEDIO_LBNAME="binary.iso"
-			MEDIO_CSNAME="${META_DISTRO}-${SABOR}_${ARCH}.iso"
-			MEDIO_S="Imagen para dispositivos ópticos de almacenamiento (CD/DVD)"
-			EXITO "Medio: %s" "${MEDIO_S}"
+			MEDIO_CSNAME="${META_DISTRO}-${SABOR}~${DATE}_${ARCH}.iso"
+			EXITO "Medio: Imagen para dispositivos ópticos de almacenamiento (CD/DVD)."
 		;;
 
 		iso-hybrid|hibrido|mixto|hybrid)
 			MEDIO="iso-hybrid"
 			MEDIO_LBNAME="binary-hybrid.iso"
-			MEDIO_CSNAME="${META_DISTRO}-${SABOR}_${ARCH}.iso"
-			MEDIO_S="Imagen mixta para dispositivos de almacenamiento (CD/DVD/USB)"
-			EXITO "Medio: %s" "${MEDIO_S}"
+			MEDIO_CSNAME="${META_DISTRO}-${SABOR}~${DATE}_${ARCH}.iso"
+			EXITO "Medio: Imagen mixta para dispositivos de almacenamiento (CD/DVD/USB)."
 		;;
 
 		*)
@@ -321,10 +314,10 @@ if ${CONFIGONLY}; then
 		--iso-publisher="${CS_ISO_PUBLISHER}" \
 		--iso-application="${CS_ISO_APPLICATION}" \
 		--memtest="none" \
-		--debian-installer="${INSTALADOR}" \
+		--debian-installer="${IMG_DEBIAN_INSTALLER}" \
 		--win32-loader="false" \
-		--bootappend-live="locale=${OS_LOCALE} keyb=${OS_LANG} quiet splash vga=791 live-config.user-fullname=${META_DISTRO}" \
-		--bootappend-install="locale=${OS_LOCALE}" \
+		--bootappend-live="${CS_BOOTAPPEND_LIVE}" \
+		--bootappend-install="${CS_BOOTAPPEND_INSTALL}"
 		${NULL}
 	else
 		lb config \
@@ -364,11 +357,11 @@ if ${CONFIGONLY}; then
 		--iso-volume="${CS_ISO_VOLUME}" \
 		--iso-publisher="${CS_ISO_PUBLISHER}" \
 		--iso-application="${CS_ISO_APPLICATION}" \
-		--debian-installer="${INSTALADOR}" \
+		--debian-installer="${IMG_DEBIAN_INSTALLER}" \
 		--win32-loader="false" \
 		--memtest="none" \
-		--bootappend-live="locale=${OS_LOCALE} keyb=${OS_LANG} quiet splash vga=791 live-config.user-fullname=${META_DISTRO}" \
-		--bootappend-install="locale=${OS_LOCALE}"
+		--bootappend-live="${CS_BOOTAPPEND_LIVE}" \
+		--bootappend-install="${CS_BOOTAPPEND_INSTALL}"
 		${NULL}
 	fi
 	

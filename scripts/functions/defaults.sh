@@ -7,9 +7,17 @@ CS_NAME="Canaima Semilla"
 CS_LOG_MAIL="desarrolladores@canaima.softwarelibre.gob.ve"
 LB_VERSION="$( dpkg-query --show --showformat='${Version}\n' live-build )"
 
-DEBIAN_CODENAMES="lenny squeeze wheezy sid"
-UBUNTU_CODENAMES="lenny squeeze wheezy sid"
-CANAIMA_CODENAMES="roraima auyantepui"
+DEBIAN_DEFAULT_REPO="squeeze"
+DEBIAN_DEFAULT_CODENAME="squeeze"
+DEBIAN_DEFAULT_REPOSECTIONS="squeeze"
+
+UBUNTU_DEFAULT_REPO="karmic"
+UBUNTU_DEFAULT_CODENAME="karmic"
+UBUNTU_DEFAULT_CODENAME="karmic"
+
+CANAIMA_DEFAULT_REPO="auyantepui"
+CANAIMA_DEFAULT_CODENAME="auyantepui"
+CANAIMA_DEFAULT_CODENAME="auyantepui"
 
 CONFIG="${CONFIG:-${CONFDIR}01-core.conf}"
 LIBRARY="${LIBRARY:-${BASEDIR}scripts/library.sh}"
