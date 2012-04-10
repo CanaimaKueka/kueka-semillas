@@ -1,3 +1,6 @@
+DEVELOPMENT RELEASE v3.0+20120410000334 (04/10/12)
+Mejorando módulo de construcción y función para cargar el perfil.
+
 DEVELOPMENT RELEASE v3.0+20120403173411 (04/03/12)
 Mejorando función para la carga del perfil.
 Incluyendo platillas para debootstrap.
