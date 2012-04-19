@@ -1,8 +1,135 @@
 #!/bin/sh -e
 
-CS_CONFIG_PROFILE() {
+CS_CLEAN_TREE() {
+
+	ISOS="${1}"
+	shift || true
+
+	CS_OP_MODE="${1}"
+	shift || true
+
+	CS_PRINT_MODE="${1}"
+	shift || true
+
+	PHISTORY="${ISOS}/history"
+	PCONF="${ISOS}/config"
+	PCONFBKP="${ISOS}/history/config.${DATE}.backup"
+
+	if [ "${CS_OP_MODE}" != "vardump" ]; then
+		if [ -d "${PCONF}" ]; then
+			INFOMSG "Respaldando árbol de configuraciones previo en '%s'." "${PCONFBKP}"
+			mkdir -p "${PHISTORY}"
+			mv "${PCONF}" "${PCONFBKP}"
+		fi
+
+		WARNINGMSG "Limpiando residuos de construcciones anteriores ..."
+		cd "${ISOS}" && lb clean --all > /dev/null 2>&1
+	fi
+}
+
+CS_CREATE_TREE() {
+
+	ISOS="${1}"
+	shift || true
+
+	TCONFFILE="${1}"
+	shift || true
+
+	CS_OP_MODE="${1}"
+	shift || true
+
+	CS_PRINT_MODE="${1}"
+	shift || true
+
+	TCONFFILE="${ISOS}/config/c-s/config.conf"
+	TBUILDFILE="${ISOS}/config/c-s/build.conf"
+
+	if [ -f "${TCONFFILE}" ]; then
+		. "${TCONFFILE}"
+	else
+		ERRORMSG "El archivo de configuraciones '%s' no existe o no es un archivo válido." "${TCONFFILE}"
+		exit 1
+	fi
+
+	if dpkg --compare-versions "${LB_VERSION}" ge 3.0; then
+		LB_PARENTS="	--parent-mirror-bootstrap=\"${META_REPO}\" \
+				--parent-mirror-chroot=\"${META_REPO}\" \
+				--parent-mirror-binary=\"${META_REPO}\" \
+				--parent-mirror-debian-installer=\"${META_REPO}\" \
+				--parent-mirror-chroot-security=\"none\" \
+				--parent-mirror-chroot-volatile=\"none\" \
+				--parent-mirror-chroot-backports=\"none\" \
+				--parent-mirror-binary-security=\"none\" \
+				--parent-mirror-binary-volatile=\"none\" \
+				--parent-mirror-binary-backports=\"none\""
+		LB_INDICES="	--apt-indices=\"none\""
+	else
+		LB_INDICES="	--binary-indices=\"false\""
+		LB_SYSLINUX="	--syslinux-menu=\"true\" \
+				--syslinux-timeout=\"5\" \
+				--syslinux-splash=\"${IMG_SYSLINUX_SPLASH}\""
+		LB_USERNAME="	--username=\"${META_DISTRO}\""
+		LB_HOSTNAME="	--hostname=\"${META_DISTRO}-${SABOR}\""
+	fi
+
+	OS_LANG="$( echo "${OS_LOCALE}" | sed 's/_.*//g' )"
+	CS_ISO_PREPARER="${CS_ISO_PREPARER:-${CS_NAME}; http://code.google.com/p/canaima-semilla/}"
+	CS_ISO_VOLUME="${CS_ISO_VOLUME:-${META_DISTRO}-${SABOR} (${DATE})}"
+	CS_ISO_PUBLISHER="${CS_ISO_PUBLISHER:-${AUTHOR_NAME}; ${AUTHOR_EMAIL}; ${AUTHOR_URL}}"
+	CS_ISO_APPLICATION="${CS_ISO_APPLICATION:-${META_DISTRO} Live}"
+	CS_BOOTAPPEND_LIVE="live-config.locales=${OS_LOCALE} live-config.hostname=${META_DISTRO} live-config.username=${META_DISTRO}-${SABOR}"
+	CS_BOOTAPPEND_LIVE="${CS_BOOTAPPEND_LIVE} live-config.user-fullname=${META_DISTRO}"
+	CS_BOOTAPPEND_LIVE="${CS_BOOTAPPEND_LIVE} keyb=${OS_LANG} quiet splash vga=791"
+	LB_ARGUMENTS="	--architecture=\"${ARCH}\" \
+			--linux-flavours=\"${KERNEL_ARCH}\" \
+			--distribution=\"${META_CODENAME}\" \
+			--mode=\"${META_MODE}\" \
+			--language=\"${OS_LANG}\" \
+			--apt=\"aptitude\" \
+			--apt-recommends=\"false\" \
+			--apt-secure=\"false\" \
+			--bootloader=\"syslinux\" \
+			--binary-images=\"${MEDIO}\" \
+			--bootstrap=\"debootstrap\" \
+			--includes=\"none\" \
+			--archive-areas=\"${META_REPOSECTIONS}\" \
+			--mirror-bootstrap=\"${META_REPO}\" \
+			--mirror-chroot=\"${META_REPO}\" \
+			--mirror-binary=\"${META_REPO}\" \
+			--mirror-debian-installer=\"${META_REPO}\" \
+			--mirror-chroot-security=\"none\" \
+			--mirror-chroot-volatile=\"none\" \
+			--mirror-chroot-backports=\"none\" \
+			--mirror-binary-security=\"none\" \
+			--mirror-binary-volatile=\"none\" \
+			--mirror-binary-backports=\"none\" \
+			--security=\"false\" \
+			--volatile=\"false\" \
+			--backports=\"false\" \
+			--source=\"false\" \
+			--iso-preparer=\"${CS_ISO_PREPARER}\" \
+			--iso-volume=\"${CS_ISO_VOLUME}\" \
+			--iso-publisher=\"${CS_ISO_PUBLISHER}\" \
+			--iso-application=\"${CS_ISO_APPLICATION}\" \
+			--debian-installer=\"${IMG_DEBIAN_INSTALLER}\" \
+			--win32-loader=\"false\" \
+			--memtest=\"none\" \
+			--bootappend-live=\"${CS_BOOTAPPEND_LIVE}\" \
+			--bootappend-install=\"${CS_BOOTAPPEND_INSTALL}\" \
+			${LB_PARENTS} ${LB_INDICES} ${LB_SYSLINUX} ${LB_USERNAME} ${LB_HOSTNAME} ${LB_QUIET} ${LB_VERBOSE}"
+
+	WARNINGMSG "Generando árbol de configuraciones ..."
+	cd "${ISOS}" && lb config ${LB_ARGUMENTS} ${NULL}
+
+
+}
+
+CS_POPULATE_TREE() {
 
 	PROFILE="${1}"
+	shift || true
+
+	PCONF="${1}"
 	shift || true
 
 	if [ -z "${PROFILE}" ]; then
@@ -10,125 +137,8 @@ CS_CONFIG_PROFILE() {
 		exit 1
 	fi
 
-        cd "${ISOS}"
-        if [ -d "${PCONF}" ]; then
-                INFOMSG "Respaldando árbol de configuraciones previo en '%s'." "${PCONFBKP}"
-                mkdir -p "${PHISTORY}"
-                mv "${PCONF}" "${PCONFBKP}"
-        fi
-
-        WARNINGMSG "Limpiando residuos de construcciones anteriores ..."
-        rm -rf  ${ISOS}.stage \
-                ${ISOS}auto \
-                ${ISOS}binary.log \
-                ${ISOS}cache/stages_bootstrap
-
-        lb clean
-
-
-        WARNINGMSG "Generando árbol de configuraciones ..."
-        cd "${ISOS}"
-
-        if dpkg --compare-versions "${LB_VERSION}" ge 3.0; then
-                lb config \
-                --architecture="${ARCH}" \
-                --linux-flavours="${KERNEL_ARCH}" \
-                --distribution="${META_CODENAME}" \
-                --mode="${META_MODE}" \
-                --language="${OS_LANG}" \
-                --apt="aptitude" \
-                --apt-recommends="false" \
-                --apt-indices="none" \
-                --apt-secure="false" \
-                --bootloader="syslinux" \
-                --binary-images="${MEDIO}" \
-                --bootstrap="debootstrap" \
-                --includes="none" \
-                --hostname="${META_DISTRO}-${SABOR}" \
-                --username="${META_DISTRO}" \
-                --archive-areas="${META_REPOSECTIONS}"
-                --parent-mirror-bootstrap="${META_REPO}" \
-                --parent-mirror-chroot="${META_REPO}" \
-                --parent-mirror-binary="${META_REPO}" \
-                --parent-mirror-debian-installer="${META_REPO}" \
-                --mirror-bootstrap="${META_REPO}" \
-                --mirror-chroot="${META_REPO}" \
-                --mirror-binary="${META_REPO}" \
-                --mirror-debian-installer="${META_REPO}" \
-                --parent-mirror-chroot-security="none" \
-                --parent-mirror-chroot-volatile="none" \
-                --parent-mirror-chroot-backports="none" \
-                --parent-mirror-binary-security="none" \
-                --parent-mirror-binary-volatile="none" \
-                --parent-mirror-binary-backports="none" \
-                --mirror-chroot-security="none" \
-                --mirror-chroot-volatile="none" \
-                --mirror-chroot-backports="none" \
-                --mirror-binary-security="none" \
-                --mirror-binary-volatile="none" \
-                --mirror-binary-backports="none" \
-                --security="false" \
-                --volatile="false" \
-                --backports="false" \
-                --source="false" \
-                --iso-preparer="${CS_ISO_PREPARER}" \
-                --iso-volume="${CS_ISO_VOLUME}" \
-                --iso-publisher="${CS_ISO_PUBLISHER}" \
-                --iso-application="${CS_ISO_APPLICATION}" \
-                --memtest="none" \
-                --debian-installer="${IMG_DEBIAN_INSTALLER}" \
-                --win32-loader="false" \
-                --bootappend-live="${CS_BOOTAPPEND_LIVE}" \
-                --bootappend-install="${CS_BOOTAPPEND_INSTALL}"
-                ${NULL}
-        else
-                lb config \
-                --architecture="${ARCH}" \
-                --linux-flavours="${KERNEL_ARCH}" \
-                --distribution="${META_CODENAME}" \
-                --mode="${META_MODE}" \
-                --language="${OS_LANG}" \
-                --apt="aptitude" \
-                --apt-recommends="false" \
-                --apt-secure="false" \
-                --bootloader="syslinux" \
-                --syslinux-menu="true" \
-                --syslinux-timeout="5" \
-                --syslinux-splash="${IMG_SYSLINUX_SPLASH}" \
-                --binary-images="${MEDIO}" \
-                --bootstrap="debootstrap" \
-                --binary-indices="false" \
-                --includes="none" \
-                --username="${META_DISTRO}" \
-                --hostname="${META_DISTRO}-${SABOR}" \
-                --archive-areas="${META_REPOSECTIONS}"
-                --mirror-chroot="${META_REPO}" \
-                --mirror-binary="${META_REPO}" \
-                --mirror-debian-installer="${META_REPO}" \
-                --mirror-chroot-security="none" \
-                --mirror-chroot-volatile="none" \
-                --mirror-chroot-backports="none" \
-                --mirror-binary-security="none" \
-                --mirror-binary-volatile="none" \
-                --mirror-binary-backports="none" \
-                --security="false" \
-                --volatile="false" \
-                --backports="false" \
-                --source="false" \
-                --iso-preparer="${CS_ISO_PREPARER}" \
-                --iso-volume="${CS_ISO_VOLUME}" \
-                --iso-publisher="${CS_ISO_PUBLISHER}" \
-                --iso-application="${CS_ISO_APPLICATION}" \
-                --debian-installer="${IMG_DEBIAN_INSTALLER}" \
-                --win32-loader="false" \
-                --memtest="none" \
-                --bootappend-live="${CS_BOOTAPPEND_LIVE}" \
-                --bootappend-install="${CS_BOOTAPPEND_INSTALL}"
-                ${NULL}
-        fi
-
-	if [ -d "${TEMPLATES}syslinux" ]
-		mkdir -p "${ISOS}config/templates"
+	if [ -d "${TEMPLATES}/syslinux" ]; then
+		mkdir -p "${ISOS}/config/templates"
 		cp -r "${TEMPLATES}syslinux" "${ISOS}config/templates/"
 	fi
 
@@ -244,7 +254,5 @@ CS_CONFIG_PROFILE() {
 	fi
 
 sed -i 's/LB_SYSLINUX_MENU_LIVE_ENTRY=.*/LB_SYSLINUX_MENU_LIVE_ENTRY="Probar"/g' config/binary
-
-echo "${1}" > ${ISO_DIR}config/sabor-configurado
 }
 

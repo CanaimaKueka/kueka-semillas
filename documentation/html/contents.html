@@ -1,29 +1,23 @@
-
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
     <title>1. Contenido &mdash; Documentación para Canaima Semilla</title>
-    
     <link rel="stylesheet" href="_static/default.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '',
         VERSION:     '3.0',
-        COLLAPSE_INDEX: false,
+        COLLAPSE_MODINDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
       };
     </script>
     <script type="text/javascript" src="_static/jquery.js"></script>
-    <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
     <script type="text/javascript" src="_static/translations.js"></script>
     <link rel="shortcut icon" href="_static/favicon.ico"/>
@@ -76,7 +70,7 @@
 Un perfil está compuesto de varios archivos con nombres específicos colocados dentro de una carpeta que lleve por nombre el nombre del sabor en minúsculas . La carpeta contendrá:</p>
 <p>1.- (<em>Obligatorio</em>) Un archivo llamado &#8220;sabor.conf&#8221; con las siguientes variables y sus valores:</p>
 <blockquote>
-<div><ul>
+<ul>
 <li><dl class="first docutils">
 <dt>&#8220;PUBLICADO_POR&#8221;: Individuo o colectivo que publica la imagen.</dt>
 <dd><p class="first last">Ejemplo: PUBLICADO_POR=&#8221;Canaima GNU/Linux; <a class="reference external" href="http://canaima.softwarelibre.gob.ve/">http://canaima.softwarelibre.gob.ve/</a>&#8220;</p>
@@ -114,7 +108,7 @@ Un perfil está compuesto de varios archivos con nombres específicos colocados 
 </dl>
 </li>
 </ul>
-</div></blockquote>
+</blockquote>
 <p>2.- (<em>Opcional</em>) Una imagen PNG llamada &#8220;syslinux.png&#8221; de una dimensión no mayor a 1024x768 pixeles, la cuál servirá de fondo en el menú de inicio del Medio Vivo.</p>
 <div class="figure">
 <img alt="_images/syslinux.png" src="_images/syslinux.png" style="width: 640px;" />
@@ -126,7 +120,7 @@ Un perfil está compuesto de varios archivos con nombres específicos colocados 
 <p>4.- (<em>Opcional</em>) Un archivo de configuración GTKRC llamado &#8220;gtkrc-instalador&#8221;, el cuál albergará los parámetros GTK para modificar la apariencia del instalador. Ver el sabor de</p>
 <p>5.- (<em>Opcional</em>) Un par de archivos para definir repositorios extra en la etapa de instalación de paquetes finales (BINARY):</p>
 <blockquote>
-<div><ul>
+<ul>
 <li><dl class="first docutils">
 <dt>Uno de extensión *.binary (pudiendo tener cualquier nombre), que contenga una lista de repositorios extra necesarios para la instalación de paquetes no incluídos en MIRROR_DEBIAN y especificados en SABOR_PAQUETES.</dt>
 <dd><dl class="first last docutils">
@@ -141,10 +135,10 @@ deb <a class="reference external" href="http://seguridad.canaima.softwarelibre.g
 <li><p class="first">Otro de extensión *.binary.gpg, conteniendo la (o las) llave(s) GPG válida(s) correspondientes a los repositorios listados en el archivo *.binary.</p>
 </li>
 </ul>
-</div></blockquote>
+</blockquote>
 <p>6.- (<em>Opcional</em>) Un par de archivos para definir repositorios extra en la etapa de instalación del sistema base inicial (CHROOT):</p>
 <blockquote>
-<div><ul>
+<ul>
 <li><dl class="first docutils">
 <dt>Uno de extensión *.chroot (pudiendo tener cualquier nombre), que contenga una lista de repositorios extra necesarios para la instalación de paquetes no incluídos en MIRROR_DEBIAN y especificados en SABOR_PAQUETES.</dt>
 <dd><dl class="first last docutils">
@@ -159,7 +153,7 @@ deb <a class="reference external" href="http://seguridad.canaima.softwarelibre.g
 <li><p class="first">Otro de extensión *.chroot.gpg (con nombre igual al anterior), conteniendo la (o las) llave(s) GPG válida(s) correspondientes a los repositorios listados en el archivo *.chroot.</p>
 </li>
 </ul>
-</div></blockquote>
+</blockquote>
 <p>7.- (<em>Opcional</em>) Un archivo llamado &#8220;preseed-debconf&#8221; en donde se incluirán los parámetros debconf que se quieran modificar en el modo nVivo del medio instalable.</p>
 <p>8.- (<em>Opcional</em>) Un archivo llamado &#8220;preseed-instalador&#8221; en donde se incluirán los parámetros debconf a modificar en el instalador.</p>
 <p>Se provee en la dirección de los perfiles (/usr/share/canaima-semilla/perfiles) un perfil de ejemplo, el cuál podrá ser utilizado como base para nuevos sabores. La ausencia de alguno de los archivos Opcionales causará que Canaima Semilla use los valores por defecto (Debian).</p>
@@ -363,11 +357,11 @@ directorio /usr/share/canaima-semilla/semillero/.</p>
 <p>El primer paso para crear el archivo &#8220;*.binary&#8221; es especificarle un nombre y luego validar cada uno de los repositorios que desee incluir, especificando la rama y la sección del repositorio con el fin de verificarlos. Por último debe dar clic en &#8220;Siguiente&gt;&#8221; para aplicar los cambios efectuados y continuar.</p>
 <div class="figure align-center">
 <img alt="Ejemplo de ventana configurando el archivo &quot;.binary&quot;" src="_images/paso3-1.png" />
-<p class="caption">5.8Ejemplo de ventana configurando el archivo &#8221;.binary&#8221;</p>
+<p class="caption">5.8Ejemplo de ventana configurando el archivo &#8220;.binary&#8221;</p>
 </div>
 <div class="figure align-center">
 <img alt="Ejemplo de ventana con el archivo &quot;.binary&quot; creado con éxito" src="_images/paso3-2.png" />
-<p class="caption">5.9Ejemplo de ventana con el archivo &#8221;.binary&#8221; creado con éxito</p>
+<p class="caption">5.9Ejemplo de ventana con el archivo &#8220;.binary&#8221; creado con éxito</p>
 </div>
 </div>
 <div class="section" id="paso-4">
@@ -443,35 +437,35 @@ Puede encontrar una copia de esta licencia en este manual o en el archivo inclui
       </div>
       <div class="sphinxsidebar">
         <div class="sphinxsidebarwrapper">
-  <h3><a href="index.html">Contenidos</a></h3>
-  <ul>
-<li><a class="reference internal" href="#">1. <strong>Contenido</strong></a><ul>
-<li><a class="reference internal" href="#uso-de-la-interfaz-en-modo-texto">1.1. Uso de la interfaz en modo texto</a><ul>
-<li><a class="reference internal" href="#creacion-de-imagenes">1.1.1. Creación de imágenes</a><ul>
-<li><a class="reference internal" href="#modo-de-uso">1.1.1.1. Modo de uso</a></li>
+            <h3><a href="index.html">Contenidos</a></h3>
+            <ul>
+<li><a class="reference external" href="#">1. <strong>Contenido</strong></a><ul>
+<li><a class="reference external" href="#uso-de-la-interfaz-en-modo-texto">1.1. Uso de la interfaz en modo texto</a><ul>
+<li><a class="reference external" href="#creacion-de-imagenes">1.1.1. Creación de imágenes</a><ul>
+<li><a class="reference external" href="#modo-de-uso">1.1.1.1. Modo de uso</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#creacion-de-perfiles">1.1.2. Creación de perfiles</a></li>
-<li><a class="reference internal" href="#sugerencias">1.1.3. Sugerencias</a></li>
+<li><a class="reference external" href="#creacion-de-perfiles">1.1.2. Creación de perfiles</a></li>
+<li><a class="reference external" href="#sugerencias">1.1.3. Sugerencias</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#uso-de-la-interfaz-grafica">1.2. Uso de la interfaz gráfica</a><ul>
-<li><a class="reference internal" href="#id1">1.2.1. Creación de imágenes</a><ul>
-<li><a class="reference internal" href="#abortar-creacion-de-imagenes">1.2.1.1. Abortar creación de imágenes</a></li>
-<li><a class="reference internal" href="#diagnostico-de-errores">1.2.1.2. Diagnóstico de errores</a></li>
+<li><a class="reference external" href="#uso-de-la-interfaz-grafica">1.2. Uso de la interfaz gráfica</a><ul>
+<li><a class="reference external" href="#id1">1.2.1. Creación de imágenes</a><ul>
+<li><a class="reference external" href="#abortar-creacion-de-imagenes">1.2.1.1. Abortar creación de imágenes</a></li>
+<li><a class="reference external" href="#diagnostico-de-errores">1.2.1.2. Diagnóstico de errores</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#id2">1.2.2. Creación de perfiles</a><ul>
-<li><a class="reference internal" href="#paso-1">1.2.2.1. Paso 1</a></li>
-<li><a class="reference internal" href="#paso-2">1.2.2.2. Paso 2</a></li>
-<li><a class="reference internal" href="#paso-3">1.2.2.3. Paso 3</a></li>
-<li><a class="reference internal" href="#paso-4">1.2.2.4. Paso 4</a></li>
-<li><a class="reference internal" href="#paso-5">1.2.2.5. Paso 5</a></li>
+<li><a class="reference external" href="#id2">1.2.2. Creación de perfiles</a><ul>
+<li><a class="reference external" href="#paso-1">1.2.2.1. Paso 1</a></li>
+<li><a class="reference external" href="#paso-2">1.2.2.2. Paso 2</a></li>
+<li><a class="reference external" href="#paso-3">1.2.2.3. Paso 3</a></li>
+<li><a class="reference external" href="#paso-4">1.2.2.4. Paso 4</a></li>
+<li><a class="reference external" href="#paso-5">1.2.2.5. Paso 5</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#acerca-de-canaima-semilla">1.2.3. Acerca de Canaima Semilla</a><ul>
-<li><a class="reference internal" href="#aviso-legal">1.2.3.1. Aviso legal</a></li>
-<li><a class="reference internal" href="#retroalimentacion">1.2.3.2. Retroalimentación</a></li>
+<li><a class="reference external" href="#acerca-de-canaima-semilla">1.2.3. Acerca de Canaima Semilla</a><ul>
+<li><a class="reference external" href="#aviso-legal">1.2.3.1. Aviso legal</a></li>
+<li><a class="reference external" href="#retroalimentacion">1.2.3.2. Retroalimentación</a></li>
 </ul>
 </li>
 </ul>
@@ -480,27 +474,27 @@ Puede encontrar una copia de esta licencia en este manual o en el archivo inclui
 </li>
 </ul>
 
-  <h4>Tema anterior</h4>
-  <p class="topless"><a href="index.html"
-                        title="Capítulo anterior"><strong>Canaima Semilla</strong></a></p>
-  <h3>Esta página</h3>
-  <ul class="this-page-menu">
-    <li><a href="_sources/contents.txt"
-           rel="nofollow">Enseñar el código</a></li>
-  </ul>
-<div id="searchbox" style="display: none">
-  <h3>Búsqueda rápida</h3>
-    <form class="search" action="search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Ir a" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
-    </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
-</div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+            <h4>Tema anterior</h4>
+            <p class="topless"><a href="index.html"
+                                  title="Capítulo anterior"><strong>Canaima Semilla</strong></a></p>
+            <h3>Esta página</h3>
+            <ul class="this-page-menu">
+              <li><a href="_sources/contents.txt"
+                     rel="nofollow">Enseñar el código</a></li>
+            </ul>
+          <div id="searchbox" style="display: none">
+            <h3>Búsqueda rápida</h3>
+              <form class="search" action="search.html" method="get">
+                <input type="text" name="q" size="18" />
+                <input type="submit" value="Ir a" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+              </form>
+              <p class="searchtip" style="font-size: 90%">
+              Enter search terms or a module, class or function name.
+              </p>
+          </div>
+          <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -518,9 +512,9 @@ Puede encontrar una copia de esta licencia en este manual o en el archivo inclui
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 10-04-2012, Luis Alejandro Martínez Faneyth.
-      Actualizado por última vez en Apr 10, 2012.
-      Creado con <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+      &copy; Copyright 19-04-2012, Luis Alejandro Martínez Faneyth.
+      Actualizado por última vez en Apr 19, 2012.
+      Creado con <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.6.6.
     </div>
   </body>
 </html>

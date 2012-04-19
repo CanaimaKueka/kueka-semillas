@@ -40,6 +40,7 @@ MSGFMT = $(shell which msgfmt)
 CONVERT = $(shell which convert)
 ICOTOOL = $(shell which icotool)
 LIBSVG = $(shell find /usr/lib/ -maxdepth 1 -type d -iname "imagemagick-*")/modules-Q16/coders/svg.so
+LIBRSVGBIN = $(shell which rsvg)
 
 # Dependencias de Instalación
 # Tareas de Instalación
@@ -64,7 +65,6 @@ LINTIAN = $(shell which lintian)
 GNUPG = $(shell which gpg)
 MD5SUM = $(shell which md5sum)
 TAR = $(shell which tar)
-TRANSIFEX = $(shell which tx)
 BASHISMS = $(shell which checkbashisms)
 
 all: build
@@ -402,14 +402,6 @@ check-maintdep:
 	fi
 	@echo
 
-	@printf "Checking if we have tx ... "
-	@if [ -z $(TRANSIFEX) ]; then \
-		echo "[ABSENT]"; \
-		echo "If you are using Debian, Ubuntu or Canaima, please install the \"transifex-client\" package."; \
-		exit 1; \
-	fi
-	@echo
-
 	@printf "Checking if we have checkbashisms ... "
 	@if [ -z $(BASHISMS) ]; then \
 		echo "[ABSENT]"; \
@@ -480,6 +472,14 @@ check-buildep:
 	@if [ -z $(LIBSVG) ]; then \
 		echo "[ABSENT]"; \
 		echo "If you are using Debian, Ubuntu or Canaima, please install the \"libmagickcore-extra\" package."; \
+		exit 1; \
+	fi
+	@echo
+
+	@printf "Checking if we have imagemagick rsvg support ... "
+	@if [ -z $(LIBRSVGBIN) ]; then \
+		echo "[ABSENT]"; \
+		echo "If you are using Debian, Ubuntu or Canaima, please install the \"librsvg2-bin\" package."; \
 		exit 1; \
 	fi
 	@echo

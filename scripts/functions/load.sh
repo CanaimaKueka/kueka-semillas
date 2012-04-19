@@ -2,21 +2,28 @@
 
 CS_LOAD_PROFILE() {
 
+	ISOS="${1}"
+	shift || true
+
+	PROFILES="${1}"
+	shift || true
+
 	SABOR="${1}"
 	shift || true
 
-	PCONFFILE="${1}"
+	CS_OP_MODE="${1}"
 	shift || true
 
-	if [ -z "${PCONFFILE}" ]; then
-		ERRORMSG "La función '%s' necesita un nombre de perfil válido como argumento." "${FUNCNAME}"
-		exit 1
-	fi
+	CS_PRINT_MODE="${1}"
+	shift || true
 
-	if [ -e "${PCONFFILE}" ]; then
+	PCONFFILE="${PROFILES}/${SABOR}/profile.conf"
+	TCONFFILE="${ISOS}/config/c-s/config.conf"
+
+	if [ -f "${PCONFFILE}" ]; then
 		. "${PCONFFILE}"	
 	else
-		ERRORMSG "El archivo de configuraciones '%s' no existe." "${PCONFFILE}"
+		ERRORMSG "El archivo de configuraciones '%s' no existe o no es un archivo válido." "${PCONFFILE}"
 		exit 1
 	fi
 
@@ -108,6 +115,19 @@ CS_LOAD_PROFILE() {
 	fi
 	INFOMSG "Seleccionando paquetes '%s' para incluir en el repositorio interno."
 	DEBUGMSG "IMG_POOL_PACKAGES"
+
+	CONFIGMSG "Leyendo estado de la inclusión de repositorios adicionales en el sistema" "OS_EXTRAREPOS"
+	if [ -z "${OS_EXTRAREPOS}" ] || [ "${OS_EXTRAREPOS}" = "profile" ]; then
+		OS_EXTRAREPOS="${PROFILES}${SABOR}/extra-repos.list"
+		WARNINGMSG "No se han definido repositorios adicionales para incluir en el sistema."
+	fi
+	if [ -f "${OS_EXTRAREPOS}" ] && [ $( cat "${OS_EXTRAREPOS}" | wc -l ) >= 1 ]; then
+		INFOMSG "Se incluirán en el sistema los repositorios adicionales presentes en el archivo '%s'." "${OS_EXTRAREPOS}"
+	else
+		INFOMSG "'%s' está vacío o no es un archivo válido. Ningún repositorio adicional se incluirá en el sistema." "${OS_EXTRAREPOS}"
+		OS_EXTRAREPOS="none"
+	fi
+	DEBUGMSG "OS_EXTRAREPOS"
 
 	CONFIGMSG "Leyendo estado de la inclusión de archivos en el sistema" "OS_INCLUDES"
 	if [ -z "${OS_INCLUDES}" ] || [ "${OS_INCLUDES}" = "profile" ]; then
@@ -251,16 +271,40 @@ CS_LOAD_PROFILE() {
 		INFOMSG "Se incluirá el instalador en la imagen."
 	fi
 
-	OS_LANG="$( echo "${OS_LOCALE}" | sed 's/_.*//g' )"
-	CS_ISO_PREPARER="${CS_ISO_PREPARER:-${CS_NAME}; http://code.google.com/p/canaima-semilla/}"
-	CS_ISO_VOLUME="${CS_ISO_VOLUME:-${META_DISTRO}-${SABOR} (${DATE})}"	
-	CS_ISO_PUBLISHER="${CS_ISO_PUBLISHER:-${AUTHOR_NAME}; ${AUTHOR_EMAIL}; ${AUTHOR_URL}}"	
-	CS_ISO_APPLICATION="${CS_ISO_APPLICATION:-${META_DISTRO} Live}"
-	CS_LIVECONFIG_VARS=""
-	CS_BOOTAPPEND_LIVE="locale=${OS_LOCALE} keyb=${OS_LANG} quiet splash vga=791 live-config.user-fullname=${META_DISTRO}"
-cat >  << EOF
+cat > "${TCONFFILE}" << EOF
+AUTHOR_NAME="${AUTHOR_NAME}"
+AUTHOR_EMAIL="${AUTHOR_EMAIL}"
+AUTHOR_URL="${AUTHOR_URL}"
 
+OS_LOCALE="${OS_LOCALE}"
+OS_LANG="${OS_LANG}"
+
+META_MODE="${META_MODE}"
+META_CODENAME="${META_CODENAME}"
+META_DISTRO="${META_DISTRO}"
+META_REPO="${META_REPO}"
+META_REPOSECTIONS="${META_REPOSECTIONS}"
+
+OS_PACKAGES="${OS_PACKAGES}"
+OS_EXTRAREPOS="${OS_EXTRAREPOS}"
+OS_INCLUDES="${OS_INCLUDES}"
+OS_HOOKS="${OS_HOOKS}"
+IMG_POOL_PACKAGES="${IMG_POOL_PACKAGES}"
+IMG_INCLUDES="${IMG_INCLUDES}"
+IMG_HOOKS="${IMG_HOOKS}"
+
+IMG_SYSLINUX_SPLASH="${IMG_SYSLINUX_SPLASH}"
+IMG_DEBIAN_INSTALLER="${IMG_DEBIAN_INSTALLER}"
+IMG_DEBIAN_INSTALLER_BANNER="${IMG_DEBIAN_INSTALLER_BANNER}"
+IMG_DEBIAN_INSTALLER_PRESEED="${IMG_DEBIAN_INSTALLER_PRESEED}"
+IMG_DEBIAN_INSTALLER_GTK="${IMG_DEBIAN_INSTALLER_GTK}"
+
+CS_ISO_PREPARER="${CS_ISO_PREPARER}"
+CS_ISO_VOLUME="${CS_ISO_VOLUME}"
+CS_ISO_PUBLISHER="${CS_ISO_PUBLISHER}"
+CS_ISO_APPLICATION="${CS_ISO_APPLICATION}"
+CS_BOOTAPPEND_LIVE="${CS_BOOTAPPEND_LIVE}"
+CS_BOOTAPPEND_INSTALL="${CS_BOOTAPPEND_INSTALL}"
 EOF
 
 }
-
