@@ -31,18 +31,18 @@ BINDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 # Asignando directorios de trabajo
 if [ "${BINDIR}" == "/usr/bin" ]; then
-	BASEDIR="/usr/share/canaima-semilla/"
-	CONFDIR="/etc/canaima-semilla/"
+	BASEDIR="/usr/share/canaima-semilla"
+	CONFDIR="/etc/canaima-semilla"
 else
-	BASEDIR="$( dirname "${BINDIR}" )/"
-	CONFDIR="${BASEDIR}"
+	BASEDIR="${BINDIR}"
+	CONFDIR="${BINDIR}"
 fi
 
 # Cargando valores predeterminados
-. "${BASEDIR}scripts/functions/defaults.sh"
+. "${BASEDIR}/scripts/functions/defaults.sh"
 
 # Corriendo rutinas de inicio
-. "${BASEDIR}scripts/functions/init.sh"
+. "${BASEDIR}/scripts/functions/init.sh"
 
 ACTION=${1}
 shift || true
@@ -70,6 +70,6 @@ case ${ACTION} in
 	;;
 
 	*)
-		HANDLER "${ACTION}.sh" "${ACTION}" "${BINDIR}" "${@}"
+		MODULE "${ACTION}.sh" "${ACTION}" "${BINDIR}" "${@}"
 	;;
 esac

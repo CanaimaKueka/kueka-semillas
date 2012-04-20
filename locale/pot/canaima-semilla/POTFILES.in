@@ -1,10 +1,13 @@
+../../../scripts/config.sh
 ../../../scripts/modules/build.sh
 ../../../scripts/library.sh
 ../../../scripts/c-s.sh
-../../../scripts/functions/config.sh
+../../../scripts/functions/image.sh
 ../../../scripts/functions/color.sh
 ../../../scripts/functions/misc.sh
 ../../../scripts/functions/defaults.sh
+../../../scripts/functions/profile.sh
 ../../../scripts/functions/init.sh
-../../../scripts/functions/load.sh
+../../../scripts/functions/tree.sh
 ../../../scripts/functions/messages.sh
+../../../scripts/functions/modules.sh

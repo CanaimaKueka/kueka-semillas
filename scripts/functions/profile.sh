@@ -4,27 +4,35 @@ CS_LOAD_PROFILE() {
 
 	ISOS="${1}"
 	shift || true
-
 	PROFILES="${1}"
 	shift || true
-
 	SABOR="${1}"
 	shift || true
-
+	ARCH="${1}"
+	shift || true
+	MEDIO="${1}"
+	shift || true
 	CS_OP_MODE="${1}"
 	shift || true
-
 	CS_PRINT_MODE="${1}"
 	shift || true
+	EXTRACONF="${1}"
+	shift || true
 
-	PCONFFILE="${PROFILES}/${SABOR}/profile.conf"
-	TCONFFILE="${ISOS}/config/c-s/config.conf"
+	PCONFDIR="${PROFILES}/${SABOR}"
+	PCONFFILE="${PCONFDIR}/profile.conf"
+	TCSCONFDIR="${ISOS}/config/c-s"
+	TCSCONFFILE="${TCONFDIR}/tree.conf"
 
 	if [ -f "${PCONFFILE}" ]; then
 		. "${PCONFFILE}"	
 	else
 		ERRORMSG "El archivo de configuraciones '%s' no existe o no es un archivo válido." "${PCONFFILE}"
 		exit 1
+	fi
+
+	if [ -n "${EXTRACONF}" ] && [ -f "${EXTRACONF}" ]; then
+		. "${EXTRACONF}"
 	fi
 
 	CONFIGMSG "Leyendo estado del nombre del autor" "AUTHOR_NAME"
@@ -75,6 +83,64 @@ CS_LOAD_PROFILE() {
 	esac
 	INFOMSG "Seleccionando Metadistribución base '%s' para la construcción del sistema." "${META_DISTRO}"
 	DEBUGMSG "META_DISTRO"
+
+	CONFIGMSG "Leyendo estado de la arquitectura de construcción" "ARCH"
+	case ${ARCH} in
+		amd64)
+			ARCH="amd64"
+			KERNEL_ARCH="amd64"
+		;;
+
+		i386)
+			ARCH="i386"
+			KERNEL_ARCH="686"
+		;;
+
+		*)
+			ERRORMSG "Arquitectura '%s' no soportada por %s. Abortando." "${ARCH}" "${CS_NAME}"
+			exit 1
+		;;
+	esac
+	INFOMSG "Seleccionando '%s' como arquitectura de construcción para la imagen" "${ARCH}"
+	DEBUGMSG "ARCH"
+
+	CONFIGMSG "Leyendo estado del formato de imagen a utilizar" "MEDIO"
+	case ${MEDIO} in
+		img)
+			if dpkg --compare-versions "${LB_VERSION}" ge 3.0; then
+				MEDIO="hdd"
+			else
+				MEDIO="usb-hdd"
+			fi
+			MEDIO_LBNAME="binary.img"
+			MEDIO_CSNAME="${META_DISTRO}-${SABOR}~${DATE}_${ARCH}.img"
+			LB_BOOTLOADER="syslinux"
+			SUCCESSMSG "Medio: Imagen para dispositivos de almacenamiento extraíble (USB)."
+		;;
+
+		iso)
+			MEDIO="iso"
+			MEDIO_LBNAME="binary.iso"
+			MEDIO_CSNAME="${META_DISTRO}-${SABOR}~${DATE}_${ARCH}.iso"
+			LB_BOOTLOADER="isolinux"
+			SUCCESSMSG "Medio: Imagen para dispositivos ópticos de almacenamiento (CD/DVD)."
+		;;
+
+		mixto|hybrid)
+			MEDIO="iso-hybrid"
+			MEDIO_LBNAME="binary-hybrid.iso"
+			MEDIO_CSNAME="${META_DISTRO}-${SABOR}~${DATE}_${ARCH}.iso"
+			LB_BOOTLOADER="isolinux"
+			SUCCESSMSG "Medio: Imagen mixta para dispositivos de almacenamiento (CD/DVD/USB)."
+		;;
+
+		*)
+			ERRORMSG "Tipo de formato '%s' no reconocido por %s. Abortando." "${MEDIO}" "${CS_NAME}"
+			exit 1
+		;;
+	esac
+	INFOMSG "Seleccionando '%s' como formato de construcción para la imagen" "${MEDIO}"
+	DEBUGMSG "MEDIO"
 
 	CONFIGMSG "Leyendo estado de la versión para la Metadistribución base" "META_CODENAME"
 	if [ -z "${META_CODENAME}" ] || [ "${META_CODENAME}" = "none" ]; then
@@ -181,6 +247,12 @@ CS_LOAD_PROFILE() {
 	fi
 	DEBUGMSG "IMG_HOOKS"
 
+	if dpkg --compare-versions "${LB_VERSION}" ge 3.0; then
+		IMG_SYSLINUX_TEMPLATE="${TEMPLATES}/${LB_BOOTLOADER}/3.0/${META_DISTRO}/"
+	else
+		IMG_SYSLINUX_TEMPLATE="${TEMPLATES}/${LB_BOOTLOADER}/2.0/${META_DISTRO}/"
+	fi
+
 	CONFIGMSG "Leyendo estado de la imagen para la portada de arranque" "IMG_SYSLINUX_SPLASH"
 	if [ -z "${IMG_SYSLINUX_SPLASH}" ] || [ "${IMG_SYSLINUX_SPLASH}" = "profile" ]; then
 		IMG_SYSLINUX_SPLASH="${PROFILES}${SABOR}/syslinux.png"
@@ -268,43 +340,50 @@ CS_LOAD_PROFILE() {
 		DEBUGMSG "IMG_DEBIAN_INSTALLER_GTK"
 	else
 		IMG_DEBIAN_INSTALLER="false"
-		INFOMSG "Se incluirá el instalador en la imagen."
+		CS_BOOTAPPEND_INSTALL=""
+		INFOMSG "No se incluirá el instalador en la imagen."
 	fi
 
-cat > "${TCONFFILE}" << EOF
-AUTHOR_NAME="${AUTHOR_NAME}"
-AUTHOR_EMAIL="${AUTHOR_EMAIL}"
-AUTHOR_URL="${AUTHOR_URL}"
+        case ${CS_PRINT_MODE} in
+                normal)
+                        LB_QUIET=""
+                        LB_VERBOSE=""
+                ;;
 
-OS_LOCALE="${OS_LOCALE}"
-OS_LANG="${OS_LANG}"
+                quiet)
+                        LB_QUIET="--quiet"
+                        LB_VERBOSE=""
+                ;;
 
-META_MODE="${META_MODE}"
-META_CODENAME="${META_CODENAME}"
-META_DISTRO="${META_DISTRO}"
-META_REPO="${META_REPO}"
-META_REPOSECTIONS="${META_REPOSECTIONS}"
+                verbose)
+                        LB_QUIET=""
+                        LB_VERBOSE="--verbose"
+                ;;
+        esac
 
-OS_PACKAGES="${OS_PACKAGES}"
-OS_EXTRAREPOS="${OS_EXTRAREPOS}"
-OS_INCLUDES="${OS_INCLUDES}"
-OS_HOOKS="${OS_HOOKS}"
-IMG_POOL_PACKAGES="${IMG_POOL_PACKAGES}"
-IMG_INCLUDES="${IMG_INCLUDES}"
-IMG_HOOKS="${IMG_HOOKS}"
+        OS_LANG="$( echo "${OS_LOCALE}" | sed 's/_.*//g' )"
+        CS_ISO_PREPARER="${CS_ISO_PREPARER:-${CS_NAME}; http://code.google.com/p/canaima-semilla/}"
+        CS_ISO_VOLUME="${CS_ISO_VOLUME:-${META_DISTRO}-${SABOR} (${DATE})}"
+        CS_ISO_PUBLISHER="${CS_ISO_PUBLISHER:-${AUTHOR_NAME}; ${AUTHOR_EMAIL}; ${AUTHOR_URL}}"
+        CS_ISO_APPLICATION="${CS_ISO_APPLICATION:-${META_DISTRO} Live}"
+        CS_BOOTAPPEND_LIVE="    live-config.locales=${OS_LOCALE} \
+                                live-config.hostname=${META_DISTRO} \
+                                live-config.username=${META_DISTRO}-${SABOR} \
+                                live-config.user-fullname=${META_DISTRO} \
+                                keyb=${OS_LANG} quiet splash vga=791"
 
-IMG_SYSLINUX_SPLASH="${IMG_SYSLINUX_SPLASH}"
-IMG_DEBIAN_INSTALLER="${IMG_DEBIAN_INSTALLER}"
-IMG_DEBIAN_INSTALLER_BANNER="${IMG_DEBIAN_INSTALLER_BANNER}"
-IMG_DEBIAN_INSTALLER_PRESEED="${IMG_DEBIAN_INSTALLER_PRESEED}"
-IMG_DEBIAN_INSTALLER_GTK="${IMG_DEBIAN_INSTALLER_GTK}"
+	PVARIABLES="SABOR=\"${SABOR}\"\nARCH=\"${ARCH}\"\nKERNEL_ARCH=\"${KERNEL_ARCH}\"\nMEDIO=\"${MEDIO}\"\nMEDIO_LBNAME=\"${MEDIO_LBNAME}\"\nMEDIO_CS_NAME=\"${MEDIO_CSNAME}\"\n\nAUTHOR_NAME=\"${AUTHOR_NAME}\"\nAUTHOR_EMAIL=\"${AUTHOR_EMAIL}\"\nAUTHOR_URL=\"${AUTHOR_URL}\"\n\nOS_LOCALE=\"${OS_LOCALE}\"\nOS_LANG=\"${OS_LANG}\"\n\nMETA_MODE=\"${META_MODE}\"\nMETA_CODENAME=\"${META_CODENAME}\"\nMETA_DISTRO=\"${META_DISTRO}\"\nMETA_REPO=\"${META_REPO}\"\nMETA_REPOSECTIONS=\"${META_REPOSECTIONS}\"\n\nOS_PACKAGES=\"${OS_PACKAGES}\"\nOS_EXTRAREPOS=\"${OS_EXTRAREPOS}\"\nOS_INCLUDES=\"${OS_INCLUDES}\"\nOS_HOOKS=\"${OS_HOOKS}\"\nIMG_POOL_PACKAGES=\"${IMG_POOL_PACKAGES}\"\nIMG_INCLUDES=\"${IMG_INCLUDES}\"\nIMG_HOOKS=\"${IMG_HOOKS}\"\n\nLB_BOOTLOADER=\"${LB_BOOTLOADER}\"\nIMG_SYSLINUX_SPLASH=\"${IMG_SYSLINUX_SPLASH}\"\nIMG_SYSLINUX_TEMPLATE=\"${IMG_SYSLINUX_TEMPLATE}\"\nIMG_DEBIAN_INSTALLER=\"${IMG_DEBIAN_INSTALLER}\"\nIMG_DEBIAN_INSTALLER_BANNER=\"${IMG_DEBIAN_INSTALLER_BANNER}\"\nIMG_DEBIAN_INSTALLER_PRESEED=\"${IMG_DEBIAN_INSTALLER_PRESEED}\"\nIMG_DEBIAN_INSTALLER_GTK=\"${IMG_DEBIAN_INSTALLER_GTK}\"\n\nCS_ISO_PREPARER=\"${CS_ISO_PREPARER}\"\nCS_ISO_VOLUME=\"${CS_ISO_VOLUME}\"\nCS_ISO_PUBLISHER=\"${CS_ISO_PUBLISHER}\"\nCS_ISO_APPLICATION=\"${CS_ISO_APPLICATION}\"\nCS_BOOTAPPEND_LIVE=\"${CS_BOOTAPPEND_LIVE}\"\nCS_BOOTAPPEND_INSTALL=\"${CS_BOOTAPPEND_INSTALL}\"\n\nLB_QUIET=\"${LB_QUIET}\"\nLB_VERBOSE=\"${LB_VERBOSE}\""
 
-CS_ISO_PREPARER="${CS_ISO_PREPARER}"
-CS_ISO_VOLUME="${CS_ISO_VOLUME}"
-CS_ISO_PUBLISHER="${CS_ISO_PUBLISHER}"
-CS_ISO_APPLICATION="${CS_ISO_APPLICATION}"
-CS_BOOTAPPEND_LIVE="${CS_BOOTAPPEND_LIVE}"
-CS_BOOTAPPEND_INSTALL="${CS_BOOTAPPEND_INSTALL}"
-EOF
+	case ${CS_OP_MODE} in
+		configonly|normal)
+			if [ ! -d "${TCSCONFDIR}" ]; then
+				mkdir -p "${TCSCONFDIR}"
+			fi
+			echo -e "${PVARIABLES}" > "${TCSCONFFILE}"
+		;;
 
+		vardump)
+			echo -e "${PVARIABLES}"
+		;;
+	esac
 }
