@@ -131,7 +131,7 @@ CS_LOAD_PROFILE() {
 			MEDIO_LBNAME="binary-hybrid.iso"
 			MEDIO_CSNAME="${META_DISTRO}-${SABOR}~${DATE}_${ARCH}.iso"
 			LB_BOOTLOADER="isolinux"
-			SUCCESSMSG "Medio: Imagen mixta para dispositivos de almacenamiento (CD/DVD/USB)."
+			SUCCESSMSG "Medio: Imagen mixta para dispositivos de almacenamiento variado (CD/DVD/USB)."
 		;;
 
 		*)

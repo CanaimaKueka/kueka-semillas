@@ -1,7 +1,7 @@
 #!/bin/sh -e
 
-EXTENDCONFIG="${ISOS}/config/c-s/extend.conf"
-EXTENDSCRIPT="${ISOS}/config/c-s/extend.sh"
+EXTENDCONFIG="${ISOS}/c-s-extend.conf"
+EXTENDSCRIPT="${ISOS}/c-s-extend.sh"
 
 # Inicializando variables
 # Un archivo variables.conf en ${ISOS} sobreescribe la configuración por defecto

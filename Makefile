@@ -23,6 +23,7 @@ PODATE = $(shell date +%F\ %R%z)
 SCRIPTS = $(shell find ./scripts -type f -iname "*.sh")
 IMAGES = $(shell ls documentation/rest/images/ | grep "\.svg" | sed 's/\.svg//g')
 LOCALES = $(shell find locale -mindepth 1 -maxdepth 1 -type d | sed 's|locale/pot||g;s|locale/||g')
+PYCS = $(shell find . -type f -iname "*.pyc")
 
 # Dependencias de Construcción
 # Tareas de Construcción
@@ -132,24 +133,38 @@ gen-mo: check-buildep clean-mo
 
 install:
 
-	mkdir -p $(DESTDIR)/usr/bin/
-	mkdir -p $(DESTDIR)/usr/share/canaima-semilla/isos/
-	mkdir -p $(DESTDIR)/usr/share/canaima-semilla/scripts/
-	mkdir -p $(DESTDIR)/usr/share/applications/
-	cp *.desktop $(DESTDIR)/usr/share/applications/
-	cp c-s.sh $(DESTDIR)/usr/bin/c-s
-	cp -r scripts templates profiles $(DESTDIR)/usr/share/canaima-semilla/
+	@# canaima-semilla-core
+	@mkdir -p $(COREDIR)/usr/bin/
+	@mkdir -p $(COREDIR)/etc/canaima-semilla/
+	@mkdir -p $(COREDIR)/usr/share/canaima-semilla/scripts/
+	@mkdir -p $(COREDIR)/usr/share/locale/
+	@cp scripts/c-s.sh $(COREDIR)/usr/bin/c-s
+	@cp -r scripts templates profiles $(COREDIR)/usr/share/canaima-semilla/
+	@cp -r config $(COREDIR)/etc/canaima-semilla/
+	@cp -r locale/* $(COREDIR)/usr/share/locale/
+	@rm -f $(COREDIR)/usr/share/canaima-semilla/scripts/c-s.sh
+	@rm -rf $(COREDIR)/usr/share/locale/pot
 
+	@# canaima-semilla-doc
+	@mkdir -p $(DOCDIR)/usr/share/applications/
+	@mkdir -p $(DOCDIR)/usr/share/doc/canaima-semilla/
+	@cp c-s-manual.desktop $(DOCDIR)/usr/share/applications/
+	@cp -r documentation/html $(DOCDIR)/usr/share/doc/canaima-semilla/
 
+	@# canaima-semilla-gui
+	@mkdir -p $(GUIDIR)/usr/share/applications/
+	@mkdir -p $(GUIDIR)/usr/share/canaima-semilla/
+	@cp c-s-gui.desktop $(GUIDIR)/usr/share/applications/
+	@cp -r gui $(GUIDIR)/usr/share/canaima-semilla/
 
 uninstall:
 
-	rm -rf $(DESTDIR)/usr/share/canaima-semilla
-	rm -rf $(DESTDIR)/usr/bin/canaima-semilla
-	rm -rf $(DESTDIR)/usr/bin/c-s
-	rm -rf $(DESTDIR)/usr/bin/manual-semilla
-	rm -rf $(DESTDIR)/etc/skel/.config/canaima-semilla/
-	rm -rf $(DESTDIR)/usr/share/applications/manual-semilla.desktop
+	@rm -rf /usr/bin/c-s
+	@rm -rf /usr/share/canaima-semilla
+	@rm -rf /usr/share/doc/canaima-semilla
+	@rm -f /usr/share/locale/*/LC_MESSAGES/canaima-semilla.mo
+	@rm -f /usr/share/applications/c-s-manual.desktop
+	@rm -f /usr/share/applications/c-s-gui.desktop
 
 # MAINTAINER TASKS ---------------------------------------------------------------------------------
 
@@ -233,9 +248,18 @@ deb-final-release: check-maintdep
 
 # CLEAN TASKS ------------------------------------------------------------------------------
 
-clean: clean-img clean-mo clean-man clean-predoc
+clean: clean-img clean-mo clean-man clean-predoc clean-pyc
 
-clean-all: clean-img clean-mo clean-html clean-wiki clean-man clean-predoc
+clean-all: clean-img clean-mo clean-html clean-wiki clean-man clean-predoc clean-pyc
+
+clean-pyc:
+
+	@printf "Cleaning precompilated python files ["
+	@for PYC in $(PYCS); do \
+		rm -rf $${PYC}; \
+		printf "."; \
+	done
+	@printf "]\n"
 
 clean-predoc:
 

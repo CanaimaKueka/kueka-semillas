@@ -10,7 +10,7 @@ import threading
 from subprocess import Popen, PIPE, STDOUT
 
 import config
-import bienvenido
+import main
 import paso2
 
 #---Hilo Principal----#
@@ -125,7 +125,7 @@ class Paso1():
 			hilo.start()
 		
 		def atras(self):
-			bienvenido.bienvenido_1()
+			main.CanaimaSemilla()
 			self.window.hide()
 		
 		boton_atras.set_size_request(80, 30)

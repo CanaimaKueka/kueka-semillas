@@ -1,0 +1,43 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+from gettext import gettext as _
+
+MainWindowTitle = _('Generador de Distribuciones Derivadas')
+MainWindowIntro = _('Canaima Semilla  es un paquete diseñado para facilitar a individuales, colectivos e instituciones la creación de distribuciones GNU/Linux personalizadas y adaptadas a sus necesidades (lo que conocemos como sabores), partiendo de la Metadistribución Canaima GNU/Linux. La herramienta permite crear imágenes instalables (ISO o IMG) basadas en los perfiles de sabores existentes y  construir nuevas distribuciones Canaima GNU/linux conocidas como sabores. Seleccione alguna de las opciones:')
+CrearPerfilTitle = _('Crear perfil')
+CrearImagenTitle = _('Crear imagen')
+ProbarImagenTitle = _('Probar imagen')
+GrabarImagenTitle = _('Grabar imagen')
+CrearPerfilLabel = _('Inicia un asistente que te permitirá construir un perfil para una nueva distribución derivada.')
+CrearImagenLabel = _('Crear nueva imagen')
+ProbarImagenLabel = _('Probar imagen existente')
+GrabarImagenLabel = _('Grabar imagen en dispositivo de almacenamiento')
+
+BuildImageTitle = _('Crear imagen CD o DVD')
+BuildImageIntro = _('Canaima Semilla puede crear imágenes instalables (ISO o IMG) basado en los perfiles de sabores existentes. Puede especificársele el tipo de Medio, la arquitectura a construir, y el nombre del sabor.')
+MedioOptionLabel = _('Seleccione el formato de imagen a construir:')
+MedioOptionIso = _('ISO: Imagen para dispositivos ópticos de almacenamiento (CD/DVD).')
+MedioOptionImg = _('IMG: Imagen para dispositivos de almacenamiento extraíble (USB).')
+MedioOptionHybrid = _('HÍBRIDA: Imagen mixta para dispositivos de almacenamiento variado (CD/DVD/USB).')
+ArchOptionLabel = _('Seleccione el tipo de arquitectura de la imagen:')
+ArchOptionI386 = _('i386')
+ArchOptionAmd64 = _('amd64')
+SaborOptionLabel = _('Seleccione un perfil:')
+BuildImageEndLabel = _('Cuando esté listo, presione el botón generar.')
+CancelLabel = _('Cancelar')
+ConfirmCancelBuildImageLabel = _('"\tEsta seguro que desea cancerlar \t\n\tla creación de la imagen:\t"')
+MustSelectArchLabel = _('"\tDebe seleccionar La Arquitectura i386 o amd64\t\t"')
+MustSelectArchTitle = _('Error i386 o amd64')
+MustSelectSaborLabel = _('"\tDebe seleccionar un sabor\t\t"')
+MustSelectSaborTitle = _('Error sabor')
+LooksLikeNoInternetLabel = _('Parece que no tiene internet')
+LooksLikeNoInternetTitle = _('Parece que no tiene internet')
+BuildingImage = _('"CONSTRUYENDO IMAGEN"')
+ImageBuiltSuccessfully = _('"\tSe ha creado una imagen ISO de canaima-%s.\n\n\tLa imagen ''canaima-%s_i386.iso'' resultante \n\tde los proceso de construcción se encuentra en la \n\tdireccion:\t\n\n\t\t/usr/share/canaima-semilla/semillero/"')
+DoneLabel = _('Finalizado')
+ImageBuiltError = _('"Ocurrio un error durante la generacion de la imagen. Envie un correo a desarrolladores@canaima.softwarelibre.gob.ve con el contenido del archivo /usr/share/canaima-semilla/semillero/binary.log"')
+ErrorLabel = _('Ocurrió un error')
+ImageBuiltCancelled = _('"\tLa construcción de la imagen ISO de\n\tcanaima-%s ha sido cancelada.\t"')
+CancelledLabel = _('Ocurrió un error')
+

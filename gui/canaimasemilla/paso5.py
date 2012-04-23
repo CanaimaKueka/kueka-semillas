@@ -7,7 +7,7 @@ import gtk
 import threading
 import gobject
 from subprocess import Popen, PIPE, STDOUT
-import bienvenido
+import main
 import paso1
 
 gtk.gdk.threads_init()
@@ -579,7 +579,7 @@ class Paso5():
 						pass
 					
 			if prueba_inter(self) == True:	
-				bienvenido.bienvenido_1()
+				main.CanaimaSemilla()
 				self.window.hide()
 				
 			else:

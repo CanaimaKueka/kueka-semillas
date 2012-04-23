@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: aguilas\n"
 "Report-Msgid-Bugs-To: desarrolladores@canaima.softwarelibre.gob.ve\n"
-"POT-Creation-Date: 2012-04-20 17:52-0430\n"
+"POT-Creation-Date: 2012-04-23 05:14-0430\n"
 "PO-Revision-Date: 2012-01-20 19:38-0400\n"
 "Last-Translator: Luis Alejandro Martínez Faneyth <luis@huntingbears.com.ve>\n"
 "Language-Team: Aguilas Translation Team <aguilas-list@googlegroups.com>\n"
@@ -558,6 +558,10 @@ msgstr ""
 #: ../../../scripts/modules/build.sh:216 ../../../scripts/modules/build.sh:191
 #: ../../../scripts/functions/profile.sh:134
 msgid "Medio: Imagen mixta para dispositivos de almacenamiento (CD/DVD/USB)."
+msgstr ""
+
+#: ../../../scripts/functions/profile.sh:134
+msgid "Medio: Imagen mixta para dispositivos de almacenamiento variado (CD/DVD/USB)."
 msgstr ""
 
 #: ../../../scripts/modules/build.sh:202 ../../../scripts/modules/build.sh:177
