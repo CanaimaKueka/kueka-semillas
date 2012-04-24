@@ -24,23 +24,8 @@ class MainWindow():
         image.show()
 
         return banner
-    
-    def Intro(self, homogeneous, spacing, expand, fill, padding, borderwidth, width, height, textblock, linewrap):
-        intro = gtk.HBox(homogeneous, spacing)
-        intro.set_border_width(borderwidth)
-        
-        descripcion = gtk.Label()
-        descripcion.set_markup(textblock)
-        descripcion.set_line_wrap(linewrap)
-        descripcion.set_size_request(width, height)
-        descripcion.set_justify(gtk.JUSTIFY_CENTER)
-        
-        intro.pack_start(descripcion, expand, fill, padding)
-        descripcion.show()
-        
-        return intro
-        
-    def Opciones(self, homogeneous, spacing, expand, fill, padding):
+
+    def Opciones(self, homogeneous, spacing, expand, fill, padding, width, height):
     
         def crearperfil(self):
             hilo = threading.Thread(target=crearperfilexec, args=(self))
@@ -82,40 +67,37 @@ class MainWindow():
             self.window.hide()
             gtk.gdk.threads_leave()
 
-        def botoncontenido(self, icono, texto, titulo):
-            button = gtk.VBox(False, 0)
-            button.set_border_width(2)
+        def botoncontenido(self, homogeneous, spacing, expand, fill, padding, icono, texto, titulo):
+            button = gtk.VBox(homogeneous, spacing)
+            button.set_border_width(5)
             
             image = gtk.Image()
             image.set_from_file(icono)
             image.show()
 
-            attr = pango.AttrList()
+            attrtitle = pango.AttrList()
             size = pango.AttrSize(20000, 0, -1)
-            weight = pango.AttrWeight(700, 0, -1)
-            attr.insert(size)
-            attr.insert(size)
+            attrtitle.insert(size)
             
             title = gtk.Label()
             title.set_markup(titulo)
             title.set_justify(gtk.JUSTIFY_CENTER)
-            title.set_attributes(attr)
+            title.set_attributes(attrtitle)
             title.show()
             
             line = gtk.HSeparator()
             line.show()
-            
+
             label = gtk.Label()
             label.set_markup(texto)
             label.set_line_wrap(True)
-            label.set_size_request(300, -1)
             label.set_justify(gtk.JUSTIFY_CENTER)
             label.show()
             
-            button.pack_start(image, False, False, 0)
-            button.pack_start(title, False, False, 0)
-            button.pack_start(line, False, False, 0)
-            button.pack_start(label, False, False, 0)
+            button.pack_start(image, expand, fill, padding)
+            button.pack_start(title, expand, fill, padding)
+            button.pack_start(line, expand, fill, padding)
+            button.pack_start(label, expand, fill, padding)
 
             return button
 
@@ -130,66 +112,66 @@ class MainWindow():
         
         boton_cp = gtk.Button()             
         boton_cp.connect("clicked", crearperfil)
-        boton_cp.set_size_request(330, 170)
-        contenido_cp = botoncontenido(self, GUIDIR+'/images/crear-perfil.png', CrearPerfilLabel, CrearPerfilTitle)
+        boton_cp.set_size_request(width, height)
+        contenido_cp = botoncontenido(self, False, 0, False, False, 0, GUIDIR+'/images/crear-perfil.png', CrearPerfilLabel, CrearPerfilTitle)
         boton_cp.add(contenido_cp)
-        fila1.pack_start(boton_cp, False, False, 5)
+        fila1.pack_start(boton_cp, expand, fill, padding)
         boton_cp.show()
                 
         boton_ci = gtk.Button()             
         boton_ci.connect("clicked", crearimagen)
-        boton_ci.set_size_request(330, 170)
-        contenido_ci = botoncontenido(self, GUIDIR+'/images/crear-imagen.png', CrearImagenLabel, CrearImagenTitle)
+        boton_ci.set_size_request(width, height)
+        contenido_ci = botoncontenido(self, False, 0, False, False, 0, GUIDIR+'/images/crear-imagen.png', CrearImagenLabel, CrearImagenTitle)
         boton_ci.add(contenido_ci)
-        fila1.pack_start(boton_ci, False, False, 5)
+        fila1.pack_start(boton_ci, expand, fill, padding)
         boton_ci.show()
 
         boton_pi = gtk.Button()             
         boton_pi.connect("clicked", probarimagen)
-        boton_pi.set_size_request(330, 170)
-        contenido_pi = botoncontenido(self, GUIDIR+'/images/probar-imagen.png', ProbarImagenLabel, ProbarImagenTitle)
+        boton_pi.set_size_request(width, height)
+        contenido_pi = botoncontenido(self, False, 0, False, False, 0, GUIDIR+'/images/probar-imagen.png', ProbarImagenLabel, ProbarImagenTitle)
         boton_pi.add(contenido_pi)
-        fila2.pack_start(boton_pi, False, False, 5)
+        fila2.pack_start(boton_pi, expand, fill, padding)
         boton_pi.show()
                 
         boton_gi = gtk.Button()             
         boton_gi.connect("clicked", grabarimagen)
-        boton_gi.set_size_request(330, 170)
-        contenido_gi = botoncontenido(self, GUIDIR+'/images/grabar-imagen.png', GrabarImagenLabel, GrabarImagenTitle)
+        boton_gi.set_size_request(width, height)
+        contenido_gi = botoncontenido(self, False, 0, False, False, 0, GUIDIR+'/images/grabar-imagen.png', GrabarImagenLabel, GrabarImagenTitle)
         boton_gi.add(contenido_gi)
-        fila2.pack_start(boton_gi, False, False, 5)
+        fila2.pack_start(boton_gi, expand, fill, padding)
         boton_gi.show()
         
-        caja.pack_start(fila1, False, False, 5)
-        caja.pack_start(fila2, False, False, 5)
+        caja.pack_start(fila1, expand, fill, padding)
+        caja.pack_start(fila2, expand, fill, padding)
         
         return caja
 
-    def Botones(self, homogeneous, spacing, expand, fill, padding):
+    def Botones(self, homogeneous, spacing, expand, fill, padding, borderwidth, width, height):
 
         def ayuda(self):
             hilo = threading.Thread(target=ayudaexec, args=(self))
             hilo.start()
 
-        def ayudaexec(self, widget=None):            
-            x = Popen(['/usr/bin/yelp', DOCDIR+'/index.html'], shell=True, stdout=PIPE)
+        def ayudaexec(self, widget=None):
+            x = Popen(['/usr/bin/yelp', DOCDIR+'/index.html'], shell = False, stdout = PIPE)
 
-        caja = gtk.HBox(homogeneous, spacing)
-        caja.set_border_width(5)
+        botones = gtk.HBox(homogeneous, spacing)
+        botones.set_border_width(borderwidth)
         
         boton_cerrar = gtk.Button(stock=gtk.STOCK_CLOSE)
-        boton_cerrar.set_size_request(80, 30)
+        boton_cerrar.set_size_request(width, height)
         boton_cerrar.connect("clicked", gtk.main_quit)
-        caja.pack_start(boton_cerrar, False, False, 5)
+        botones.pack_start(boton_cerrar, expand, fill, padding)
         boton_cerrar.show()
 
         boton_ayuda = gtk.Button(stock=gtk.STOCK_HELP)             
         boton_ayuda.connect("clicked", ayuda)
-        boton_ayuda.set_size_request(80, 30)
-        caja.pack_start(boton_ayuda, False, False, 5)
+        boton_ayuda.set_size_request(width, height)
+        botones.pack_start(boton_ayuda, expand, fill, padding)
         boton_ayuda.show()
         
-        return caja
+        return botones
 
     def __init__(self):
             
@@ -207,16 +189,13 @@ class MainWindow():
         self.box = self.Banner(False, 0, False, False, 0, 0, GUIDIR+'/images/banner.png')
         self.vbox.pack_start(self.box, False, False, 0)
 
-        self.separator = gtk.HSeparator()
-        self.vbox.pack_start(self.separator, False, False, 0)
-
-        self.box = self.Opciones(False, 0, False, False, 0)
+        self.box = self.Opciones(False, 0, False, False, 5, 330, 170)
         self.vbox.pack_start(self.box, False, False, 0)
          
         self.separator = gtk.HSeparator()
         self.vbox.pack_start(self.separator, False, False, 0)
         
-        self.box = self.Botones(False, 0, False, False, 0)
+        self.box = self.Botones(False, 0, False, False, 0, 5, 80, 30)
         self.vbox.pack_start(self.box, False, False, 0)
         
         self.window.add(self.vbox)
