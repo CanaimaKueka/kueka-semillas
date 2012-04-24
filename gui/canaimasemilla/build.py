@@ -11,8 +11,6 @@ from library.strings import *
 from library.localization import *
 from config import *
 
-gtk.gdk.threads_init()
-
 class BuildImage():
 
     def Banner(self, homogeneous, spacing, expand, fill, padding, borderwidth, imagefile):
@@ -461,5 +459,8 @@ class BuildImage():
         self.window.show_all()
 
 if __name__ == "__main__":
+    gtk.gdk.threads_init()
+    init_localization()
     app = BuildImage()
     gtk.main()
+    sys.exit()

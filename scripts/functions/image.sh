@@ -48,25 +48,25 @@ CS_BUILD_IMAGE() {
 				;;
 			esac
 		else
-			ERRORMSG "%s no pudo encontrar una configuración apropiada en %s." "${CS_NAME}" "${ISOS}config"
+			ERRORMSG "%s no pudo encontrar una configuración apropiada en %s." "${CS_NAME}" "${ISOS}/config"
 			exit 1
 		fi
 	fi
 
 	WARNINGMSG "[--- INICIANDO CONSTRUCCIÓN ---]"
-	cd "${ISOS}" && lb build ${LB_QUIET} ${LB_VERBOSE} 2>&1 | tee "${ISOS}${LOGFILE}"
+	cd "${ISOS}" && lb build ${LB_QUIET} ${LB_VERBOSE} 2>&1 | tee "${ISOS}/${LOGFILE}"
 
-	if [ -e "${ISOS}${MEDIO_LBNAME}" ] && [ -n "${MEDIO_CSNAME}" ] && [ -n "${MEDIO_LBNAME}" ]; then
+	if [ -e "${ISOS}/${MEDIO_LBNAME}" ] && [ -n "${MEDIO_CSNAME}" ] && [ -n "${MEDIO_LBNAME}" ]; then
 
-		PESO="$( echo "scale=2;$( stat --format=%s "${ISOS}${MEDIO_LBNAME}" )/1048576" | bc )MB"
-		mv "${ISOS}${MEDIO_LBNAME}" "${ISOS}${MEDIO_CSNAME}"
+		PESO="$( echo "scale=2;$( stat --format=%s "${ISOS}/${MEDIO_LBNAME}" )/1048576" | bc )MB"
+		mv "${ISOS}/${MEDIO_LBNAME}" "${ISOS}/${MEDIO_CSNAME}"
 
 		SUCCESSMSG "Se ha creado una imagen %s con un peso de %s." "${MEDIO}" "${PESO}"
 		SUCCESSMSG "Puedes encontrar la imagen '%s' en el directorio %s" "${MEDIO_CSNAME}" "${ISOS}"
 		exit 0
 	else
 		ERRORMSG "Ocurrió un error durante la generación de la imagen."
-		ERRORMSG "Si deseas asistencia, puedes enviar un correo a %s con el contenido del archivo '%s'" "${CS_LOG_MAIL}" "${ISOS}${LOGFILE}"
+		ERRORMSG "Si deseas asistencia, puedes enviar un correo a %s con el contenido del archivo '%s'" "${CS_LOG_MAIL}" "${ISOS}/${LOGFILE}"
 		exit 1
 	fi
 }

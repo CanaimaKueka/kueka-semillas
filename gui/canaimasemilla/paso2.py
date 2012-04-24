@@ -10,7 +10,7 @@ import threading
 from subprocess import Popen, PIPE, STDOUT
 
 import config
-import paso1, paso3
+import profile, paso3
 
 #---Hilo Principal----#
 gtk.gdk.threads_init()
@@ -26,7 +26,7 @@ class Paso2():
 		self.window.set_resizable(False)
 		self.window.connect("delete_event", self.on_delete)
 		self.window.connect("destroy", gtk.main_quit)
-		self.window.set_icon_from_file('/usr/share/icons/canaima-iconos/apps/48/c-s.png')
+#	self.window.set_icon_from_file('/usr/share/icons/canaima-iconos/apps/48/c-s.png')
 		
 		#------------------Empaquetado de cajas------------------#
 		self.box1 = gtk.VBox(False, 0)
@@ -192,7 +192,7 @@ class Paso2():
 			
 				gtk.gdk.threads_enter()
 				os.system('rm -r '+config.ruta)
-				paso1.Paso1()
+				profile.Paso1()
 				self.window.hide()
 				gtk.gdk.threads_leave()
 		

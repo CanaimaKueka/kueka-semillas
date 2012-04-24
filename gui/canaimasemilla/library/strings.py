@@ -42,3 +42,8 @@ ErrorLabel = _('Ocurrió un error')
 ImageBuiltCancelled = _('"\tLa construcción de la imagen ISO de\n\tcanaima-%s ha sido cancelada.\t"')
 CancelledLabel = _('Ocurrió un error')
 
+CreateProfileTitle = _('Creación de perfiles para distribuciones derivadas')
+CreateProfileSaborNameLabel = _('Introduzca el nombre del sabor a crear:')
+CreateProfileSaborNameDesc = _('Debe introducir el nombre con el que desea identificar la distribución derivada que está creando, en minúsculas y sin espacios.')
+ProfileExists = _('El nombre escogido para la distribución derivada ya está siendo utilizado por otro perfil.')
+

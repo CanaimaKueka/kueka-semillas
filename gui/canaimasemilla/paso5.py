@@ -8,7 +8,7 @@ import threading
 import gobject
 from subprocess import Popen, PIPE, STDOUT
 import main
-import paso1
+import profile
 
 gtk.gdk.threads_init()
 
@@ -127,7 +127,7 @@ class Paso5():
 						boton_cerrar.set_sensitive(True)
 							
 						#crear Isos						
-						self.systema = os.system('c-s construir --medio='+cd_1+' --arquitectura='+i386_1+' --sabor='+paso1.nombre_carpeta.get_text())
+						self.systema = os.system('c-s construir --medio='+cd_1+' --arquitectura='+i386_1+' --sabor='+profile.nombre_carpeta.get_text())
 						#~ error=os.system('echo $?')
 						#~ error= Popen('echo $?', stdout=PIPE, stderr = STDOUT, shell=True) #shell=True, stdout=PIPE)
 						#~ eror = error.stdout.read().split('\n')[0]							
@@ -140,7 +140,7 @@ class Paso5():
 							pbar.set_text("FINALIZADO")
 							timer_2 = gobject.source_remove(timer_1)
 							gtk.gdk.threads_enter()
-							md=gtk.MessageDialog(parent=None, flags=0, buttons=gtk.BUTTONS_OK, message_format="\tSe ha creado una imagen ISO de canaima-"+paso1.nombre_carpeta.get_text()+".\n\n\tLa imagen ''canaima-"+paso1.nombre_carpeta.get_text()+"_i386.iso'' resultante \n\tde los proceso de construcción se encuentra en la \n\tdireccion:\t\n\n\t\t/usr/share/canaima-semilla/semillero/")
+							md=gtk.MessageDialog(parent=None, flags=0, buttons=gtk.BUTTONS_OK, message_format="\tSe ha creado una imagen ISO de canaima-"+profile.nombre_carpeta.get_text()+".\n\n\tLa imagen ''canaima-"+profile.nombre_carpeta.get_text()+"_i386.iso'' resultante \n\tde los proceso de construcción se encuentra en la \n\tdireccion:\t\n\n\t\t/usr/share/canaima-semilla/semillero/")
 							md.set_title('Finalizado')
 							md.run()
 							md.destroy()
@@ -185,7 +185,7 @@ class Paso5():
 							pbar.set_text("IMAGEN CANCELADA")
 							timer_2 = gobject.source_remove(timer_1)
 							gtk.gdk.threads_enter()
-							md=gtk.MessageDialog(parent=None, flags=0, type=gtk.MESSAGE_ERROR, buttons=gtk.BUTTONS_OK, message_format="\tLa construcción de la imagen ISO de\n\tcanaima-"+paso1.nombre_carpeta.get_text()+" ha sido cancelada.\t")
+							md=gtk.MessageDialog(parent=None, flags=0, type=gtk.MESSAGE_ERROR, buttons=gtk.BUTTONS_OK, message_format="\tLa construcción de la imagen ISO de\n\tcanaima-"+profile.nombre_carpeta.get_text()+" ha sido cancelada.\t")
 							md.set_title('Imagen cancelada')
 							md.run()
 							md.destroy()
@@ -234,7 +234,7 @@ class Paso5():
 							boton_cerrar.set_sensitive(True)
 								
 							#Crear Isos
-							systema = os.system('c-s construir --medio='+cd_1+' --arquitectura='+amd64_1+' --sabor='+paso1.nombre_carpeta.get_text())	
+							systema = os.system('c-s construir --medio='+cd_1+' --arquitectura='+amd64_1+' --sabor='+profile.nombre_carpeta.get_text())	
 							#~ error= Popen(["echo $?"], shell=True, stdout=PIPE)
 							#~ eror = error.stdout.read().split('\n')[0]
 							#~ x= "0"
@@ -245,7 +245,7 @@ class Paso5():
 								pbar.set_text("FINALIZADO")
 								timer_2 = gobject.source_remove(timer_1)
 								gtk.gdk.threads_enter()
-								md=gtk.MessageDialog(parent=None, flags=0, buttons=gtk.BUTTONS_OK, message_format="\tSe ha creado una imagen ISO de canaima-"+paso1.nombre_carpeta.get_text()+".\n\n\tLa imagen ''canaima-"+paso1.nombre_carpeta.get_text()+"_amd64.iso'' resultante \n\tde los proceso de construcción se encuentra en la \n\tdireccion:\t\n\n\t\t/usr/share/canaima-semilla/semillero/")
+								md=gtk.MessageDialog(parent=None, flags=0, buttons=gtk.BUTTONS_OK, message_format="\tSe ha creado una imagen ISO de canaima-"+profile.nombre_carpeta.get_text()+".\n\n\tLa imagen ''canaima-"+profile.nombre_carpeta.get_text()+"_amd64.iso'' resultante \n\tde los proceso de construcción se encuentra en la \n\tdireccion:\t\n\n\t\t/usr/share/canaima-semilla/semillero/")
 								md.set_title('Finalizado')
 								md.run()
 								md.destroy()
@@ -288,7 +288,7 @@ class Paso5():
 								pbar.set_text("IMAGEN CANCELADA")
 								timer_2 = gobject.source_remove(timer_1)
 								gtk.gdk.threads_enter()
-								md=gtk.MessageDialog(parent=None, flags=0, type=gtk.MESSAGE_ERROR, buttons=gtk.BUTTONS_OK, message_format="\tLa construcción de la imagen ISO de\n\tcanaima-"+paso1.nombre_carpeta.get_text()+" ha sido cancelada.\t")
+								md=gtk.MessageDialog(parent=None, flags=0, type=gtk.MESSAGE_ERROR, buttons=gtk.BUTTONS_OK, message_format="\tLa construcción de la imagen ISO de\n\tcanaima-"+profile.nombre_carpeta.get_text()+" ha sido cancelada.\t")
 								md.set_title('Imagen cancelada')
 								md.run()
 								md.destroy()
@@ -344,7 +344,7 @@ class Paso5():
 						boton_atras.set_sensitive(False)
 						boton_cerrar.set_sensitive(True)
 							
-						systema = os.system('c-s construir --medio='+usb_1+' --arquitectura='+i386_1+' --sabor='+paso1.nombre_carpeta.get_text())
+						systema = os.system('c-s construir --medio='+usb_1+' --arquitectura='+i386_1+' --sabor='+profile.nombre_carpeta.get_text())
 						#~ error= Popen(["echo $?"], shell=True, stdout=PIPE)
 						#~ eror = error.stdout.read().split('\n')[0]
 						#~ x= "0"
@@ -355,7 +355,7 @@ class Paso5():
 							pbar.set_text("FINALIZADO")
 							timer_2 = gobject.source_remove(timer_1)
 							gtk.gdk.threads_enter()
-							md=gtk.MessageDialog(parent=None, flags=0, buttons=gtk.BUTTONS_OK, message_format="\tSe ha creado una imagen ISO de canaima-"+paso1.nombre_carpeta.get_text()+".\n\n\tLa imagen ''canaima-"+paso1.nombre_carpeta.get_text()+"_i386.usb'' resultante \n\tde los proceso de construcción se encuentra en la \n\tdireccion:\t\n\n\t\t/usr/share/canaima-semilla/semillero/")
+							md=gtk.MessageDialog(parent=None, flags=0, buttons=gtk.BUTTONS_OK, message_format="\tSe ha creado una imagen ISO de canaima-"+profile.nombre_carpeta.get_text()+".\n\n\tLa imagen ''canaima-"+profile.nombre_carpeta.get_text()+"_i386.usb'' resultante \n\tde los proceso de construcción se encuentra en la \n\tdireccion:\t\n\n\t\t/usr/share/canaima-semilla/semillero/")
 							md.set_title('Finalizado')
 							md.run()
 							md.destroy()
@@ -398,7 +398,7 @@ class Paso5():
 							pbar.set_text("IMAGEN CANCELADA")
 							timer_2 = gobject.source_remove(timer_1)
 							gtk.gdk.threads_enter()
-							md=gtk.MessageDialog(parent=None, flags=0, type=gtk.MESSAGE_ERROR, buttons=gtk.BUTTONS_OK, message_format="\tLa construcción de la imagen ISO de\n\tcanaima-"+paso1.nombre_carpeta.get_text()+" ha sido cancelada.\t")
+							md=gtk.MessageDialog(parent=None, flags=0, type=gtk.MESSAGE_ERROR, buttons=gtk.BUTTONS_OK, message_format="\tLa construcción de la imagen ISO de\n\tcanaima-"+profile.nombre_carpeta.get_text()+" ha sido cancelada.\t")
 							md.set_title('Imagen cancelada')
 							md.run()
 							md.destroy()
@@ -445,7 +445,7 @@ class Paso5():
 							boton_siguiente.set_sensitive(False)
 							boton_atras.set_sensitive(False)
 							boton_cerrar.set_sensitive(True)
-							systema = os.system('c-s construir --medio='+usb_1+' --arquitectura='+amd64_1+' --sabor='+paso1.nombre_carpeta.get_text())
+							systema = os.system('c-s construir --medio='+usb_1+' --arquitectura='+amd64_1+' --sabor='+profile.nombre_carpeta.get_text())
 							#~ error= Popen(["echo $?"], shell=True, stdout=PIPE)
 							#~ eror = error.stdout.read().split('\n')[0]
 							#~ x= "0"
@@ -456,7 +456,7 @@ class Paso5():
 								pbar.set_text("FINALIZADO")
 								timer_2 = gobject.source_remove(timer_1)
 								gtk.gdk.threads_enter()
-								md=gtk.MessageDialog(parent=None, flags=0, buttons=gtk.BUTTONS_OK, message_format="\tSe ha creado una imagen ISO de canaima-"+paso1.nombre_carpeta.get_text()+".\n\n\tLa imagen ''canaima-"+paso1.nombre_carpeta.get_text()+"_amd64.usb'' resultante \n\tde los proceso de construcción se encuentra en la \n\tdireccion:\t\n\n\t\t/usr/share/canaima-semilla/semillero/")
+								md=gtk.MessageDialog(parent=None, flags=0, buttons=gtk.BUTTONS_OK, message_format="\tSe ha creado una imagen ISO de canaima-"+profile.nombre_carpeta.get_text()+".\n\n\tLa imagen ''canaima-"+profile.nombre_carpeta.get_text()+"_amd64.usb'' resultante \n\tde los proceso de construcción se encuentra en la \n\tdireccion:\t\n\n\t\t/usr/share/canaima-semilla/semillero/")
 								md.set_title('Finalizado')
 								md.run()
 								md.destroy()
@@ -499,7 +499,7 @@ class Paso5():
 								pbar.set_text("IMAGEN CANCELADA")
 								timer_2 = gobject.source_remove(timer_1)
 								gtk.gdk.threads_enter()
-								md=gtk.MessageDialog(parent=None, flags=0, type=gtk.MESSAGE_ERROR, buttons=gtk.BUTTONS_OK, message_format="\tLa construcción de la imagen ISO de\n\tcanaima-"+paso1.nombre_carpeta.get_text()+" ha sido cancelada.\t")
+								md=gtk.MessageDialog(parent=None, flags=0, type=gtk.MESSAGE_ERROR, buttons=gtk.BUTTONS_OK, message_format="\tLa construcción de la imagen ISO de\n\tcanaima-"+profile.nombre_carpeta.get_text()+" ha sido cancelada.\t")
 								md.set_title('Imagen cancelada')
 								md.run()
 								md.destroy()
@@ -548,10 +548,10 @@ class Paso5():
 			def prueba_inter(self):
 				
 				t = next(os.walk('/usr/share/canaima-semilla/semillero/'))[2]
-				a= "canaima-"+paso1.nombre_carpeta.get_text()+"_i386.iso"
-				xy= "canaima-"+paso1.nombre_carpeta.get_text()+"_i386.img"
-				zy= "canaima-"+paso1.nombre_carpeta.get_text()+"_amd64.iso"
-				zo= "canaima-"+paso1.nombre_carpeta.get_text()+"_amd64.img"
+				a= "canaima-"+profile.nombre_carpeta.get_text()+"_i386.iso"
+				xy= "canaima-"+profile.nombre_carpeta.get_text()+"_i386.img"
+				zy= "canaima-"+profile.nombre_carpeta.get_text()+"_amd64.iso"
+				zo= "canaima-"+profile.nombre_carpeta.get_text()+"_amd64.img"
 				
 				b = ''
 				for b in t:
@@ -584,7 +584,7 @@ class Paso5():
 				
 			else:
 				gtk.gdk.threads_enter()
-				md=gtk.MessageDialog(parent=None, flags=0, type=gtk.MESSAGE_QUESTION, buttons=gtk.BUTTONS_YES_NO, message_format="\t¿Está seguro que desea salir sin construir \t\n\tla imagen del Sabor-"+paso1.nombre_carpeta.get_text()+"?\t")
+				md=gtk.MessageDialog(parent=None, flags=0, type=gtk.MESSAGE_QUESTION, buttons=gtk.BUTTONS_YES_NO, message_format="\t¿Está seguro que desea salir sin construir \t\n\tla imagen del Sabor-"+profile.nombre_carpeta.get_text()+"?\t")
 				md.set_title('Salir')
 				respuesta = md.run()
 				md.destroy()
@@ -757,7 +757,7 @@ class Paso5():
 		
 		descripcion = gtk.Label()
 		descripcion.set_use_markup(True)
-		descripcion.set_markup("Canaima Semilla ha construido con éxito el sabor “"+paso1.nombre_carpeta.get_text()+"”. \nDebe especificar  el tipo de medio y la arquitectura a construir \npara crear una imagen del nuevo sabor. ")
+		descripcion.set_markup("Canaima Semilla ha construido con éxito el sabor “"+profile.nombre_carpeta.get_text()+"”. \nDebe especificar  el tipo de medio y la arquitectura a construir \npara crear una imagen del nuevo sabor. ")
 		descripcion.set_justify(gtk.JUSTIFY_CENTER)
 		caja.pack_start(descripcion, True, False,0)
 		descripcion.show()

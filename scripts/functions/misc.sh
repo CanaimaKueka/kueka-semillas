@@ -18,12 +18,12 @@ IMG_VALIDATOR() {
 		IMG_VSIZE="${IMG_SIZE#${IMG_HSIZE}x}"
 
 		if [ ${IMG_HSIZE} -le ${HSIZE} ] && [ ${IMG_VSIZE} -le ${VSIZE} ]; then
-			return true
+			return 1
 		else
-			return false
+			return 0
 		fi
 	else
-		return false
+		return 0
 	fi
 }
 

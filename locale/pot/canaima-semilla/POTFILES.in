@@ -1,5 +1,8 @@
 ../../../scripts/config.sh
 ../../../scripts/modules/build.sh
+../../../scripts/modules/save.sh
+../../../scripts/modules/profile.sh
+../../../scripts/modules/test.sh
 ../../../scripts/init.sh
 ../../../scripts/library.sh
 ../../../scripts/c-s.sh

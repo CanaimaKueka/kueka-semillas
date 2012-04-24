@@ -66,5 +66,3 @@ MODULES="${MODULES%/}"
 PROFILES="${PROFILES%/}"
 SCRIPTS="${SCRIPTS%/}"
 ISOS="${ISOS%/}"
-
-SUCCESSMSG "Iniciando ..."
