@@ -6,7 +6,7 @@ LB_VERSION="$( dpkg-query --show --showformat='${Version}\n' live-build )"
 
 CONFIG="${CONFIG:-${BASEDIR}/scripts/config.sh}"
 LIBRARY="${LIBRARY:-${BASEDIR}/scripts/library.sh}"
-VARIABLES="${VARIABLES:-${CONFDIR}/variables}"
+VARIABLES="${VARIABLES:-${CONFDIR}/config/core}"
 FUNCTIONS="${FUNCTIONS:-${BASEDIR}/scripts/functions}"
 MODULES="${MODULES:-${BASEDIR}/scripts/modules}"
 PROFILES="${PROFILES:-${BASEDIR}/profiles}"

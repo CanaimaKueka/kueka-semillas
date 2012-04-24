@@ -1,5 +1,6 @@
 ../../../scripts/config.sh
 ../../../scripts/modules/build.sh
+../../../scripts/init.sh
 ../../../scripts/library.sh
 ../../../scripts/c-s.sh
 ../../../scripts/functions/image.sh
@@ -7,7 +8,6 @@
 ../../../scripts/functions/misc.sh
 ../../../scripts/functions/defaults.sh
 ../../../scripts/functions/profile.sh
-../../../scripts/functions/init.sh
 ../../../scripts/functions/tree.sh
 ../../../scripts/functions/messages.sh
 ../../../scripts/functions/modules.sh

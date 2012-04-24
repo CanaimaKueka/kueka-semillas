@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Canaima Semilla 3.0\n"
 "Report-Msgid-Bugs-To: desarrolladores@canaima.softwarelibre.gob.ve\n"
-"POT-Creation-Date: 2012-04-24 01:07-0430\n"
-"PO-Revision-Date: 2012-04-24 01:07-0430\n"
+"POT-Creation-Date: 2012-04-24 02:08-0430\n"
+"PO-Revision-Date: 2012-04-24 02:08-0430\n"
 "Last-Translator: Luis Alejandro Martínez Faneyth <luis@huntingbears.com.ve>\n"
 "Language-Team: Equipo de Traducción de Canaima Semilla <desarrolladores@canaima.softwarelibre.gob.ve>\n"
 "Language: English\n"
@@ -69,6 +69,11 @@ msgstr ""
 #: ../../../scripts/functions/messages.sh:49
 #: ../../../scripts/functions/messages.sh:62
 #: ../../../scripts/functions/messages.sh:74
+#: ../../../scripts/functions/messages.sh:28
+#: ../../../scripts/functions/messages.sh:42
+#: ../../../scripts/functions/messages.sh:56
+#: ../../../scripts/functions/messages.sh:71
+#: ../../../scripts/functions/messages.sh:85
 msgid "-s"
 msgstr ""
 
@@ -115,6 +120,7 @@ msgid "Arquitectura: i386"
 msgstr ""
 
 #: ../../../scripts/functions/init.sh:26 ../../../scripts/functions/init.sh:28
+#: ../../../scripts/init.sh:25
 msgid "Canaima Semilla debe ser ejecutado como usuario root."
 msgstr ""
 
@@ -158,6 +164,7 @@ msgid "El archivo de configuraciones '%s' no existe."
 msgstr ""
 
 #: ../../../scripts/functions/init.sh:31 ../../../scripts/functions/init.sh:33
+#: ../../../scripts/init.sh:30
 msgid "El archivo de configuración '%s' no existe o no es ejecutable."
 msgstr ""
 
@@ -168,6 +175,7 @@ msgid "El contenedor de construcción parece haber sido configurado manualmente.
 msgstr ""
 
 #: ../../../scripts/modules/build.sh:131 ../../../scripts/modules/build.sh:125
+#: ../../../scripts/modules/build.sh:126
 msgid "El directorio '%s' establecido a través de la opción --dir-construir no existe."
 msgstr ""
 
@@ -176,22 +184,28 @@ msgstr ""
 #: ../../../scripts/modules/build.sh:148 ../../../scripts/modules/build.sh:172
 #: ../../../scripts/functions/init.sh:63 ../../../scripts/functions/tree.sh:40
 #: ../../../scripts/functions/tree.sh:142
+#: ../../../scripts/modules/build.sh:149 ../../../scripts/modules/build.sh:173
+#: ../../../scripts/init.sh:60
 msgid "El directorio de construcción de imágenes '%s' no existe."
 msgstr ""
 
 #: ../../../scripts/functions/init.sh:41 ../../../scripts/functions/init.sh:43
+#: ../../../scripts/init.sh:40
 msgid "El directorio que contiene las funciones '%s' no existe."
 msgstr ""
 
 #: ../../../scripts/functions/init.sh:46 ../../../scripts/functions/init.sh:48
+#: ../../../scripts/init.sh:45
 msgid "El directorio que contiene los módulos '%s' no existe."
 msgstr ""
 
 #: ../../../scripts/functions/init.sh:51 ../../../scripts/functions/init.sh:53
+#: ../../../scripts/init.sh:50
 msgid "El directorio que contiene los perfiles '%s' no existe."
 msgstr ""
 
 #: ../../../scripts/functions/init.sh:56 ../../../scripts/functions/init.sh:58
+#: ../../../scripts/init.sh:55
 msgid "El directorio que contiene los scripts '%s' no existe."
 msgstr ""
 
@@ -206,6 +220,7 @@ msgstr ""
 #: ../../../scripts/modules/build.sh:155 ../../../scripts/modules/build.sh:263
 #: ../../../scripts/modules/build.sh:168 ../../../scripts/modules/build.sh:233
 #: ../../../scripts/modules/build.sh:216 ../../../scripts/modules/build.sh:158
+#: ../../../scripts/modules/build.sh:159
 msgid "El perfil '%s' no existe dentro de la carpeta de perfiles '%s'."
 msgstr ""
 
@@ -298,11 +313,11 @@ msgstr ""
 msgid "IMG_SYSLINUX_SPLASH"
 msgstr ""
 
-#: ../../../scripts/functions/init.sh:73
+#: ../../../scripts/functions/init.sh:73 ../../../scripts/init.sh:70
 msgid "Iniciando ..."
 msgstr ""
 
-#: ../../../scripts/modules/build.sh:153
+#: ../../../scripts/modules/build.sh:153 ../../../scripts/modules/build.sh:154
 msgid "La carpeta de perfiles '%s' no existe o no es un directorio válido."
 msgstr ""
 
@@ -363,6 +378,7 @@ msgid "La instalación de %s puede estar corrupta, por favor reinstala."
 msgstr ""
 
 #: ../../../scripts/functions/init.sh:36 ../../../scripts/functions/init.sh:38
+#: ../../../scripts/init.sh:35
 msgid "La librería de funciones principales '%s' no existe o no es ejecutable."
 msgstr ""
 
@@ -603,16 +619,19 @@ msgstr ""
 
 #: ../../../scripts/modules/build.sh:109 ../../../scripts/modules/build.sh:127
 #: ../../../scripts/modules/build.sh:141 ../../../scripts/modules/build.sh:134
+#: ../../../scripts/modules/build.sh:135
 msgid "No especificaste un sabor, utilizando sabor '%s' por defecto."
 msgstr ""
 
 #: ../../../scripts/modules/build.sh:119 ../../../scripts/modules/build.sh:137
 #: ../../../scripts/modules/build.sh:151 ../../../scripts/modules/build.sh:144
+#: ../../../scripts/modules/build.sh:145
 msgid "No especificaste un tipo de formato para la imagen, utilizando medio '%s' por defecto."
 msgstr ""
 
 #: ../../../scripts/modules/build.sh:114 ../../../scripts/modules/build.sh:132
 #: ../../../scripts/modules/build.sh:146 ../../../scripts/modules/build.sh:139
+#: ../../../scripts/modules/build.sh:140
 msgid "No especificaste una arquitectura, utilizando '%s' presente en el sistema."
 msgstr ""
 
@@ -790,6 +809,7 @@ msgstr ""
 
 #: ../../../scripts/modules/build.sh:50 ../../../scripts/modules/build.sh:99
 #: ../../../scripts/modules/build.sh:115 ../../../scripts/modules/build.sh:121
+#: ../../../scripts/modules/build.sh:114
 msgid "Ocurrió un problema interpretando los parámetros."
 msgstr ""
 
@@ -1057,6 +1077,7 @@ msgid "Utilice otra imagen menor o igual a 640x480 px."
 msgstr ""
 
 #: ../../../scripts/modules/build.sh:129 ../../../scripts/modules/build.sh:123
+#: ../../../scripts/modules/build.sh:124
 msgid "Utilizando %s para construir la imagen."
 msgstr ""
 

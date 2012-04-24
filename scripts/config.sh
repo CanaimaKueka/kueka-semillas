@@ -12,7 +12,7 @@
 # Este programa es software libre. Puede redistribuirlo y/o modificarlo bajo los
 # términos de la Licencia Pública General de GNU (versión 3).
 
-for VARIABLE in "${VARIABLES}/*.conf"; do
+for VARIABLE in ${VARIABLES}/*.conf; do
         . "${VARIABLE}"
 done
 

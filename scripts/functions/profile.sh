@@ -266,7 +266,7 @@ CS_LOAD_PROFILE() {
 			ERRORMSG "Debe utilizar una imagen PNG de dimensiones menores o iguales a 640x480px."
 			exit 1
 		fi
-	elif [ -f "${TEMPLATES}profile/${META_DISTRO}/default/syslinux.png" ]
+	elif [ -f "${TEMPLATES}profile/${META_DISTRO}/default/syslinux.png" ]; then
 		IMG_SYSLINUX_SPLASH="${TEMPLATES}profile/${META_DISTRO}/default/syslinux.png"
 		INFOMSG "Seleccionando la imagen predeterminada para la portada de arranque." "${IMG_SYSLINUX_SPLASH}"
 	else
@@ -297,7 +297,7 @@ CS_LOAD_PROFILE() {
 			fi
 		elif [ -f "${TEMPLATES}profile/${META_DISTRO}/default/DEBIAN_INSTALLER/banner.png" ]; then
 			IMG_DEBIAN_INSTALLER_BANNER="${TEMPLATES}profile/${META_DISTRO}/default/DEBIAN_INSTALLER/banner.png"
-		|	INFOMSG "Seleccionando imagen de encabezado predeterminada."
+			INFOMSG "Seleccionando imagen de encabezado predeterminada."
 		else
 			ERRORMSG "Resultó imposible seleccionar una imagen de encabezado."
 			ERRORMSG "La instalación de %s puede estar corrupta, por favor reinstala." "${CS_NAME}"

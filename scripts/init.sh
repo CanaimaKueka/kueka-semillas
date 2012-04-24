@@ -1,11 +1,8 @@
 #!/bin/sh -e
 
-EXTENDCONFIG="${ISOS}/c-s-extend.conf"
-EXTENDSCRIPT="${ISOS}/c-s-extend.sh"
-
 # Inicializando variables
 # Un archivo variables.conf en ${ISOS} sobreescribe la configuración por defecto
-for FILE in ${CONFIG} ${EXTENDCONFIG}; do
+for FILE in ${CONFIG}; do
 	if [ -f "${FILE}" ]; then
 		. "${FILE}"
 	fi
@@ -13,7 +10,7 @@ done
 
 # Inicializando funciones
 # Un archivo lib.sh en ${ISOS} sobreescribe la configuración por defecto
-for FILE in ${LIBRARY} ${EXTENDSCRIPT}; do
+for FILE in ${LIBRARY}; do
 	if [ -f "${FILE}" ]; then
 		. "${FILE}"
 	fi
@@ -29,12 +26,12 @@ if [ $( id -u ) != 0 ]; then
 	exit 1
 fi
 
-if [ -x "${CONFIG}" ]; then
+if [ ! -f "${CONFIG}" ]; then
 	ERRORMSG "El archivo de configuración '%s' no existe o no es ejecutable." "${CONFIG}"
 	exit 1
 fi
 
-if [ -x "${LIBRARY}" ]; then
+if [ ! -f "${LIBRARY}" ]; then
 	ERRORMSG "La librería de funciones principales '%s' no existe o no es ejecutable." "${LIBRARY}"
 	exit 1
 fi

@@ -20,25 +20,25 @@ shift || true
 
 # Asignando directorios de trabajo
 if [ "${BINDIR}" == "/usr/bin" ]; then
-        BASEDIR="/usr/share/canaima-semilla/"
-        CONFDIR="/etc/canaima-semilla/"
+        BASEDIR="/usr/share/canaima-semilla"
+        CONFDIR="/etc/canaima-semilla"
 else
-        BASEDIR="$( dirname "${BINDIR}" )/"
+        BASEDIR="$( dirname "${BINDIR}" )"
         CONFDIR="${BASEDIR}"
 fi
 
 # Cargando valores predeterminados
-. "${BASEDIR}scripts/functions/defaults.sh"
+. "${BASEDIR}/scripts/functions/defaults.sh"
 
 # Corriendo rutinas de inicio
-. "${BASEDIR}scripts/functions/init.sh"
+. "${BASEDIR}/scripts/functions/init.sh"
 
 if [ "${ACTION}" == "construir" ]; then
-	SHORTOPTS="f:a:m:s:inbcd"
-	LONGOPTS="archivo-config:,arquitectura:,medio:,sabor:,instalador,sin-instalador,solo-construir,solo-configurar,debug"
+	SHORTOPTS="a:m:s:f:d:bcpvq"
+	LONGOPTS="arquitectura:,medio:,sabor:,archivo-config:,dir-construir:,solo-construir,solo-configurar,mostrar-variables,expresivo,silencioso"
 elif [ "${ACTION}" == "build" ]; then
-	SHORTOPTS="f:a:m:s:inbcd"
-	LONGOPTS="config-file:,architecture:,image:,profile:,installer,no-installer,build-only,config-only,debug"
+	SHORTOPTS="a:m:s:f:d:bcpvq"
+	LONGOPTS="architecture:,image:,profile:,config-file:,build-dir:,build-only,config-only,var-dump,verbose,quiet"
 else
 	ERRORMSG "Error interno"
 	exit 1
@@ -90,18 +90,17 @@ while true; do
 			shift 1 || true
 		;;
 
-		-p|--var-dump|--mostrar-variables)
+		-p|--mostrar-variables|--var-dump)
 			CS_OP_MODE="vardump"
 			shift 1 || true
 		;;
 
-		-v|--verbose|--expresivo)
+		-v|--expresivo|--verbose)
 			CS_PRINT_MODE="verbose"
 			shift 1 || true
 		;;
 
-
-		-q|--quiet|--silencioso)
+		-q|--silencioso|--quiet)
 			CS_PRINT_MODE="quiet"
 			shift 1 || true
 		;;
@@ -117,6 +116,8 @@ while true; do
 		;;
 	esac
 done
+
+SWITCHLOG="on"
 
 if [ -n "${BUILDDIR}" ] && [ -d "${BUILDDIR}" ]; then
 	ISOS="${BUILDDIR}"

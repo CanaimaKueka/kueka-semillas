@@ -27,10 +27,10 @@
 # CODE IS POETRY
 
 # Determinando directorio de ejecución
-BINDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+BINDIR="$( dirname "$(readlink -f "${0}")" )"
 
 # Asignando directorios de trabajo
-if [ "${BINDIR}" == "/usr/bin" ]; then
+if [ "${BINDIR}" = "/usr/bin" ]; then
 	BASEDIR="/usr/share/canaima-semilla"
 	CONFDIR="/etc/canaima-semilla"
 else
@@ -42,7 +42,7 @@ fi
 . "${BASEDIR}/scripts/functions/defaults.sh"
 
 # Corriendo rutinas de inicio
-. "${BASEDIR}/scripts/functions/init.sh"
+. "${BASEDIR}/scripts/init.sh"
 
 ACTION=${1}
 shift || true

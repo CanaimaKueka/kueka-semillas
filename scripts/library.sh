@@ -12,7 +12,7 @@
 # Este programa es software libre. Puede redistribuirlo y/o modificarlo bajo los
 # términos de la Licencia Pública General de GNU (versión 3).
 
-for FUNCTION in "${FUNCTIONS}/*.sh"; do
+for FUNCTION in ${FUNCTIONS}/*.sh; do
         . "${FUNCTION}"
 done
 
