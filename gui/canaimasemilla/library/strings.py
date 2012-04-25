@@ -43,7 +43,15 @@ ImageBuiltCancelled = _('"\tLa construcción de la imagen ISO de\n\tcanaima-%s h
 CancelledLabel = _('Ocurrió un error')
 
 CreateProfileTitle = _('Creación de perfiles para distribuciones derivadas')
-CreateProfileSaborNameLabel = _('Introduzca el nombre del sabor a crear:')
-CreateProfileSaborNameDesc = _('Debe introducir el nombre con el que desea identificar la distribución derivada que está creando, en minúsculas y sin espacios.')
+CreateProfileNombreSaborLabel = _('Introduzca el nombre del sabor a crear:')
+CreateProfileNombreSaborDesc = _('Debe introducir el nombre con el que desea identificar la distribución derivada que está creando, en minúsculas y sin espacios.')
+CreateProfileNombreAutorLabel = _('Introduzca el nombre de la persona o grupo responsable:')
+CreateProfileNombreAutorDesc = _('Debe introducir el nombre de la persona o grupo responsable de la creación y mantenimiento del sabor.')
+CreateProfileCorreoAutorLabel = _('Introduzca el correo electrónico de la persona o grupo responsable:')
+CreateProfileCorreoAutorDesc = _('Debe introducir un correo electrónico válido para contacto de la persona o grupo responsable de la creación y mantenimiento del sabor.')
+CreateProfileWebAutorLabel = _('Introduzca una dirección web para la persona o grupo responsable:')
+CreateProfileWebAutorDesc = _('Puede introducir una dirección web de referencia para mayor información acerca del sabor.')
+CreateProfileDistroLabel = _('Seleccione la Metadistribución base de sabor:')
+CreateProfileDistroDesc = _('Seleccione la Metadistribución que será la base del sabor en construcción.')
 ProfileExists = _('El nombre escogido para la distribución derivada ya está siendo utilizado por otro perfil.')
 

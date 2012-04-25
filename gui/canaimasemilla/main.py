@@ -6,7 +6,7 @@ import gtk, sys, threading, pango
 from subprocess import Popen, PIPE, STDOUT
 
 # Librerías Locales
-#import build, profile, test, save
+import build, profile, test, save
 from library.strings import *
 from library.localization import *
 from config import *
@@ -45,25 +45,25 @@ class MainWindow():
             
         def crearperfilexec(self, widget=None):
             gtk.gdk.threads_enter()
-            #build.BuildImage()
+            profile.CreateProfile()
             self.window.hide()
             gtk.gdk.threads_leave()
 
         def crearimagenexec(self, widget=None):
             gtk.gdk.threads_enter()
-            #profile.CreateProfile()
+            build.BuildImage()
             self.window.hide()
             gtk.gdk.threads_leave()
             
         def probarimagenexec(self, widget=None):
             gtk.gdk.threads_enter()
-            #test.TestImage()
+            test.TestImage()
             self.window.hide()
             gtk.gdk.threads_leave()
 
         def grabarimagenexec(self, widget=None):
             gtk.gdk.threads_enter()
-            #save.SaveImage()
+            save.SaveImage()
             self.window.hide()
             gtk.gdk.threads_leave()
 

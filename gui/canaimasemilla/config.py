@@ -37,5 +37,9 @@ configuration = Config.read(conffiles)
 AlwaysOnWebPage = ConfigSectionMap(Config, 'misc')['google']
 WindowHeight = int(ConfigSectionMap(Config, 'window')['height'])
 WindowWidth = int(ConfigSectionMap(Config, 'window')['width'])
+DefProfileAuthor = ConfigSectionMap(Config, 'data')['default_profile_author']
+DefProfileURL = ConfigSectionMap(Config, 'data')['default_profile_url']
+DefProfileName = ConfigSectionMap(Config, 'data')['default_profile_name']
+DefProfileEmail = ConfigSectionMap(Config, 'data')['default_profile_email']
 
 

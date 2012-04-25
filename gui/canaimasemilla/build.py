@@ -30,11 +30,16 @@ class BuildImage():
         intro.set_border_width(borderwidth)
 
         introwidth = WindowWidth - (borderwidth*2)
-        
+
+        attrintro = pango.AttrList()
+        size = pango.AttrSize(8500, 0, -1)
+        attrintro.insert(size)
+
         descripcion = gtk.Label()
         descripcion.set_markup(textblock)
         descripcion.set_line_wrap(True)
         descripcion.set_size_request(introwidth, -1)
+        descripcion.set_attributes(attrintro)
         descripcion.show()
         
         intro.pack_start(descripcion, expand, fill, padding)
@@ -224,6 +229,10 @@ class BuildImage():
                 x2 = Popen(['/usr/bin/pkill', 'lb'], shell=False, stdout=PIPE)
                 x3 = Popen(['/usr/bin/pkill', 'live-build'], shell=False, stdout=PIPE)
                 x1 = Popen(['/usr/bin/pkill', 'c-s'], shell=False, stdout=PIPE)
+                gtk.gdk.threads_enter()
+                main.MainWindow()
+                self.window.hide()
+                gtk.gdk.threads_leave()
             
         def generar(self):
             hilo = threading.Thread(target=generarexec, args=(self))
@@ -390,7 +399,7 @@ class BuildImage():
 
         space = gtk.HSeparator()
         botones.pack_start(space, expand, fill, 180)
-		
+
         boton_cancelar = gtk.Button(stock=gtk.STOCK_CANCEL)
         boton_cancelar.connect("clicked", cancelar)
         boton_cancelar.set_size_request(width, height)
@@ -439,15 +448,18 @@ class BuildImage():
         
         self.box = self.Arch(False, 0, False, False, 0, 0)
         self.vbox.pack_start(self.box, False, False, 0)
-                
-        self.box = self.Intro(False, 0, False, False, 0, 5, BuildImageTimeLabel)
-        self.vbox.pack_start(self.box, False, False, 0)
         
-        self.box = self.Ask(False, 0, False, False, 0, 5, BuildImageEndLabel)
+        self.separator = gtk.HSeparator()
+        self.vbox.pack_start(self.separator, False, False, 0)
+
+        self.box = self.Intro(False, 0, False, False, 0, 5, BuildImageTimeLabel)
         self.vbox.pack_start(self.box, False, False, 0)
         
         self.box = self.Progress(True, 0, True, True, 0, 5)
         self.vbox.pack_start(self.box, True, True, 0)
+        
+        self.box = self.Intro(False, 0, False, False, 0, 5, BuildImageEndLabel)
+        self.vbox.pack_start(self.box, False, False, 0)
         
         self.separator = gtk.HSeparator()
         self.vbox.pack_start(self.separator, False, False, 0)

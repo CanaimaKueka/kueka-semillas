@@ -10,7 +10,7 @@ from library.strings import *
 from library.localization import *
 from config import *
 
-class Profile_1():
+class CreateProfile():
 
     def Banner(self, homogeneous, spacing, expand, fill, padding, borderwidth, imagefile):
         banner = gtk.HBox(homogeneous, spacing)
@@ -28,7 +28,7 @@ class Profile_1():
         ask = gtk.HBox(homogeneous, spacing)
         ask.set_border_width(borderwidth)
 
-        askwidth = WindowWidth - (borderwidth*4)
+        askwidth = WindowWidth - (borderwidth*8)
 
         descripcion = gtk.Label()
         descripcion.set_markup(textblock)
@@ -40,11 +40,16 @@ class Profile_1():
         
         return ask
 
-    def Entry(self, homogeneous, spacing, expand, fill, padding, borderwidth, maxlength, pretexto, regex):
+    def NombreSabor(self, homogeneous, spacing, expand, fill, padding, borderwidth, maxlength, pretexto, regex):
         def Limit(editable, new_text, new_text_length, position):
             limit = re.compile(regex)
             if limit.match(new_text) is None:
                 editable.stop_emission('insert-text')
+
+        def Clear(editable, new_text):
+            content = nombresabor.get_text()
+            if content == pretexto:
+                nombresabor.set_text('')
 
         entry = gtk.HBox(homogeneous, spacing)
         entry.set_border_width(borderwidth)
@@ -53,6 +58,8 @@ class Profile_1():
 
         nombresabor = gtk.Entry()
         nombresabor.connect('insert-text', Limit)
+        nombresabor.connect('key-press-event', Clear)
+        nombresabor.set_width_chars(maxlength)
         nombresabor.set_max_length(maxlength)
         nombresabor.set_text(pretexto)
         nombresabor.set_sensitive(True)
@@ -62,15 +69,105 @@ class Profile_1():
         nombresabor.show()
 
         return entry
+        
+    def NombreAutor(self, homogeneous, spacing, expand, fill, padding, borderwidth, maxlength, pretexto, regex):
+        def Limit(editable, new_text, new_text_length, position):
+            limit = re.compile(regex)
+            if limit.match(new_text) is None:
+                editable.stop_emission('insert-text')
+
+        def Clear(editable, new_text):
+            content = nombreautor.get_text()
+            if content == pretexto:
+                nombreautor.set_text('')
+
+        entry = gtk.HBox(homogeneous, spacing)
+        entry.set_border_width(borderwidth)
+
+        global nombreautor
+
+        nombreautor = gtk.Entry()
+        nombreautor.connect('insert-text', Limit)
+        nombreautor.connect('key-press-event', Clear)
+        nombreautor.set_width_chars(maxlength)
+        nombreautor.set_max_length(maxlength)
+        nombreautor.set_text(pretexto)
+        nombreautor.set_sensitive(True)
+        nombreautor.set_editable(True)
+        nombreautor.set_visibility(True)
+        entry.pack_start(nombreautor, expand, fill, padding)
+        nombresabor.show()
+
+        return entry
+
+    def CorreoAutor(self, homogeneous, spacing, expand, fill, padding, borderwidth, maxlength, pretexto, regex):
+        def Limit(editable, new_text, new_text_length, position):
+            limit = re.compile(regex)
+            if limit.match(new_text) is None:
+                editable.stop_emission('insert-text')
+
+        def Clear(editable, new_text):
+            content = correoautor.get_text()
+            if content == pretexto:
+                correoautor.set_text('')
+
+        entry = gtk.HBox(homogeneous, spacing)
+        entry.set_border_width(borderwidth)
+
+        global correoautor
+
+        correoautor = gtk.Entry()
+        correoautor.connect('insert-text', Limit)
+        correoautor.connect('key-press-event', Clear)
+        correoautor.set_width_chars(maxlength)
+        correoautor.set_max_length(maxlength)
+        correoautor.set_text(pretexto)
+        correoautor.set_sensitive(True)
+        correoautor.set_editable(True)
+        correoautor.set_visibility(True)
+        entry.pack_start(correoautor, expand, fill, padding)
+        correoautor.show()
+
+        return entry
+
+    def WebAutor(self, homogeneous, spacing, expand, fill, padding, borderwidth, maxlength, pretexto, regex):
+        def Limit(editable, new_text, new_text_length, position):
+            limit = re.compile(regex)
+            if limit.match(new_text) is None:
+                editable.stop_emission('insert-text')
+
+        def Clear(editable, new_text):
+            content = webautor.get_text()
+            if content == pretexto:
+                webautor.set_text('')
+
+        entry = gtk.HBox(homogeneous, spacing)
+        entry.set_border_width(borderwidth)
+
+        global webautor
+
+        webautor = gtk.Entry()
+        webautor.connect('insert-text', Limit)
+        webautor.connect('key-press-event', Clear)
+        webautor.set_width_chars(maxlength)
+        webautor.set_max_length(maxlength)
+        webautor.set_text(pretexto)
+        webautor.set_sensitive(True)
+        webautor.set_editable(True)
+        webautor.set_visibility(True)
+        entry.pack_start(webautor, expand, fill, padding)
+        webautor.show()
+
+        return entry
 
     def Description(self, homogeneous, spacing, expand, fill, padding, borderwidth, textblock):
         description = gtk.HBox(homogeneous, spacing)
         description.set_border_width(borderwidth)
 
-        descriptionwidth = WindowWidth - (borderwidth*4)
+        descriptionwidth = WindowWidth - (borderwidth*8)
         
         attrdescription = pango.AttrList()
-        size = pango.AttrSize(8500, 0, -1)
+        size = pango.AttrSize(8000, 0, -1)
         attrdescription.insert(size)
         
         text = gtk.Label()
@@ -83,6 +180,21 @@ class Profile_1():
         description.pack_start(text, expand, fill, padding)
         
         return description
+
+	def Distro(self, homogeneous, spacing, expand, fill, padding, borderwidth):
+        caja = gtk.HBox(homogeneous, spacing)
+        caja.set_border_width(borderwidth)
+
+		global distro
+		distro = gtk.combo_box_new_text()
+		for t in cs_distros:
+		    distro.append_text(t)
+		distro.set_active(1)
+		distro.show()
+		
+		caja.pack_start(distro, expand, fill, padding)
+		
+		return caja
 
     def Botones(self, homogeneous, spacing, expand, fill, padding, borderwidth, width, height):
     
@@ -223,14 +335,65 @@ class Profile_1():
         self.box = self.Banner(False, 0, False, False, 0, 0, GUIDIR+'/images/banner.png')
         self.outbox.pack_start(self.box, False, False, 0)
         
-        self.box = self.Ask(False, 0, False, False, 0, 5, CreateProfileSaborNameLabel)
+        self.box = self.Ask(False, 0, False, False, 0, 5, CreateProfileNombreSaborLabel)
         self.vbox.pack_start(self.box, False, False, 0)
         
-        self.box = self.Entry(False, 0, False, False, 0, 5, 18, 'nombre-sabor', '^[a-z-]*$')
+        self.box = self.NombreSabor(False, 0, False, False, 0, 0, 18, DefProfileName, '^[a-z-]*$')
         self.vbox.pack_start(self.box, False, False, 0)
         
-        self.box = self.Description(False, 0, False, False, 0, 5, CreateProfileSaborNameDesc)
+        self.box = self.Description(False, 0, False, False, 0, 5, CreateProfileNombreSaborDesc)
         self.vbox.pack_start(self.box, False, False, 0)
+        
+        self.separator = gtk.HSeparator()
+        self.vbox.pack_start(self.separator, False, False, 0)
+        
+        self.box = self.Ask(False, 0, False, False, 0, 5, CreateProfileNombreAutorLabel)
+        self.vbox.pack_start(self.box, False, False, 0)
+        
+        self.box = self.NombreAutor(False, 0, False, False, 0, 0, 60, DefProfileAuthor, '\w')
+        self.vbox.pack_start(self.box, False, False, 0)
+        
+        self.box = self.Description(False, 0, False, False, 0, 5, CreateProfileNombreAutorDesc)
+        self.vbox.pack_start(self.box, False, False, 0)
+        
+        self.separator = gtk.HSeparator()
+        self.vbox.pack_start(self.separator, False, False, 0)
+        
+        self.box = self.Ask(False, 0, False, False, 0, 5, CreateProfileCorreoAutorLabel)
+        self.vbox.pack_start(self.box, False, False, 0)
+        
+        self.box = self.CorreoAutor(False, 0, False, False, 0, 0, 60, DefProfileEmail, '^[_.@0-9A-Za-z-]*$')
+        self.vbox.pack_start(self.box, False, False, 0)
+        
+        self.box = self.Description(False, 0, False, False, 0, 5, CreateProfileCorreoAutorDesc)
+        self.vbox.pack_start(self.box, False, False, 0)
+        
+        self.separator = gtk.HSeparator()
+        self.vbox.pack_start(self.separator, False, False, 0)
+        
+        self.box = self.Ask(False, 0, False, False, 0, 5, CreateProfileWebAutorLabel)
+        self.vbox.pack_start(self.box, False, False, 0)
+        
+        self.box = self.WebAutor(False, 0, False, False, 0, 0, 60, DefProfileURL, '[-A-Za-z0-9+&@#/%?=~_()|!:,.;]')
+        self.vbox.pack_start(self.box, False, False, 0)
+        
+        self.box = self.Description(False, 0, False, False, 0, 5, CreateProfileWebAutorDesc)
+        self.vbox.pack_start(self.box, False, False, 0)
+        
+        self.separator = gtk.HSeparator()
+        self.vbox.pack_start(self.separator, False, False, 0)
+        
+        self.box = self.Ask(False, 0, False, False, 0, 5, CreateProfileDistroLabel)
+        self.vbox.pack_start(self.box, False, False, 0)
+        
+        self.box = self.Distro(False, 0, False, False, 0, 0, 5)
+        self.vbox.pack_start(self.box, False, False, 0)
+        
+        self.box = self.Description(False, 0, False, False, 0, 5, CreateProfileDistroDesc)
+        self.vbox.pack_start(self.box, False, False, 0)
+        
+        self.separator = gtk.HSeparator()
+        self.vbox.pack_start(self.separator, False, False, 0)
         
         self.swindow.add_with_viewport(self.vbox)
         self.outbox.add(self.swindow)
@@ -245,5 +408,5 @@ class Profile_1():
         self.window.show_all()
 
 if __name__ == "__main__":
-    app = Profile_1()
+    app = CreateProfile()
     gtk.main()
