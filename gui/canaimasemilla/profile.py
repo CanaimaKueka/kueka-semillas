@@ -184,6 +184,99 @@ class CreateProfile():
 
         return entry
 
+    def Repo(self, homogeneous, spacing, expand, fill, padding, borderwidth, maxlength, pretexto, regex):
+        def Limit(editable, new_text, new_text_length, position):
+            limit = re.compile(regex)
+            if limit.match(new_text) is None:
+                editable.stop_emission('insert-text')
+
+        def Clear(editable, new_text):
+            content = repo.get_text()
+            if content == pretexto:
+                repo.set_text('')
+
+        def Fill(editable, new_text):
+            content = repo.get_text()
+            if content == '':
+                repo.set_text(pretexto)
+
+        entry = gtk.HBox(homogeneous, spacing)
+        entry.set_border_width(borderwidth)
+
+        global repo
+
+        repo = gtk.Entry()
+        repo.connect('insert-text', Limit)
+        repo.connect('focus-in-event', Clear)
+        repo.connect('focus-out-event', Fill)
+        repo.set_width_chars(maxlength)
+        repo.set_max_length(maxlength)
+        repo.set_text(pretexto)
+        repo.set_sensitive(True)
+        repo.set_editable(True)
+        repo.set_visibility(True)
+        entry.pack_start(repo, expand, fill, padding)
+        repo.show()
+
+        return entry
+
+    def ExtraRepo(self, homogeneous, spacing, expand, fill, padding, borderwidth, length, maxlength, regex):
+        def Limit(editable, new_text, new_text_length, position):
+            limit = re.compile(regex)
+            if limit.match(new_text) is None:
+                editable.stop_emission('insert-text')
+
+        bigentry = gtk.VBox(homogeneous, spacing)
+        bigentry.set_border_width(borderwidth)
+
+        description = gtk.HBox(homogeneous, spacing)
+        description.set_border_width(borderwidth)
+
+        descurl = gtk.Label()
+        descurl.set_markup()
+        descurl.show()
+        
+        description.pack_start(text, expand, fill, padding)
+        
+        entry = gtk.HBox(homogeneous, spacing)
+        entry.set_border_width(borderwidth)
+
+        global extrarepourl
+        global extrareporama
+        global extrareposeccion
+
+        extrarepourl = gtk.Entry()
+        extrarepourl.connect('insert-text', Limit)
+        extrarepourl.set_width_chars(length)
+        extrarepourl.set_max_length(maxlength)
+        extrarepourl.set_sensitive(True)
+        extrarepourl.set_editable(True)
+        extrarepourl.set_visibility(True)
+        entry.pack_start(extrarepourl, expand, fill, padding)
+        extrarepourl.show()
+
+        extrareporama = gtk.Entry()
+        extrareporama.connect('insert-text', Limit)
+        extrareporama.set_width_chars(length)
+        extrareporama.set_max_length(maxlength)
+        extrareporama.set_sensitive(True)
+        extrareporama.set_editable(True)
+        extrareporama.set_visibility(True)
+        entry.pack_start(extrareporama, expand, fill, padding)
+        extrareporama.show()
+
+        extrareposeccion = gtk.Entry()
+        extrareposeccion.connect('insert-text', Limit)
+        extrareposeccion.set_width_chars(length)
+        extrareposeccion.set_max_length(maxlength)
+        extrareposeccion.set_sensitive(True)
+        extrareposeccion.set_editable(True)
+        extrareposeccion.set_visibility(True)
+        entry.pack_start(extrareposeccion, expand, fill, padding)
+        extrareposeccion.show()
+
+        return entry
+
     def Description(self, homogeneous, spacing, expand, fill, padding, borderwidth, textblock):
         description = gtk.HBox(homogeneous, spacing)
         description.set_border_width(borderwidth)
@@ -213,11 +306,30 @@ class CreateProfile():
         distro = gtk.combo_box_new_text()
         for t in cs_distros:
             distro.append_text(t)
+        distro.set_active(2)
         distro.connect('changed', self.Change)
-        distro.set_active(1)
         distro.show()
 
         caja.pack_start(distro, expand, fill, padding)
+
+        return caja
+
+    def Locale(self, homogeneous, spacing, expand, fill, padding, borderwidth):
+        caja = gtk.HBox(homogeneous, spacing)
+        caja.set_border_width(borderwidth)
+
+        global locale
+        locale = gtk.combo_box_new_text()
+
+        with open(supported_locales, 'r') as localelist:
+            for line in localelist:
+                localecode = line.split()
+                locale.append_text(localecode[0])
+        locale.set_active(2)
+        locale.connect('changed', self.Change)
+        locale.show()
+
+        caja.pack_start(locale, expand, fill, padding)
 
         return caja
 
@@ -237,19 +349,45 @@ class CreateProfile():
         curdistro = distro.get_active_text()
         exec 'cursections = '+curdistro+'_sections'
         for section in cursections:
-            exec 'global '+section+'section\n'+section+'section = gtk.CheckButton(section)\n'+section+'section.set_active(False)\n'+section+'section.show()\nreposections.pack_start('+section+'section, expand, fill, padding)'
-        print globals()['mainsection']
+            label = section
+            if section == 'non-free':
+                section = 'nonfree'
+                label = 'non-free'
+            if section == 'main':
+                global mainsection
+                mainsection = gtk.CheckButton('main')
+                mainsection.set_active(True)
+                mainsection.set_sensitive(False)
+                mainsection.show()
+                reposections.pack_start(mainsection, expand, fill, padding)
+            else:
+                exec 'global '+section+'section\n'+section+'section = gtk.CheckButton(label)\n'+section+'section.set_active(False)\n'+section+'section.show()\nreposections.pack_start('+section+'section, expand, fill, padding)'
         bigsections.pack_start(reposections, expand, fill, padding)
         
         return bigsections
 
     def Change(self, distro):
-        for metadistro in cs_distros:
-            exec 'cursections = '+metadistro+'_sections'
-            for section in cursections:
-                exec 'print '+section+'section' 
-                exec 'reposections.remove('+section+'section)'
-                
+        children = reposections.get_children()
+        for child in children:
+            reposections.remove(child)
+        curdistro = distro.get_active_text()
+        exec 'currepo = '+curdistro+'_repo'
+        repo.set_text(currepo)
+        exec 'cursections = '+curdistro+'_sections'
+        for section in cursections:
+            label = section
+            if section == 'non-free':
+                section = 'nonfree'
+                label = 'non-free'
+            if section == 'main':
+                global mainsection
+                mainsection = gtk.CheckButton('main')
+                mainsection.set_active(True)
+                mainsection.set_sensitive(False)
+                mainsection.show()
+                reposections.pack_start(mainsection)
+            else:
+                exec 'global '+section+'section\n'+section+'section = gtk.CheckButton(label)\n'+section+'section.set_active(False)\n'+section+'section.show()\nreposections.pack_start('+section+'section)'
                 
     def Botones(self, homogeneous, spacing, expand, fill, padding, borderwidth, width, height):
     
@@ -450,10 +588,34 @@ class CreateProfile():
         self.separator = gtk.HSeparator()
         self.vbox.pack_start(self.separator, False, False, 0)
         
+        self.box = self.Ask(False, 0, False, False, 0, 5, PROFILE_META_REPO_1)
+        self.vbox.pack_start(self.box, False, False, 0)
+        
+        self.box = self.Repo(False, 0, False, False, 0, 0, 60, canaima_repo, '[-A-Za-z0-9+&@#/%?=~_()|!:,.;]')
+        self.vbox.pack_start(self.box, False, False, 0)
+        
+        self.box = self.Description(False, 0, False, False, 0, 5, PROFILE_META_REPO_2)
+        self.vbox.pack_start(self.box, False, False, 0)
+        
+        self.separator = gtk.HSeparator()
+        self.vbox.pack_start(self.separator, False, False, 0)
+        
         self.box = self.Ask(False, 0, False, False, 0, 5, PROFILE_META_REPOSECTIONS_1)
         self.vbox.pack_start(self.box, False, False, 0)
         
         self.box = self.Sections(False, 0, False, False, 0, 0)
+        self.vbox.pack_start(self.box, False, False, 0)
+        
+        self.box = self.Description(False, 0, False, False, 0, 5, PROFILE_META_REPOSECTIONS_2)
+        self.vbox.pack_start(self.box, False, False, 0)
+        
+        self.separator = gtk.HSeparator()
+        self.vbox.pack_start(self.separator, False, False, 0)
+        
+        self.box = self.Ask(False, 0, False, False, 0, 5, PROFILE_META_REPOSECTIONS_1)
+        self.vbox.pack_start(self.box, False, False, 0)
+        
+        self.box = self.Locale(False, 0, False, False, 0, 0)
         self.vbox.pack_start(self.box, False, False, 0)
         
         self.box = self.Description(False, 0, False, False, 0, 5, PROFILE_META_REPOSECTIONS_2)
