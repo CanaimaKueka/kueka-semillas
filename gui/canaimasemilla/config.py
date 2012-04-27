@@ -1,10 +1,8 @@
 #!/usr/bin/python
 #-*- coding: UTF-8 -*-
 
-import os
-import ConfigParser
+import os, ConfigParser
 from library.configuration import *
-from library.misc import *
 
 curdir = os.path.dirname(os.path.abspath(os.getcwd()))
 
@@ -28,18 +26,8 @@ else:
     DOCDIR = SRCDIR+'/documentation/html'
     ICONDIR = SRCDIR+'/icons/hicolor'
 
-ruta= ''
-
 Config = ConfigParser.ConfigParser()
-conffiles = listdirfullpath(CONFDIR)
-configuration = Config.read(conffiles)
+configload = ConfigMapper(Config, CONFDIR)
 
-AlwaysOnWebPage = ConfigSectionMap(Config, 'misc')['google']
-WindowHeight = int(ConfigSectionMap(Config, 'window')['height'])
-WindowWidth = int(ConfigSectionMap(Config, 'window')['width'])
-DefProfileAuthor = ConfigSectionMap(Config, 'data')['default_profile_author']
-DefProfileURL = ConfigSectionMap(Config, 'data')['default_profile_url']
-DefProfileName = ConfigSectionMap(Config, 'data')['default_profile_name']
-DefProfileEmail = ConfigSectionMap(Config, 'data')['default_profile_email']
-
-
+for configoption, configvalue in configload.iteritems():
+    exec str(configoption)+' = '+str(configvalue)

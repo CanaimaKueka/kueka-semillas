@@ -1,13 +1,25 @@
 #!/usr/bin/python
 #-*- coding: UTF-8 -*-
 
+from library.misc import *
 
-def ConfigSectionMap(Config, section):
-    dict1 = {}
-    options = Config.options(section)
-    for option in options:
-        try:
-            dict1[option] = Config.get(section, option)
-        except:
-            dict1[option] = None
-    return dict1
+def ConfigMapper(Config, CONFDIR):
+    conffiles = listdirfullpath(CONFDIR)
+    configuration = Config.read(conffiles)
+    dictionary = {}
+    sections = Config.sections()
+    for section in sections:
+        options = Config.options(section)
+        for option in options:
+            try:
+                giveme = Config.get(section, option)
+                if section == 'array':
+                    process = giveme[1:-1].split(',')
+                elif section == 'int':
+                    process = int(giveme)
+                else:
+                    process = '"'+giveme+'"'
+                dictionary[option] = process
+            except:
+                dictionary[option] = None
+    return dictionary

@@ -144,7 +144,7 @@ class BuildImage():
         bigarch.pack_start(arch, expand, fill, padding)
 
         return bigarch
-    
+
     def listarperfiles(self):
         global perfil
         
@@ -419,7 +419,7 @@ class BuildImage():
         self.window.set_border_width(0)
         self.window.set_title(BuildImageTitle)
         self.window.set_position(gtk.WIN_POS_CENTER_ALWAYS)
-        self.window.set_size_request(WindowWidth, WindowHeight)
+        self.window.set_size_request(window_width, window_height)
         self.window.set_resizable(False)
         self.window.connect("destroy", gtk.main_quit)
         self.window.set_icon_from_file(ICONDIR+'/48x48/apps/c-s-gui.png')
