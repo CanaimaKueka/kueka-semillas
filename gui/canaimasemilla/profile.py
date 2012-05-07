@@ -184,21 +184,22 @@ class CreateProfile():
 
         return entry
 
+    def ClearEntry(editable, new_text, _object, _string):
+        content = _object.get_text()
+        if content == _string:
+            _object.set_text('')
+
+    def FillEntry(editable, new_text, _object, _string):
+        content = _object.get_text()
+        if content == '':
+            _object.set_text(_string)
+
+    def LimitEntry(editable, new_text, new_text_length, position, regex):
+        limit = re.compile(regex)
+        if limit.match(new_text) is None:
+            editable.stop_emission('insert-text')
+
     def Repo(self, homogeneous, spacing, expand, fill, padding, borderwidth, maxlength, pretexto, regex):
-        def Limit(editable, new_text, new_text_length, position):
-            limit = re.compile(regex)
-            if limit.match(new_text) is None:
-                editable.stop_emission('insert-text')
-
-        def Clear(editable, new_text):
-            content = repo.get_text()
-            if content == pretexto:
-                repo.set_text('')
-
-        def Fill(editable, new_text):
-            content = repo.get_text()
-            if content == '':
-                repo.set_text(pretexto)
 
         entry = gtk.HBox(homogeneous, spacing)
         entry.set_border_width(borderwidth)
@@ -206,9 +207,9 @@ class CreateProfile():
         global repo
 
         repo = gtk.Entry()
-        repo.connect('insert-text', Limit)
-        repo.connect('focus-in-event', Clear)
-        repo.connect('focus-out-event', Fill)
+        repo.connect('insert-text', self.LimitEntry)
+        repo.connect('focus-in-event', self.ClearEntry(repo.get_text(), repo, pretexto))
+        repo.connect('focus-out-event', self.FillEntry(repo, repo, pretexto))
         repo.set_width_chars(maxlength)
         repo.set_max_length(maxlength)
         repo.set_text(pretexto)
@@ -220,62 +221,123 @@ class CreateProfile():
 
         return entry
 
-    def ExtraRepo(self, homogeneous, spacing, expand, fill, padding, borderwidth, length, maxlength, regex):
-        def Limit(editable, new_text, new_text_length, position):
+    def ExtraRepos(self, homogeneous, spacing, expand, fill, padding, borderwidth, maxlength, lengthurl, lengthrama, lengthseccion, regexurl, regexrama, regexseccion):
+        def Limit(editable, new_text, new_text_length, position, regex):
             limit = re.compile(regex)
             if limit.match(new_text) is None:
                 editable.stop_emission('insert-text')
 
-        bigentry = gtk.VBox(homogeneous, spacing)
-        bigentry.set_border_width(borderwidth)
+        def OnOff(editable, new_text, new_text_length, position):
+            limit = re.compile(regex)
+            if limit.match(new_text) is None:
+                editable.stop_emission('insert-text')
 
-        description = gtk.HBox(homogeneous, spacing)
-        description.set_border_width(borderwidth)
+        def limpiar(editable, new_text, new_text_length, position):
+            limit = re.compile(regex)
+            if limit.match(new_text) is None:
+                editable.stop_emission('insert-text')
 
-        descurl = gtk.Label()
-        descurl.set_markup()
-        descurl.show()
+        def agregar(editable, new_text, new_text_length, position):
+            limit = re.compile(regex)
+            if limit.match(new_text) is None:
+                editable.stop_emission('insert-text')
+
+        extrareposbox = gtk.VBox(homogeneous, spacing)
+        extrareposbox.set_border_width(borderwidth)
         
-        description.pack_start(text, expand, fill, padding)
-        
+        checkrepos = gtk.CheckButton(PROFILE_OS_EXTRAREPOS_CHECK)
+        checkrepos.connect('toggled', OnOff)
+        checkrepos.show()
+
+        extrareposbox.pack_start(checkrepos, expand, fill, padding)
+
+#        labelbox = gtk.HBox(homogeneous, spacing)
+#        labelbox.set_border_width(borderwidth)
+
+#        urllabel = gtk.Label()
+#        urllabel.set_markup(PROFILE_OS_EXTRAREPOS_URL)
+#        urllabel.show()
+
+#        ramalabel = gtk.Label()
+#        ramalabel.set_markup(PROFILE_OS_EXTRAREPOS_RAMA)
+#        ramalabel.show()
+
+#        seccionlabel = gtk.Label()
+#        seccionlabel.set_markup(PROFILE_OS_EXTRAREPOS_SECCION)
+#        seccionlabel.show()
+
+#        labelbox.pack_start(urllabel, expand, fill, padding)
+#        labelbox.pack_start(ramalabel, expand, fill, padding)
+#        labelbox.pack_start(seccionlabel, expand, fill, padding)
+#        extrareposbox.pack_start(labelbox, expand, fill, padding)
+
         entry = gtk.HBox(homogeneous, spacing)
         entry.set_border_width(borderwidth)
 
-        global extrarepourl
-        global extrareporama
-        global extrareposeccion
+        extrareposurl = gtk.Entry()
+        extrareposurl.connect('insert-text', Limit)
+        extrareposurl.set_width_chars(lengthurl)
+        extrareposurl.set_max_length(maxlength)
+        extrareposurl.set_sensitive(True)
+        extrareposurl.set_editable(True)
+        extrareposurl.set_visibility(True)
+        entry.pack_start(extrareposurl, expand, fill, padding)
+        extrareposurl.show()
 
-        extrarepourl = gtk.Entry()
-        extrarepourl.connect('insert-text', Limit)
-        extrarepourl.set_width_chars(length)
-        extrarepourl.set_max_length(maxlength)
-        extrarepourl.set_sensitive(True)
-        extrarepourl.set_editable(True)
-        extrarepourl.set_visibility(True)
-        entry.pack_start(extrarepourl, expand, fill, padding)
-        extrarepourl.show()
+        space = gtk.HSeparator()
+        entry.pack_start(space, expand, fill, padding)
 
-        extrareporama = gtk.Entry()
-        extrareporama.connect('insert-text', Limit)
-        extrareporama.set_width_chars(length)
-        extrareporama.set_max_length(maxlength)
-        extrareporama.set_sensitive(True)
-        extrareporama.set_editable(True)
-        extrareporama.set_visibility(True)
-        entry.pack_start(extrareporama, expand, fill, padding)
-        extrareporama.show()
+        extrareposrama = gtk.Entry()
+        extrareposrama.connect('insert-text', Limit)
+        extrareposrama.set_width_chars(lengthrama)
+        extrareposrama.set_max_length(maxlength)
+        extrareposrama.set_sensitive(True)
+        extrareposrama.set_editable(True)
+        extrareposrama.set_visibility(True)
+        entry.pack_start(extrareposrama, expand, fill, padding)
+        extrareposrama.show()
 
-        extrareposeccion = gtk.Entry()
-        extrareposeccion.connect('insert-text', Limit)
-        extrareposeccion.set_width_chars(length)
-        extrareposeccion.set_max_length(maxlength)
-        extrareposeccion.set_sensitive(True)
-        extrareposeccion.set_editable(True)
-        extrareposeccion.set_visibility(True)
-        entry.pack_start(extrareposeccion, expand, fill, padding)
-        extrareposeccion.show()
+        space = gtk.HSeparator()
+        entry.pack_start(space, expand, fill, padding)
 
-        return entry
+        extrareposseccion = gtk.Entry()
+        extrareposseccion.connect('insert-text', Limit)
+        extrareposseccion.set_width_chars(lengthseccion)
+        extrareposseccion.set_max_length(maxlength)
+        extrareposseccion.set_sensitive(True)
+        extrareposseccion.set_editable(True)
+        extrareposseccion.set_visibility(True)
+        entry.pack_start(extrareposseccion, expand, fill, padding)
+        extrareposseccion.show()
+
+        space = gtk.HSeparator()
+        entry.pack_start(space, expand, fill, padding)
+        
+        boton_limpiar = gtk.Button(stock=gtk.STOCK_CLEAR)
+        boton_limpiar.connect('clicked', limpiar)
+        boton_agregar = gtk.Button(stock=gtk.STOCK_ADD)
+        boton_agregar.connect('clicked', agregar)
+        entry.pack_start(boton_limpiar, expand, fill, padding)
+        entry.pack_start(boton_agregar, expand, fill, padding)
+
+        extrareposbox.pack_start(entry, expand, fill, padding)
+        
+        scrolledwindow = gtk.ScrolledWindow()
+        scrolledwindow.set_policy(gtk.POLICY_AUTOMATIC, gtk.POLICY_AUTOMATIC)
+
+        global textbuffer
+        marco = gtk.Frame()
+        textview = gtk.TextView()
+        textbuffer = textview.get_buffer()
+        start, end = textbuffer.get_bounds()
+        textview.set_wrap_mode(gtk.WRAP_WORD)
+        textview.set_editable(False)
+        scrolledwindow.add(textview)
+        marco.add(scrolledwindow)
+
+        extrareposbox.pack_start(marco, expand, fill, padding)
+
+        return extrareposbox
 
     def Description(self, homogeneous, spacing, expand, fill, padding, borderwidth, textblock):
         description = gtk.HBox(homogeneous, spacing)
@@ -612,13 +674,22 @@ class CreateProfile():
         self.separator = gtk.HSeparator()
         self.vbox.pack_start(self.separator, False, False, 0)
         
-        self.box = self.Ask(False, 0, False, False, 0, 5, PROFILE_META_REPOSECTIONS_1)
+        self.box = self.Ask(False, 0, False, False, 0, 5, PROFILE_OS_LOCALE_1)
         self.vbox.pack_start(self.box, False, False, 0)
         
         self.box = self.Locale(False, 0, False, False, 0, 0)
         self.vbox.pack_start(self.box, False, False, 0)
         
-        self.box = self.Description(False, 0, False, False, 0, 5, PROFILE_META_REPOSECTIONS_2)
+        self.box = self.Description(False, 0, False, False, 0, 5, PROFILE_OS_LOCALE_2)
+        self.vbox.pack_start(self.box, False, False, 0)
+        
+        self.separator = gtk.HSeparator()
+        self.vbox.pack_start(self.separator, False, False, 0)
+        
+        self.box = self.ExtraRepos(False, 0, False, False, 0, 5, 60, 35, 10, 17, '^[a-z-]*$', '^[a-z-]*$', '^[a-z-]*$')
+        self.vbox.pack_start(self.box, False, False, 0)
+        
+        self.box = self.Description(False, 0, False, False, 0, 5, PROFILE_OS_EXTRAREPOS_2)
         self.vbox.pack_start(self.box, False, False, 0)
         
         self.separator = gtk.HSeparator()
@@ -626,10 +697,10 @@ class CreateProfile():
         
         self.swindow.add_with_viewport(self.vbox)
         self.outbox.add(self.swindow)
-        
+
         self.separator = gtk.HSeparator()
         self.outbox.pack_start(self.separator, False, False, 0)
-        
+
         self.box = self.Botones(False, 0, False, False, 0, 5, 80, 30)
         self.outbox.pack_start(self.box, False, False, 0)
         
