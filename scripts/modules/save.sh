@@ -83,5 +83,6 @@ case ${DEVICE} in
 		wodim ${BURNDEVICE} -data ''
 	;;
 	*)
+		dd if="${IMAGE}" of="${DEVICE}"
 	;;
 esac

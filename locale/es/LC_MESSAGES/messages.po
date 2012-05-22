@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: aguilas\n"
 "Report-Msgid-Bugs-To: desarrolladores@canaima.softwarelibre.gob.ve\n"
-"POT-Creation-Date: 2012-04-24 17:50-0430\n"
+"POT-Creation-Date: 2012-05-21 23:13-0430\n"
 "PO-Revision-Date: 2012-02-28 14:29+0000\n"
 "Last-Translator: Luis Alejandro Martínez Faneyth <luis@huntingbears.com.ve>\n"
 "Language-Team: Spanish (Castilian) (http://www.transifex.net/projects/p/aguilas/language/es/)\n"
@@ -233,6 +233,14 @@ msgstr ""
 #: ../../../scripts/functions/init.sh:56 ../../../scripts/functions/init.sh:58
 #: ../../../scripts/init.sh:55
 msgid "El directorio que contiene los scripts '%s' no existe."
+msgstr ""
+
+#: ../../../scripts/modules/test.sh:114
+msgid "El espacio en disco es insuficiente para crear el disco virtual para la prueba. Abortando."
+msgstr ""
+
+#: ../../../scripts/modules/test.sh:132
+msgid "El espacio libre en memoria es menor al asignado para la prueba. Abortando."
 msgstr ""
 
 #: ../../../scripts/functions/config.sh:65
@@ -712,6 +720,10 @@ msgstr ""
 msgid "No especificaste una arquitectura, utilizando '%s' presente en el sistema."
 msgstr ""
 
+#: ../../../scripts/modules/test.sh:105
+msgid "No especificaste una imagen. Abortando."
+msgstr ""
+
 #: ../../../scripts/functions/config.sh:248
 #: ../../../scripts/functions/load.sh:236
 #: ../../../scripts/functions/load.sh:256
@@ -914,7 +926,7 @@ msgstr ""
 #: ../../../scripts/modules/build.sh:114 ../../../scripts/modules/save.sh:50
 #: ../../../scripts/modules/save.sh:74 ../../../scripts/modules/profile.sh:50
 #: ../../../scripts/modules/profile.sh:114 ../../../scripts/modules/test.sh:50
-#: ../../../scripts/modules/test.sh:114
+#: ../../../scripts/modules/test.sh:114 ../../../scripts/modules/test.sh:94
 msgid "Ocurrió un problema interpretando los parámetros."
 msgstr ""
 
@@ -993,6 +1005,10 @@ msgstr ""
 #: ../../../scripts/functions/profile.sh:217
 #: ../../../scripts/functions/profile.sh:214
 msgid "Se ejecutarán en el sistema los ganchos presentes en el directorio '%s'."
+msgstr ""
+
+#: ../../../scripts/modules/test.sh:123
+msgid "Se ha asignado un número de procesadores mayor al presente en el sistema. Abortando."
 msgstr ""
 
 #: ../../../scripts/modules/build.sh:434 ../../../scripts/modules/build.sh:300
