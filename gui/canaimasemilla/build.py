@@ -2,7 +2,7 @@
 #-*- coding: UTF-8 -*-
 
 # Librerías Globales
-import os, pygtk, gtk, threading, gobject, urllib2, pango
+import os, sys, pygtk, gtk, threading, gobject, urllib2, pango
 from subprocess import Popen, PIPE, STDOUT
 
 # Librerías Locales
@@ -29,7 +29,7 @@ class BuildImage():
         intro = gtk.HBox(homogeneous, spacing)
         intro.set_border_width(borderwidth)
 
-        introwidth = WindowWidth - (borderwidth*2)
+        introwidth = window_width - (borderwidth*2)
 
         attrintro = pango.AttrList()
         size = pango.AttrSize(8500, 0, -1)
@@ -50,7 +50,7 @@ class BuildImage():
         title = gtk.HBox(homogeneous, spacing)
         title.set_border_width(borderwidth)
 
-        titlewidth = WindowWidth - (borderwidth*2)
+        titlewidth = window_width - (borderwidth*2)
         
         attrtitle = pango.AttrList()
         size = pango.AttrSize(15000, 0, -1)
@@ -71,7 +71,7 @@ class BuildImage():
         ask = gtk.HBox(homogeneous, spacing)
         ask.set_border_width(borderwidth)
 
-        askwidth = WindowWidth - (borderwidth*2)
+        askwidth = window_width - (borderwidth*2)
 
         descripcion = gtk.Label()
         descripcion.set_markup(textblock)

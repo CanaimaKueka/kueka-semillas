@@ -179,7 +179,7 @@ class MainWindow():
         self.window.set_border_width(0)
         self.window.set_title(MainWindowTitle)
         self.window.set_position(gtk.WIN_POS_CENTER_ALWAYS)
-        self.window.set_size_request(WindowWidth, WindowHeight)
+        self.window.set_size_request(window_width, window_height)
         self.window.set_resizable(False)
         self.window.connect("destroy", gtk.main_quit)
         self.window.set_icon_from_file(ICONDIR+'/48x48/apps/c-s-gui.png')

@@ -757,7 +757,7 @@ class Paso5():
 		
 		descripcion = gtk.Label()
 		descripcion.set_use_markup(True)
-		descripcion.set_markup("Canaima Semilla ha construido con éxito el sabor “"+profile.nombre_carpeta.get_text()+"”. \nDebe especificar  el tipo de medio y la arquitectura a construir \npara crear una imagen del nuevo sabor. ")
+		#descripcion.set_markup("Canaima Semilla ha construido con éxito el sabor “"+profile.nombre_carpeta.get_text()+"”. \nDebe especificar  el tipo de medio y la arquitectura a construir \npara crear una imagen del nuevo sabor. ")
 		descripcion.set_justify(gtk.JUSTIFY_CENTER)
 		caja.pack_start(descripcion, True, False,0)
 		descripcion.show()

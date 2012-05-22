@@ -27,7 +27,7 @@ class Paso4():
 		self.window.set_resizable(False)
 		self.window.connect("delete_event", self.on_delete)
 		self.window.connect("destroy", gtk.main_quit)
-		self.window.set_icon_from_file('/usr/share/icons/canaima-iconos/apps/48/c-s.png')
+		#self.window.set_icon_from_file('/usr/share/icons/canaima-iconos/apps/48/c-s.png')
 		
 		#------------------Empaquetado de cajas------------------#
 		self.box1 = gtk.VBox(False, 0)
