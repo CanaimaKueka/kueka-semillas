@@ -1,3 +1,6 @@
+DEVELOPMENT RELEASE v3.0+20120522183846 (05/22/12)
+Mejorando el módulo de construcción de perfiles.
+
 DEVELOPMENT RELEASE v3.0+20120521232022 (05/21/12)
 Borrando plantilla para isolinux, convirtiendo en enlace simbólico hacia syslinux.
 Desarrollando módulo para probar imágenes con qemu-kvm.
