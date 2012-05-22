@@ -1,3 +1,7 @@
+DEVELOPMENT RELEASE v3.0+20120521232022 (05/21/12)
+Borrando plantilla para isolinux, convirtiendo en enlace simbólico hacia syslinux.
+Desarrollando módulo para probar imágenes con qemu-kvm.
+
 DEVELOPMENT RELEASE v3.0+20120507124627 (05/07/12)
 Actualizando mensajes de traducción
 
