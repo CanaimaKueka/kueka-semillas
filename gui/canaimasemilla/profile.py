@@ -1,8 +1,9 @@
 #!/usr/bin/env python
 #-*- coding: UTF-8 -*-
 
-import pygtk, gtk, re, os, sys, threading, urllib2, shutil, pango, tempfile, gobject
+import pygtk, gtk, re, os, sys, threading, urllib2, shutil, pango, gobject, Queue, time, tempfile
 from subprocess import Popen, PIPE, STDOUT
+from aptsources.distinfo import DistInfo
 
 # Librerías Locales
 import main
@@ -11,6 +12,37 @@ from library.localization import *
 from config import *
 
 class CreateProfile():
+
+    def LimitEntry(self, editable, new_text, new_text_length, position, regex):
+        limit = re.compile(regex)
+        if limit.match(new_text) is None:
+            editable.stop_emission('insert-text')
+
+    def ClearEntry(self, editable, new_text, _object, _string):
+        content = _object.get_text()
+        if content == _string:
+            _object.set_text('')
+
+    def CleanEntry(self, editable, textbuffer):
+        textbuffer.set_text('')
+
+    def FillEntry(self, editable, new_text, _object, _string):
+        content = _object.get_text()
+        if content == '':
+            _object.set_text(_string)
+
+    def OnOff(self, widget, widgetcontainer):
+        on_off_widgetlist = widgetcontainer.get_children()
+        for on_off_widget in on_off_widgetlist:
+            new_widgets = on_off_widget.get_children()
+            on_off_widgetlist = on_off_widgetlist + new_widgets
+        for on_off_widget in on_off_widgetlist:
+            if on_off_widget != widget:
+                if on_off_widget.get_sensitive() == True:
+                    on_off_setting = False
+                else:
+                    on_off_setting = True
+                on_off_widget.set_sensitive(on_off_setting)
 
     def Banner(self, homogeneous, spacing, expand, fill, padding, borderwidth, imagefile):
         banner = gtk.HBox(homogeneous, spacing)
@@ -41,30 +73,15 @@ class CreateProfile():
         return ask
 
     def NombreSabor(self, homogeneous, spacing, expand, fill, padding, borderwidth, maxlength, pretexto, regex):
-        def Limit(editable, new_text, new_text_length, position):
-            limit = re.compile(regex)
-            if limit.match(new_text) is None:
-                editable.stop_emission('insert-text')
-
-        def Clear(editable, new_text):
-            content = nombresabor.get_text()
-            if content == pretexto:
-                nombresabor.set_text('')
-
-        def Fill(editable, new_text):
-            content = nombresabor.get_text()
-            if content == '':
-                nombresabor.set_text(pretexto)
-
         entry = gtk.HBox(homogeneous, spacing)
         entry.set_border_width(borderwidth)
 
         global nombresabor
 
         nombresabor = gtk.Entry()
-        nombresabor.connect('insert-text', Limit)
-        nombresabor.connect('focus-in-event', Clear)
-        nombresabor.connect('focus-out-event', Fill)
+        nombresabor.connect('insert-text', self.LimitEntry, regex)
+        nombresabor.connect('focus-in-event', self.ClearEntry, nombresabor, pretexto)
+        nombresabor.connect('focus-out-event', self.FillEntry, nombresabor, pretexto)
         nombresabor.set_width_chars(maxlength)
         nombresabor.set_max_length(maxlength)
         nombresabor.set_text(pretexto)
@@ -77,30 +94,15 @@ class CreateProfile():
         return entry
         
     def NombreAutor(self, homogeneous, spacing, expand, fill, padding, borderwidth, maxlength, pretexto, regex):
-        def Limit(editable, new_text, new_text_length, position):
-            limit = re.compile(regex)
-            if limit.match(new_text) is None:
-                editable.stop_emission('insert-text')
-
-        def Clear(editable, new_text):
-            content = nombreautor.get_text()
-            if content == pretexto:
-                nombreautor.set_text('')
-
-        def Fill(editable, new_text):
-            content = nombreautor.get_text()
-            if content == '':
-                nombreautor.set_text(pretexto)
-
         entry = gtk.HBox(homogeneous, spacing)
         entry.set_border_width(borderwidth)
 
         global nombreautor
 
         nombreautor = gtk.Entry()
-        nombreautor.connect('insert-text', Limit)
-        nombreautor.connect('focus-in-event', Clear)
-        nombreautor.connect('focus-out-event', Fill)
+        nombreautor.connect('insert-text', self.LimitEntry, regex)
+        nombreautor.connect('focus-in-event', self.ClearEntry, nombreautor, pretexto)
+        nombreautor.connect('focus-out-event', self.FillEntry, nombreautor, pretexto)
         nombreautor.set_width_chars(maxlength)
         nombreautor.set_max_length(maxlength)
         nombreautor.set_text(pretexto)
@@ -113,30 +115,15 @@ class CreateProfile():
         return entry
 
     def CorreoAutor(self, homogeneous, spacing, expand, fill, padding, borderwidth, maxlength, pretexto, regex):
-        def Limit(editable, new_text, new_text_length, position):
-            limit = re.compile(regex)
-            if limit.match(new_text) is None:
-                editable.stop_emission('insert-text')
-
-        def Clear(editable, new_text):
-            content = correoautor.get_text()
-            if content == pretexto:
-                correoautor.set_text('')
-
-        def Fill(editable, new_text):
-            content = correoautor.get_text()
-            if content == '':
-                correoautor.set_text(pretexto)
-
         entry = gtk.HBox(homogeneous, spacing)
         entry.set_border_width(borderwidth)
 
         global correoautor
 
         correoautor = gtk.Entry()
-        correoautor.connect('insert-text', Limit)
-        correoautor.connect('focus-in-event', Clear)
-        correoautor.connect('focus-out-event', Fill)
+        correoautor.connect('insert-text', self.LimitEntry, regex)
+        correoautor.connect('focus-in-event', self.ClearEntry, correoautor, pretexto)
+        correoautor.connect('focus-out-event', self.FillEntry, correoautor, pretexto)
         correoautor.set_width_chars(maxlength)
         correoautor.set_max_length(maxlength)
         correoautor.set_text(pretexto)
@@ -149,30 +136,15 @@ class CreateProfile():
         return entry
 
     def WebAutor(self, homogeneous, spacing, expand, fill, padding, borderwidth, maxlength, pretexto, regex):
-        def Limit(editable, new_text, new_text_length, position):
-            limit = re.compile(regex)
-            if limit.match(new_text) is None:
-                editable.stop_emission('insert-text')
-
-        def Clear(editable, new_text):
-            content = webautor.get_text()
-            if content == pretexto:
-                webautor.set_text('')
-
-        def Fill(editable, new_text):
-            content = webautor.get_text()
-            if content == '':
-                webautor.set_text(pretexto)
-
         entry = gtk.HBox(homogeneous, spacing)
         entry.set_border_width(borderwidth)
 
         global webautor
 
         webautor = gtk.Entry()
-        webautor.connect('insert-text', Limit)
-        webautor.connect('focus-in-event', Clear)
-        webautor.connect('focus-out-event', Fill)
+        webautor.connect('insert-text', self.LimitEntry, regex)
+        webautor.connect('focus-in-event', self.ClearEntry, webautor, pretexto)
+        webautor.connect('focus-out-event', self.FillEntry, webautor, pretexto)
         webautor.set_width_chars(maxlength)
         webautor.set_max_length(maxlength)
         webautor.set_text(pretexto)
@@ -183,34 +155,6 @@ class CreateProfile():
         webautor.show()
 
         return entry
-
-    def ClearEntry(self, editable, new_text, _object, _string):
-        content = _object.get_text()
-        if content == _string:
-            _object.set_text('')
-
-    def FillEntry(self, editable, new_text, _object, _string):
-        content = _object.get_text()
-        if content == '':
-            _object.set_text(_string)
-
-    def LimitEntry(self, editable, new_text, new_text_length, position, regex):
-        limit = re.compile(regex)
-        if limit.match(new_text) is None:
-            editable.stop_emission('insert-text')
-
-    def OnOff(self, widget, widgetcontainer):
-        on_off_widgetlist = widgetcontainer.get_children()
-        for on_off_widget in on_off_widgetlist:
-            new_widgets = on_off_widget.get_children()
-            on_off_widgetlist = on_off_widgetlist + new_widgets
-        for on_off_widget in on_off_widgetlist:
-            if on_off_widget != widget:
-                if on_off_widget.get_sensitive() == True:
-                    on_off_setting = False
-                else:
-                    on_off_setting = True
-                on_off_widget.set_sensitive(on_off_setting)
 
     def Repo(self, homogeneous, spacing, expand, fill, padding, borderwidth, maxlength, pretexto, regex):
 
@@ -234,128 +178,142 @@ class CreateProfile():
 
         return entry
 
+    def DownloadProgress(self, pbar, blocknum, bs, size):
+        percent = float(blocknum*bs)/size
+        if percent >= 1: percent = 1
+        pbar.set_fraction(percent)
+        return True
+
+    def DownloadWindow(self, homogeneous, spacing, expand, fill, padding, borderwidth, q_window, q_bar, arch, section):
+
+        global downloadwindow
+        gtk.gdk.threads_enter()
+        downloadwindow = gtk.Dialog()
+        downloadwindow.set_title(PROFILE_OS_EXTRAREPOS_VALIDATE)
+        downloadwindowarea = downloadwindow.get_content_area()
+        downloadwindow.set_position(gtk.WIN_POS_CENTER_ALWAYS)
+        downloadwindow.set_size_request(window_width*2/3, window_height/8)
+        downloadwindow.set_resizable(False)
+
+        progress = gtk.VBox(homogeneous, spacing)
+        progress.set_border_width(borderwidth)
+
+        descripcion = gtk.Label()
+        descripcion.set_markup(PROFILE_OS_EXTRAREPOS_VALIDATE_URL % (arch, section))
+        progress.pack_start(descripcion, expand, fill, padding)
+
+        pbar = gtk.ProgressBar()
+        progress.pack_start(pbar, expand, fill, padding)
+
+        downloadwindowarea.add(progress)
+        downloadwindow.show_all()
+        gtk.gdk.threads_leave()
+
+        q_window.put(downloadwindow)
+        q_bar.put(pbar)
+
+    def AddExtraReposThread(self, _object, homogeneous, spacing, expand, fill, padding, borderwidth, textbuffer, extrareposurl, extrareposrama, extrareposseccion):
+        q_window = Queue.Queue()
+        q_bar = Queue.Queue()
+        savefile = tempfile.NamedTemporaryFile(mode='a')
+        buffertext = textbuffer.get_text(*textbuffer.get_bounds())
+        urltext = extrareposurl.get_text()
+        ramatext = extrareposrama.get_text()
+        secciontext = extrareposseccion.get_text()
+        seccionlist = secciontext.split(' ')
+        for section in seccionlist:
+            for arch in supported_arch:
+                errorcounter = 0
+                l_section = section
+                if l_section.find('-') != -1:
+                    l_section = l_section.replace('-','')
+                try:
+                    response = urllib2.urlopen(urltext+'/dists/'+ramatext+'/'+section+'/binary-'+arch+'/Packages.gz')
+                except urllib2.HTTPError as e:
+                    errorcode = str(e.code)
+                    errorcounter += 1
+                except urllib2.URLError as e:
+                    errorcode = str(e.reason)
+                    errorcounter += 1
+                except IOError as e:
+                    errorcode = str(e.errno)+': '+str(e.strerror)
+                    errorcounter += 1
+                except ValueError as e:
+                    errorcode = str(e)
+                    errorcounter += 1
+                except TypeError as e:
+                    errorcode = str(e)
+                    errorcounter += 1
+                except:
+                    errorcode = str(sys.exc_info()[0])
+                    errorcounter += 1
+                else: pass
+
+                if errorcounter > 0 :
+                    hilo = threading.Thread(target=self.ErrorExtraReposThread, args=(PROFILE_OS_EXTRAREPOS_VALIDATE_URL_ERROR+":\n"+errorcode, PROFILE_OS_EXTRAREPOS_VALIDATE_URL_ERROR_TITLE))
+                    hilo.start()
+                else:
+                    hilo = threading.Thread(target=self.DownloadWindow, args=(homogeneous, spacing, expand, fill, padding, borderwidth, q_window, q_bar, arch, section))
+                    hilo.start()
+                    exec "b_"+l_section+"_"+arch+" = q_bar.get()"
+                    exec "w_"+l_section+"_"+arch+" = q_window.get()"
+
+                    bs = 5*10240
+                    size = -1
+                    read = 0
+                    blocknum = 0
+                    headers = response.info()
+                    if "content-length" in headers:
+                        size = int(headers["Content-Length"])
+
+                    while True:
+                        block = response.read(bs)
+                        if not block: break
+                        read += len(block)
+                        savefile.seek(0)
+                        savefile.write(block)
+                        savefile.flush()
+                        blocknum += 1
+                        exec "hilo = threading.Thread(target=self.DownloadProgress, args=(b_"+l_section+"_"+arch+", blocknum, bs, size))"
+                        hilo.start()
+        savefile.close()
+        response.close()
+
+        for section in seccionlist:
+            for arch in supported_arch:
+                exec "w_"+l_section+"_"+arch+".hide_all()"
+
+        if buffertext.find('deb '+urltext+' '+ramatext+' '+secciontext) == -1:
+            if size >= 0 and read < size:
+                hilo = threading.Thread(target=self.ErrorExtraReposThread, args=(PROFILE_OS_EXTRAREPOS_VALIDATE_URL_ERROR_INCOMPLETE+":\n"+errorcode, PROFILE_OS_EXTRAREPOS_VALIDATE_URL_ERROR_TITLE))
+                hilo.start()
+            else:
+                textbuffer.set_text(buffertext+'deb '+urltext+' '+ramatext+' '+secciontext+'\n')
+
+    def ErrorExtraReposThread(self, message, title):
+            gtk.gdk.threads_enter()
+            md = gtk.MessageDialog( parent = None,
+                                    flags = 0,
+                                    type = gtk.MESSAGE_ERROR,
+                                    buttons = gtk.BUTTONS_CLOSE,
+                                    message_format = message)
+            md.set_title(title)
+            md.run()
+            md.destroy()
+            gtk.gdk.threads_leave()
+
+    def AddExtraRepos(self, _object, homogeneous, spacing, expand, fill, padding, borderwidth, textbuffer, extrareposurl, extrareposrama, extrareposseccion):
+        if is_valid_url(extrareposurl.get_text()):
+            hilo = threading.Thread(target=self.AddExtraReposThread, args=(self, homogeneous, spacing, expand, fill, padding, borderwidth, textbuffer, extrareposurl, extrareposrama, extrareposseccion))
+            hilo.start()
+        else:
+            hilo = threading.Thread(target=self.ErrorExtraReposThread, args=(PROFILE_OS_EXTRAREPOS_VALIDATE_URL_ERROR, PROFILE_OS_EXTRAREPOS_VALIDATE_URL_ERROR_TITLE))
+            hilo.start()
+
     def ExtraRepos(self, homogeneous, spacing, expand, fill, padding,
                         borderwidth, maxlength, lengthurl, lengthrama,
                         lengthseccion, regexurl, regexrama, regexseccion,
                         pretextourl, pretextorama, pretextoseccion):
-
-        def limpiar(self, textbuffer):
-            textbuffer.set_text('')
-
-        def agregar(self, homogeneous, spacing, expand, fill, padding, borderwidth, textbuffer, extrareposurl, extrareposrama, extrareposseccion):
-            if is_valid_url(extrareposurl.get_text()):
-                hilo = threading.Thread(target=agregarexec, args=(self, homogeneous, spacing, expand, fill, padding, borderwidth, textbuffer, extrareposurl, extrareposrama, extrareposseccion))
-                hilo.start()
-            else:
-                hilo = threading.Thread(target=urlerrorexec, args=(self, PROFILE_OS_EXTRAREPOS_VALIDATE_URL_ERROR, PROFILE_OS_EXTRAREPOS_VALIDATE_URL_ERROR_TITLE))
-                hilo.start()
-
-        def urlerrorexec(self, message, title):
-                gtk.gdk.threads_enter()
-                md = gtk.MessageDialog( parent = None,
-                                        flags = 0,
-                                        type = gtk.MESSAGE_ERROR,
-                                        buttons = gtk.BUTTONS_CLOSE,
-                                        message_format = message)
-                md.set_title(title)
-                md.run()
-                md.destroy()
-                gtk.gdk.threads_leave()
-
-        def DownloadProgress(self, blocknum, bs, size):
-            percent = float(blocknum*bs)/size
-            if percent >= 1: percent = 1
-            pbar.set_fraction(percent)
-            return True
-
-        def DownloadWindow(self, homogeneous, spacing, expand, fill, padding, borderwidth, blocknum, bs, size):
-            global downloadwindow, pbar
-            gtk.gdk.threads_enter()
-            downloadwindow = gtk.Dialog()
-            downloadwindowarea = downloadwindow.get_content_area()
-            downloadwindow.set_position(gtk.WIN_POS_CENTER_ALWAYS)
-            downloadwindow.set_size_request(window_width/2, window_height/2)
-            downloadwindow.set_resizable(False)
-
-            progress = gtk.VBox(homogeneous, spacing)
-            progress.set_border_width(borderwidth)
-
-            descripcion = gtk.Label()
-            descripcion.set_markup('hola')
-            progress.pack_start(descripcion, expand, fill, padding)
-
-            pbar = gtk.ProgressBar()
-            timer = gobject.timeout_add(100, DownloadProgress, self, blocknum, bs, size)
-            progress.pack_start(pbar, expand, fill, padding)
-
-            downloadwindowarea.add(progress)
-            downloadwindow.show_all()
-            gtk.gdk.threads_leave()
-
-        def agregarexec(self, homogeneous, spacing, expand, fill, padding, borderwidth, textbuffer, extrareposurl, extrareposrama, extrareposseccion):
-            errorcounter = 0
-            buffertext = textbuffer.get_text(*textbuffer.get_bounds())
-            urltext = extrareposurl.get_text()
-            ramatext = extrareposrama.get_text()
-            secciontext = extrareposseccion.get_text()
-            seccionlist = secciontext.split(' ')
-            for section in seccionlist:
-                for arch in supported_arch:
-                    try:
-                        exec "r_"+section+"_"+arch+" = urllib2.urlopen(urltext+'/dists/'+ramatext+'/'+section+'/binary-'+arch+'/Packages')"
-                        print response
-                    except urllib2.HTTPError as e:
-                        errorcode = str(e.code)
-                        errorcounter += 1
-                    except urllib2.URLError as e:
-                        errorcode = str(e.code)
-                        errorcounter += 1
-                    except IOError as e:
-                        errorcode = str(e.errno)+': '+str(e.strerror)
-                        errorcounter += 1
-                    except ValueError as e:
-                        errorcode = str(e)
-                        errorcounter += 1
-                    except TypeError as e:
-                        errorcode = str(e)
-                        errorcounter += 1
-                    except:
-                        errorcode = str(sys.exc_info()[0])
-                        errorcounter += 1
-                    else: pass
-
-            if errorcounter > 0 :
-                hilo = threading.Thread(target=urlerrorexec, args=(self, errorcode, 'chao'))
-                hilo.start()
-            else:
-                headers = response.info()
-                savefile = tempfile.NamedTemporaryFile(mode='a', delete=False)
-                savefilename = savefile.name
-                bs = 1024*8
-                size = -1
-                read = 0
-                blocknum = 0
-                if "content-length" in headers:
-                    size = int(headers["Content-Length"])
-                DownloadWindow(self, homogeneous, spacing, expand, fill, padding, borderwidth, blocknum, bs, size)
-                while True:
-                    block = response.read(bs)
-                    if not block: break
-                    read += len(block)
-                    savefile.seek(0)
-                    savefile.write(block)
-                    savefile.flush()
-                    blocknum += 1
-                    DownloadProgress(self, blocknum, bs, size)
-
-                if not re.search(buffertext, 'deb '+urltext+' '+ramatext+' '+secciontext):
-                    print 'no esta'
-                    if size >= 0 and read < size:
-                        raise IOError("incomplete retrieval error", "got only %d bytes out of %d" % (read,size))
-                    else:
-                        textbuffer.set_text(buffertext+'deb '+urltext+' '+ramatext+' '+secciontext+'\n')
-            savefile.close()
-            response.close()
 
         extrareposbox = gtk.VBox(homogeneous, spacing)
 
@@ -424,10 +382,10 @@ class CreateProfile():
         entry.pack_start(space, expand, fill, borderwidth)
 
         boton_limpiar = gtk.Button(stock=gtk.STOCK_CLEAR)
-        boton_limpiar.connect('clicked', limpiar, textbuffer)
+        boton_limpiar.connect('clicked', self.CleanEntry, textbuffer)
 
         boton_agregar = gtk.Button(stock=gtk.STOCK_ADD)
-        boton_agregar.connect('clicked', agregar, homogeneous, spacing, expand, fill, padding, borderwidth, textbuffer, extrareposurl, extrareposrama, extrareposseccion)
+        boton_agregar.connect('clicked', self.AddExtraRepos, homogeneous, spacing, expand, fill, padding, borderwidth, textbuffer, extrareposurl, extrareposrama, extrareposseccion)
         entry.pack_start(boton_agregar, expand, fill, padding)
         entry.pack_start(boton_limpiar, expand, fill, padding)
 
@@ -466,7 +424,7 @@ class CreateProfile():
         for t in cs_distros:
             distro.append_text(t)
         distro.set_active(2)
-        distro.connect('changed', self.Change)
+        distro.connect('changed', self.Change, homogeneous, spacing, expand, fill, padding, borderwidth)
         distro.show()
 
         caja.pack_start(distro, expand, fill, padding)
@@ -481,16 +439,42 @@ class CreateProfile():
         locale = gtk.combo_box_new_text()
 
         with open(supported_locales, 'r') as localelist:
+            localecount = 0
             for line in localelist:
                 localecode = line.split()
                 locale.append_text(localecode[0])
-        locale.set_active(2)
-        locale.connect('changed', self.Change)
+                if localecode[0].upper().replace('-','') == os.environ['LC_ALL'].upper():
+                    localeactive = localecount
+                localecount += 1
+
+        locale.set_active(localeactive)
         locale.show()
 
         caja.pack_start(locale, expand, fill, padding)
 
         return caja
+
+    def Codenames(self, homogeneous, spacing, expand, fill, padding, borderwidth):
+        global bigcodenames, codename
+        codenamelist = []
+        
+        bigcodenames = gtk.HBox(homogeneous, spacing)
+        bigcodenames.set_border_width(borderwidth)
+
+        codename = gtk.combo_box_new_text()
+        curdistro = distro.get_active_text()
+        d = DistInfo(curdistro.title(), apt_templates)
+
+        for template in d.templates:
+            codename.append_text(template.name)
+
+        codename.append_text('otro')
+        codename.set_active(0)
+        codename.show()
+
+        bigcodenames.pack_start(codename, expand, fill, padding)
+
+        return bigcodenames
 
     def Sections(self, homogeneous, spacing, expand, fill, padding, borderwidth):
         
@@ -509,9 +493,8 @@ class CreateProfile():
         exec 'cursections = '+curdistro+'_sections'
         for section in cursections:
             label = section
-            if section == 'non-free':
-                section = 'nonfree'
-                label = 'non-free'
+            if section.find('-') != -1:
+                section = section.replace('-','')
             if section == 'main':
                 global mainsection
                 mainsection = gtk.CheckButton('main')
@@ -525,7 +508,24 @@ class CreateProfile():
         
         return bigsections
 
-    def Change(self, distro):
+    def Change(self, distro, homogeneous, spacing, expand, fill, padding, borderwidth):
+        global codename
+        bigcodenames.remove(codename)
+        curdistro = distro.get_active_text()
+        curdistro_u = curdistro.title()
+        codename = gtk.combo_box_new_text()
+        d = DistInfo(curdistro_u, apt_templates)
+        codenamelist = []
+        for template in d.templates:
+            if not template.name in codenamelist:
+                codenamelist.append(template.name)
+                codename.append_text(template.name)
+        codename.append_text('otro')
+        codename.set_active(0)
+
+        codename.show()
+        bigcodenames.pack_start(codename, expand, fill, padding)
+
         children = reposections.get_children()
         for child in children:
             reposections.remove(child)
@@ -535,9 +535,8 @@ class CreateProfile():
         exec 'cursections = '+curdistro+'_sections'
         for section in cursections:
             label = section
-            if section == 'non-free':
-                section = 'nonfree'
-                label = 'non-free'
+            if section.find('-') != -1:
+                section = section.replace('-','')
             if section == 'main':
                 global mainsection
                 mainsection = gtk.CheckButton('main')
@@ -547,7 +546,137 @@ class CreateProfile():
                 reposections.pack_start(mainsection)
             else:
                 exec 'global '+section+'section\n'+section+'section = gtk.CheckButton(label)\n'+section+'section.set_active(False)\n'+section+'section.show()\nreposections.pack_start('+section+'section)'
-                
+
+    def AddPackagesThread(self, _object, homogeneous, spacing, expand, fill,
+                            padding, borderwidth, repo, rama, section_container,
+                            extrareposlist, packageslist, packagename):
+        q_window = Queue.Queue()
+        q_bar = Queue.Queue()
+        savefile = open(apt_temp_file, 'w')
+        buffertext = packageslist.get_text(*textbuffer.get_bounds())
+        urltext = extrareposurl.get_text()
+        ramatext = extrareposrama.get_text()
+        secciontext = extrareposseccion.get_text()
+        seccionlist = secciontext.split(' ')
+        for section in seccionlist:
+            for arch in supported_arch:
+                errorcounter = 0
+                l_section = section
+                if l_section.find('-') != -1:
+                    l_section = l_section.replace('-','')
+                try:
+                    response = urllib2.urlopen(urltext+'/dists/'+ramatext+'/'+section+'/binary-'+arch+'/Packages.gz')
+                except urllib2.HTTPError as e:
+                    errorcode = str(e.code)
+                    errorcounter += 1
+                except urllib2.URLError as e:
+                    errorcode = str(e.reason)
+                    errorcounter += 1
+                except IOError as e:
+                    errorcode = str(e.errno)+': '+str(e.strerror)
+                    errorcounter += 1
+                except ValueError as e:
+                    errorcode = str(e)
+                    errorcounter += 1
+                except TypeError as e:
+                    errorcode = str(e)
+                    errorcounter += 1
+                except:
+                    errorcode = str(sys.exc_info()[0])
+                    errorcounter += 1
+                else: pass
+
+                if errorcounter > 0 :
+                    hilo = threading.Thread(target=self.ErrorExtraReposThread, args=(PROFILE_OS_EXTRAREPOS_VALIDATE_URL_ERROR+":\n"+errorcode, PROFILE_OS_EXTRAREPOS_VALIDATE_URL_ERROR_TITLE))
+                    hilo.start()
+                else:
+                    hilo = threading.Thread(target=self.DownloadWindow, args=(homogeneous, spacing, expand, fill, padding, borderwidth, q_window, q_bar, arch, section))
+                    hilo.start()
+                    exec "b_"+l_section+"_"+arch+" = q_bar.get()"
+                    exec "w_"+l_section+"_"+arch+" = q_window.get()"
+
+                    bs = 5*10240
+                    size = -1
+                    read = 0
+                    blocknum = 0
+                    headers = response.info()
+                    if "content-length" in headers:
+                        size = int(headers["Content-Length"])
+
+                    while True:
+                        block = response.read(bs)
+                        if not block: break
+                        read += len(block)
+                        savefile.seek(0)
+                        savefile.write(block)
+                        savefile.flush()
+                        blocknum += 1
+                        exec "hilo = threading.Thread(target=self.DownloadProgress, args=(b_"+l_section+"_"+arch+", blocknum, bs, size))"
+                        hilo.start()
+
+        savefile.close()
+        response.close()
+
+        for section in seccionlist:
+            for arch in supported_arch:
+                exec "w_"+l_section+"_"+arch+".hide_all()"
+
+        if buffertext.find('deb '+urltext+' '+ramatext+' '+secciontext) == -1:
+            if size >= 0 and read < size:
+                hilo = threading.Thread(target=self.ErrorExtraReposThread, args=(PROFILE_OS_EXTRAREPOS_VALIDATE_URL_ERROR_INCOMPLETE+":\n"+errorcode, PROFILE_OS_EXTRAREPOS_VALIDATE_URL_ERROR_TITLE))
+                hilo.start()
+            else:
+                textbuffer.set_text(buffertext+'deb '+urltext+' '+ramatext+' '+secciontext+'\n')
+
+    def AddPackages(self, _object, homogeneous, spacing, expand, fill, padding, borderwidth, packagelist, packagename):
+        hilo = threading.Thread(target=self.AddPackagesThread, args=(self, homogeneous, spacing, expand, fill, padding, borderwidth, packagelist, packagename))
+        hilo.start()
+
+    def Packages(self, homogeneous, spacing, expand, fill, padding,
+                    borderwidth, maxlength, lengthpkg, regexpkg):
+
+        packagesbox = gtk.VBox(homogeneous, spacing)
+
+        scrolledwindow = gtk.ScrolledWindow()
+        scrolledwindow.set_policy(gtk.POLICY_AUTOMATIC, gtk.POLICY_AUTOMATIC)
+
+        global packagelist
+        marco = gtk.Frame()
+        marco.set_border_width(borderwidth)
+        textview = gtk.TextView()
+        packagelist = textview.get_buffer()
+        textview.set_wrap_mode(gtk.WRAP_WORD)
+        textview.set_editable(False)
+        scrolledwindow.add(textview)
+        marco.add(scrolledwindow)
+
+        packagesbox.pack_start(marco, expand, fill, padding)
+
+        entry = gtk.HBox(homogeneous, spacing)
+        entry.set_border_width(borderwidth)
+
+        packagename = gtk.Entry()
+        packagename.set_width_chars(lengthpkg)
+        packagename.set_max_length(maxlength)
+        packagename.connect('insert-text', self.LimitEntry, regexpkg)
+        entry.pack_start(packagename, expand, fill, padding)
+        packagename.show()
+
+        space = gtk.HSeparator()
+        entry.pack_start(space, expand, fill, borderwidth)
+
+        boton_limpiar = gtk.Button(stock=gtk.STOCK_CLEAR)
+        boton_limpiar.connect('clicked', self.CleanEntry, packagelist)
+
+        boton_agregar = gtk.Button(stock=gtk.STOCK_ADD)
+        boton_agregar.connect('clicked', self.AddPackages, homogeneous, spacing, expand, fill, padding, borderwidth, packagelist, packagename)
+        entry.pack_start(boton_agregar, expand, fill, padding)
+        entry.pack_start(boton_limpiar, expand, fill, padding)
+
+        packagesbox.pack_start(entry, expand, fill, padding)
+
+        return packagesbox
+
     def Botones(self, homogeneous, spacing, expand, fill, padding, borderwidth, width, height):
     
         def cerrar(self):
@@ -677,7 +806,7 @@ class CreateProfile():
         self.window.set_resizable(False)
         self.window.connect("destroy", gtk.main_quit)
         self.window.set_icon_from_file(ICONDIR+'/48x48/apps/c-s-gui.png')
-        
+
         self.outbox = gtk.VBox(False, 0)
         self.swindow = gtk.ScrolledWindow()
         self.swindow.set_policy(gtk.POLICY_AUTOMATIC, gtk.POLICY_AUTOMATIC)
@@ -735,6 +864,18 @@ class CreateProfile():
         self.separator = gtk.HSeparator()
         self.vbox.pack_start(self.separator, False, False, 0)
         
+        self.box = self.Ask(False, 0, False, False, 0, 5, PROFILE_OS_LOCALE_1)
+        self.vbox.pack_start(self.box, False, False, 0)
+        
+        self.box = self.Locale(False, 0, False, False, 0, 0)
+        self.vbox.pack_start(self.box, False, False, 0)
+        
+        self.box = self.Description(False, 0, False, False, 0, 5, PROFILE_OS_LOCALE_2)
+        self.vbox.pack_start(self.box, False, False, 0)
+        
+        self.separator = gtk.HSeparator()
+        self.vbox.pack_start(self.separator, False, False, 0)
+        
         self.box = self.Ask(False, 0, False, False, 0, 5, PROFILE_META_DISTRO_1)
         self.vbox.pack_start(self.box, False, False, 0)
         
@@ -742,6 +883,18 @@ class CreateProfile():
         self.vbox.pack_start(self.box, False, False, 0)
         
         self.box = self.Description(False, 0, False, False, 0, 5, PROFILE_META_DISTRO_2)
+        self.vbox.pack_start(self.box, False, False, 0)
+        
+        self.separator = gtk.HSeparator()
+        self.vbox.pack_start(self.separator, False, False, 0)
+        
+        self.box = self.Ask(False, 0, False, False, 0, 5, PROFILE_META_CODENAME_1)
+        self.vbox.pack_start(self.box, False, False, 0)
+        
+        self.box = self.Codenames(False, 0, False, False, 0, 0)
+        self.vbox.pack_start(self.box, False, False, 0)
+        
+        self.box = self.Description(False, 0, False, False, 0, 5, PROFILE_META_CODENAME_2)
         self.vbox.pack_start(self.box, False, False, 0)
         
         self.separator = gtk.HSeparator()
@@ -771,21 +924,21 @@ class CreateProfile():
         self.separator = gtk.HSeparator()
         self.vbox.pack_start(self.separator, False, False, 0)
         
-        self.box = self.Ask(False, 0, False, False, 0, 5, PROFILE_OS_LOCALE_1)
+        self.box = self.ExtraRepos(False, 0, False, False, 0, 3, 60, 37, 10, 17,
+            '^[-A-Za-z0-9+&@#/%?=~_()|!:,.;]*$', '^[A-Za-z0-9-]*$', '^[A-Za-z0-9\ -]*$', PROFILE_OS_EXTRAREPOS_URL,
+            PROFILE_OS_EXTRAREPOS_RAMA, PROFILE_OS_EXTRAREPOS_SECCION)
         self.vbox.pack_start(self.box, False, False, 0)
         
-        self.box = self.Locale(False, 0, False, False, 0, 0)
-        self.vbox.pack_start(self.box, False, False, 0)
-        
-        self.box = self.Description(False, 0, False, False, 0, 5, PROFILE_OS_LOCALE_2)
+        self.box = self.Description(False, 0, False, False, 0, 5, PROFILE_OS_EXTRAREPOS_2)
         self.vbox.pack_start(self.box, False, False, 0)
         
         self.separator = gtk.HSeparator()
         self.vbox.pack_start(self.separator, False, False, 0)
         
-        self.box = self.ExtraRepos(False, 0, False, False, 0, 3, 60, 37, 10, 17,
-            '^[-A-Za-z0-9+&@#/%?=~_()|!:,.;]*$', '^[A-Za-z0-9-]*$', '^[A-Za-z0-9\ -]*$', PROFILE_OS_EXTRAREPOS_URL,
-            PROFILE_OS_EXTRAREPOS_RAMA, PROFILE_OS_EXTRAREPOS_SECCION)
+        self.box = self.Ask(False, 0, False, False, 0, 5, PROFILE_META_REPO_1)
+        self.vbox.pack_start(self.box, False, False, 0)
+        
+        self.box = self.Packages(False, 0, False, False, 0, 3, 60, 66, '^[A-Za-z0-9\ -]*$')
         self.vbox.pack_start(self.box, False, False, 0)
         
         self.box = self.Description(False, 0, False, False, 0, 5, PROFILE_OS_EXTRAREPOS_2)
