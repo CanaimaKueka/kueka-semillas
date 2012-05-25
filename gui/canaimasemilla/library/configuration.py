@@ -15,7 +15,9 @@ def ConfigMapper(Config, CONFDIR):
                 giveme = Config.get(section, option)
                 if section == 'array':
                     process = giveme[1:-1].split(',')
-                elif section == 'int':
+                elif section == 'boolean':
+                    process = giveme
+                elif section == 'integer':
                     process = int(giveme)
                 else:
                     process = '"'+giveme+'"'

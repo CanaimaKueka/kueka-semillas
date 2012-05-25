@@ -9,9 +9,9 @@ def listdirfullpath(d):
 
 def is_valid_url(url):
     regex = re.compile(
-        r'^(https?|ftp)://'  # http:// or https://
+        r'^(http|ftp|file):///?'  # http:// or https://
         r'(?:(?:[A-Z0-9](?:[A-Z0-9-]{0,61}[A-Z0-9])?\.)+[A-Z]{2,6}\.?|'  # domain...
-        r'localhost|'  # localhost...
+        r'localhost|[a-zA-Z0-9-]*|'  # localhost...
         r'\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})' # ...or ip
         r'(?::\d+)?'  # optional port
         r'(?:/?|[/?]\S+)$', re.IGNORECASE)
