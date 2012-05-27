@@ -1,0 +1,378 @@
+# Plantilla de Traducción para Canaima Semilla.
+# Copyright (C) 2012 Luis Alejandro Martínez Faneyth
+# This file is distributed under the same license as the Canaima Semilla package.
+#
+# Translators:
+# Luis Alejandro Martínez Faneyth <luis@huntingbears.com.ve>, 2012
+#
+#: ../../../gui/canaimasemilla/library/vocabulary.py:78
+#: ../../../gui/canaimasemilla/library/vocabulary.py:90
+#: ../../../gui/canaimasemilla/library/vocabulary.py:91
+#: ../../../gui/canaimasemilla/library/vocabulary.py:92
+#: ../../../gui/canaimasemilla/library/vocabulary.py:93
+#: ../../../gui/canaimasemilla/library/vocabulary.py:94
+#: ../../../gui/canaimasemilla/library/vocabulary.py:95
+#: ../../../gui/canaimasemilla/library/vocabulary.py:96
+#: ../../../gui/canaimasemilla/library/vocabulary.py:97
+#: ../../../gui/canaimasemilla/library/vocabulary.py:98
+#: ../../../gui/canaimasemilla/library/vocabulary.py:99
+#: ../../../gui/canaimasemilla/library/vocabulary.py:100
+#: ../../../gui/canaimasemilla/library/vocabulary.py:101
+#: ../../../gui/canaimasemilla/library/vocabulary.py:102
+#: ../../../gui/canaimasemilla/library/vocabulary.py:103
+#: ../../../gui/canaimasemilla/library/vocabulary.py:104
+#: ../../../gui/canaimasemilla/library/vocabulary.py:105
+#: ../../../gui/canaimasemilla/library/vocabulary.py:106
+#: ../../../gui/canaimasemilla/library/vocabulary.py:107
+#: ../../../gui/canaimasemilla/library/vocabulary.py:108
+#: ../../../gui/canaimasemilla/library/vocabulary.py:109
+msgid ""
+msgstr ""
+"Project-Id-Version: Canaima Semilla 3.0\n"
+"Report-Msgid-Bugs-To: desarrolladores@canaima.softwarelibre.gob.ve\n"
+"POT-Creation-Date: 2012-05-27 03:40-0430\n"
+"PO-Revision-Date: 2012-05-27 03:40-0430\n"
+"Last-Translator: Luis Alejandro Martínez Faneyth <luis@huntingbears.com.ve>\n"
+"Language-Team: Equipo de Traducción de Canaima Semilla <desarrolladores@canaima.softwarelibre.gob.ve>\n"
+"Language: English\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../../../gui/canaimasemilla/library/vocabulary.py:44
+#: ../../../gui/canaimasemilla/library/vocabulary.py:45
+msgid "\"\tDebe seleccionar La Arquitectura i386 o amd64\t\t\""
+msgstr ""
+
+#: ../../../gui/canaimasemilla/library/vocabulary.py:46
+#: ../../../gui/canaimasemilla/library/vocabulary.py:47
+msgid "\"\tDebe seleccionar un sabor\t\t\""
+msgstr ""
+
+#: ../../../gui/canaimasemilla/library/vocabulary.py:55
+#: ../../../gui/canaimasemilla/library/vocabulary.py:56
+#, python-format
+msgid ""
+"\"\tLa construcción de la imagen ISO de\n"
+"\tcanaima-%s ha sido cancelada.\t\""
+msgstr ""
+
+#: ../../../gui/canaimasemilla/library/vocabulary.py:51
+#: ../../../gui/canaimasemilla/library/vocabulary.py:52
+#, python-format
+msgid ""
+"\"\tSe ha creado una imagen ISO de canaima-%s.\n"
+"\n"
+"\tLa imagen canaima-%s_i386.iso resultante \n"
+"\tde los proceso de construcción se encuentra en la \n"
+"\tdireccion:\t\n"
+"\n"
+"\t\t/usr/share/canaima-semilla/semillero/\""
+msgstr ""
+
+#: ../../../gui/canaimasemilla/library/vocabulary.py:50
+#: ../../../gui/canaimasemilla/library/vocabulary.py:51
+msgid "\"CONSTRUYENDO IMAGEN\""
+msgstr ""
+
+#: ../../../gui/canaimasemilla/library/vocabulary.py:53
+#: ../../../gui/canaimasemilla/library/vocabulary.py:54
+msgid "\"Ocurrio un error durante la generacion de la imagen. Envie un correo a desarrolladores@canaima.softwarelibre.gob.ve con el contenido del archivo /usr/share/canaima-semilla/semillero/binary.log\""
+msgstr ""
+
+#: ../../../gui/canaimasemilla/library/vocabulary.py:74
+#: ../../../gui/canaimasemilla/library/vocabulary.py:75
+msgid "Cada Metadistribución tiene secciones del repositorio particulares. Seleccione segun su conveniencia."
+msgstr ""
+
+#: ../../../gui/canaimasemilla/library/vocabulary.py:31
+#: ../../../gui/canaimasemilla/library/vocabulary.py:32
+msgid "Canaima Semilla puede crear imágenes instalables (ISO o IMG) basado en los perfiles de sabores existentes. Puede especificársele el tipo de Medio, la arquitectura a construir, y el nombre del sabor."
+msgstr ""
+
+#: ../../../gui/canaimasemilla/library/vocabulary.py:42
+#: ../../../gui/canaimasemilla/library/vocabulary.py:43
+msgid "Cancelar"
+msgstr ""
+
+#: ../../../gui/canaimasemilla/library/vocabulary.py:25
+#: ../../../gui/canaimasemilla/library/vocabulary.py:26
+msgid "Crea una imagen de un Sistema Operativo construido en base a un perfil."
+msgstr ""
+
+#: ../../../gui/canaimasemilla/library/vocabulary.py:30
+#: ../../../gui/canaimasemilla/library/vocabulary.py:31
+msgid "Creación de imágenes a partir de perfiles existentes"
+msgstr ""
+
+#: ../../../gui/canaimasemilla/library/vocabulary.py:58
+#: ../../../gui/canaimasemilla/library/vocabulary.py:59
+msgid "Creación de perfiles para distribuciones derivadas"
+msgstr ""
+
+#: ../../../gui/canaimasemilla/library/vocabulary.py:21
+#: ../../../gui/canaimasemilla/library/vocabulary.py:22
+msgid "Crear imagen"
+msgstr ""
+
+#: ../../../gui/canaimasemilla/library/vocabulary.py:20
+#: ../../../gui/canaimasemilla/library/vocabulary.py:21
+msgid "Crear perfil"
+msgstr ""
+
+#: ../../../gui/canaimasemilla/library/vocabulary.py:41
+#: ../../../gui/canaimasemilla/library/vocabulary.py:42
+msgid "Cuando esté preparado para iniciar la construcción, presione el botón generar."
+msgstr ""
+
+#: ../../../gui/canaimasemilla/library/vocabulary.py:60
+#: ../../../gui/canaimasemilla/library/vocabulary.py:61
+msgid "Debe introducir el nombre con el que desea identificar la distribución derivada que está creando, en minúsculas y sin espacios."
+msgstr ""
+
+#: ../../../gui/canaimasemilla/library/vocabulary.py:62
+#: ../../../gui/canaimasemilla/library/vocabulary.py:63
+msgid "Debe introducir el nombre de la persona o grupo responsable de la creación y mantenimiento del sabor."
+msgstr ""
+
+#: ../../../gui/canaimasemilla/library/vocabulary.py:64
+#: ../../../gui/canaimasemilla/library/vocabulary.py:65
+msgid "Debe introducir un correo electrónico válido para contacto de la persona o grupo responsable de la creación y mantenimiento del sabor."
+msgstr ""
+
+#: ../../../gui/canaimasemilla/library/vocabulary.py:76
+#: ../../../gui/canaimasemilla/library/vocabulary.py:77
+msgid "Debe seleccionar de la lista el idioma que vendrá configurado en la imagen resultante."
+msgstr ""
+
+#: ../../../gui/canaimasemilla/library/vocabulary.py:80
+#: ../../../gui/canaimasemilla/library/vocabulary.py:81
+msgid "Deseo incluir repositorios adicionales"
+msgstr ""
+
+#: ../../../gui/canaimasemilla/library/vocabulary.py:87
+#: ../../../gui/canaimasemilla/library/vocabulary.py:88
+msgid "ERROR"
+msgstr ""
+
+#: ../../../gui/canaimasemilla/library/vocabulary.py:112
+#: ../../../gui/canaimasemilla/library/vocabulary.py:113
+msgid "El nombre escogido para la distribución derivada ya está siendo utilizado por otro perfil."
+msgstr ""
+
+#: ../../../gui/canaimasemilla/library/vocabulary.py:40
+#: ../../../gui/canaimasemilla/library/vocabulary.py:41
+msgid "El proceso de construcción de la imagen puede completarse en unos cuantos minutos o en varias horas, dependiendo de la velocidad de su conexión a internet y la capacidad de procesamiento de su computador."
+msgstr ""
+
+#: ../../../gui/canaimasemilla/library/vocabulary.py:45
+#: ../../../gui/canaimasemilla/library/vocabulary.py:46
+msgid "Error i386 o amd64"
+msgstr ""
+
+#: ../../../gui/canaimasemilla/library/vocabulary.py:47
+#: ../../../gui/canaimasemilla/library/vocabulary.py:48
+msgid "Error sabor"
+msgstr ""
+
+#: ../../../gui/canaimasemilla/library/vocabulary.py:52
+#: ../../../gui/canaimasemilla/library/vocabulary.py:53
+msgid "Finalizado"
+msgstr ""
+
+#: ../../../gui/canaimasemilla/library/vocabulary.py:19
+#: ../../../gui/canaimasemilla/library/vocabulary.py:20
+msgid "Generador de Distribuciones Derivadas"
+msgstr ""
+
+#: ../../../gui/canaimasemilla/library/vocabulary.py:23
+#: ../../../gui/canaimasemilla/library/vocabulary.py:24
+msgid "Grabar imagen"
+msgstr ""
+
+#: ../../../gui/canaimasemilla/library/vocabulary.py:35
+#: ../../../gui/canaimasemilla/library/vocabulary.py:36
+msgid "HÍBRIDA: Imagen mixta para dispositivos variados (CD/DVD/USB) [Recomendado]."
+msgstr ""
+
+#: ../../../gui/canaimasemilla/library/vocabulary.py:34
+#: ../../../gui/canaimasemilla/library/vocabulary.py:35
+msgid "IMG: Imagen para dispositivos de almacenamiento extraíble (USB)."
+msgstr ""
+
+#: ../../../gui/canaimasemilla/library/vocabulary.py:33
+#: ../../../gui/canaimasemilla/library/vocabulary.py:34
+msgid "ISO: Imagen para dispositivos ópticos de almacenamiento (CD/DVD)."
+msgstr ""
+
+#: ../../../gui/canaimasemilla/library/vocabulary.py:24
+#: ../../../gui/canaimasemilla/library/vocabulary.py:25
+msgid "Inicia un asistente que permite construir un perfil para una nueva distribución derivada."
+msgstr ""
+
+#: ../../../gui/canaimasemilla/library/vocabulary.py:27
+#: ../../../gui/canaimasemilla/library/vocabulary.py:28
+msgid "Inicia un asistente que permite grabar una imagen en un dispositivo de almacenamiento."
+msgstr ""
+
+#: ../../../gui/canaimasemilla/library/vocabulary.py:26
+#: ../../../gui/canaimasemilla/library/vocabulary.py:27
+msgid "Inicia un emulador que permite ejecutar el Sistema Operativo contenido en una imagen."
+msgstr ""
+
+#: ../../../gui/canaimasemilla/library/vocabulary.py:63
+#: ../../../gui/canaimasemilla/library/vocabulary.py:64
+msgid "Introduzca el correo electrónico de la persona o grupo responsable:"
+msgstr ""
+
+#: ../../../gui/canaimasemilla/library/vocabulary.py:71
+#: ../../../gui/canaimasemilla/library/vocabulary.py:72
+msgid "Introduzca el espejo del repositorio a utilizar:"
+msgstr ""
+
+#: ../../../gui/canaimasemilla/library/vocabulary.py:61
+#: ../../../gui/canaimasemilla/library/vocabulary.py:62
+msgid "Introduzca el nombre de la persona o grupo responsable:"
+msgstr ""
+
+#: ../../../gui/canaimasemilla/library/vocabulary.py:59
+#: ../../../gui/canaimasemilla/library/vocabulary.py:60
+msgid "Introduzca el nombre del sabor a crear:"
+msgstr ""
+
+#: ../../../gui/canaimasemilla/library/vocabulary.py:77
+#: ../../../gui/canaimasemilla/library/vocabulary.py:78
+msgid "Introduzca los paquetes que conformarán el Sistema Operativo:"
+msgstr ""
+
+#: ../../../gui/canaimasemilla/library/vocabulary.py:65
+#: ../../../gui/canaimasemilla/library/vocabulary.py:66
+msgid "Introduzca una dirección web para la persona o grupo responsable:"
+msgstr ""
+
+#: ../../../gui/canaimasemilla/library/vocabulary.py:86
+#: ../../../gui/canaimasemilla/library/vocabulary.py:87
+msgid "La dirección web introducida es inválida"
+msgstr ""
+
+#: ../../../gui/canaimasemilla/library/vocabulary.py:79
+#: ../../../gui/canaimasemilla/library/vocabulary.py:80
+msgid "Los repositorios adicionales permiten agregar software no oficial o desarrollado localmente a la imagen en construcción. Introduzca la dirección web, la rama y las secciones (separadas por espacios) correspondientes al repositorio."
+msgstr ""
+
+#: ../../../gui/canaimasemilla/library/vocabulary.py:54
+#: ../../../gui/canaimasemilla/library/vocabulary.py:56
+#: ../../../gui/canaimasemilla/library/vocabulary.py:55
+#: ../../../gui/canaimasemilla/library/vocabulary.py:57
+msgid "Ocurrió un error"
+msgstr ""
+
+#: ../../../gui/canaimasemilla/library/vocabulary.py:88
+#: ../../../gui/canaimasemilla/library/vocabulary.py:89
+#: ../../../gui/canaimasemilla/library/vocabulary.py:90
+msgid "Ocurrió un error durante la descarga de los componentes"
+msgstr ""
+
+#: ../../../gui/canaimasemilla/library/vocabulary.py:48
+#: ../../../gui/canaimasemilla/library/vocabulary.py:49
+#: ../../../gui/canaimasemilla/library/vocabulary.py:50
+msgid "Parece que no tiene internet"
+msgstr ""
+
+#: ../../../gui/canaimasemilla/library/vocabulary.py:22
+#: ../../../gui/canaimasemilla/library/vocabulary.py:23
+msgid "Probar imagen"
+msgstr ""
+
+#: ../../../gui/canaimasemilla/library/vocabulary.py:66
+#: ../../../gui/canaimasemilla/library/vocabulary.py:67
+msgid "Puede introducir una dirección web de referencia para mayor información acerca del sabor."
+msgstr ""
+
+#: ../../../gui/canaimasemilla/library/vocabulary.py:72
+#: ../../../gui/canaimasemilla/library/vocabulary.py:73
+msgid "Puede utilizar el espejo del repositorio de la Metadistribución que más le convenga. Se recomienda la utilización de un espejo local para mayor rapidez. Si no está seguro, deje el valor por defecto."
+msgstr ""
+
+#: ../../../gui/canaimasemilla/library/vocabulary.py:32
+#: ../../../gui/canaimasemilla/library/vocabulary.py:33
+msgid "Seleccione el formato de archivo de la imagen:"
+msgstr ""
+
+#: ../../../gui/canaimasemilla/library/vocabulary.py:75
+#: ../../../gui/canaimasemilla/library/vocabulary.py:76
+msgid "Seleccione el idioma predeterminado del Sistema Operativo:"
+msgstr ""
+
+#: ../../../gui/canaimasemilla/library/vocabulary.py:69
+#: ../../../gui/canaimasemilla/library/vocabulary.py:70
+msgid "Seleccione el nombre código de la Metadistribución:"
+msgstr ""
+
+#: ../../../gui/canaimasemilla/library/vocabulary.py:39
+#: ../../../gui/canaimasemilla/library/vocabulary.py:40
+msgid "Seleccione el perfil del sistema operativo a incluir en la imagen:"
+msgstr ""
+
+#: ../../../gui/canaimasemilla/library/vocabulary.py:36
+#: ../../../gui/canaimasemilla/library/vocabulary.py:37
+msgid "Seleccione el tipo de arquitectura de la imagen:"
+msgstr ""
+
+#: ../../../gui/canaimasemilla/library/vocabulary.py:67
+#: ../../../gui/canaimasemilla/library/vocabulary.py:68
+msgid "Seleccione la Metadistribución base de sabor:"
+msgstr ""
+
+#: ../../../gui/canaimasemilla/library/vocabulary.py:68
+#: ../../../gui/canaimasemilla/library/vocabulary.py:70
+#: ../../../gui/canaimasemilla/library/vocabulary.py:69
+#: ../../../gui/canaimasemilla/library/vocabulary.py:71
+msgid "Seleccione la Metadistribución que será la base del sabor en construcción."
+msgstr ""
+
+#: ../../../gui/canaimasemilla/library/vocabulary.py:73
+#: ../../../gui/canaimasemilla/library/vocabulary.py:74
+msgid "Seleccione las secciones que estarán disponibles:"
+msgstr ""
+
+#: ../../../gui/canaimasemilla/library/vocabulary.py:84
+#: ../../../gui/canaimasemilla/library/vocabulary.py:85
+msgid "Validación"
+msgstr ""
+
+#: ../../../gui/canaimasemilla/library/vocabulary.py:85
+#: ../../../gui/canaimasemilla/library/vocabulary.py:86
+#, python-format
+msgid "Validando arquitectura \"%s\" de la rama \"%s\" ..."
+msgstr ""
+
+#: ../../../gui/canaimasemilla/library/vocabulary.py:81
+#: ../../../gui/canaimasemilla/library/vocabulary.py:82
+msgid "http://repositorio.canaima.softwarelibre.gob.ve/"
+msgstr ""
+
+#: ../../../gui/canaimasemilla/library/vocabulary.py:82
+#: ../../../gui/canaimasemilla/library/vocabulary.py:83
+msgid "roraima"
+msgstr ""
+
+#: ../../../gui/canaimasemilla/library/vocabulary.py:83
+#: ../../../gui/canaimasemilla/library/vocabulary.py:84
+msgid "usuarios"
+msgstr ""
+
+#: ../../../gui/canaimasemilla/library/vocabulary.py:37
+#: ../../../gui/canaimasemilla/library/vocabulary.py:38
+msgid "x86: Arquitectura de procesadores con soporte para 32 bits [Recomendado]."
+msgstr ""
+
+#: ../../../gui/canaimasemilla/library/vocabulary.py:38
+#: ../../../gui/canaimasemilla/library/vocabulary.py:39
+msgid "x86_64: Arquitectura de procesadores con soporte para 64 bits."
+msgstr ""
+
+#: ../../../gui/canaimasemilla/library/vocabulary.py:43
+#: ../../../gui/canaimasemilla/library/vocabulary.py:44
+msgid "¿Está seguro que desea cancelar la creación de la imagen?"
+msgstr ""

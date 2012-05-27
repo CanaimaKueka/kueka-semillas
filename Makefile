@@ -13,17 +13,30 @@ YEAR = $(shell date +%Y)
 
 # Datos de traducción
 LANGTEAM = Equipo de Traducción de Canaima Semilla <desarrolladores@canaima.softwarelibre.gob.ve>
-POTLIST = locale/pot/canaima-semilla/POTFILES.in
-POTFILE = locale/pot/canaima-semilla/messages.pot
 POTITLE = Plantilla de Traducción para Canaima Semilla
 POTEAM = Equipo de Traducción de Canaima Semilla
 PODATE = $(shell date +%F\ %R%z)
+PYLOCALE = gui/canaimasemilla/library/vocabulary.py
+POTDIR = locale/pot/canaima-semilla/
+GUIPOTNAME = c-s-gui.pot
+COREPOTNAME = c-s-core.pot
+GUIPOTLISTNAME = POTFILES.gui.in
+COREPOTLISTNAME = POTFILES.core.in
+GUIPOT = $(POTDIR)$(GUIPOTNAME)
+COREPOT = $(POTDIR)$(COREPOTNAME)
+GUIPOTLIST = $(POTDIR)$(GUIPOTLISTNAME)
+COREPOTLIST = $(POTDIR)$(COREPOTLISTNAME)
+LOCALETYPES = core gui
 
 # Listas de Archivos
 SCRIPTS = $(shell find ./scripts -type f -iname "*.sh")
-IMAGES = $(shell ls documentation/rest/images/ | grep "\.svg" | sed 's/\.svg//g')
+DOCIMAGES = $(shell ls -1 documentation/rest/images/ | grep "\.svg" | sed 's/\.svg//g')
+GUIIMAGES = $(shell ls -1 gui/canaimasemilla/images/ | grep "\.svg" | sed 's/\.svg//g')
+ICOIMAGES = $(shell ls -1 icons/hicolor/scalable/apps/ | grep "\.svg" | sed 's/\.svg//g')
 LOCALES = $(shell find locale -mindepth 1 -maxdepth 1 -type d | sed 's|locale/pot||g;s|locale/||g')
 PYCS = $(shell find . -type f -iname "*.pyc")
+
+ICOSIZES = 16x16 22x22 24x24 32x32 48x48 64x64 128x128 256x256
 
 # Dependencias de Construcción
 # Tareas de Construcción
@@ -107,13 +120,26 @@ gen-man: check-buildep gen-predoc clean-man
 
 gen-img: check-buildep clean-img
 
-	@printf "Generando imágenes desde las fuentes [SVG > JPG,ICO] ["
-	@for IMAGE in $(IMAGES); do \
+	@printf "Generando imágenes desde las fuentes [SVG > PNG,JPG,ICO] ["
+	@for IMAGE in $(DOCIMAGES); do \
 		$(CONVERT) -background None documentation/rest/images/$${IMAGE}.svg \
 			documentation/rest/images/$${IMAGE}.png; \
 		$(CONVERT) -background None documentation/rest/images/$${IMAGE}.png \
 			documentation/rest/images/$${IMAGE}.jpg; \
 		printf "."; \
+	done;
+	@for IMAGE in $(GUIIMAGES); do \
+		$(CONVERT) -background None gui/canaimasemilla/images/$${IMAGE}.svg \
+			gui/canaimasemilla/images/$${IMAGE}.png; \
+		printf "."; \
+	done;
+	@for IMAGE in $(ICOIMAGES); do \
+		for SIZE in $(ICOSIZES); do \
+			mkdir -p icons/hicolor/$${SIZE}/apps/; \
+			$(CONVERT) -background None icons/hicolor/scalable/apps/$${IMAGE}.svg \
+				-resize $${SIZE} icons/hicolor/$${SIZE}/apps/$${IMAGE}.png; \
+			printf "."; \
+		done; \
 	done;
 	@$(ICOTOOL) -c -o documentation/rest/images/favicon.ico \
 		documentation/rest/images/favicon.png
@@ -123,9 +149,11 @@ gen-mo: check-buildep clean-mo
 
 	@printf "Generando mensajes de traducción desde las fuentes [PO > MO] ["
 	@for LOCALE in $(LOCALES); do \
-		$(MSGFMT) locale/$${LOCALE}/LC_MESSAGES/messages.po \
-			-o locale/$${LOCALE}/LC_MESSAGES/messages.mo; \
-		printf "."; \
+		for TYPE in $(LOCALETYPES); do \
+			$(MSGFMT) locale/$${LOCALE}/LC_MESSAGES/c-s-$${TYPE}.po \
+				-o locale/$${LOCALE}/LC_MESSAGES/c-s-$${TYPE}.mo; \
+			printf "."; \
+		done; \
 	done
 	@printf "]\n"
 
@@ -133,7 +161,7 @@ gen-mo: check-buildep clean-mo
 
 install:
 
-	@# canaima-semilla-core
+	@# c-s-core
 	@mkdir -p $(COREDIR)/usr/bin/
 	@mkdir -p $(COREDIR)/etc/canaima-semilla/
 	@mkdir -p $(COREDIR)/usr/share/canaima-semilla/scripts/
@@ -145,13 +173,13 @@ install:
 	@rm -f $(COREDIR)/usr/share/canaima-semilla/scripts/c-s.sh
 	@rm -rf $(COREDIR)/usr/share/locale/pot
 
-	@# canaima-semilla-doc
+	@# c-s-doc
 	@mkdir -p $(DOCDIR)/usr/share/applications/
 	@mkdir -p $(DOCDIR)/usr/share/doc/canaima-semilla/
 	@cp c-s-manual.desktop $(DOCDIR)/usr/share/applications/
 	@cp -r documentation/html $(DOCDIR)/usr/share/doc/canaima-semilla/
 
-	@# canaima-semilla-gui
+	@# c-s-gui
 	@mkdir -p $(GUIDIR)/usr/share/applications/
 	@mkdir -p $(GUIDIR)/usr/share/canaima-semilla/
 	@cp c-s-gui.desktop $(GUIDIR)/usr/share/applications/
@@ -185,34 +213,44 @@ push-po: check-maintdep
 
 gen-po: check-maintdep gen-pot
 
-	@echo "Actualizando archivos de traducción desde plantilla ["
+	@printf "Actualizando archivos de traducción desde plantilla [POT > PO] ["
 	@for LOCALE in $(LOCALES); do \
-		$(MSGMERGE) --no-wrap -s -U locale/$${LOCALE}/LC_MESSAGES/messages.po $(POTFILE); \
-		sed -i -e ':a;N;$$!ba;s|#, fuzzy\n||g' locale/$${LOCALE}/LC_MESSAGES/messages.po; \
-		rm -rf locale/$${LOCALE}/LC_MESSAGES/messages.po~; \
+		for TYPE in $(LOCALETYPES); do \
+			$(MSGMERGE) --no-wrap -q -s -U locale/$${LOCALE}/LC_MESSAGES/c-s-$${TYPE}.po \
+				locale/pot/canaima-semilla/c-s-$${TYPE}.pot; \
+			sed -i -e ':a;N;$$!ba;s|#, fuzzy\n||g' locale/$${LOCALE}/LC_MESSAGES/c-s-$${TYPE}.po; \
+			rm -rf locale/$${LOCALE}/LC_MESSAGES/c-s-$${TYPE}.po~; \
+			printf "."; \
+		done; \
 	done
-	@echo "]"
+	@printf "]\n"
 
 gen-pot: check-maintdep
 
-	@echo "Actualizando plantilla de traducción ..."
-	@rm $(POTLIST)
+	@echo "Actualizando plantilla de traducción [ POT ] ..."
+	@rm -rf $(GUIPOTLIST) $(COREPOTLIST)
 	@for FILE in $(SCRIPTS); do \
-		echo "../../.$${FILE}" >> $(POTLIST); \
+		echo "../../.$${FILE}" >> $(COREPOTLIST); \
 	done
+	@echo "../../../$(PYLOCALE)" > $(GUIPOTLIST)
 	@cd locale/pot/canaima-semilla/ && $(XGETTEXT) --msgid-bugs-address="$(MAILIST)" \
 		--package-version="$(VERSION)" --package-name="$(PACKAGE)" --copyright-holder="$(AUTHOR)" \
 		--no-wrap --from-code=utf-8 --language=Shell -kERRORMSG -kCONFIGMSG -kDEBUGMSG -kWARNINGMSG \
-		-kINFOMSG -kSUCCESSMSG -s -j -o messages.pot -f POTFILES.in
-	@sed -i -e 's/# SOME DESCRIPTIVE TITLE./# $(POTITLE)./' \
+		-kINFOMSG -kSUCCESSMSG -s -j -o $(COREPOTNAME) -f $(COREPOTLISTNAME)
+	@cd locale/pot/canaima-semilla/ && $(XGETTEXT) --msgid-bugs-address="$(MAILIST)" \
+		--package-version="$(VERSION)" --package-name="$(PACKAGE)" --copyright-holder="$(AUTHOR)" \
+		--no-wrap --from-code=utf-8 --language=Python -k_ -s -j -o $(GUIPOTNAME) -f $(GUIPOTLISTNAME)
+	@for TYPE in $(LOCALETYPES); do \
+		sed -i -e 's/# SOME DESCRIPTIVE TITLE./# $(POTITLE)./' \
 		-e 's/# Copyright (C) YEAR Luis Alejandro Martínez Faneyth/# Copyright (C) $(YEAR) $(AUTHOR)/' \
 		-e 's/same license as the PACKAGE package./same license as the $(PACKAGE) package./' \
 		-e 's/# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR./#\n# Translators:\n# $(AUTHOR) <$(EMAIL)>, $(YEAR)/' \
 		-e 's/"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\\n"/"PO-Revision-Date: $(PODATE)\\n"/' \
 		-e 's/"Last-Translator: FULL NAME <EMAIL@ADDRESS>\\n"/"Last-Translator: $(AUTHOR) <$(EMAIL)>\\n"/' \
 		-e 's/"Language-Team: LANGUAGE <LL@li.org>\\n"/"Language-Team: $(POTEAM) <$(MAILIST)>\\n"/' \
-		-e 's/"Language: \\n"/"Language: English\\n"/g' $(POTFILE)
-	@sed -i -e ':a;N;$$!ba;s|#, fuzzy\n||g' $(POTFILE)
+		-e 's/"Language: \\n"/"Language: English\\n"/g' locale/pot/canaima-semilla/c-s-$${TYPE}.pot; \
+		sed -i -e ':a;N;$$!ba;s|#, fuzzy\n||g' locale/pot/canaima-semilla/c-s-$${TYPE}.pot; \
+	done
 
 gen-test:
 
@@ -270,19 +308,30 @@ clean-predoc:
 clean-img:
 
 	@printf "Cleaning generated images [JPG,ICO] ["
-	@for IMAGE in $(IMAGES); do \
+	@for IMAGE in $(DOCIMAGES); do \
 		rm -rf documentation/rest/images/$${IMAGE}.jpg; \
 		rm -rf documentation/rest/images/$${IMAGE}.png; \
 		printf "."; \
 	done
+	@for IMAGE in $(GUIIMAGES); do \
+		rm -rf gui/canaimasemilla/images/$${IMAGE}.png; \
+		printf "."; \
+	done
+	@for IMAGE in $(ICOIMAGES); do \
+		for SIZE in $(ICOSIZES); do \
+			rm -rf icons/hicolor/$${SIZE}; \
+			printf "."; \
+		done; \
+	done
 	@rm -rf documentation/rest/images/favicon.ico
+	@printf "."
 	@printf "]\n"
 
 clean-mo:
 
 	@printf "Cleaning generated localization ["
 	@for LOCALE in $(LOCALES); do \
-		rm -rf locale/$${LOCALE}/LC_MESSAGES/messages.mo; \
+		rm -rf locale/$${LOCALE}/LC_MESSAGES/*.mo; \
 		printf "."; \
 	done
 	@printf "]\n"

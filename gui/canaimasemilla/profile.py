@@ -8,9 +8,9 @@ import gtk, sys
 
 ## Librerías Locales
 #import main
-from library.strings import *
-from library.localization import *
-from library.ui import *
+from library.vocabulary import *
+from library.creativity import *
+from library.intelligence import *
 from config import *
 
 class CreateProfile():
@@ -21,7 +21,7 @@ class CreateProfile():
         pbar.set_fraction(percent)
         return True
 
-    def DownloadWindow(self, homogeneous, spacing, expand, fill, padding, borderwidth, q_window, q_bar, arch, section):
+    def DownloadWindow(self, q_window, q_bar, arch, section):
 
         global downloadwindow
         gtk.gdk.threads_enter()
@@ -128,7 +128,7 @@ class CreateProfile():
             else:
                 textbuffer.set_text(buffertext+'deb '+urltext+' '+ramatext+' '+secciontext+'\n')
 
-    def ErrorExtraReposThread(self, message, title):
+    def UserMessage(self, message, title):
             gtk.gdk.threads_enter()
             md = gtk.MessageDialog( parent = None,
                                     flags = 0,
@@ -232,85 +232,6 @@ class CreateProfile():
         self.OnOff(checkrepos, extrareposbox)
         return extrareposbox
 
-
-    def ChangeRepo(class_id):
-        global codename
-        bigcodenames.remove(codename)
-        curdistro = distro.get_active_text()
-        curdistro_u = curdistro.title()
-        codename = gtk.combo_box_new_text()
-        d = DistInfo(curdistro_u, apt_templates)
-        codenamelist = []
-        for template in d.templates:
-            if not template.name in codenamelist:
-                codenamelist.append(template.name)
-                codename.append_text(template.name)
-        codename.append_text('otro')
-        codename.set_active(0)
-
-        codename.show()
-        bigcodenames.pack_start(codename, expand, fill, padding)
-
-        children = reposections.get_children()
-        for child in children:
-            reposections.remove(child)
-        curdistro = distro.get_active_text()
-        exec 'currepo = '+curdistro+'_repo'
-        repo.set_text(currepo)
-        exec 'cursections = '+curdistro+'_sections'
-        for section in cursections:
-            label = section
-            if section.find('-') != -1:
-                section = section.replace('-','')
-            if section == 'main':
-                global mainsection
-                mainsection = gtk.CheckButton('main')
-                mainsection.set_active(True)
-                mainsection.set_sensitive(False)
-                mainsection.show()
-                reposections.pack_start(mainsection)
-            else:
-                exec 'global '+section+'section\n'+section+'section = gtk.CheckButton(label)\n'+section+'section.set_active(False)\n'+section+'section.show()\nreposections.pack_start('+section+'section)'
-
-    def ChangeSections(class_id):
-        global codename
-        bigcodenames.remove(codename)
-        curdistro = distro.get_active_text()
-        curdistro_u = curdistro.title()
-        codename = gtk.combo_box_new_text()
-        d = DistInfo(curdistro_u, apt_templates)
-        codenamelist = []
-        for template in d.templates:
-            if not template.name in codenamelist:
-                codenamelist.append(template.name)
-                codename.append_text(template.name)
-        codename.append_text('otro')
-        codename.set_active(0)
-
-        codename.show()
-        bigcodenames.pack_start(codename, expand, fill, padding)
-
-        children = reposections.get_children()
-        for child in children:
-            reposections.remove(child)
-        curdistro = distro.get_active_text()
-        exec 'currepo = '+curdistro+'_repo'
-        repo.set_text(currepo)
-        exec 'cursections = '+curdistro+'_sections'
-        for section in cursections:
-            label = section
-            if section.find('-') != -1:
-                section = section.replace('-','')
-            if section == 'main':
-                global mainsection
-                mainsection = gtk.CheckButton('main')
-                mainsection.set_active(True)
-                mainsection.set_sensitive(False)
-                mainsection.show()
-                reposections.pack_start(mainsection)
-            else:
-                exec 'global '+section+'section\n'+section+'section = gtk.CheckButton(label)\n'+section+'section.set_active(False)\n'+section+'section.show()\nreposections.pack_start('+section+'section)'
-
     def AddPackagesThread(class_id, m_url, m_rama, m_section, e_repos, p_list, p_entry):
         q_window = Queue.Queue()
         q_bar = Queue.Queue()
@@ -397,19 +318,6 @@ class CreateProfile():
                                     args = (class_id, url, branch, section, extra, packagelist, packagename))
         thread.start()
 
-    def FramedScrolledWindow(class_id):
-        scrolledwindow = gtk.ScrolledWindow()
-        scrolledwindow.set_policy(gtk.POLICY_AUTOMATIC, gtk.POLICY_AUTOMATIC)
-        textview = gtk.TextView()
-        textview.set_wrap_mode(gtk.WRAP_WORD)
-        textview.set_editable(False)
-        scrolledwindow.add(textview)
-        marco = gtk.Frame()
-        marco.set_border_width(borderwidth)
-        marco.add(scrolledwindow)
-        packagelist = textview.get_buffer()
-
-        return marco, packagelist
 
     def PackagesField(class_id, url, branch, section, extra, mlength, length, regex):
 
@@ -563,8 +471,6 @@ class CreateProfile():
         return botones
 
     def __init__(self):
-
-        dummylist = []
         self.window = gtk.Window()
         self.window.set_border_width(0)
         self.window.set_title(PROFILE_TITLE)
@@ -583,38 +489,134 @@ class CreateProfile():
         self.banner = Banner(self, GUIDIR+'/images/banner.png')
         self.outbox.pack_start(self.banner, False, False, 0)
 
-        self.profile_name_title = Title(self, PROFILE_PROFILE_NAME_1)
-        self.author_name_title = Title(self, PROFILE_AUTHOR_NAME_1)
-        self.author_email_title = Title(self, PROFILE_AUTHOR_EMAIL_1)
-        self.author_url_title = Title(self, PROFILE_AUTHOR_URL_1)
-        self.os_locale_title = Title(self, PROFILE_OS_LOCALE_1)
-        self.meta_dist_title = Title(self, PROFILE_META_DIST_1)
-        self.meta_codename_title = Title(self, PROFILE_META_CODENAME_1)
-        self.meta_repo_title = Title(self, PROFILE_META_REPO_1)
-        self.meta_reposections_title = Title(self, PROFILE_META_REPOSECTIONS_1)
+        self.profile_name_title = Title(class_id = self, text = PROFILE_PROFILE_NAME_1)
+        self.author_name_title = Title(class_id = self, text = PROFILE_AUTHOR_NAME_1)
+        self.author_email_title = Title(class_id = self, text = PROFILE_AUTHOR_EMAIL_1)
+        self.author_url_title = Title(class_id = self, text = PROFILE_AUTHOR_URL_1)
+        self.os_locale_title = Title(class_id = self, text = PROFILE_OS_LOCALE_1)
+        self.meta_dist_title = Title(class_id = self, text = PROFILE_META_DIST_1)
+        self.meta_codename_title = Title(class_id = self, text = PROFILE_META_CODENAME_1)
+        self.meta_repo_title = Title(class_id = self, text = PROFILE_META_REPO_1)
+        self.meta_reposections_title = Title(class_id = self, text = PROFILE_META_REPOSECTIONS_1)
 
-        self.profile_name_description = Description(self, PROFILE_PROFILE_NAME_2)
-        self.author_name_description = Description(self, PROFILE_AUTHOR_NAME_2)
-        self.author_email_description = Description(self, PROFILE_AUTHOR_EMAIL_2)
-        self.author_url_description = Description(self, PROFILE_AUTHOR_URL_2)
-        self.os_locale_description = Description(self, PROFILE_OS_LOCALE_2)
-        self.meta_dist_description = Description(self, PROFILE_META_DIST_2)
-        self.meta_codename_description = Description(self, PROFILE_META_CODENAME_2)
-        self.meta_repo_description = Description(self, PROFILE_META_REPO_2)
-        self.meta_reposections_description = Description(self, PROFILE_META_REPOSECTIONS_2)
+        self.profile_name_description = Description(class_id = self, text = PROFILE_PROFILE_NAME_2)
+        self.author_name_description = Description(class_id = self, text = PROFILE_AUTHOR_NAME_2)
+        self.author_email_description = Description(class_id = self, text = PROFILE_AUTHOR_EMAIL_2)
+        self.author_url_description = Description(class_id = self, text = PROFILE_AUTHOR_URL_2)
+        self.os_locale_description = Description(class_id = self, text = PROFILE_OS_LOCALE_2)
+        self.meta_dist_description = Description(class_id = self, text = PROFILE_META_DIST_2)
+        self.meta_codename_description = Description(class_id = self, text = PROFILE_META_CODENAME_2)
+        self.meta_repo_description = Description(class_id = self, text = PROFILE_META_REPO_2)
+        self.meta_reposections_description = Description(class_id = self, text = PROFILE_META_REPOSECTIONS_2)
+        self.os_extrarepos_description = Description(class_id = self, text = PROFILE_OS_EXTRAREPOS_2)
 
-        self.profile_name, self.profilename = TextEntry(self, 18, 18, default_profile_name, '^[a-z-]*$')
-        self.author_name, self.authorname = TextEntry(self, 60, 60, default_profile_author, '\w')
-        self.author_email, self.authoremail = TextEntry(self, 60, 60, default_profile_email, '^[_.@0-9A-Za-z-]*$')
-        self.author_url, self.authorurl = TextEntry(self, 60, 60, default_profile_url, '^[-A-Za-z0-9+&@#/%?=~_()|!:,.;]*$')
-        self.localelist, self.localeactive = LocaleList(self, supported_locales, os.environ['LC_ALL'])
-        self.os_locale, self.oslocale = Combo(self, self.localelist, self.localeactive, Dummy, dummylist)
-        self.meta_dist, self.metadist = Combo(self, cs_distros, 2, ChangeCodename, changecodename_p)
-        self.codenamelist, self.codenameactive = CodenameList(self, self.metadist, apt_templates)
-        self.meta_codename, self.metacodename = Combo(self, self.codenamelist, self.codenameactive)
-        self.meta_repo, self.metarepo = TextEntry(self, 60, 60, canaima_repo, '^[-A-Za-z0-9+&@#/%?=~_()|!:,.;]*$')
-        self.sectionlist = SectionList(self, self.metadist)
-        self.meta_reposections, self.metareposections = CheckList(self, self.sectionlist, 'main')
+        self.profile_name, self.profilename = TextEntry(
+            class_id = self, maxlength = 18, length = 18,
+            text = default_profile_name,
+            regex = '^[a-z-]*$'
+            )
+
+        self.author_name, self.authorname = TextEntry(
+            class_id = self, maxlength = 60, length = 60,
+            text = default_profile_author,
+            regex = '\w'
+            )
+
+        self.author_email, self.authoremail = TextEntry(
+            class_id = self, maxlength = 60, length = 60,
+            text = default_profile_email,
+            regex = '^[_.@0-9A-Za-z-]*$'
+            )
+
+        self.author_url, self.authorurl = TextEntry(
+            class_id = self, maxlength = 60, length = 60,
+            text = default_profile_url,
+            regex = '^[-A-Za-z0-9+&@#/%?=~_()|!:,.;]*$'
+            )
+
+        self.localelist, self.localeactive = LocaleList(
+            class_id = self, supported = supported_locales,
+            current = os.environ['LC_ALL']
+            )
+
+        self.os_locale, self.oslocale = Combo(
+            class_id = self, combolist = self.localelist,
+            combodefault = self.localeactive, entry = False,
+            f_1 = Dummy, f_2 = Dummy, f_3 = Dummy
+            )
+
+        self.meta_dist, self.metadist = Combo(
+            class_id = self, combolist = cs_distros,
+            combodefault = 2, entry = False,
+            f_1 = ChangeCodename, f_2 = ChangeRepo, f_3 = ChangeSections
+            )
+
+        self.codenamelist, self.codenameactive = CodenameList(
+            class_id = self, dist = self.metadist, db = apt_templates
+            )
+
+        self.meta_codename, self.metacodename = Combo(
+            class_id = self, combolist = self.codenamelist,
+            combodefault = self.codenameactive, entry = True,
+            f_1 = Dummy, f_2 = Dummy, f_3 = Dummy
+            )
+
+        self.meta_repo, self.metarepo = TextEntry(
+            class_id = self, maxlength = 60,
+            length = 60, text = canaima_repo,
+            regex = '^[-A-Za-z0-9+&@#/%?=~_()|!:,.;]*$'
+            )
+
+        self.sectionlist = SectionList(class_id = self, dist = self.metadist)
+
+        self.meta_reposections , self.metareposections = CheckList(
+            class_id = self, checklist = self.sectionlist, checkdefault = 'main'
+            )
+
+        self.os_extrarepos, self.osextrarepos = ScrolledFrame(class_id = self)
+
+        self.os_extrarepos_entries_box = gtk.HBox(homogeneous, spacing)
+
+        self.os_extrarepos_check, self.osextrareposcheck = ActiveCheck(
+            class_id = self, text = PROFILE_OS_EXTRAREPOS_CHECK, active = False,
+            f_1 = Toggle, p_1 = { 'destination': self.os_extrarepos },
+            f_2 = Toggle, p_2 = { 'destination': self.os_extrarepos_entries_box }
+            )
+
+        self.os_extrarepos_url, self.osextrareposurl = TextEntry(
+            class_id = self, maxlength = 60,
+            length = 38, text = PROFILE_OS_EXTRAREPOS_URL,
+            regex = '^[-A-Za-z0-9+&@#/%?=~_()|!:,.;]*$'
+            )
+
+        self.os_extrarepos_branch, self.osextrareposbranch = TextEntry(
+            class_id = self, maxlength = 60,
+            length = 10, text = PROFILE_OS_EXTRAREPOS_BRANCH,
+            regex = '^[A-Za-z0-9-]*$'
+            )
+
+        self.os_extrarepos_sections, self.osextrarepossections = TextEntry(
+            class_id = self, maxlength = 60,
+            length = 17, text = PROFILE_OS_EXTRAREPOS_SECTIONS,
+            regex = '^[A-Za-z0-9\ -]*$'
+            )
+
+        self.add_repo_params = {
+            'url': self.osextrareposurl,
+            'branch': self.osextrareposbranch,
+            'sections': self.osextrarepossections,
+            'destination': self.osextrarepos
+        }
+
+        self.os_extrarepos_add, self.osextrareposadd = ActiveButton(
+            class_id = self, text = gtk.STOCK_ADD,
+            f_1 = AddRepo, p_1 = self.add_repo_params
+            )
+
+        self.os_extrarepos_clean, self.osextrareposclean = ActiveButton(
+            class_id = self, text = gtk.STOCK_CLEAR,
+            f_1 = CleanEntry, p_1 = { 'destination': self.osextrarepos }
+            )
 
         self.vbox.pack_start(self.profile_name_title, False, False, 0)
         self.vbox.pack_start(self.profile_name, False, False, 0)
@@ -651,7 +653,19 @@ class CreateProfile():
         self.vbox.pack_start(self.meta_reposections_title, False, False, 0)
         self.vbox.pack_start(self.meta_reposections, False, False, 0)
         self.vbox.pack_start(self.meta_reposections_description, False, False, 0)
+        self.vbox.pack_start(gtk.HSeparator(), False, False, 0)
+        self.vbox.pack_start(self.os_extrarepos_check, False, False, 0)
+        self.vbox.pack_start(self.os_extrarepos, False, False, 0)
+        self.os_extrarepos_entries_box.pack_start(self.os_extrarepos_url, False, False, 0)
+        self.os_extrarepos_entries_box.pack_start(self.os_extrarepos_branch, False, False, 0)
+        self.os_extrarepos_entries_box.pack_start(self.os_extrarepos_sections, False, False, 0)
+        self.os_extrarepos_entries_box.pack_start(self.os_extrarepos_add, False, False, 0)
+        self.os_extrarepos_entries_box.pack_start(self.os_extrarepos_clean, False, False, 0)
+        self.vbox.pack_start(self.os_extrarepos_entries_box, False, False, 0)
+        self.vbox.pack_start(self.os_extrarepos_description, False, False, 0)
 
+        Toggle(self.os_extrarepos_check, { 'destination': self.os_extrarepos })
+        Toggle(self.os_extrarepos_check, { 'destination': self.os_extrarepos_entries_box })
 
 #        self.separator = gtk.HSeparator()
 #        self.vbox.pack_start(self.separator, False, False, 0)
@@ -699,7 +713,6 @@ class CreateProfile():
 
 if __name__ == "__main__":
     gtk.gdk.threads_init()
-    init_localization()
     app = CreateProfile()
     gtk.main()
     sys.exit()

@@ -1,7 +1,20 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
+#!/usr/bin/python
+#-*- coding: UTF-8 -*-
 
+import gettext, locale
 from gettext import gettext as _
+
+from config import *
+
+settinglocale = locale.setlocale(locale.LC_ALL, '')
+naminglocale = LOCALEDIR+'/'+locale.getlocale()[0]+'/LC_MESSAGES/c-s-gui.mo'
+
+try:
+    trans = gettext.GNUTranslations(open(naminglocale, 'rb'))
+except IOError:
+    trans = gettext.NullTranslations()
+
+installinglocale = trans.install()
 
 MainWindowTitle = _('Generador de Distribuciones Derivadas')
 CrearPerfilTitle = _('Crear perfil')
@@ -66,8 +79,8 @@ PROFILE_OS_PACKAGES_2 = _('')
 PROFILE_OS_EXTRAREPOS_2 = _('Los repositorios adicionales permiten agregar software no oficial o desarrollado localmente a la imagen en construcción. Introduzca la dirección web, la rama y las secciones (separadas por espacios) correspondientes al repositorio.')
 PROFILE_OS_EXTRAREPOS_CHECK = _('Deseo incluir repositorios adicionales')
 PROFILE_OS_EXTRAREPOS_URL = _('http://repositorio.canaima.softwarelibre.gob.ve/')
-PROFILE_OS_EXTRAREPOS_RAMA = _('roraima')
-PROFILE_OS_EXTRAREPOS_SECCION = _('usuarios')
+PROFILE_OS_EXTRAREPOS_BRANCH = _('roraima')
+PROFILE_OS_EXTRAREPOS_SECTIONS = _('usuarios')
 PROFILE_OS_EXTRAREPOS_VALIDATE = _('Validación')
 PROFILE_OS_EXTRAREPOS_VALIDATE_URL = _('Validando arquitectura "%s" de la rama "%s" ...')
 PROFILE_OS_EXTRAREPOS_VALIDATE_URL_ERROR = _('La dirección web introducida es inválida')
@@ -97,4 +110,7 @@ PROFILE_IMG_DEBIAN_INSTALLER_GTK_2 = _('')
 
 
 ProfileExists = _('El nombre escogido para la distribución derivada ya está siendo utilizado por otro perfil.')
+
+
+
 
