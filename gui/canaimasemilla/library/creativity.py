@@ -160,3 +160,26 @@ def ActiveCheck(class_id, text, active, f_1, p_1, f_2, p_2):
     box.pack_start(check, expand, fill, padding)
 
     return box, check
+
+def ProgressWindow(self, q_window, q_bar, arch, section, text):
+    dialog = gtk.Dialog()
+    dialog.set_title(PROFILE_OS_EXTRAREPOS_VALIDATE)
+    dialogarea = dialog.get_content_area()
+    dialog.set_position(gtk.WIN_POS_CENTER_ALWAYS)
+    dialog.set_size_request(window_width*2/3, window_height/8)
+    dialog.set_resizable(False)
+
+    box = gtk.VBox(homogeneous, spacing)
+    box.set_border_width(borderwidth)
+
+    label = gtk.Label()
+    label.set_markup(PROFILE_OS_EXTRAREPOS_VALIDATE_URL % (arch, section))
+    progress = gtk.ProgressBar()
+
+    box.pack_start(label, expand, fill, padding)
+    box.pack_start(progress, expand, fill, padding)
+    dialogarea.add(box)
+    dialog.show_all()
+
+    q_window.put(dialog)
+    q_bar.put(progress)

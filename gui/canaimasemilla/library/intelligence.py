@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import os
+import os, re
 
 from aptsources.distinfo import DistInfo
 from config import *
@@ -53,11 +53,8 @@ def is_valid_url(url):
         r'(?:/?|[/?]\S+)$', re.IGNORECASE)
     return regex.search(url)
 
-def AddExtraRepos(class_id, textbuffer, extrareposurl, extrareposrama, extrareposseccion):
-    if is_valid_url(extrareposurl.get_text()):
-        hilo = threading.Thread(
-            target = AddExtraReposThread, args=(self, homogeneous, spacing, expand, fill, padding, borderwidth, textbuffer, extrareposurl, extrareposrama, extrareposseccion))
-            hilo.start()
-        else:
-            hilo = threading.Thread(target=self.ErrorExtraReposThread, args=(PROFILE_OS_EXTRAREPOS_VALIDATE_URL_ERROR, PROFILE_OS_EXTRAREPOS_VALIDATE_URL_ERROR_TITLE))
-            hilo.start()
+def DownloadProgress(self, pbar, blocknum, bs, size):
+    percent = float(blocknum*bs)/size
+    if percent >= 1: percent = 1
+    pbar.set_fraction(percent)
+    return True

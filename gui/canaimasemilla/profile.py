@@ -10,44 +10,9 @@ import gtk, sys
 #import main
 from library.vocabulary import *
 from library.creativity import *
-from library.intelligence import *
 from config import *
 
 class CreateProfile():
-
-    def DownloadProgress(self, pbar, blocknum, bs, size):
-        percent = float(blocknum*bs)/size
-        if percent >= 1: percent = 1
-        pbar.set_fraction(percent)
-        return True
-
-    def DownloadWindow(self, q_window, q_bar, arch, section):
-
-        global downloadwindow
-        gtk.gdk.threads_enter()
-        downloadwindow = gtk.Dialog()
-        downloadwindow.set_title(PROFILE_OS_EXTRAREPOS_VALIDATE)
-        downloadwindowarea = downloadwindow.get_content_area()
-        downloadwindow.set_position(gtk.WIN_POS_CENTER_ALWAYS)
-        downloadwindow.set_size_request(window_width*2/3, window_height/8)
-        downloadwindow.set_resizable(False)
-
-        progress = gtk.VBox(homogeneous, spacing)
-        progress.set_border_width(borderwidth)
-
-        descripcion = gtk.Label()
-        descripcion.set_markup(PROFILE_OS_EXTRAREPOS_VALIDATE_URL % (arch, section))
-        progress.pack_start(descripcion, expand, fill, padding)
-
-        pbar = gtk.ProgressBar()
-        progress.pack_start(pbar, expand, fill, padding)
-
-        downloadwindowarea.add(progress)
-        downloadwindow.show_all()
-        gtk.gdk.threads_leave()
-
-        q_window.put(downloadwindow)
-        q_bar.put(pbar)
 
     def AddExtraReposThread(self, _object, homogeneous, spacing, expand, fill, padding, borderwidth, textbuffer, extrareposurl, extrareposrama, extrareposseccion):
         print self, _object
@@ -610,7 +575,7 @@ class CreateProfile():
 
         self.os_extrarepos_add, self.osextrareposadd = ActiveButton(
             class_id = self, text = gtk.STOCK_ADD,
-            f_1 = AddRepo, p_1 = self.add_repo_params
+            f_1 = AddExtraRepos, p_1 = self.add_repo_params
             )
 
         self.os_extrarepos_clean, self.osextrareposclean = ActiveButton(
