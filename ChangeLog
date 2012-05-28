@@ -1,3 +1,6 @@
+DEVELOPMENT RELEASE v3.0+20120527224239 (05/27/12)
+Mejorando módulos en general
+
 DEVELOPMENT RELEASE v3.0+20120527034049 (05/27/12)
 Removiendo imágenes png generadas a partir de svg. Se generan al momento de compilación/empaquetamiento.
 Renombrando librerías.
