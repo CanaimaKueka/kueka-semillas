@@ -6,7 +6,6 @@
 # Luis Alejandro Martínez Faneyth <luis@huntingbears.com.ve>, 2012
 #
 #: ../../../gui/canaimasemilla/library/vocabulary.py:78
-#: ../../../gui/canaimasemilla/library/vocabulary.py:90
 #: ../../../gui/canaimasemilla/library/vocabulary.py:91
 #: ../../../gui/canaimasemilla/library/vocabulary.py:92
 #: ../../../gui/canaimasemilla/library/vocabulary.py:93
@@ -26,11 +25,12 @@
 #: ../../../gui/canaimasemilla/library/vocabulary.py:107
 #: ../../../gui/canaimasemilla/library/vocabulary.py:108
 #: ../../../gui/canaimasemilla/library/vocabulary.py:109
+#: ../../../gui/canaimasemilla/library/vocabulary.py:110
 msgid ""
 msgstr ""
 "Project-Id-Version: Canaima Semilla 3.0\n"
 "Report-Msgid-Bugs-To: desarrolladores@canaima.softwarelibre.gob.ve\n"
-"POT-Creation-Date: 2012-05-27 03:38-0430\n"
+"POT-Creation-Date: 2012-05-30 17:06-0430\n"
 "PO-Revision-Date: 2012-05-26 19:47-0430\n"
 "Last-Translator: Luis Alejandro Martínez Faneyth <luis@huntingbears.com.ve>\n"
 "Language-Team: Equipo de Traducción de Canaima Semilla <desarrolladores@canaima.softwarelibre.gob.ve>\n"
@@ -148,6 +148,10 @@ msgstr ""
 #: ../../../gui/canaimasemilla/library/vocabulary.py:80
 #: ../../../gui/canaimasemilla/library/vocabulary.py:81
 msgid "Deseo incluir repositorios adicionales"
+msgstr ""
+
+#: ../../../gui/canaimasemilla/library/vocabulary.py:82
+msgid "Dirección URL del Repositorio"
 msgstr ""
 
 #: ../../../gui/canaimasemilla/library/vocabulary.py:87
@@ -273,6 +277,10 @@ msgstr ""
 msgid "Ocurrió un error durante la descarga de los componentes"
 msgstr ""
 
+#: ../../../gui/canaimasemilla/library/vocabulary.py:79
+msgid "Paquetes"
+msgstr ""
+
 #: ../../../gui/canaimasemilla/library/vocabulary.py:48
 #: ../../../gui/canaimasemilla/library/vocabulary.py:49
 #: ../../../gui/canaimasemilla/library/vocabulary.py:50
@@ -292,6 +300,14 @@ msgstr ""
 #: ../../../gui/canaimasemilla/library/vocabulary.py:72
 #: ../../../gui/canaimasemilla/library/vocabulary.py:73
 msgid "Puede utilizar el espejo del repositorio de la Metadistribución que más le convenga. Se recomienda la utilización de un espejo local para mayor rapidez. Si no está seguro, deje el valor por defecto."
+msgstr ""
+
+#: ../../../gui/canaimasemilla/library/vocabulary.py:83
+msgid "Rama"
+msgstr ""
+
+#: ../../../gui/canaimasemilla/library/vocabulary.py:84
+msgid "Secciones"
 msgstr ""
 
 #: ../../../gui/canaimasemilla/library/vocabulary.py:32

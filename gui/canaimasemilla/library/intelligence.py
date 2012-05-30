@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import os, re
+import gtk, os, re
 
 from aptsources.distinfo import DistInfo
 from config import *
@@ -53,8 +53,10 @@ def is_valid_url(url):
         r'(?:/?|[/?]\S+)$', re.IGNORECASE)
     return regex.search(url)
 
-def DownloadProgress(self, pbar, blocknum, bs, size):
+def DownloadProgress(pbar, blocknum, bs, size):
+    gtk.gdk.threads_enter()
     percent = float(blocknum*bs)/size
     if percent >= 1: percent = 1
     pbar.set_fraction(percent)
+    gtk.gdk.threads_leave()
     return True

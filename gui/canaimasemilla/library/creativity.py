@@ -4,7 +4,6 @@
 import gtk, pango
 
 from config import *
-from library.dynamism import *
 
 def Banner(class_id, image):
     box = gtk.HBox(homogeneous, spacing)
@@ -51,7 +50,7 @@ def Description(class_id, text):
 
     return box
 
-def TextEntry(class_id, maxlength, length, text, regex):
+def TextEntry(class_id, maxlength, length, text, regex, flimit, fclear, ffill):
     box = gtk.HBox(homogeneous, spacing)
     box.set_border_width(borderwidth/3)
 
@@ -62,9 +61,9 @@ def TextEntry(class_id, maxlength, length, text, regex):
     textentry.set_sensitive(True)
     textentry.set_editable(True)
     textentry.set_visibility(True)
-    textentry.connect('insert-text', LimitEntry, regex)
-    textentry.connect('focus-in-event', ClearEntry, text)
-    textentry.connect('focus-out-event', FillEntry, text)
+    textentry.connect('insert-text', flimit, regex)
+    textentry.connect('focus-in-event', fclear, text)
+    textentry.connect('focus-out-event', ffill, text)
     textentry.show()
 
     box.pack_start(textentry, expand, fill, padding)
@@ -161,9 +160,22 @@ def ActiveCheck(class_id, text, active, f_1, p_1, f_2, p_2):
 
     return box, check
 
-def ProgressWindow(self, q_window, q_bar, arch, section, text):
+def UserMessage(message, title):
+    gtk.gdk.threads_enter()
+    md = gtk.MessageDialog( parent = None,
+                            flags = 0,
+                            type = gtk.MESSAGE_ERROR,
+                            buttons = gtk.BUTTONS_CLOSE,
+                            message_format = message)
+    md.set_title(title)
+    md.run()
+    md.destroy()
+    gtk.gdk.threads_leave()
+
+def ProgressWindow(q_window, q_bar, arch, section, text, title):
+    gtk.gdk.threads_enter()
     dialog = gtk.Dialog()
-    dialog.set_title(PROFILE_OS_EXTRAREPOS_VALIDATE)
+    dialog.set_title(title)
     dialogarea = dialog.get_content_area()
     dialog.set_position(gtk.WIN_POS_CENTER_ALWAYS)
     dialog.set_size_request(window_width*2/3, window_height/8)
@@ -173,7 +185,7 @@ def ProgressWindow(self, q_window, q_bar, arch, section, text):
     box.set_border_width(borderwidth)
 
     label = gtk.Label()
-    label.set_markup(PROFILE_OS_EXTRAREPOS_VALIDATE_URL % (arch, section))
+    label.set_markup(text % (arch, section))
     progress = gtk.ProgressBar()
 
     box.pack_start(label, expand, fill, padding)
@@ -183,3 +195,4 @@ def ProgressWindow(self, q_window, q_bar, arch, section, text):
 
     q_window.put(dialog)
     q_bar.put(progress)
+    gtk.gdk.threads_leave()
