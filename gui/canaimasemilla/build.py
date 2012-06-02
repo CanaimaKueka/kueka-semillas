@@ -7,8 +7,7 @@ from subprocess import Popen, PIPE, STDOUT
 
 # Librerías Locales
 import main
-from library.strings import *
-from library.localization import *
+from library.vocabulary import *
 from config import *
 
 class BuildImage():
@@ -472,7 +471,6 @@ class BuildImage():
 
 if __name__ == "__main__":
     gtk.gdk.threads_init()
-    init_localization()
     app = BuildImage()
     gtk.main()
     sys.exit()

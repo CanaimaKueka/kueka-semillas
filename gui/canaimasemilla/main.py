@@ -7,8 +7,7 @@ from subprocess import Popen, PIPE, STDOUT
 
 # Librerías Locales
 import build, profile, test, save
-from library.strings import *
-from library.localization import *
+from library.vocabulary import *
 from config import *
 
 class MainWindow():
@@ -203,7 +202,6 @@ class MainWindow():
 
 if __name__ == "__main__":
     gtk.gdk.threads_init()
-    init_localization()
     app = MainWindow()
     gtk.main()
     sys.exit()

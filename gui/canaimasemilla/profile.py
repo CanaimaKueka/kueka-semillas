@@ -136,6 +136,8 @@ class CreateProfile():
         return botones
 
     def __init__(self):
+    
+        dummydict = {}
         self.window = gtk.Window()
         self.window.set_border_width(0)
         self.window.set_title(PROFILE_TITLE)
@@ -155,6 +157,7 @@ class CreateProfile():
         self.outbox.pack_start(self.banner, False, False, 0)
 
         self.profile_name_title = Title(class_id = self, text = PROFILE_PROFILE_NAME_1)
+        self.profile_arch_title = Title(class_id = self, text = PROFILE_PROFILE_ARCH_1)
         self.author_name_title = Title(class_id = self, text = PROFILE_AUTHOR_NAME_1)
         self.author_email_title = Title(class_id = self, text = PROFILE_AUTHOR_EMAIL_1)
         self.author_url_title = Title(class_id = self, text = PROFILE_AUTHOR_URL_1)
@@ -166,6 +169,7 @@ class CreateProfile():
         self.os_packages_title = Title(class_id = self, text = PROFILE_OS_PACKAGES_1)
 
         self.profile_name_description = Description(class_id = self, text = PROFILE_PROFILE_NAME_2)
+        self.profile_arch_description = Description(class_id = self, text = PROFILE_PROFILE_ARCH_2)
         self.author_name_description = Description(class_id = self, text = PROFILE_AUTHOR_NAME_2)
         self.author_email_description = Description(class_id = self, text = PROFILE_AUTHOR_EMAIL_2)
         self.author_url_description = Description(class_id = self, text = PROFILE_AUTHOR_URL_2)
@@ -181,6 +185,10 @@ class CreateProfile():
             class_id = self, maxlength = 18, length = 18,
             text = default_profile_name, regex = '^[a-z-]*$',
             flimit = LimitEntry, fclear = ClearEntry, ffill = FillEntry
+            )
+
+        self.profile_arch, self.profilearch = CheckList(
+            class_id = self, checklist = supported_arch, checkdefault = ''
             )
 
         self.author_name, self.authorname = TextEntry(
@@ -209,13 +217,17 @@ class CreateProfile():
         self.os_locale, self.oslocale = Combo(
             class_id = self, combolist = self.localelist,
             combodefault = self.localeactive, entry = False,
-            f_1 = Dummy, f_2 = Dummy, f_3 = Dummy
+            f_1 = Dummy, p_1 = dummydict,
+            f_2 = Dummy, p_2 = dummydict,
+            f_3 = Dummy, p_3 = dummydict
             )
 
         self.meta_dist, self.metadist = Combo(
             class_id = self, combolist = cs_distros,
             combodefault = 2, entry = False,
-            f_1 = ChangeCodename, f_2 = ChangeRepo, f_3 = ChangeSections
+            f_1 = ChangeCodename, p_1 = dummydict,
+            f_2 = ChangeRepo, p_2 = dummydict,
+            f_3 = ChangeSections, p_3 = dummydict
             )
 
         self.codenamelist, self.codenameactive = CodenameList(
@@ -225,7 +237,9 @@ class CreateProfile():
         self.meta_codename, self.metacodename = Combo(
             class_id = self, combolist = self.codenamelist,
             combodefault = self.codenameactive, entry = True,
-            f_1 = Dummy, f_2 = Dummy, f_3 = Dummy
+            f_1 = Dummy, p_1 = dummydict,
+            f_2 = Dummy, p_2 = dummydict,
+            f_3 = Dummy, p_3 = dummydict
             )
 
         self.meta_repo, self.metarepo = TextEntry(
@@ -247,7 +261,8 @@ class CreateProfile():
         self.os_extrarepos_check, self.osextrareposcheck = ActiveCheck(
             class_id = self, text = PROFILE_OS_EXTRAREPOS_CHECK, active = False,
             f_1 = Toggle, p_1 = { 'destination': self.os_extrarepos },
-            f_2 = Toggle, p_2 = { 'destination': self.os_extrarepos_entries_box }
+            f_2 = Toggle, p_2 = { 'destination': self.os_extrarepos_entries_box },
+            f_3 = Dummy, p_3 = dummydict
             )
 
         self.os_extrarepos_url, self.osextrareposurl = TextEntry(
@@ -272,12 +287,13 @@ class CreateProfile():
             'url': self.osextrareposurl,
             'branch': self.osextrareposbranch,
             'sections': self.osextrarepossections,
+            'arch_container': self.profilearch,
             'repolist': self.osextrarepos,
             'fvalidation': is_valid_url,
             'fok': AddExtraReposThread,
             'ferror': UserMessage,
             'fprogresswindow': ProgressWindow,
-            'fprogress': DownloadProgress,
+            'frequest': HeadRequest,
             'errormessage': PROFILE_OS_EXTRAREPOS_VALIDATE_URL_ERROR,
             'errortitle': PROFILE_OS_EXTRAREPOS_VALIDATE_URL_ERROR_TITLE,
             'progressmessage': PROFILE_OS_EXTRAREPOS_VALIDATE_URL,
@@ -286,12 +302,16 @@ class CreateProfile():
 
         self.os_extrarepos_add, self.osextrareposadd = ActiveButton(
             class_id = self, text = gtk.STOCK_ADD,
-            f_1 = AddExtraRepos, p_1 = self.add_repo_params
+            f_1 = AddExtraRepos, p_1 = self.add_repo_params,
+            f_2 = Dummy, p_2 = dummydict,
+            f_3 = Dummy, p_3 = dummydict
             )
 
         self.os_extrarepos_clean, self.osextrareposclean = ActiveButton(
             class_id = self, text = gtk.STOCK_CLEAR,
-            f_1 = CleanEntry, p_1 = { 'destination': self.osextrarepos }
+            f_1 = CleanEntry, p_1 = { 'destination': self.osextrarepos },
+            f_2 = Dummy, p_2 = dummydict,
+            f_3 = Dummy, p_3 = dummydict
             )
 
         self.os_packages, self.ospackages = ScrolledFrame(class_id = self)
@@ -305,12 +325,19 @@ class CreateProfile():
             )
 
         self.add_packages_params = {
+            'url': self.metarepo,
+            'branch': self.metacodename,
+            'section_container': self.metareposections,
+            'arch_container': self.profilearch,
+            'extrarepos': self.osextrarepos,
             'packages': self.ospackagesname,
             'packageslist': self.ospackages,
             'fok': AddPackagesThread,
             'ferror': UserMessage,
             'fprogresswindow': ProgressWindow,
             'fprogress': DownloadProgress,
+            'freplace': replace_all,
+            'fcleantempdir': CleanTempDir,
             'errormessage': PROFILE_OS_EXTRAREPOS_VALIDATE_URL_ERROR,
             'errortitle': PROFILE_OS_EXTRAREPOS_VALIDATE_URL_ERROR_TITLE,
             'progressmessage': PROFILE_OS_EXTRAREPOS_VALIDATE_URL,
@@ -319,17 +346,25 @@ class CreateProfile():
 
         self.os_packages_add, self.ospackagesadd = ActiveButton(
             class_id = self, text = gtk.STOCK_ADD,
-            f_1 = AddPackages, p_1 = self.add_packages_params
+            f_1 = AddPackages, p_1 = self.add_packages_params,
+            f_2 = Dummy, p_2 = dummydict,
+            f_3 = Dummy, p_3 = dummydict
             )
 
         self.os_packages_clean, self.ospackagesclean = ActiveButton(
             class_id = self, text = gtk.STOCK_CLEAR,
-            f_1 = CleanEntry, p_1 = { 'destination': self.ospackages }
+            f_1 = CleanEntry, p_1 = { 'destination': self.ospackages },
+            f_2 = Dummy, p_2 = dummydict,
+            f_3 = Dummy, p_3 = dummydict
             )
 
         self.vbox.pack_start(self.profile_name_title, False, False, 0)
         self.vbox.pack_start(self.profile_name, False, False, 0)
         self.vbox.pack_start(self.profile_name_description, False, False, 0)
+        self.vbox.pack_start(gtk.HSeparator(), False, False, 0)
+        self.vbox.pack_start(self.profile_arch_title, False, False, 0)
+        self.vbox.pack_start(self.profile_arch, False, False, 0)
+        self.vbox.pack_start(self.profile_arch_description, False, False, 0)
         self.vbox.pack_start(gtk.HSeparator(), False, False, 0)
         self.vbox.pack_start(self.author_name_title, False, False, 0)
         self.vbox.pack_start(self.author_name, False, False, 0)
@@ -380,10 +415,6 @@ class CreateProfile():
         self.os_packages_entries_box.pack_start(self.os_packages_clean, False, False, 0)
         self.vbox.pack_start(self.os_packages_entries_box, False, False, 0)
         self.vbox.pack_start(self.os_packages_description, False, False, 0)
-
-        Toggle(self.os_extrarepos_check, { 'destination': self.os_extrarepos })
-        Toggle(self.os_extrarepos_check, { 'destination': self.os_extrarepos_entries_box })
-
         self.swindow.add_with_viewport(self.vbox)
         self.outbox.add(self.swindow)
 
@@ -395,6 +426,9 @@ class CreateProfile():
         
         self.window.add(self.outbox)
         self.window.show_all()
+
+        Toggle(self.os_extrarepos_check, { 'destination': self.os_extrarepos })
+        Toggle(self.os_extrarepos_check, { 'destination': self.os_extrarepos_entries_box })
 
 if __name__ == "__main__":
     gtk.gdk.threads_init()

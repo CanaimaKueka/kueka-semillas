@@ -70,7 +70,7 @@ def TextEntry(class_id, maxlength, length, text, regex, flimit, fclear, ffill):
 
     return box, textentry
 
-def Combo(class_id, combolist, combodefault, entry, f_1, f_2, f_3):
+def Combo(class_id, combolist, combodefault, entry, f_1, p_1, f_2, p_2, f_3, p_3):
     box = gtk.HBox(homogeneous, spacing)
     box.set_border_width(borderwidth/3)
 
@@ -83,9 +83,9 @@ def Combo(class_id, combolist, combodefault, entry, f_1, f_2, f_3):
         combo.append_text(item)
 
     combo.set_active(combodefault)
-    combo.connect('changed', f_1, class_id)
-    combo.connect('changed', f_2, class_id)
-    combo.connect('changed', f_3, class_id)
+    combo.connect('changed', f_1, p_1)
+    combo.connect('changed', f_2, p_2)
+    combo.connect('changed', f_3, p_3)
     combo.show()
 
     box.pack_start(combo, expand, fill, padding)
@@ -104,7 +104,7 @@ def CheckList(class_id, checklist, checkdefault):
 
     for item in checklist:
         check = gtk.CheckButton(item)
-        if item == checkdefault:
+        if checkdefault != '' and item == checkdefault:
             check.set_active(True)
             check.set_sensitive(False)
         check.show()
@@ -131,20 +131,22 @@ def ScrolledFrame(class_id):
 
     return frame, text
 
-def ActiveButton(class_id, text, f_1, p_1):
+def ActiveButton(class_id, text, f_1, p_1, f_2, p_2, f_3, p_3):
     box = gtk.HBox(homogeneous, spacing)
     box.set_border_width(borderwidth*0)
 
     button = gtk.Button(stock = text)
     button.set_border_width(borderwidth*0)
     button.connect('clicked', f_1, p_1)
+    button.connect('clicked', f_2, p_2)
+    button.connect('clicked', f_3, p_3)
     button.show()
 
     box.pack_start(button, expand, fill, padding)
 
     return box, button
 
-def ActiveCheck(class_id, text, active, f_1, p_1, f_2, p_2):
+def ActiveCheck(class_id, text, active, f_1, p_1, f_2, p_2, f_3, p_3):
     box = gtk.HBox(homogeneous, spacing)
     box.set_border_width(borderwidth/3)
 
@@ -154,6 +156,7 @@ def ActiveCheck(class_id, text, active, f_1, p_1, f_2, p_2):
         check.set_active(True)
     check.connect('toggled', f_1, p_1)
     check.connect('toggled', f_2, p_2)
+    check.connect('toggled', f_3, p_3)
     check.show()
 
     box.pack_start(check, expand, fill, padding)
@@ -172,7 +175,7 @@ def UserMessage(message, title):
     md.destroy()
     gtk.gdk.threads_leave()
 
-def ProgressWindow(q_window, q_bar, arch, section, text, title):
+def ProgressWindow(text, title, q_window, q_bar, q_msg):
     gtk.gdk.threads_enter()
     dialog = gtk.Dialog()
     dialog.set_title(title)
@@ -185,7 +188,7 @@ def ProgressWindow(q_window, q_bar, arch, section, text, title):
     box.set_border_width(borderwidth)
 
     label = gtk.Label()
-    label.set_markup(text % (arch, section))
+    label.set_markup(text)
     progress = gtk.ProgressBar()
 
     box.pack_start(label, expand, fill, padding)
@@ -195,4 +198,5 @@ def ProgressWindow(q_window, q_bar, arch, section, text, title):
 
     q_window.put(dialog)
     q_bar.put(progress)
+    q_msg.put(label)
     gtk.gdk.threads_leave()

@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import gtk, sys, re, threading, Queue, gzip, urllib2
+import gtk, sys, re, threading, Queue, gzip, urllib2, tempfile, fnmatch, gobject
 
 from config import *
 
@@ -14,6 +14,7 @@ def LimitEntry(editable, new_text, new_text_length, position, regex):
         editable.stop_emission('insert-text')
 
 def CleanEntry(editable, destination):
+    print editable, destination
     textbuffer = destination['destination']
     textbuffer.set_text('')
 
@@ -76,23 +77,30 @@ def AddExtraRepos(signaled, params):
     url = params['url'].get_text()
     branch = params['branch'].get_text()
     sections = params['sections'].get_text()
+    arch_container = params['arch_container']
+    archs = []
     repolist = params['repolist'].get_text(*params['repolist'].get_bounds())
     repolistframe = params['repolist']
     fvalidation = params['fvalidation']
     fok = params['fok']
     ferror = params['ferror']
     fprogresswindow = params['fprogresswindow']
-    fprogress = params['fprogress']
+    frequest = params['frequest']
     errormessage = params['errormessage']
     errortitle = params['errortitle']
     progressmessage = params['progressmessage']
     progresstitle = params['progresstitle']
+    
+    arch_children = arch_container.get_children()
+    for child in arch_children:
+        if child.get_active():
+            archs.append(child.get_label())
 
-    if fvalidation(url):
+    if fvalidation(url) and archs:
         thread = threading.Thread(
             target = fok, args = (
-                url, branch, sections, repolist, repolistframe,
-                ferror, fprogresswindow, fprogress, errormessage,
+                url, branch, sections, archs, repolist, repolistframe,
+                ferror, fprogresswindow, frequest, errormessage,
                 errortitle, progressmessage, progresstitle
                 )
             )
@@ -103,32 +111,37 @@ def AddExtraRepos(signaled, params):
             )
     thread.start()
 
-def AddExtraReposThread(url, branch, sections, repolist, repolistframe,
-                ferror, fprogresswindow, fprogress, errormessage,
+def AddExtraReposThread(url, branch, sections, archs, repolist, repolistframe,
+                ferror, fprogresswindow, frequest, errormessage,
                 errortitle, progressmessage, progresstitle):
 
+    errorcounter = 0
     q_window = Queue.Queue()
     q_bar = Queue.Queue()
+    q_msg = Queue.Queue()
 
     if repolist.find('deb '+url+' '+branch+' '+sections) == -1:
+
+        thread = threading.Thread(
+            target = fprogresswindow,
+            args = (
+                progresstitle, progresstitle,
+                q_window, q_bar, q_msg
+                )
+            )
+        thread.start()
+        message = q_msg.get()
+        window = q_window.get()
+        bar = q_bar.get()
+
         for section in sections.split(' '):
-            for arch in supported_arch:
-                bs = 5*10240
-                size = -1
-                read = 0
-                blocknum = 0
-                errorcounter = 0
-                tempfile = open(apt_extra_tempfile+'.tmp', 'wb')
-                print apt_extra_tempfile+'.tmp'
-
-                if section.find('-') != -1:
-                    l_section = l_section.replace('-','')
-                else:
-                    l_section = section
-
+            for arch in archs:
+                contentheader = 0
+                message.set_markup(progressmessage % (arch, section))
+                bar.pulse()
+                requesturl = url+'/dists/'+branch+'/'+section+'/binary-'+arch+'/Packages.gz'
                 try:
-                    response = urllib2.urlopen(url+'/dists/'+branch+'/'+section+'/binary-'+arch+'/Packages.gz')
-                    headers = response.info()
+                    response = urllib2.urlopen(frequest(requesturl))
                 except urllib2.HTTPError as e:
                     errorcode = str(e.code)
                     errorcounter += 1
@@ -148,185 +161,203 @@ def AddExtraReposThread(url, branch, sections, repolist, repolistframe,
                     errorcode = str(sys.exc_info()[0])
                     errorcounter += 1
                 else:
-                    pass
+                    headers = response.info()
+                    contentheader = int(headers["Content-Length"])
+                
+                if contentheader == 0:
+                    errorcode = ''
+                    errorcounter += 1
 
-                if errorcounter > 0 :
-                    thread = threading.Thread(
-                        target = ferror,
-                        args = (errormessage+":\n"+errorcode, errortitle)
-                        )
-                    thread.start()
-                else:
-                    thread = threading.Thread(
-                        target = fprogresswindow,
-                        args = (
-                            q_window, q_bar, arch, section,
-                            progressmessage, progresstitle
-                            )
-                        )
-                    thread.start()
-
-                    exec "b_"+l_section+"_"+arch+" = q_bar.get()"
-                    exec "w_"+l_section+"_"+arch+" = q_window.get()"
-
-                    if "content-length" in headers:
-                        size = int(headers["Content-Length"])
-
-                    while True:
-                        block = response.read(bs)
-                        if not block: break
-                        read += len(block)
-                        tempfile.seek(0)
-                        tempfile.write(block)
-                        tempfile.flush()
-                        blocknum += 1
-                        exec "thread = threading.Thread(target=fprogress, args=(b_"+l_section+"_"+arch+", blocknum, bs, size))"
-                        thread.start()
-
-                    tempfile.close()
-                    response.close()
-
-                    tempfile = gzip.open(apt_extra_tempfile+'.tmp', 'rb')
-                    savefile = open(apt_extra_tempfile, 'ab')
-                    savefile.writelines(tempfile.read())
-                    tempfile.close()
-                    savefile.close()
-
-    for section in sections:
-        for arch in supported_arch:
-            exec "w_"+l_section+"_"+arch+".hide_all()"
-
-    if size >= 0 and read < size:
+        if errorcounter > 0:
             thread = threading.Thread(
-                target = fmessage,
+                target = ferror,
                 args = (errormessage+":\n"+errorcode, errortitle)
                 )
             thread.start()
-    else:
-        repolistframe.set_text(repolist+'deb '+url+' '+branch+' '+sections+'\n')
+        else:
+            repolistframe.set_text(repolist+'deb '+url+' '+branch+' '+sections+'\n')
+
+        window.hide_all()
 
 def AddPackages(signaled, params):
+    url = params['url'].get_text()
+    branch = params['branch'].get_active_text()
+    section_container = params['section_container']
+    sections = []
+    arch_container = params['arch_container']
+    archs = []
+    extrarepos = params['extrarepos'].get_text(*params['extrarepos'].get_bounds())
     packages = params['packages'].get_text()
-    packageslist = params['packageslist'].get_text(*params['packageslist'].get_bounds())
     packageslistframe = params['packageslist']
     fok = params['fok']
+    ferror = params['ferror']
     fprogresswindow = params['fprogresswindow']
     fprogress = params['fprogress']
-    errormessage = params['errormessage']
+    freplace = params['freplace']
+    fcleantempdir = params['fcleantempdir']
+    m_no_arch_selected = params['m_no_arch_selected']
     errortitle = params['errortitle']
     progressmessage = params['progressmessage']
     progresstitle = params['progresstitle']
 
-    thread = threading.Thread(
-        target = fok, args = (
-            packages, packageslist, packageslistframe,
-            fprogresswindow, fprogress, errormessage,
-            errortitle, progressmessage, progresstitle
-            )
-        )
+    section_children = section_container.get_children()
+    for child in section_children:
+        if child.get_active():
+            sections.append(child.get_label())
 
-def AddPackagesThread(packages, packageslist, packageslistframe,
-            fprogresswindow, fprogress, errormessage,
-            errortitle, progressmessage, progresstitle):
+    arch_children = arch_container.get_children()
+    for child in arch_children:
+        if child.get_active():
+            archs.append(child.get_label())
+
+    repolist = [[url, branch, sections]]
+
+    for repoline in extrarepos.split('\n'):
+        if repoline:
+            components = repoline.split(' ')
+            xurl = components[1]
+            xbranch = components[2]
+            del components[0:3]
+            repo = [xurl, xbranch, components]
+            repolist.append(repo)
+
+    if archs:
+        thread = threading.Thread(
+            target = fok, args = (
+                repolist, packages, archs, packageslistframe,
+                ferror, fprogresswindow, fprogress, freplace, fcleantempdir,
+                errormessage, errortitle, progressmessage, progresstitle
+                )
+            )
+    else:
+        thread = threading.Thread(
+            target = ferror,
+            args = (m_no_arch_selected, errortitle)
+            )
+    thread.start()
+
+def AddPackagesThread(repolist, packages, archs, packageslistframe,
+            ferror, fprogresswindow, fprogress, freplace, fcleantempdir,
+            errormessage, errortitle, progressmessage, progresstitle):
+
+    bs = 16*1024
+    errorcounter = 0
+    dic = {
+            '/':'', ':':'', 'http':'', 'file':'', 'ftp':'', '?':'',
+            '=':'', '&':'', '-':'', '(':'', ')':'', '+':'', '-':'',
+            '#':'', '$':'', '%':'', '@':'', '|':'', '~':'', '_':'',
+            ',':'', ';':'', '!':''
+            }
 
     q_window = Queue.Queue()
     q_bar = Queue.Queue()
+    q_msg = Queue.Queue()
+    f_cleantempdir = fcleantempdir(tempdir)
 
-#    for package in packages.split(' '):
-#        if packageslist.find(package) == -1:
-#            bs = 5*10240
-#            size = -1
-#            read = 0
-#            blocknum = 0
-#            errorcounter = 0
-#            tempfile = open(apt_extra_tempfile+'.tmp', 'wb')
+    thread = threading.Thread(
+        target = fprogresswindow,
+        args = (
+            progresstitle, progresstitle,
+            q_window, q_bar, q_msg
+            )
+        )
+    thread.start()
 
-#                if l_section.find('-') != -1:
-#                    l_section = l_section.replace('-','')
-#                else:
-#                    l_section = section
+    message = q_msg.get()
+    window = q_window.get()
+    bar = q_bar.get()
 
-#                try:
-#                    response = urllib2.urlopen(url+'/dists/'+branch+'/'+section+'/binary-'+arch+'/Packages.gz')
-#                    headers = response.info()
-#                except urllib2.HTTPError as e:
-#                    errorcode = str(e.code)
-#                    errorcounter += 1
-#                except urllib2.URLError as e:
-#                    errorcode = str(e.reason)
-#                    errorcounter += 1
-#                except IOError as e:
-#                    errorcode = str(e.errno)+': '+str(e.strerror)
-#                    errorcounter += 1
-#                except ValueError as e:
-#                    errorcode = str(e)
-#                    errorcounter += 1
-#                except TypeError as e:
-#                    errorcode = str(e)
-#                    errorcounter += 1
-#                except:
-#                    errorcode = str(sys.exc_info()[0])
-#                    errorcounter += 1
-#                else:
-#                    pass
+    for url, branch, sections in repolist:
+        for section in sections:
+            for arch in archs:
+                read = 0
+                blocknum = 0
+                contentheader = 0
+                message.set_markup(progressmessage % (arch, section))
+                requesturl = url+'/dists/'+branch+'/'+section+'/binary-'+arch+'/Packages.gz'
+                urlname = freplace(url, dic)
 
-#                if errorcounter > 0 :
-#                    thread = threading.Thread(
-#                        target = ferror,
-#                        args = (errormessage+":\n"+errorcode, errortitle)
-#                        )
-#                    thread.start()
-#                else:
-#                    thread = threading.Thread(
-#                        target = fprogresswindow,
-#                        args = (
-#                            q_window, q_bar, arch, section,
-#                            progressmessage, progresstitle
-#                            )
-#                        )
-#                    thread.start()
+                pkgcache = tempfile.NamedTemporaryFile(
+                    prefix = urlname+'-'+branch+'-',
+                    suffix = '-'+section+'_'+arch+'.gz',
+                    dir = tempdir, delete = False
+                    )
 
-#                    exec "b_"+l_section+"_"+arch+" = q_bar.get()"
-#                    exec "w_"+l_section+"_"+arch+" = q_window.get()"
+                try:
+                    response = urllib2.urlopen(requesturl)
+                except urllib2.HTTPError as e:
+                    errorcode = str(e.code)
+                    errorcounter += 1
+                except urllib2.URLError as e:
+                    errorcode = str(e.reason)
+                    errorcounter += 1
+                except IOError as e:
+                    errorcode = str(e.errno)+': '+str(e.strerror)
+                    errorcounter += 1
+                except ValueError as e:
+                    errorcode = str(e)
+                    errorcounter += 1
+                except TypeError as e:
+                    errorcode = str(e)
+                    errorcounter += 1
+                except:
+                    errorcode = str(sys.exc_info()[0])
+                    errorcounter += 1
+                else:
+                    headers = response.info()
+                    contentheader = int(headers["Content-Length"])
 
-#                    if "content-length" in headers:
-#                        size = int(headers["Content-Length"])
+                if contentheader == 0:
+                    errorcode = ''
+                    errorcounter += 1
 
-#                    while True:
-#                        block = response.read(bs)
-#                        if not block: break
-#                        read += len(block)
-#                        tempfile.seek(0)
-#                        tempfile.write(block)
-#                        tempfile.flush()
-#                        blocknum += 1
-#                        exec "thread = threading.Thread(target=fprogress, args=(b_"+l_section+"_"+arch+", blocknum, bs, size))"
-#                        thread.start()
+                if errorcounter == 0:
+                    while True:
+                        block = response.read(bs)
+                        if not block:
+                            break
+                        pkgcache.write(block)
+                        pkgcache.flush()
+                        os.fsync(pkgcache.fileno())
+                        read += len(block)
+                        blocknum += 1
+                        percent = float(blocknum*bs)/contentheader
+                        fprogress(bar, False, percent)
 
-#                    tempfile.close()
-#                    response.close()
+                    pkgcache.close()
+                    response.close()
 
-#                    tempfile = gzip.open(apt_extra_tempfile+'.tmp', 'rb')
-#                    savefile = open(apt_extra_tempfile, 'ab')
-#                    savefile.writelines(tempfile.read())
-#                    tempfile.close()
-#                    savefile.close()
+                if read < contentheader:
+                    errorcode = ''
+                    errorcounter += 1
 
-#    for section in sections:
-#        for arch in supported_arch:
-#            exec "w_"+l_section+"_"+arch+".hide_all()"
+    if errorcounter > 0:
+        thread = threading.Thread(
+            target = ferror,
+            args = (errormessage+":\n"+errorcode, errortitle)
+            )
+        thread.start()
+    else:
+        timer = gobject.timeout_add(100, fprogress, bar, True, 0)
+        for package in packages.split(' '):
+            found = 0
+            message.set_markup(progressmessage % (package, section))
+            for path in os.listdir(tempdir):
+                if os.path.isfile(tempdir+path) and fnmatch.fnmatch(tempdir+path, '*.gz'):
+                    zipfile = gzip.open(tempdir+path)
+                    for line in zipfile.readlines():
+                        if line == 'Package: '+package+'\n':
+                            found += 1
+                    zipfile.close()
 
-#    if size >= 0 and read < size:
-#            thread = threading.Thread(
-#                target = fmessage,
-#                args = (errormessage+":\n"+errorcode, errortitle)
-#                )
-#            thread.start()
-#    else:
-#        repoframe.set_text(repo+'deb '+url+' '+branch+' '+sections+'\n')
-    
-    
-    
-    
-    
-    
+            if found > 0:
+                packageslist = packageslistframe.get_text(*packageslistframe.get_bounds())
+                packageslistframe.set_text(packageslist+' '+package)
+            else:
+                thread = threading.Thread(
+                    target = ferror,
+                    args = (errormessage+":\n"+package, errortitle)
+                    )
+                thread.start()
+        gobject.source_remove(timer)
+    window.destroy()
