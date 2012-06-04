@@ -133,10 +133,8 @@ def ScrolledFrame(class_id):
 
 def ActiveButton(class_id, text, f_1, p_1, f_2, p_2, f_3, p_3):
     box = gtk.HBox(homogeneous, spacing)
-    box.set_border_width(borderwidth*0)
 
     button = gtk.Button(stock = text)
-    button.set_border_width(borderwidth*0)
     button.connect('clicked', f_1, p_1)
     button.connect('clicked', f_2, p_2)
     button.connect('clicked', f_3, p_3)
@@ -164,19 +162,15 @@ def ActiveCheck(class_id, text, active, f_1, p_1, f_2, p_2, f_3, p_3):
     return box, check
 
 def UserMessage(message, title):
-    gtk.gdk.threads_enter()
-    md = gtk.MessageDialog( parent = None,
-                            flags = 0,
-                            type = gtk.MESSAGE_ERROR,
-                            buttons = gtk.BUTTONS_CLOSE,
-                            message_format = message)
-    md.set_title(title)
-    md.run()
-    md.destroy()
-    gtk.gdk.threads_leave()
+    message = gtk.MessageDialog(
+        parent = None, flags = 0, type = gtk.MESSAGE_ERROR,
+        buttons = gtk.BUTTONS_CLOSE, message_format = message
+        )
+    message.set_title(title)
+    message.run()
+    message.destroy()
 
 def ProgressWindow(text, title, q_window, q_bar, q_msg):
-    gtk.gdk.threads_enter()
     dialog = gtk.Dialog()
     dialog.set_title(title)
     dialogarea = dialog.get_content_area()
@@ -199,4 +193,144 @@ def ProgressWindow(text, title, q_window, q_bar, q_msg):
     q_window.put(dialog)
     q_bar.put(progress)
     q_msg.put(label)
-    gtk.gdk.threads_leave()
+
+def IconButton(class_id, icon, text_1, text_2, width, height, f_1, p_1):
+    box = gtk.VBox(homogeneous, spacing)
+    box.set_border_width(borderwidth)
+
+    button = gtk.Button()
+    button.connect("clicked", f_1, p_1)
+    button.set_size_request(width, height)
+
+    inbox = gtk.VBox(homogeneous, spacing)
+    inbox.set_border_width(borderwidth)
+
+    image = gtk.Image()
+    image.set_from_file(icon)
+
+    attr = pango.AttrList()
+    size = pango.AttrSize(20000, 0, -1)
+    attr.insert(size)
+
+    title = gtk.Label()
+    title.set_markup(text_1)
+    title.set_justify(gtk.JUSTIFY_CENTER)
+    title.set_attributes(attr)
+
+    description = gtk.Label()
+    description.set_markup(text_2)
+    description.set_line_wrap(True)
+    description.set_justify(gtk.JUSTIFY_CENTER)
+
+    inbox.pack_start(image, expand, fill, padding)
+    inbox.pack_start(title, expand, fill, padding)
+    inbox.pack_start(gtk.HSeparator(), expand, fill, padding)
+    inbox.pack_start(description, expand, fill, padding)
+    button.add(inbox)
+    box.pack_start(button, expand, fill, padding)
+
+    return box
+
+def AboutWindow(img, name, version, url, copyright, description,
+    authorsfile, licensefile, translatorsfile):
+
+    about = gtk.AboutDialog()
+    about.set_position(gtk.WIN_POS_CENTER_ON_PARENT)
+    about.set_logo(gtk.gdk.pixbuf_new_from_file(img))
+    about.set_name(name)
+    about.set_version(version)
+    about.set_copyright(copyright)
+    about.set_comments(description)
+    about.set_website(url)
+
+    try:
+        f = open(licensefile, 'r')
+        license = f.read()
+        f.close()
+    except Exception, msg:
+        license =  'NOT FOUND'
+
+    try:
+        f = open(authorsfile, 'r')
+        a = f.read()
+        authors = a.split('\n')
+        f.close()
+    except Exception, msg:
+        authors = 'NOT FOUND'
+
+    try:
+        f = open(translatorsfile, 'r')
+        translators = f.read()
+        f.close()
+    except Exception, msg:
+        translators = 'NOT FOUND'
+
+    about.set_translator_credits(translators)
+    about.set_authors(authors)
+    about.set_license(license)
+
+    about.run()
+    about.destroy()
+
+def BottomButtons(classid, fclose, pclose, fhelp, phelp,
+    fabout, pabout, fback, pback, fgo, pgo, fdummy, pdummy):
+
+    box = gtk.VBox(homogeneous, spacing)
+    hbox = gtk.HBox(homogeneous, spacing)
+
+    if fclose != fdummy:
+        close_button, close = ActiveButton(
+            class_id = classid, text = gtk.STOCK_CLOSE,
+            f_1 = fclose, p_1 = pclose,
+            f_2 = fdummy, p_2 = pdummy,
+            f_3 = fdummy, p_3 = pdummy
+        )
+
+        hbox.pack_start(close_button, expand, fill, padding)
+
+    if fhelp != fdummy:
+        help_button, help = ActiveButton(
+            class_id = classid, text = gtk.STOCK_HELP,
+            f_1 = fhelp, p_1 = phelp,
+            f_2 = fdummy, p_2 = pdummy,
+            f_3 = fdummy, p_3 = pdummy
+        )
+
+        hbox.pack_start(help_button, expand, fill, padding)
+
+    if fabout != fdummy:
+        about_button, about = ActiveButton(
+            class_id = classid, text = gtk.STOCK_ABOUT,
+            f_1 = fabout, p_1 = pabout,
+            f_2 = fdummy, p_2 = pdummy,
+            f_3 = fdummy, p_3 = pdummy
+        )
+
+        hbox.pack_start(about_button, expand, fill, padding)
+
+    hbox.pack_start(gtk.HSeparator(), expand, fill, 180)
+
+    if fback != fdummy:
+        back_button, back = ActiveButton(
+            class_id = classid, text = gtk.STOCK_GO_BACK,
+            f_1 = fback, p_1 = pback,
+            f_2 = fdummy, p_2 = pdummy,
+            f_3 = fdummy, p_3 = pdummy
+        )
+
+        hbox.pack_start(back_button, expand, fill, padding)
+
+    if fgo != fdummy:
+        go_button, go = ActiveButton(
+            class_id = classid, text = gtk.STOCK_GO_FORWARD,
+            f_1 = fgo, p_1 = pgo,
+            f_2 = fdummy, p_2 = pdummy,
+            f_3 = fdummy, p_3 = pdummy
+        )
+
+        hbox.pack_start(go_button, expand, fill, padding)
+
+    box.pack_start(gtk.HSeparator(), expand, fill, padding)
+    box.pack_start(hbox, expand, fill, padding)
+
+    return box

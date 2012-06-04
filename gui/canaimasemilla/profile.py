@@ -14,7 +14,10 @@ from library.dynamism import *
 from library.creativity import *
 from config import *
 
-class CreateProfile():
+gtk.gdk.threads_init()
+gobject.threads_init()
+
+class Profile():
 
     def Botones(self, homogeneous, spacing, expand, fill, padding, borderwidth, width, height):
     
@@ -136,7 +139,6 @@ class CreateProfile():
         return botones
 
     def __init__(self):
-    
         dummydict = {}
         self.window = gtk.Window()
         self.window.set_border_width(0)
@@ -431,7 +433,6 @@ class CreateProfile():
         Toggle(self.os_extrarepos_check, { 'destination': self.os_extrarepos_entries_box })
 
 if __name__ == "__main__":
-    gtk.gdk.threads_init()
-    app = CreateProfile()
+    app = Profile()
     gtk.main()
     sys.exit()

@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import gtk, os, re, urllib2, fnmatch
+import gtk, os, re, urllib2, fnmatch, threading, subprocess
 
 from aptsources.distinfo import DistInfo
 from config import *
@@ -79,3 +79,38 @@ def replace_all(text, dic):
     for i, j in dic.iteritems():
         text = text.replace(i, j)
     return text
+    
+def ThreadGenerator(reference, dic):
+    if dic['gtk']:
+        function = GTKThreadReceiver
+        params = dic['function'], dic['params'], dic['hide']
+    else:
+        function = dic['function']
+        params = dic['params']
+
+    thread = threading.Thread(
+        target = function,
+        args = params
+        )
+    thread.start()
+
+    return thread
+
+def GTKThreadReceiver(function, params, window):
+    gtk.gdk.threads_enter()
+
+    if params:
+        fexec = function(*params)
+    else:
+        fexec = function()
+
+    if window:
+        window.hide()
+
+    gtk.gdk.threads_leave()
+    
+
+def ProcessGenerator(command):
+    process = subprocess.Popen(command, shell = False, stdout = subprocess.PIPE)
+    return process
+

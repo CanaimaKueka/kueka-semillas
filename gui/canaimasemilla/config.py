@@ -42,6 +42,7 @@ if curdir == '/usr/share/pyshared':
     DOCDIR = '/usr/share/doc/canaima-semilla/html'
     ICONDIR = '/usr/share/icons/hicolor'
     LOCALEDIR = '/usr/share/locale/'
+    SHAREDIR = '/usr/share/canaima-semilla/'
 else:
     GUIDIR = curdir+'/canaimasemilla'
     SRCDIR = os.path.dirname(curdir)
@@ -53,6 +54,7 @@ else:
     DOCDIR = SRCDIR+'/documentation/html'
     ICONDIR = SRCDIR+'/icons/hicolor'
     LOCALEDIR = SRCDIR+'/locale'
+    SHAREDIR = SRCDIR
 
 configload = ConfigMapper(CONFDIR)
 

@@ -237,8 +237,8 @@ def AddPackages(signaled, params):
     thread.start()
 
 def AddPackagesThread(repolist, packages, archs, packageslistframe,
-            ferror, fprogresswindow, fprogress, freplace, fcleantempdir,
-            errormessage, errortitle, progressmessage, progresstitle):
+    ferror, fprogresswindow, fprogress, freplace, fcleantempdir,
+    errormessage, errortitle, progressmessage, progresstitle):
 
     bs = 16*1024
     errorcounter = 0

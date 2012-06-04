@@ -10,7 +10,7 @@ import main
 from library.vocabulary import *
 from config import *
 
-class BuildImage():
+class Main():
 
     def Banner(self, homogeneous, spacing, expand, fill, padding, borderwidth, imagefile):
         banner = gtk.HBox(homogeneous, spacing)

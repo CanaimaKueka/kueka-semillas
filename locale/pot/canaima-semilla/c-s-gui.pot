@@ -5,8 +5,7 @@
 # Translators:
 # Luis Alejandro Martínez Faneyth <luis@huntingbears.com.ve>, 2012
 #
-#: ../../../gui/canaimasemilla/library/vocabulary.py:80
-#: ../../../gui/canaimasemilla/library/vocabulary.py:93
+#: ../../../gui/canaimasemilla/library/vocabulary.py:81
 #: ../../../gui/canaimasemilla/library/vocabulary.py:94
 #: ../../../gui/canaimasemilla/library/vocabulary.py:95
 #: ../../../gui/canaimasemilla/library/vocabulary.py:96
@@ -26,12 +25,13 @@
 #: ../../../gui/canaimasemilla/library/vocabulary.py:110
 #: ../../../gui/canaimasemilla/library/vocabulary.py:111
 #: ../../../gui/canaimasemilla/library/vocabulary.py:112
+#: ../../../gui/canaimasemilla/library/vocabulary.py:113
 msgid ""
 msgstr ""
 "Project-Id-Version: Canaima Semilla 3.0\n"
 "Report-Msgid-Bugs-To: desarrolladores@canaima.softwarelibre.gob.ve\n"
-"POT-Creation-Date: 2012-06-02 10:55-0430\n"
-"PO-Revision-Date: 2012-06-02 10:55-0430\n"
+"POT-Creation-Date: 2012-06-04 00:25-0430\n"
+"PO-Revision-Date: 2012-06-04 00:25-0430\n"
 "Last-Translator: Luis Alejandro Martínez Faneyth <luis@huntingbears.com.ve>\n"
 "Language-Team: Equipo de Traducción de Canaima Semilla <desarrolladores@canaima.softwarelibre.gob.ve>\n"
 "Language: English\n"
@@ -83,6 +83,7 @@ msgstr ""
 #: ../../../gui/canaimasemilla/library/vocabulary.py:74
 #: ../../../gui/canaimasemilla/library/vocabulary.py:75
 #: ../../../gui/canaimasemilla/library/vocabulary.py:76
+#: ../../../gui/canaimasemilla/library/vocabulary.py:77
 msgid "Cada Metadistribución tiene secciones del repositorio particulares. Seleccione segun su conveniencia."
 msgstr ""
 
@@ -94,6 +95,10 @@ msgstr ""
 #: ../../../gui/canaimasemilla/library/vocabulary.py:42
 #: ../../../gui/canaimasemilla/library/vocabulary.py:43
 msgid "Cancelar"
+msgstr ""
+
+#: ../../../gui/canaimasemilla/library/vocabulary.py:22
+msgid "Construir imagen"
 msgstr ""
 
 #: ../../../gui/canaimasemilla/library/vocabulary.py:25
@@ -134,24 +139,28 @@ msgstr ""
 #: ../../../gui/canaimasemilla/library/vocabulary.py:62
 #: ../../../gui/canaimasemilla/library/vocabulary.py:63
 #: ../../../gui/canaimasemilla/library/vocabulary.py:64
+#: ../../../gui/canaimasemilla/library/vocabulary.py:65
 msgid "Debe introducir el nombre de la persona o grupo responsable de la creación y mantenimiento del sabor."
 msgstr ""
 
 #: ../../../gui/canaimasemilla/library/vocabulary.py:64
 #: ../../../gui/canaimasemilla/library/vocabulary.py:65
 #: ../../../gui/canaimasemilla/library/vocabulary.py:66
+#: ../../../gui/canaimasemilla/library/vocabulary.py:67
 msgid "Debe introducir un correo electrónico válido para contacto de la persona o grupo responsable de la creación y mantenimiento del sabor."
 msgstr ""
 
 #: ../../../gui/canaimasemilla/library/vocabulary.py:76
 #: ../../../gui/canaimasemilla/library/vocabulary.py:77
 #: ../../../gui/canaimasemilla/library/vocabulary.py:78
+#: ../../../gui/canaimasemilla/library/vocabulary.py:79
 msgid "Debe seleccionar de la lista el idioma que vendrá configurado en la imagen resultante."
 msgstr ""
 
 #: ../../../gui/canaimasemilla/library/vocabulary.py:80
 #: ../../../gui/canaimasemilla/library/vocabulary.py:81
 #: ../../../gui/canaimasemilla/library/vocabulary.py:83
+#: ../../../gui/canaimasemilla/library/vocabulary.py:84
 msgid "Deseo incluir repositorios adicionales"
 msgstr ""
 
@@ -162,12 +171,14 @@ msgstr ""
 #: ../../../gui/canaimasemilla/library/vocabulary.py:87
 #: ../../../gui/canaimasemilla/library/vocabulary.py:88
 #: ../../../gui/canaimasemilla/library/vocabulary.py:90
+#: ../../../gui/canaimasemilla/library/vocabulary.py:91
 msgid "ERROR"
 msgstr ""
 
 #: ../../../gui/canaimasemilla/library/vocabulary.py:112
 #: ../../../gui/canaimasemilla/library/vocabulary.py:113
 #: ../../../gui/canaimasemilla/library/vocabulary.py:115
+#: ../../../gui/canaimasemilla/library/vocabulary.py:116
 msgid "El nombre escogido para la distribución derivada ya está siendo utilizado por otro perfil."
 msgstr ""
 
@@ -187,6 +198,7 @@ msgid "Error sabor"
 msgstr ""
 
 #: ../../../gui/canaimasemilla/library/vocabulary.py:62
+#: ../../../gui/canaimasemilla/library/vocabulary.py:63
 msgid "Estas serán las arquitecturas disponibles para la construcción de imágenes basadas en el perfil de este nuevo sabor. Las arquitecturas que seleccione serán utilizadas para validar paquetes y repositorios."
 msgstr ""
 
@@ -238,18 +250,21 @@ msgstr ""
 #: ../../../gui/canaimasemilla/library/vocabulary.py:63
 #: ../../../gui/canaimasemilla/library/vocabulary.py:64
 #: ../../../gui/canaimasemilla/library/vocabulary.py:65
+#: ../../../gui/canaimasemilla/library/vocabulary.py:66
 msgid "Introduzca el correo electrónico de la persona o grupo responsable:"
 msgstr ""
 
 #: ../../../gui/canaimasemilla/library/vocabulary.py:71
 #: ../../../gui/canaimasemilla/library/vocabulary.py:72
 #: ../../../gui/canaimasemilla/library/vocabulary.py:73
+#: ../../../gui/canaimasemilla/library/vocabulary.py:74
 msgid "Introduzca el espejo del repositorio a utilizar:"
 msgstr ""
 
 #: ../../../gui/canaimasemilla/library/vocabulary.py:61
 #: ../../../gui/canaimasemilla/library/vocabulary.py:62
 #: ../../../gui/canaimasemilla/library/vocabulary.py:63
+#: ../../../gui/canaimasemilla/library/vocabulary.py:64
 msgid "Introduzca el nombre de la persona o grupo responsable:"
 msgstr ""
 
@@ -261,24 +276,28 @@ msgstr ""
 #: ../../../gui/canaimasemilla/library/vocabulary.py:77
 #: ../../../gui/canaimasemilla/library/vocabulary.py:78
 #: ../../../gui/canaimasemilla/library/vocabulary.py:79
+#: ../../../gui/canaimasemilla/library/vocabulary.py:80
 msgid "Introduzca los paquetes que conformarán el Sistema Operativo:"
 msgstr ""
 
 #: ../../../gui/canaimasemilla/library/vocabulary.py:65
 #: ../../../gui/canaimasemilla/library/vocabulary.py:66
 #: ../../../gui/canaimasemilla/library/vocabulary.py:67
+#: ../../../gui/canaimasemilla/library/vocabulary.py:68
 msgid "Introduzca una dirección web para la persona o grupo responsable:"
 msgstr ""
 
 #: ../../../gui/canaimasemilla/library/vocabulary.py:86
 #: ../../../gui/canaimasemilla/library/vocabulary.py:87
 #: ../../../gui/canaimasemilla/library/vocabulary.py:89
+#: ../../../gui/canaimasemilla/library/vocabulary.py:90
 msgid "La dirección web introducida es inválida"
 msgstr ""
 
 #: ../../../gui/canaimasemilla/library/vocabulary.py:79
 #: ../../../gui/canaimasemilla/library/vocabulary.py:80
 #: ../../../gui/canaimasemilla/library/vocabulary.py:82
+#: ../../../gui/canaimasemilla/library/vocabulary.py:83
 msgid "Los repositorios adicionales permiten agregar software no oficial o desarrollado localmente a la imagen en construcción. Introduzca la dirección web, la rama y las secciones (separadas por espacios) correspondientes al repositorio."
 msgstr ""
 
@@ -294,11 +313,13 @@ msgstr ""
 #: ../../../gui/canaimasemilla/library/vocabulary.py:90
 #: ../../../gui/canaimasemilla/library/vocabulary.py:91
 #: ../../../gui/canaimasemilla/library/vocabulary.py:92
+#: ../../../gui/canaimasemilla/library/vocabulary.py:93
 msgid "Ocurrió un error durante la descarga de los componentes"
 msgstr ""
 
 #: ../../../gui/canaimasemilla/library/vocabulary.py:79
 #: ../../../gui/canaimasemilla/library/vocabulary.py:81
+#: ../../../gui/canaimasemilla/library/vocabulary.py:82
 msgid "Paquetes"
 msgstr ""
 
@@ -316,12 +337,14 @@ msgstr ""
 #: ../../../gui/canaimasemilla/library/vocabulary.py:66
 #: ../../../gui/canaimasemilla/library/vocabulary.py:67
 #: ../../../gui/canaimasemilla/library/vocabulary.py:68
+#: ../../../gui/canaimasemilla/library/vocabulary.py:69
 msgid "Puede introducir una dirección web de referencia para mayor información acerca del sabor."
 msgstr ""
 
 #: ../../../gui/canaimasemilla/library/vocabulary.py:72
 #: ../../../gui/canaimasemilla/library/vocabulary.py:73
 #: ../../../gui/canaimasemilla/library/vocabulary.py:74
+#: ../../../gui/canaimasemilla/library/vocabulary.py:75
 msgid "Puede utilizar el espejo del repositorio de la Metadistribución que más le convenga. Se recomienda la utilización de un espejo local para mayor rapidez. Si no está seguro, deje el valor por defecto."
 msgstr ""
 
@@ -341,12 +364,14 @@ msgstr ""
 #: ../../../gui/canaimasemilla/library/vocabulary.py:75
 #: ../../../gui/canaimasemilla/library/vocabulary.py:76
 #: ../../../gui/canaimasemilla/library/vocabulary.py:77
+#: ../../../gui/canaimasemilla/library/vocabulary.py:78
 msgid "Seleccione el idioma predeterminado del Sistema Operativo:"
 msgstr ""
 
 #: ../../../gui/canaimasemilla/library/vocabulary.py:69
 #: ../../../gui/canaimasemilla/library/vocabulary.py:70
 #: ../../../gui/canaimasemilla/library/vocabulary.py:71
+#: ../../../gui/canaimasemilla/library/vocabulary.py:72
 msgid "Seleccione el nombre código de la Metadistribución:"
 msgstr ""
 
@@ -363,6 +388,7 @@ msgstr ""
 #: ../../../gui/canaimasemilla/library/vocabulary.py:67
 #: ../../../gui/canaimasemilla/library/vocabulary.py:68
 #: ../../../gui/canaimasemilla/library/vocabulary.py:69
+#: ../../../gui/canaimasemilla/library/vocabulary.py:70
 msgid "Seleccione la Metadistribución base de sabor:"
 msgstr ""
 
@@ -371,37 +397,44 @@ msgstr ""
 #: ../../../gui/canaimasemilla/library/vocabulary.py:69
 #: ../../../gui/canaimasemilla/library/vocabulary.py:71
 #: ../../../gui/canaimasemilla/library/vocabulary.py:72
+#: ../../../gui/canaimasemilla/library/vocabulary.py:73
 msgid "Seleccione la Metadistribución que será la base del sabor en construcción."
 msgstr ""
 
 #: ../../../gui/canaimasemilla/library/vocabulary.py:61
+#: ../../../gui/canaimasemilla/library/vocabulary.py:62
 msgid "Seleccione las arquitecturas habilitadas para el sabor:"
 msgstr ""
 
 #: ../../../gui/canaimasemilla/library/vocabulary.py:73
 #: ../../../gui/canaimasemilla/library/vocabulary.py:74
 #: ../../../gui/canaimasemilla/library/vocabulary.py:75
+#: ../../../gui/canaimasemilla/library/vocabulary.py:76
 msgid "Seleccione las secciones que estarán disponibles:"
 msgstr ""
 
 #: ../../../gui/canaimasemilla/library/vocabulary.py:84
 #: ../../../gui/canaimasemilla/library/vocabulary.py:85
 #: ../../../gui/canaimasemilla/library/vocabulary.py:87
+#: ../../../gui/canaimasemilla/library/vocabulary.py:88
 msgid "Validación"
 msgstr ""
 
 #: ../../../gui/canaimasemilla/library/vocabulary.py:85
 #: ../../../gui/canaimasemilla/library/vocabulary.py:86
 #: ../../../gui/canaimasemilla/library/vocabulary.py:88
+#: ../../../gui/canaimasemilla/library/vocabulary.py:89
 #, python-format
 msgid "Validando arquitectura \"%s\" de la rama \"%s\" ..."
 msgstr ""
 
 #: ../../../gui/canaimasemilla/library/vocabulary.py:85
+#: ../../../gui/canaimasemilla/library/vocabulary.py:86
 msgid "auyantepui"
 msgstr ""
 
 #: ../../../gui/canaimasemilla/library/vocabulary.py:84
+#: ../../../gui/canaimasemilla/library/vocabulary.py:85
 msgid "http://paquetes.canaima.softwarelibre.gob.ve/"
 msgstr ""
 
@@ -411,6 +444,7 @@ msgid "http://repositorio.canaima.softwarelibre.gob.ve/"
 msgstr ""
 
 #: ../../../gui/canaimasemilla/library/vocabulary.py:86
+#: ../../../gui/canaimasemilla/library/vocabulary.py:87
 msgid "main aportes no-libres"
 msgstr ""
 

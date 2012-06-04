@@ -16,15 +16,16 @@ except IOError:
 
 installinglocale = trans.install()
 
-MainWindowTitle = _('Generador de Distribuciones Derivadas')
-CrearPerfilTitle = _('Crear perfil')
-CrearImagenTitle = _('Crear imagen')
-ProbarImagenTitle = _('Probar imagen')
-GrabarImagenTitle = _('Grabar imagen')
-CrearPerfilLabel = _('Inicia un asistente que permite construir un perfil para una nueva distribución derivada.')
-CrearImagenLabel = _('Crea una imagen de un Sistema Operativo construido en base a un perfil.')
-ProbarImagenLabel = _('Inicia un emulador que permite ejecutar el Sistema Operativo contenido en una imagen.')
-GrabarImagenLabel = _('Inicia un asistente que permite grabar una imagen en un dispositivo de almacenamiento.')
+# main.Main() strings
+MAIN_TITLE = _('Generador de Distribuciones Derivadas')
+MAIN_CREATE_PROFILE_TITLE = _('Crear perfil')
+MAIN_BUILD_IMAGE_TITLE = _('Construir imagen')
+MAIN_TEST_IMAGE_TITLE = _('Probar imagen')
+MAIN_SAVE_IMAGE_TITLE = _('Grabar imagen')
+MAIN_CREATE_PROFILE_TEXT = _('Inicia un asistente que permite construir un perfil para una nueva distribución derivada.')
+MAIN_BUILD_IMAGE_TEXT = _('Crea una imagen de un Sistema Operativo construido en base a un perfil.')
+MAIN_TEST_IMAGE_TEXT = _('Inicia un emulador que permite ejecutar el Sistema Operativo contenido en una imagen.')
+MAIN_SAVE_IMAGE_TEXT = _('Inicia un asistente que permite grabar una imagen en un dispositivo de almacenamiento.')
 
 
 BuildImageTitle = _('Creación de imágenes a partir de perfiles existentes')
