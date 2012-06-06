@@ -131,10 +131,12 @@ def ScrolledFrame(class_id):
 
     return frame, text
 
-def ActiveButton(class_id, text, f_1, p_1, f_2, p_2, f_3, p_3):
+def ActiveButton(class_id, text, width, height, f_1, p_1, f_2, p_2, f_3, p_3):
     box = gtk.HBox(homogeneous, spacing)
 
     button = gtk.Button(stock = text)
+    if width != 0 and height != 0:
+        button.set_size_request(width, height)
     button.connect('clicked', f_1, p_1)
     button.connect('clicked', f_2, p_2)
     button.connect('clicked', f_3, p_3)
@@ -272,7 +274,7 @@ def AboutWindow(img, name, version, url, copyright, description,
     about.run()
     about.destroy()
 
-def BottomButtons(classid, fclose, pclose, fhelp, phelp,
+def BottomButtons(classid, bwidth, bheight, fclose, pclose, fhelp, phelp,
     fabout, pabout, fback, pback, fgo, pgo, fdummy, pdummy):
 
     box = gtk.VBox(homogeneous, spacing)
@@ -281,6 +283,7 @@ def BottomButtons(classid, fclose, pclose, fhelp, phelp,
     if fclose != fdummy:
         close_button, close = ActiveButton(
             class_id = classid, text = gtk.STOCK_CLOSE,
+            width = bwidth, height = bheight,
             f_1 = fclose, p_1 = pclose,
             f_2 = fdummy, p_2 = pdummy,
             f_3 = fdummy, p_3 = pdummy
@@ -291,6 +294,7 @@ def BottomButtons(classid, fclose, pclose, fhelp, phelp,
     if fhelp != fdummy:
         help_button, help = ActiveButton(
             class_id = classid, text = gtk.STOCK_HELP,
+            width = bwidth, height = bheight,
             f_1 = fhelp, p_1 = phelp,
             f_2 = fdummy, p_2 = pdummy,
             f_3 = fdummy, p_3 = pdummy
@@ -301,6 +305,7 @@ def BottomButtons(classid, fclose, pclose, fhelp, phelp,
     if fabout != fdummy:
         about_button, about = ActiveButton(
             class_id = classid, text = gtk.STOCK_ABOUT,
+            width = bwidth, height = bheight,
             f_1 = fabout, p_1 = pabout,
             f_2 = fdummy, p_2 = pdummy,
             f_3 = fdummy, p_3 = pdummy
@@ -313,6 +318,7 @@ def BottomButtons(classid, fclose, pclose, fhelp, phelp,
     if fback != fdummy:
         back_button, back = ActiveButton(
             class_id = classid, text = gtk.STOCK_GO_BACK,
+            width = bwidth, height = bheight,
             f_1 = fback, p_1 = pback,
             f_2 = fdummy, p_2 = pdummy,
             f_3 = fdummy, p_3 = pdummy
@@ -323,6 +329,7 @@ def BottomButtons(classid, fclose, pclose, fhelp, phelp,
     if fgo != fdummy:
         go_button, go = ActiveButton(
             class_id = classid, text = gtk.STOCK_GO_FORWARD,
+            width = bwidth, height = bheight,
             f_1 = fgo, p_1 = pgo,
             f_2 = fdummy, p_2 = pdummy,
             f_3 = fdummy, p_3 = pdummy

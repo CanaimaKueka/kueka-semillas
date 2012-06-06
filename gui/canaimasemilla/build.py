@@ -10,7 +10,9 @@ import main
 from library.vocabulary import *
 from config import *
 
-class Main():
+gtk.gdk.threads_init()
+
+class Build():
 
     def Banner(self, homogeneous, spacing, expand, fill, padding, borderwidth, imagefile):
         banner = gtk.HBox(homogeneous, spacing)
@@ -470,7 +472,6 @@ class Main():
         self.window.show_all()
 
 if __name__ == "__main__":
-    gtk.gdk.threads_init()
-    app = BuildImage()
+    app = Build()
     gtk.main()
     sys.exit()

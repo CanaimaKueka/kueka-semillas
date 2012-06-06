@@ -108,7 +108,6 @@ def GTKThreadReceiver(function, params, window):
         window.hide()
 
     gtk.gdk.threads_leave()
-    
 
 def ProcessGenerator(command):
     process = subprocess.Popen(command, shell = False, stdout = subprocess.PIPE)

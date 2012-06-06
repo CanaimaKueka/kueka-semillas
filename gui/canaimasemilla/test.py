@@ -2,5 +2,5 @@
 #-*- coding: UTF-8 -*-
 
 
-class Main():
+class Test():
     pass

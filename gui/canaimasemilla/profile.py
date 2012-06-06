@@ -139,7 +139,6 @@ class Profile():
         return botones
 
     def __init__(self):
-        dummydict = {}
         self.window = gtk.Window()
         self.window.set_border_width(0)
         self.window.set_title(PROFILE_TITLE)
@@ -219,17 +218,17 @@ class Profile():
         self.os_locale, self.oslocale = Combo(
             class_id = self, combolist = self.localelist,
             combodefault = self.localeactive, entry = False,
-            f_1 = Dummy, p_1 = dummydict,
-            f_2 = Dummy, p_2 = dummydict,
-            f_3 = Dummy, p_3 = dummydict
+            f_1 = Dummy, p_1 = {},
+            f_2 = Dummy, p_2 = {},
+            f_3 = Dummy, p_3 = {}
             )
 
         self.meta_dist, self.metadist = Combo(
             class_id = self, combolist = cs_distros,
             combodefault = 2, entry = False,
-            f_1 = ChangeCodename, p_1 = dummydict,
-            f_2 = ChangeRepo, p_2 = dummydict,
-            f_3 = ChangeSections, p_3 = dummydict
+            f_1 = ChangeCodename, p_1 = {},
+            f_2 = ChangeRepo, p_2 = {},
+            f_3 = ChangeSections, p_3 = {}
             )
 
         self.codenamelist, self.codenameactive = CodenameList(
@@ -239,9 +238,9 @@ class Profile():
         self.meta_codename, self.metacodename = Combo(
             class_id = self, combolist = self.codenamelist,
             combodefault = self.codenameactive, entry = True,
-            f_1 = Dummy, p_1 = dummydict,
-            f_2 = Dummy, p_2 = dummydict,
-            f_3 = Dummy, p_3 = dummydict
+            f_1 = Dummy, p_1 = {},
+            f_2 = Dummy, p_2 = {},
+            f_3 = Dummy, p_3 = {}
             )
 
         self.meta_repo, self.metarepo = TextEntry(
@@ -264,7 +263,7 @@ class Profile():
             class_id = self, text = PROFILE_OS_EXTRAREPOS_CHECK, active = False,
             f_1 = Toggle, p_1 = { 'destination': self.os_extrarepos },
             f_2 = Toggle, p_2 = { 'destination': self.os_extrarepos_entries_box },
-            f_3 = Dummy, p_3 = dummydict
+            f_3 = Dummy, p_3 = {}
             )
 
         self.os_extrarepos_url, self.osextrareposurl = TextEntry(
@@ -304,16 +303,18 @@ class Profile():
 
         self.os_extrarepos_add, self.osextrareposadd = ActiveButton(
             class_id = self, text = gtk.STOCK_ADD,
+            width = 0, height = 0,
             f_1 = AddExtraRepos, p_1 = self.add_repo_params,
-            f_2 = Dummy, p_2 = dummydict,
-            f_3 = Dummy, p_3 = dummydict
+            f_2 = Dummy, p_2 = {},
+            f_3 = Dummy, p_3 = {}
             )
 
         self.os_extrarepos_clean, self.osextrareposclean = ActiveButton(
             class_id = self, text = gtk.STOCK_CLEAR,
+            width = 0, height = 0,
             f_1 = CleanEntry, p_1 = { 'destination': self.osextrarepos },
-            f_2 = Dummy, p_2 = dummydict,
-            f_3 = Dummy, p_3 = dummydict
+            f_2 = Dummy, p_2 = {},
+            f_3 = Dummy, p_3 = {}
             )
 
         self.os_packages, self.ospackages = ScrolledFrame(class_id = self)
@@ -348,16 +349,18 @@ class Profile():
 
         self.os_packages_add, self.ospackagesadd = ActiveButton(
             class_id = self, text = gtk.STOCK_ADD,
+            width = 0, height = 0,
             f_1 = AddPackages, p_1 = self.add_packages_params,
-            f_2 = Dummy, p_2 = dummydict,
-            f_3 = Dummy, p_3 = dummydict
+            f_2 = Dummy, p_2 = {},
+            f_3 = Dummy, p_3 = {}
             )
 
         self.os_packages_clean, self.ospackagesclean = ActiveButton(
             class_id = self, text = gtk.STOCK_CLEAR,
+            width = 0, height = 0,
             f_1 = CleanEntry, p_1 = { 'destination': self.ospackages },
-            f_2 = Dummy, p_2 = dummydict,
-            f_3 = Dummy, p_3 = dummydict
+            f_2 = Dummy, p_2 = {},
+            f_3 = Dummy, p_3 = {}
             )
 
         self.vbox.pack_start(self.profile_name_title, False, False, 0)

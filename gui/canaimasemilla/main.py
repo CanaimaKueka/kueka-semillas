@@ -48,7 +48,7 @@ class Main():
             text_1 = MAIN_BUILD_IMAGE_TITLE, text_2 = MAIN_BUILD_IMAGE_TEXT,
             width = 330, height = 170, f_1 = ThreadGenerator,
             p_1 = {
-                'function': build.Main,
+                'function': build.Build,
                 'params': (),
                 'gtk': True,
                 'hide': self.window,
@@ -59,7 +59,7 @@ class Main():
             text_1 = MAIN_TEST_IMAGE_TITLE, text_2 = MAIN_TEST_IMAGE_TEXT,
             width = 330, height = 170, f_1 = ThreadGenerator,
             p_1 = {
-                'function': test.Main,
+                'function': test.Test,
                 'params': (),
                 'gtk': True,
                 'hide': self.window,
@@ -70,14 +70,15 @@ class Main():
             text_1 = MAIN_SAVE_IMAGE_TITLE, text_2 = MAIN_SAVE_IMAGE_TEXT,
             width = 330, height = 170, f_1 = ThreadGenerator,
             p_1 = {
-                'function': save.Main,
+                'function': save.Save,
                 'params': (),
                 'gtk': True,
                 'hide': self.window,
                 }
             )
         self.bottombuttons = BottomButtons(
-            classid = self, fclose = gtk.main_quit, pclose = {},
+            classid = self, bwidth = 80, bheight = 30,
+            fclose = gtk.main_quit, pclose = {},
             fhelp = ThreadGenerator,
             phelp = {
                 'function': ProcessGenerator,
