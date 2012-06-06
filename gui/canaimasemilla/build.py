@@ -2,12 +2,15 @@
 #-*- coding: UTF-8 -*-
 
 # Librerías Globales
-import os, sys, pygtk, gtk, threading, gobject, urllib2, pango
-from subprocess import Popen, PIPE, STDOUT
+#import os, sys, pygtk, gtk, threading, gobject, urllib2, pango
+#from subprocess import Popen, PIPE, STDOUT
 
+import gtk, sys
 # Librerías Locales
 import main
 from library.vocabulary import *
+from library.creativity import *
+from library.intelligence import *
 from config import *
 
 gtk.gdk.threads_init()
@@ -226,7 +229,7 @@ class Build():
             md.destroy()
             gtk.gdk.threads_leave()
 
-            if respuesta == gtk.RESPONSE_YES:          
+            if respuesta == gtk.RESPONSE_YES:
                 x2 = Popen(['/usr/bin/pkill', 'lb'], shell=False, stdout=PIPE)
                 x3 = Popen(['/usr/bin/pkill', 'live-build'], shell=False, stdout=PIPE)
                 x1 = Popen(['/usr/bin/pkill', 'c-s'], shell=False, stdout=PIPE)
@@ -416,58 +419,111 @@ class Build():
         return botones
 
     def __init__(self):
+        # Creating Window
         self.window = gtk.Window()
         self.window.set_border_width(0)
-        self.window.set_title(BuildImageTitle)
+        self.window.set_title(BUILD_TITLE)
         self.window.set_position(gtk.WIN_POS_CENTER_ALWAYS)
         self.window.set_size_request(window_width, window_height)
         self.window.set_resizable(False)
         self.window.connect("destroy", gtk.main_quit)
         self.window.set_icon_from_file(ICONDIR+'/48x48/apps/c-s-gui.png')
 
-        self.listarperfiles()
-        
         self.vbox = gtk.VBox(False, 5)
-        
-        self.box = self.Banner(False, 0, False, False, 0, 0, GUIDIR+'/images/banner.png')
-        self.vbox.pack_start(self.box, False, False, 0)
-        
-        self.box = self.Ask(False, 0, False, False, 0, 5, SaborOptionLabel)
-        self.vbox.pack_start(self.box, False, False, 0)
-        
-        self.box = self.Sabor(False, 0, False, False, 0, 0)
-        self.vbox.pack_start(self.box, False, False, 0)
-        
-        self.box = self.Ask(False, 0, False, False, 0, 5, MedioOptionLabel)
-        self.vbox.pack_start(self.box, False, False, 0)
-        
-        self.box = self.Medio(False, 0, False, False, 0, 0)
-        self.vbox.pack_start(self.box, False, False, 0)
-        
-        self.box = self.Ask(False, 0, False, False, 0, 5, ArchOptionLabel)
-        self.vbox.pack_start(self.box, False, False, 0)
-        
-        self.box = self.Arch(False, 0, False, False, 0, 0)
-        self.vbox.pack_start(self.box, False, False, 0)
-        
-        self.separator = gtk.HSeparator()
-        self.vbox.pack_start(self.separator, False, False, 0)
+        self.inbox = gtk.VBox(False, 5)
+        self.inbox.set_border_width(10)
 
-        self.box = self.Intro(False, 0, False, False, 0, 5, BuildImageTimeLabel)
-        self.vbox.pack_start(self.box, False, False, 0)
-        
-        self.box = self.Progress(True, 0, True, True, 0, 5)
-        self.vbox.pack_start(self.box, True, True, 0)
-        
-        self.box = self.Intro(False, 0, False, False, 0, 5, BuildImageEndLabel)
-        self.vbox.pack_start(self.box, False, False, 0)
-        
-        self.separator = gtk.HSeparator()
-        self.vbox.pack_start(self.separator, False, False, 0)
-        
-        self.box = self.Botones(False, 0, False, False, 0, 5, 80, 30)
-        self.vbox.pack_start(self.box, False, False, 0)
-        
+        self.profile_name_title = Title(class_id = self, text = BUILD_PROFILE_NAME_1)
+        self.profile_arch_title = Title(class_id = self, text = BUILD_PROFILE_ARCH_1)
+        self.profile_media_title = Title(class_id = self, text = BUILD_PROFILE_MEDIA_1)
+
+        self.profile_name_description = Description(class_id = self, text = BUILD_PROFILE_NAME_2)
+        self.profile_arch_description = Description(class_id = self, text = BUILD_PROFILE_ARCH_2)
+        self.profile_media_description = Description(class_id = self, text = BUILD_PROFILE_MEDIA_2)
+
+        self.profilelist, self.profiledefault = ProfileList(
+            class_id = self, profiledir = PROFILEDIR
+            )
+
+        self.banner = Banner(self, GUIDIR+'/images/banner.png')
+
+        self.profile_name, self.profilename = Combo(
+            class_id = self, indent = True, combolist = self.profilelist,
+            combodefault = self.profiledefault, entry = False,
+            f_1 = Dummy, p_1 = {},
+            f_2 = Dummy, p_2 = {},
+            f_3 = Dummy, p_3 = {}
+            )
+
+        self.profile_arch, self.profilearch = OptionList(
+            class_id = self, indent = True, optionlist = supported_arch, optiondefault = ''
+            )
+
+        self.profile_media, self.profilemedia = OptionList(
+            class_id = self, indent = True, optionlist = supported_arch, optiondefault = ''
+            )
+
+        self.bottombuttons = BottomButtons(
+            classid = self, bwidth = 80, bheight = 30,
+            fclose = gtk.main_quit, pclose = {},
+            fhelp = ThreadGenerator,
+            phelp = {
+                'function': ProcessGenerator,
+                'params': (['/usr/bin/yelp', DOCDIR+'/index.html'],),
+                'gtk': False
+                },
+            fabout = ThreadGenerator,
+            pabout = {
+                'function': AboutWindow,
+                'params': (
+                    GUIDIR+'/images/logo.png', app_name, app_version,
+                    app_url, app_copyright, app_description,
+                    SHAREDIR+'/AUTHORS', SHAREDIR+'/LICENSE',
+                    SHAREDIR+'/TRANSLATORS'
+                    ),
+                'gtk': True,
+                'hide': ''
+                },
+            fback = ThreadGenerator,
+            pback = {
+                'function': UserMessage,
+                'params': (
+                    message, title, gtktype, gtkbuttons, post,
+                    c_1, f_1, p_1, c_2, f_2, p_2
+                    ),
+                'gtk': True,
+                'hide': ''
+                },
+            fgo = ThreadGenerator,
+            pgo = {
+                'function': UserMessage,
+                'params': (
+                    message, title, gtktype, gtkbuttons, post,
+                    c_1, f_1, p_1, c_2, f_2, p_2
+                    ),
+                'gtk': True,
+                'hide': ''
+                },
+            fdummy = Dummy, pdummy = {}
+            )
+
+        self.vbox.pack_start(self.banner, expand, fill, padding)
+
+        self.inbox.pack_start(self.profile_name_title, expand, fill, padding)
+        self.inbox.pack_start(self.profile_name_description, expand, fill, padding)
+        self.inbox.pack_start(self.profile_name, expand, fill, padding)
+        self.inbox.pack_start(gtk.HSeparator(), expand, fill, padding)
+        self.inbox.pack_start(self.profile_arch_title, expand, fill, padding)
+        self.inbox.pack_start(self.profile_arch_description, expand, fill, padding)
+        self.inbox.pack_start(self.profile_arch, expand, fill, padding)
+        self.inbox.pack_start(gtk.HSeparator(), expand, fill, padding)
+        self.inbox.pack_start(self.profile_media_title, expand, fill, padding)
+        self.inbox.pack_start(self.profile_media_description, expand, fill, padding)
+        self.inbox.pack_start(self.profile_media, expand, fill, padding)
+        self.inbox.pack_start(self.bottombuttons, expand, fill, padding)
+
+        self.vbox.pack_start(self.inbox, expand, fill, padding)
+
         self.window.add(self.vbox)
         self.window.show_all()
 

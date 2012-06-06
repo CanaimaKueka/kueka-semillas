@@ -9,6 +9,15 @@ from config import *
 def Dummy(signaled, class_id):
     pass
 
+def ProfileList(class_id, profiledir):
+    profilelist = []
+    items = next(os.walk(profiledir))[1]
+
+    for i in items:
+        profilelist.append(i)
+
+    return profilelist, 0
+
 def LocaleList(class_id, supported, current):
     localecount = 0
     localeactive = 0
@@ -113,3 +122,11 @@ def ProcessGenerator(command):
     process = subprocess.Popen(command, shell = False, stdout = subprocess.PIPE)
     return process
 
+def KillProcess(process):
+    for killed in process:
+        murder = subprocess.Popen(['/usr/bin/pkill', killed], shell = False, stdout = subprocess.PIPE)
+
+def GetArch():
+    process = subprocess.Popen(['/usr/bin/arch'], shell = False, stdout = subprocess.PIPE)
+    arch = process.stdout.read().split('\n')[0]
+    return arch

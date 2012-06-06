@@ -7,7 +7,7 @@ from config import *
 
 def Banner(class_id, image):
     box = gtk.HBox(homogeneous, spacing)
-    box.set_border_width(borderwidth/3)
+    box.set_border_width(0)
 
     banner = gtk.Image()
     banner.set_from_file(image)
@@ -19,7 +19,7 @@ def Banner(class_id, image):
 
 def Title(class_id, text):
     box = gtk.HBox(homogeneous, spacing)
-    box.set_border_width(borderwidth)
+    box.set_border_width(borderwidth/5)
 
     title = gtk.Label()
     title.set_markup(text)
@@ -33,7 +33,7 @@ def Title(class_id, text):
 
 def Description(class_id, text):
     box = gtk.HBox(homogeneous, spacing)
-    box.set_border_width(borderwidth/3)
+    box.set_border_width(borderwidth/5)
 
     style = pango.AttrList()
     size = pango.AttrSize(8000, 0, -1)
@@ -50,10 +50,15 @@ def Description(class_id, text):
 
     return box
 
-def TextEntry(class_id, maxlength, length, text, regex, flimit, fclear, ffill):
+def TextEntry(class_id, indent, maxlength, length, text, regex, flimit, fclear, ffill):
     box = gtk.HBox(homogeneous, spacing)
-    box.set_border_width(borderwidth/3)
+    if indent:
+        box.set_border_width(borderwidth)
+    else:
+        box.set_border_width(borderwidth/5)
 
+    if indent:
+        box.pack_start(gtk.HSeparator(), expand, fill, 30)
     textentry = gtk.Entry()
     textentry.set_width_chars(length)
     textentry.set_max_length(maxlength)
@@ -70,9 +75,12 @@ def TextEntry(class_id, maxlength, length, text, regex, flimit, fclear, ffill):
 
     return box, textentry
 
-def Combo(class_id, combolist, combodefault, entry, f_1, p_1, f_2, p_2, f_3, p_3):
+def Combo(class_id, indent, combolist, combodefault, entry, f_1, p_1, f_2, p_2, f_3, p_3):
     box = gtk.HBox(homogeneous, spacing)
-    box.set_border_width(borderwidth/3)
+    box.set_border_width(borderwidth)
+
+    if indent:
+        box.pack_start(gtk.HSeparator(), expand, fill, 30)
 
     if entry:
         combo = gtk.combo_box_entry_new_text()
@@ -92,15 +100,15 @@ def Combo(class_id, combolist, combodefault, entry, f_1, p_1, f_2, p_2, f_3, p_3
 
     return box, combo
 
-def CheckList(class_id, checklist, checkdefault):
+def CheckList(class_id, indent, checklist, checkdefault):
     box = gtk.HBox(homogeneous, spacing)
-    box.set_border_width(borderwidth/3)
+    box.set_border_width(borderwidth)
 
-    space = gtk.HSeparator()
-    box.pack_start(space, expand, fill, 30)
+    if indent:
+        box.pack_start(gtk.HSeparator(), expand, fill, 30)
 
     items = gtk.VBox(homogeneous, spacing)
-    items.set_border_width(borderwidth/3)
+    items.set_border_width(borderwidth)
 
     for item in checklist:
         check = gtk.CheckButton(item)
@@ -109,6 +117,29 @@ def CheckList(class_id, checklist, checkdefault):
             check.set_sensitive(False)
         check.show()
         items.pack_start(check, expand, fill, padding)
+
+    box.pack_start(items, expand, fill, padding)
+
+    return box, items
+
+def OptionList(class_id, indent, optionlist, optiondefault):
+    box = gtk.HBox(homogeneous, spacing)
+    box.set_border_width(borderwidth)
+
+    if indent:
+        box.pack_start(gtk.HSeparator(), expand, fill, 30)
+
+    items = gtk.VBox(homogeneous, spacing)
+    items.set_border_width(borderwidth)
+
+    option = None
+    for item in optionlist:
+        option = gtk.RadioButton(option, item)
+        if optiondefault != '' and item == optiondefault:
+            option.set_active(True)
+            option.set_sensitive(False)
+        option.show()
+        items.pack_start(option, expand, fill, padding)
 
     box.pack_start(items, expand, fill, padding)
 
@@ -133,6 +164,7 @@ def ScrolledFrame(class_id):
 
 def ActiveButton(class_id, text, width, height, f_1, p_1, f_2, p_2, f_3, p_3):
     box = gtk.HBox(homogeneous, spacing)
+    box.set_border_width(0)
 
     button = gtk.Button(stock = text)
     if width != 0 and height != 0:
@@ -148,7 +180,7 @@ def ActiveButton(class_id, text, width, height, f_1, p_1, f_2, p_2, f_3, p_3):
 
 def ActiveCheck(class_id, text, active, f_1, p_1, f_2, p_2, f_3, p_3):
     box = gtk.HBox(homogeneous, spacing)
-    box.set_border_width(borderwidth/3)
+    box.set_border_width(0)
 
     check = gtk.CheckButton(text)
     check.set_border_width(borderwidth)
@@ -163,16 +195,27 @@ def ActiveCheck(class_id, text, active, f_1, p_1, f_2, p_2, f_3, p_3):
 
     return box, check
 
-def UserMessage(message, title):
+def UserMessage(message, title, gtktype, gtkbuttons, post,
+    c_1, f_1, p_1, c_2, f_2, p_2):
+
     message = gtk.MessageDialog(
-        parent = None, flags = 0, type = gtk.MESSAGE_ERROR,
-        buttons = gtk.BUTTONS_CLOSE, message_format = message
+        parent = None, flags = 0, type = gtktype,
+        buttons = gtkbuttons, message_format = message
         )
     message.set_title(title)
-    message.run()
+    answer = message.run()
     message.destroy()
 
-def ProgressWindow(text, title, q_window, q_bar, q_msg):
+    if post:
+        if answer == c_1:
+            fexec_1 = f_1(p_1)
+
+        if answer == c_2:
+            fexec_2 = f_2(p_2)
+
+    return answer
+
+def ProgressWindow(text, title, term, q_window, q_bar, q_msg, q_terminal):
     dialog = gtk.Dialog()
     dialog.set_title(title)
     dialogarea = dialog.get_content_area()
@@ -186,15 +229,26 @@ def ProgressWindow(text, title, q_window, q_bar, q_msg):
     label = gtk.Label()
     label.set_markup(text)
     progress = gtk.ProgressBar()
+    if term:
+        terminal = vte.Terminal()
+        terminal.set_cursor_blinks(gtk.TRUE)
+        terminal.set_emulation("xterm")
+        terminal.set_font_from_string(font)
+        terminal.set_scrollback_lines(1000)
+        terminal.set_audible_bell(gtk.TRUE)
+        terminal.set_visible_bell(gtk.FALSE)
 
     box.pack_start(label, expand, fill, padding)
     box.pack_start(progress, expand, fill, padding)
+    if term:
+        box.pack_start(terminal, expand, fill, padding)
     dialogarea.add(box)
     dialog.show_all()
 
     q_window.put(dialog)
     q_bar.put(progress)
     q_msg.put(label)
+    q_terminal.put(terminal)
 
 def IconButton(class_id, icon, text_1, text_2, width, height, f_1, p_1):
     box = gtk.VBox(homogeneous, spacing)

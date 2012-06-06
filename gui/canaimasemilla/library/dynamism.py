@@ -14,7 +14,6 @@ def LimitEntry(editable, new_text, new_text_length, position, regex):
         editable.stop_emission('insert-text')
 
 def CleanEntry(editable, destination):
-    print editable, destination
     textbuffer = destination['destination']
     textbuffer.set_text('')
 
@@ -361,3 +360,4 @@ def AddPackagesThread(repolist, packages, archs, packageslistframe,
                 thread.start()
         gobject.source_remove(timer)
     window.destroy()
+
