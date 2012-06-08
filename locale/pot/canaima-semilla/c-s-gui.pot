@@ -5,9 +5,7 @@
 # Translators:
 # Luis Alejandro Martínez Faneyth <luis@huntingbears.com.ve>, 2012
 #
-#: ../../../gui/canaimasemilla/library/vocabulary.py:79
-#: ../../../gui/canaimasemilla/library/vocabulary.py:92
-#: ../../../gui/canaimasemilla/library/vocabulary.py:93
+#: ../../../gui/canaimasemilla/library/vocabulary.py:81
 #: ../../../gui/canaimasemilla/library/vocabulary.py:94
 #: ../../../gui/canaimasemilla/library/vocabulary.py:95
 #: ../../../gui/canaimasemilla/library/vocabulary.py:96
@@ -26,12 +24,14 @@
 #: ../../../gui/canaimasemilla/library/vocabulary.py:109
 #: ../../../gui/canaimasemilla/library/vocabulary.py:110
 #: ../../../gui/canaimasemilla/library/vocabulary.py:111
+#: ../../../gui/canaimasemilla/library/vocabulary.py:112
+#: ../../../gui/canaimasemilla/library/vocabulary.py:113
 msgid ""
 msgstr ""
 "Project-Id-Version: Canaima Semilla 3.0\n"
 "Report-Msgid-Bugs-To: desarrolladores@canaima.softwarelibre.gob.ve\n"
-"POT-Creation-Date: 2012-06-06 18:28-0430\n"
-"PO-Revision-Date: 2012-06-06 18:28-0430\n"
+"POT-Creation-Date: 2012-06-07 19:50-0430\n"
+"PO-Revision-Date: 2012-06-07 19:50-0430\n"
 "Last-Translator: Luis Alejandro Martínez Faneyth <luis@huntingbears.com.ve>\n"
 "Language-Team: Equipo de Traducción de Canaima Semilla <desarrolladores@canaima.softwarelibre.gob.ve>\n"
 "Language: English\n"
@@ -112,6 +112,7 @@ msgstr ""
 
 #: ../../../gui/canaimasemilla/library/vocabulary.py:43
 #: ../../../gui/canaimasemilla/library/vocabulary.py:45
+#: ../../../gui/canaimasemilla/library/vocabulary.py:47
 msgid "Creación de imagen"
 msgstr ""
 
@@ -458,6 +459,7 @@ msgstr ""
 #: ../../../gui/canaimasemilla/library/vocabulary.py:88
 #: ../../../gui/canaimasemilla/library/vocabulary.py:89
 #: ../../../gui/canaimasemilla/library/vocabulary.py:87
+#: ../../../gui/canaimasemilla/library/vocabulary.py:48
 #, python-format
 msgid "Validando arquitectura \"%s\" de la rama \"%s\" ..."
 msgstr ""

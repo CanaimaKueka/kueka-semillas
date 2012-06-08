@@ -7,7 +7,7 @@ import gtk, sys
 #from aptsources.distinfo import DistInfo
 
 ## Librerías Locales
-#import main
+import main
 from library.vocabulary import *
 from library.intelligence import *
 from library.dynamism import *
@@ -15,129 +15,8 @@ from library.creativity import *
 from config import *
 
 gtk.gdk.threads_init()
-gobject.threads_init()
 
 class Profile():
-
-    def Botones(self, homogeneous, spacing, expand, fill, padding, borderwidth, width, height):
-    
-        def cerrar(self):
-            hilo = threading.Thread(target=cerrarexec, args=(self))
-            hilo.start()
-            
-        def cerrarexec(self):            
-            gtk.gdk.threads_enter()
-            md = gtk.MessageDialog( parent = None,
-                                    flags = 0,
-                                    type = gtk.MESSAGE_QUESTION,
-                                    buttons = gtk.BUTTONS_YES_NO,
-                                    message_format = ConfirmCancelCreateProfileLabel )
-            md.set_title(CancelLabel)
-            respuesta = md.run()
-            md.destroy()
-            gtk.gdk.threads_leave()
-
-            if respuesta == gtk.RESPONSE_YES:
-                shutil.rmtree(PROFILEDIR+'/'+nombresabor.get_text())
-                self.window.destroy()
-                gtk.main_quit()
-
-        def ayuda(self):
-            hilo = threading.Thread(target=ayudaexec, args=(self))
-            hilo.start()
-
-        def ayudaexec(self, widget=None):
-            x = Popen(['/usr/bin/yelp', DOCDIR+'/index.html'], shell=False, stdout=PIPE)
-            
-        def atras(self):
-            hilo = threading.Thread(target=atrasexec, args=(self))
-            hilo.start()
-            
-        def atrasexec(self):
-            gtk.gdk.threads_enter()
-            main.MainWindow()
-            self.window.hide()
-            gtk.gdk.threads_leave()
-
-        def adelante(self):
-            hilo = threading.Thread(target=adelanteexec, args=(self))
-            hilo.start()
-            
-        def adelanteexec(self, data=None):
-            def testconnection(self):
-                try:
-                    response = urllib2.urlopen(AlwaysOnWebPage, timeout=1)
-                    return True
-                except urllib2.URLError as err: pass
-                return False
-                    
-            if os.path.isdir(PROFILEDIR+'/'+nombresabor.get_text()):
-                boton_siguiente.set_sensitive(False)
-                boton_atras.set_sensitive(False)
-
-                gtk.gdk.threads_enter()
-                md = gtk.MessageDialog( parent = None,
-                                        flags = 0,
-                                        type = gtk.MESSAGE_ERROR,
-                                        buttons = gtk.BUTTONS_CLOSE,
-                                        message_format = ProfileExists )
-                md.run()
-                md.destroy()
-                gtk.gdk.threads_leave()
-
-            elif testconnection(self) == False:
-                gtk.gdk.threads_enter()
-                md = gtk.MessageDialog( parent = None,
-                                        flags = 0,
-                                        type = gtk.MESSAGE_ERROR,
-                                        buttons = gtk.BUTTONS_CLOSE,
-                                        message_format = LooksLikeNoInternetLabel)
-                md.set_title(LooksLikeNoInternetTitle)
-                md.run()
-                md.destroy()
-                gtk.gdk.threads_leave()
-
-            else:
-                gtk.gdk.threads_enter()
-                os.makedirs(PROFILEDIR+'/'+nombresabor.get_text())
-                boton_siguiente.set_sensitive(True)
-                boton_atras.set_sensitive(True)
-                profile2.Profile_2()
-                self.window.hide()
-                gtk.gdk.threads_leave()
-
-        botones = gtk.HBox(homogeneous, spacing)
-        botones.set_border_width(borderwidth)
-
-        boton_cerrar = gtk.Button(stock=gtk.STOCK_CLOSE)
-        boton_cerrar.set_size_request(width, height)
-        boton_cerrar.connect("clicked", cerrar)
-        botones.pack_start(boton_cerrar, expand, fill, padding)
-        boton_cerrar.show()
-
-        boton_ayuda = gtk.Button(stock=gtk.STOCK_HELP)
-        boton_ayuda.connect("clicked", ayuda)
-        boton_ayuda.set_size_request(width, height)
-        botones.pack_start(boton_ayuda, expand, fill, padding)
-        boton_ayuda.show()
-
-        space = gtk.HSeparator()
-        botones.pack_start(space, expand, fill, 180)
-
-        boton_atras = gtk.Button(stock=gtk.STOCK_GO_BACK)
-        boton_atras.connect("clicked", atras)
-        boton_atras.set_size_request(width, height)
-        botones.pack_start(boton_atras, expand, fill, padding)
-        boton_atras.show()
-
-        boton_adelante = gtk.Button(stock=gtk.STOCK_GO_FORWARD)
-        boton_adelante.connect("clicked", adelante)
-        boton_adelante.set_size_request(width, height)
-        botones.pack_start(boton_adelante, expand, fill, padding)
-        boton_adelante.show()
-
-        return botones
-
     def __init__(self):
         self.window = gtk.Window()
         self.window.set_border_width(0)

@@ -3,6 +3,9 @@
 
 import gtk, sys, re, threading, Queue, gzip, urllib2, tempfile, fnmatch, gobject
 
+from library.vocabulary import BUILD_VALIDATE_SOURCES_MSG, BUILD_WINDOW_TITLE
+from library.intelligence import ThreadGenerator, KillProcess, ParseProfileConfig, TestIndexes
+from library.creativity import ProgressWindow
 from config import *
 
 def Dummy(signaled, class_id):
@@ -27,19 +30,23 @@ def FillEntry(editable, new_text, text):
     if content == '':
         editable.set_text(text)
 
-def Toggle(widget, destination):
-    widgetcontainer = destination['destination']
-    on_off_widgetlist = widgetcontainer.get_children()
-    for on_off_widget in on_off_widgetlist:
-        new_widgets = on_off_widget.get_children()
-        on_off_widgetlist = on_off_widgetlist + new_widgets
-    for on_off_widget in on_off_widgetlist:
-        if on_off_widget != widget:
-            if on_off_widget.get_sensitive() == True:
-                on_off_setting = False
+def Toggle(dont, do, children, morechildren, alwaysoff):
+    if children:
+        widgetlist = do.get_children()
+        if morechildren:
+            for widget in widgetlist:
+                morewidgets = widget.get_children()
+                widgetlist = widgetlist + morewidgets
+    else:
+        widgetlist = do
+
+    for widget in widgetlist:
+        if widget != dont:
+            if widget.get_sensitive() or alwaysoff:
+                setting = False
             else:
-                on_off_setting = True
-            on_off_widget.set_sensitive(on_off_setting)
+                setting = True
+            widget.set_sensitive(setting)
 
 def ChangeCodename(signaled, class_id):
     dist = class_id.metadist
@@ -251,13 +258,14 @@ def AddPackagesThread(repolist, packages, archs, packageslistframe,
     q_window = Queue.Queue()
     q_bar = Queue.Queue()
     q_msg = Queue.Queue()
+    q_terminal = Queue.Queue()
     f_cleantempdir = fcleantempdir(tempdir)
 
     thread = threading.Thread(
         target = fprogresswindow,
         args = (
             progresstitle, progresstitle,
-            q_window, q_bar, q_msg
+            q_window, q_bar, q_msg, q_terminal
             )
         )
     thread.start()
@@ -361,3 +369,126 @@ def AddPackagesThread(repolist, packages, archs, packageslistframe,
         gobject.source_remove(timer)
     window.destroy()
 
+def BuildImage(profile_container, arch_container, media_container,
+                window_container):
+
+    profile = profile_container.get_active_text()
+    arch_children = arch_container.get_children()
+    media_children = media_container.get_children()
+    progressmessage = BUILD_VALIDATE_SOURCES_MSG
+    progresstitle = BUILD_WINDOW_TITLE
+
+    Toggle(
+        dont = None, do = window_container, children = False,
+        morechildren = False, alwaysoff = True
+        )
+
+    q_window = Queue.Queue()
+    q_bar = Queue.Queue()
+    q_msg = Queue.Queue()
+    q_terminal = Queue.Queue()
+
+    thread = ThreadGenerator(
+        window_container, {
+        'function': ProgressWindow,
+        'params': (
+        progressmessage, progresstitle, True,
+        KillProcess, ['lb', 'live-build', 'c-s'],
+        q_window, q_bar, q_msg, q_terminal
+        ),
+        'gtk': True,
+        'hide': ''
+        }
+    )
+
+    for child in arch_children:
+        if child.get_active():
+            arch = child.get_label()
+
+    for child in media_children:
+        if child.get_active():
+            media = child.get_label()
+
+    get = ['META_REPO', 'META_CODENAME', 'META_REPOSECTIONS']
+    config = ParseProfileConfig(profile, get)
+
+    meta_repo = config['META_REPO']
+    meta_reposections = config['META_REPOSECTIONS']
+    meta_codename = config['META_CODENAME']
+    mainrepo = 'deb '+meta_repo+' '+meta_codename+' '+meta_reposections+'\n'
+
+    f = open(PROFILEDIR+'/'+profile+'/extra-repos.list', 'r')
+    extrarepos = f.read()
+
+    sourcestext = mainrepo+extrarepos
+
+
+
+#    message = q_msg.get()
+#    window = q_window.get()
+#    bar = q_bar.get()
+#    terminal = q_terminal.get()
+
+
+    errorcounter, errorcode = TestIndexes(
+        sourcestext = sourcestext, archlist = arch, bar = q_bar, message = q_msg,
+        progressmessage = progressmessage, download = False)
+
+    print errorcounter, errorcode
+#    buildimage = subprocess.Popen(
+#        [BINDIR+'/'+CSBIN, '-a', arch, '-m', media, '-s', profile],
+#        shell = False, stdout = subprocess.PIPE
+#        )
+#        
+#                    if buildimage == 0:
+#                    pbar.set_fraction(1)
+#                    pbar.set_text(DoneLabel)
+#                    timer_2 = gobject.source_remove(timer_1)
+#                    gtk.gdk.threads_enter()
+#                    md = gtk.MessageDialog( parent = None,
+#                                            flags = 0,
+#                                            buttons = gtk.BUTTONS_OK,
+#                                            message_format = ImageBuiltSuccessfully % (sabor, sabor))
+#                    md.set_title(DoneLabel)
+#                    md.run()
+#                    md.destroy()
+#                    gtk.gdk.threads_leave()
+#                    pbar.set_text(" ")
+#                                
+#                if buildimage == 256:
+#                    pbar.set_fraction(0.0)
+#                    pbar.set_text(ErrorLabel)
+#                    timer_2 = gobject.source_remove(timer_1)
+#                    gtk.gdk.threads_enter()
+#                    md = gtk.MessageDialog( parent = None,
+#                                            flags = 0,
+#                                            type = gtk.MESSAGE_ERROR,
+#                                            buttons = gtk.BUTTONS_CLOSE,
+#                                            message_format = ImageBuiltError)
+#                    md.set_title(ErrorLabel)
+#                    md.run()
+#                    md.destroy()
+#                    gtk.gdk.threads_leave()
+#                    pbar.set_text(" ")
+
+#                if buildimage == 36608:
+#                    pbar.set_fraction(0.0)
+#                    pbar.set_text(CancelledLabel)
+#                    timer_2 = gobject.source_remove(timer_1)
+#                    gtk.gdk.threads_enter()
+#                    md = gtk.MessageDialog( parent = None,
+#                                            flags = 0,
+#                                            type = gtk.MESSAGE_ERROR,
+#                                            buttons = gtk.BUTTONS_CLOSE,
+#                                            message_format = ImageBuiltCancelled % sabor)
+#                    md.set_title(CancelledLabel)
+#                    md.run()
+#                    md.destroy()
+#                    gtk.gdk.threads_leave()
+#                    pbar.set_text(" ")
+#                    
+#                    
+#    Toggle(
+#        dont = None, do = box_container, children = True,
+#        morechildren = True, alwaysoff = True
+#        )

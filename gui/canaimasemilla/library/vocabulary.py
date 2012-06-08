@@ -44,6 +44,8 @@ BUILD_CONFIRM_CANCEL_TITLE = _('Creación de imagen')
 BUILD_CONFIRM_CANCEL_MSG = _('¿Está seguro que desea cancelar la creación de la imagen?\n\nPresione aceptar para interrumpir la creación de la imagen o cancelar para seguir con el proceso.')
 BUILD_CONFIRM_OK_TITLE = _('Creación de imagen')
 BUILD_CONFIRM_OK_MSG = _('Todo está preparado para empezar a construir la imagen.\n\nPresione aceptar para continuar o cancelar para volver a la pantalla anterior.')
+BUILD_WINDOW_TITLE = _('Creación de imagen')
+BUILD_VALIDATE_SOURCES_MSG = _('Validando arquitectura "%s" de la rama "%s" ...')
 
 
 BuildingImage = _('"CONSTRUYENDO IMAGEN"')

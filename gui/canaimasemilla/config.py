@@ -56,6 +56,16 @@ else:
     LOCALEDIR = SRCDIR+'/locale'
     SHAREDIR = SRCDIR
 
+forbidden_filename_chars = {
+        '/':'', ':':'', 'http':'', 'file':'', 'ftp':'', '?':'',
+        '=':'', '&':'', '-':'', '(':'', ')':'', '+':'', '-':'',
+        '#':'', '$':'', '%':'', '@':'', '|':'', '~':'', '_':'',
+        ',':'', ';':'', '!':''
+        }
+bs = 16*1024
+
+
+
 configload = ConfigMapper(CONFDIR)
 
 for configoption, configvalue in configload.iteritems():

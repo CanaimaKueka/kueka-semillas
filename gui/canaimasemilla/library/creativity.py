@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import gtk, pango
+import gtk, pango, vte
 
 from config import *
 
@@ -196,7 +196,7 @@ def ActiveCheck(class_id, text, active, f_1, p_1, f_2, p_2, f_3, p_3):
     return box, check
 
 def UserMessage(message, title, gtktype, gtkbuttons, post,
-    c_1, f_1, p_1, c_2, f_2, p_2):
+    c_1, f_1, p_1, c_2, f_2, p_2, c_3, f_3, p_3):
 
     message = gtk.MessageDialog(
         parent = None, flags = 0, type = gtktype,
@@ -208,19 +208,36 @@ def UserMessage(message, title, gtktype, gtkbuttons, post,
 
     if post:
         if answer == c_1:
-            fexec_1 = f_1(p_1)
+            if p_1:
+                fexec_1 = f_1(*p_1)
+            else:
+                fexec_1 = f_1()
 
         if answer == c_2:
-            fexec_2 = f_2(p_2)
+            if p_2:
+                fexec_2 = f_2(*p_2)
+            else:
+                fexec_2 = f_2()
+
+        if answer == c_3:
+            if p_3:
+                fexec_3 = f_3(*p_3)
+            else:
+                fexec_3 = f_3()
 
     return answer
 
-def ProgressWindow(text, title, term, q_window, q_bar, q_msg, q_terminal):
+def ProgressWindow(text, title, term, fcancel, pcancel,
+                    q_window, q_bar, q_msg, q_terminal):
+
     dialog = gtk.Dialog()
     dialog.set_title(title)
     dialogarea = dialog.get_content_area()
     dialog.set_position(gtk.WIN_POS_CENTER_ALWAYS)
-    dialog.set_size_request(window_width*2/3, window_height/8)
+    if term:
+        dialog.set_size_request(window_width*3/4, window_height*3/4)
+    else:
+        dialog.set_size_request(window_width*3/4, window_height/4)
     dialog.set_resizable(False)
 
     box = gtk.VBox(homogeneous, spacing)
@@ -229,26 +246,39 @@ def ProgressWindow(text, title, term, q_window, q_bar, q_msg, q_terminal):
     label = gtk.Label()
     label.set_markup(text)
     progress = gtk.ProgressBar()
+
     if term:
         terminal = vte.Terminal()
-        terminal.set_cursor_blinks(gtk.TRUE)
-        terminal.set_emulation("xterm")
-        terminal.set_font_from_string(font)
+        terminal.set_cursor_blinks(True)
+        terminal.set_emulation('xterm')
+        terminal.set_font_from_string('fixed 8')
         terminal.set_scrollback_lines(1000)
-        terminal.set_audible_bell(gtk.TRUE)
-        terminal.set_visible_bell(gtk.FALSE)
+        terminal.set_audible_bell(True)
+        terminal.set_visible_bell(False)
 
     box.pack_start(label, expand, fill, padding)
     box.pack_start(progress, expand, fill, padding)
+
     if term:
+        box.pack_start(gtk.HSeparator(), expand, fill, padding)
         box.pack_start(terminal, expand, fill, padding)
+
+    button = gtk.Button(stock = gtk.STOCK_CANCEL)
+    if fcancel:
+        button.connect_object("clicked", fcancel, pcancel)
+    button.connect_object("clicked", gtk.Window.destroy, dialog)
+    box.pack_start(gtk.HSeparator(), expand, fill, padding)
+    box.pack_start(button, expand, fill, padding)
+
     dialogarea.add(box)
     dialog.show_all()
 
     q_window.put(dialog)
     q_bar.put(progress)
     q_msg.put(label)
-    q_terminal.put(terminal)
+    if term:
+        q_terminal.put(terminal)
+    print q_window.qsize()
 
 def IconButton(class_id, icon, text_1, text_2, width, height, f_1, p_1):
     box = gtk.VBox(homogeneous, spacing)
@@ -367,7 +397,7 @@ def BottomButtons(classid, bwidth, bheight, fclose, pclose, fhelp, phelp,
 
         hbox.pack_start(about_button, expand, fill, padding)
 
-    hbox.pack_start(gtk.HSeparator(), expand, fill, 180)
+    hbox.pack_start(gtk.HSeparator(), expand, fill, 140)
 
     if fback != fdummy:
         back_button, back = ActiveButton(
