@@ -75,7 +75,12 @@ def TextEntry(class_id, indent, maxlength, length, text, regex, flimit, fclear, 
 
     return box, textentry
 
-def Combo(class_id, indent, combolist, combodefault, entry, f_1, p_1, f_2, p_2, f_3, p_3):
+def Combo(class_id, indent, combolist, combodefault, entry,
+                    f_1 = False, p_1 = False,
+                    f_2 = False, p_2 = False,
+                    f_3 = False, p_3 = False
+                    ):
+
     box = gtk.HBox(homogeneous, spacing)
     box.set_border_width(borderwidth)
 
@@ -90,17 +95,23 @@ def Combo(class_id, indent, combolist, combodefault, entry, f_1, p_1, f_2, p_2, 
     for item in combolist:
         combo.append_text(item)
 
+    if f_1:
+        combo.connect('changed', f_1, p_1)
+
+    if f_2:
+        combo.connect('changed', f_2, p_2)
+
+    if f_3:
+        combo.connect('changed', f_3, p_3)
+
     combo.set_active(combodefault)
-    combo.connect('changed', f_1, p_1)
-    combo.connect('changed', f_2, p_2)
-    combo.connect('changed', f_3, p_3)
     combo.show()
 
     box.pack_start(combo, expand, fill, padding)
 
     return box, combo
 
-def CheckList(class_id, indent, checklist, checkdefault):
+def CheckList(class_id, indent, checklist, checkdefault = ''):
     box = gtk.HBox(homogeneous, spacing)
     box.set_border_width(borderwidth)
 
@@ -122,7 +133,7 @@ def CheckList(class_id, indent, checklist, checkdefault):
 
     return box, items
 
-def OptionList(class_id, indent, optionlist, optiondefault):
+def OptionList(class_id, indent, optionlist, optiondefault = ''):
     box = gtk.HBox(homogeneous, spacing)
     box.set_border_width(borderwidth)
 
@@ -162,68 +173,87 @@ def ScrolledFrame(class_id):
 
     return frame, text
 
-def ActiveButton(class_id, text, width, height, f_1, p_1, f_2, p_2, f_3, p_3):
+def ActiveButton(class_id, text, width, height,
+                    f_1 = False, p_1 = False,
+                    f_2 = False, p_2 = False,
+                    f_3 = False, p_3 = False
+                    ):
+
     box = gtk.HBox(homogeneous, spacing)
     box.set_border_width(0)
 
     button = gtk.Button(stock = text)
+
     if width != 0 and height != 0:
         button.set_size_request(width, height)
-    button.connect('clicked', f_1, p_1)
-    button.connect('clicked', f_2, p_2)
-    button.connect('clicked', f_3, p_3)
+
+    if f_1:
+        button.connect('clicked', f_1, *p_1)
+
+    if f_2:
+        button.connect('clicked', f_2, *p_2)
+
+    if f_3:
+        button.connect('clicked', f_3, *p_3)
+
     button.show()
 
     box.pack_start(button, expand, fill, padding)
 
     return box, button
 
-def ActiveCheck(class_id, text, active, f_1, p_1, f_2, p_2, f_3, p_3):
+def ActiveCheck(class_id, text, active,
+                    f_1 = False, p_1 = False,
+                    f_2 = False, p_2 = False,
+                    f_3 = False, p_3 = False
+                    ):
+
     box = gtk.HBox(homogeneous, spacing)
     box.set_border_width(0)
 
     check = gtk.CheckButton(text)
     check.set_border_width(borderwidth)
+
     if active:
         check.set_active(True)
-    check.connect('toggled', f_1, p_1)
-    check.connect('toggled', f_2, p_2)
-    check.connect('toggled', f_3, p_3)
+
+    if f_1:
+        check.connect('toggled', f_1, p_1)
+
+    if f_2:
+        check.connect('toggled', f_2, p_2)
+
+    if f_3:
+        check.connect('toggled', f_3, p_3)
+
     check.show()
 
     box.pack_start(check, expand, fill, padding)
 
     return box, check
 
-def UserMessage(message, title, gtktype, gtkbuttons, post,
-    c_1, f_1, p_1, c_2, f_2, p_2, c_3, f_3, p_3):
+def UserMessage(message, title, type, buttons,
+                    c_1 = False, f_1 = False, p_1 = '',
+                    c_2 = False, f_2 = False, p_2 = '',
+                    c_3 = False, f_3 = False, p_3 = ''
+                    ):
 
-    message = gtk.MessageDialog(
-        parent = None, flags = 0, type = gtktype,
-        buttons = gtkbuttons, message_format = message
+    dialog = gtk.MessageDialog(
+        parent = None, flags = 0, type = type,
+        buttons = buttons, message_format = message
         )
-    message.set_title(title)
-    answer = message.run()
-    message.destroy()
+    dialog.set_title(title)
+    answer = dialog.run()
+    dialog.destroy()
 
-    if post:
-        if answer == c_1:
-            if p_1:
-                fexec_1 = f_1(*p_1)
-            else:
-                fexec_1 = f_1()
+    if answer == c_1:
+        f_1(*p_1)
 
-        if answer == c_2:
-            if p_2:
-                fexec_2 = f_2(*p_2)
-            else:
-                fexec_2 = f_2()
+    if answer == c_2:
+        f_2(*p_2)
 
-        if answer == c_3:
-            if p_3:
-                fexec_3 = f_3(*p_3)
-            else:
-                fexec_3 = f_3()
+    if answer == c_3:
+        f_3(*p_3)
 
     return answer
 
@@ -265,27 +295,27 @@ def ProgressWindow(text, title, term, fcancel, pcancel,
 
     button = gtk.Button(stock = gtk.STOCK_CANCEL)
     if fcancel:
-        button.connect_object("clicked", fcancel, pcancel)
+        button.connect("clicked", fcancel, *pcancel)
     button.connect_object("clicked", gtk.Window.destroy, dialog)
     box.pack_start(gtk.HSeparator(), expand, fill, padding)
     box.pack_start(button, expand, fill, padding)
 
     dialogarea.add(box)
     dialog.show_all()
-
+    
     q_window.put(dialog)
     q_bar.put(progress)
     q_msg.put(label)
     if term:
         q_terminal.put(terminal)
-    print q_window.qsize()
+    return dialog
 
 def IconButton(class_id, icon, text_1, text_2, width, height, f_1, p_1):
     box = gtk.VBox(homogeneous, spacing)
     box.set_border_width(borderwidth)
 
     button = gtk.Button()
-    button.connect("clicked", f_1, p_1)
+    button.connect("clicked", f_1, *p_1)
     button.set_size_request(width, height)
 
     inbox = gtk.VBox(homogeneous, spacing)
@@ -358,65 +388,57 @@ def AboutWindow(img, name, version, url, copyright, description,
     about.run()
     about.destroy()
 
-def BottomButtons(classid, bwidth, bheight, fclose, pclose, fhelp, phelp,
-    fabout, pabout, fback, pback, fgo, pgo, fdummy, pdummy):
+def BottomButtons(class_id, width, height, fclose = False, pclose = False, 
+        fhelp = False, phelp = False, fabout = False, pabout = False,
+        fback = False, pback = False, fgo = False, pgo = False
+        ):
 
     box = gtk.VBox(homogeneous, spacing)
     hbox = gtk.HBox(homogeneous, spacing)
 
-    if fclose != fdummy:
+    if fclose:
         close_button, close = ActiveButton(
-            class_id = classid, text = gtk.STOCK_CLOSE,
-            width = bwidth, height = bheight,
-            f_1 = fclose, p_1 = pclose,
-            f_2 = fdummy, p_2 = pdummy,
-            f_3 = fdummy, p_3 = pdummy
+            class_id = class_id, text = gtk.STOCK_CLOSE,
+            width = width, height = height,
+            f_1 = fclose, p_1 = pclose
         )
 
         hbox.pack_start(close_button, expand, fill, padding)
 
-    if fhelp != fdummy:
+    if fhelp:
         help_button, help = ActiveButton(
-            class_id = classid, text = gtk.STOCK_HELP,
-            width = bwidth, height = bheight,
-            f_1 = fhelp, p_1 = phelp,
-            f_2 = fdummy, p_2 = pdummy,
-            f_3 = fdummy, p_3 = pdummy
+            class_id = class_id, text = gtk.STOCK_HELP,
+            width = width, height = height,
+            f_1 = fhelp, p_1 = phelp
         )
 
         hbox.pack_start(help_button, expand, fill, padding)
 
-    if fabout != fdummy:
+    if fabout:
         about_button, about = ActiveButton(
-            class_id = classid, text = gtk.STOCK_ABOUT,
-            width = bwidth, height = bheight,
-            f_1 = fabout, p_1 = pabout,
-            f_2 = fdummy, p_2 = pdummy,
-            f_3 = fdummy, p_3 = pdummy
+            class_id = class_id, text = gtk.STOCK_ABOUT,
+            width = width, height = height,
+            f_1 = fabout, p_1 = pabout
         )
 
         hbox.pack_start(about_button, expand, fill, padding)
 
     hbox.pack_start(gtk.HSeparator(), expand, fill, 140)
 
-    if fback != fdummy:
+    if fback:
         back_button, back = ActiveButton(
-            class_id = classid, text = gtk.STOCK_GO_BACK,
-            width = bwidth, height = bheight,
-            f_1 = fback, p_1 = pback,
-            f_2 = fdummy, p_2 = pdummy,
-            f_3 = fdummy, p_3 = pdummy
+            class_id = class_id, text = gtk.STOCK_GO_BACK,
+            width = width, height = height,
+            f_1 = fback, p_1 = pback
         )
 
         hbox.pack_start(back_button, expand, fill, padding)
 
-    if fgo != fdummy:
+    if fgo:
         go_button, go = ActiveButton(
-            class_id = classid, text = gtk.STOCK_GO_FORWARD,
-            width = bwidth, height = bheight,
-            f_1 = fgo, p_1 = pgo,
-            f_2 = fdummy, p_2 = pdummy,
-            f_3 = fdummy, p_3 = pdummy
+            class_id = class_id, text = gtk.STOCK_GO_FORWARD,
+            width = width, height = height,
+            f_1 = fgo, p_1 = pgo
         )
 
         hbox.pack_start(go_button, expand, fill, padding)

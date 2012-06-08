@@ -80,41 +80,30 @@ def replace_all(text, dic):
     for i, j in dic.iteritems():
         text = text.replace(i, j)
     return text
-    
-def ThreadGenerator(reference, dic):
-    if dic['gtk']:
-        function = GTKThreadReceiver
-        params = dic['function'], dic['params'], dic['hide']
-    else:
-        function = dic['function']
-        params = dic['params']
 
-    thread = threading.Thread(
-        target = function,
-        args = params
-        )
-    thread.start()
+class ThreadGenerator(threading.Thread):
+    def __init__(self, reference, gtk, window, function, kwargs):
+        threading.Thread.__init__(self)
+        self._function = function
+        self._gtk = gtk
+        self._window = window
+        self._kwargs = kwargs
+        self.start()
 
-    return thread
-
-def GTKThreadReceiver(function, params, window):
-    gtk.gdk.threads_enter()
-
-    if params:
-        fexec = function(*params)
-    else:
-        fexec = function()
-
-    if window:
-        window.hide()
-
-    gtk.gdk.threads_leave()
+    def run(self):
+        if self._gtk:
+            gtk.gdk.threads_enter()
+        self._function(**self._kwargs)
+        if self._gtk:
+            gtk.gdk.threads_leave()
+        if self._window:
+            self._window.hide()
 
 def ProcessGenerator(command):
     process = subprocess.Popen(command, shell = False, stdout = subprocess.PIPE)
     return process
 
-def KillProcess(process):
+def KillProcess(reference, process):
     for killed in process:
         murder = subprocess.Popen(['/usr/bin/pkill', killed], shell = False, stdout = subprocess.PIPE)
 
@@ -123,12 +112,14 @@ def GetArch():
     arch = process.stdout.read().split('\n')[0]
     return arch
 
-def TestIndexes(sourcestext, archlist, bar, message, progressmessage, download):
-    print 'hola'
-    print bar.qsize(), message.qsize()
-    bar = bar.get()
-    message = message.get()
+def TestIndexes(sourcestext, archlist, progressmessage, download,
+                q_bar, q_msg, q_terminal, q_code, q_counter):
+
+    bar = q_bar.get()
+    message = q_msg.get()
+    terminal = q_terminal.get()
     errorcounter = 0
+    errorcode = ''
     sourceslist = []
 
     for line in sourcestext.split('\n'):
@@ -136,7 +127,7 @@ def TestIndexes(sourcestext, archlist, bar, message, progressmessage, download):
             parts = line.split(' ')
             url = parts[1]
             branch = parts[2]
-            sections = parts[2:]
+            sections = parts[3:]
             repo = [url, branch, sections]
             sourceslist.append(repo)
 
@@ -148,7 +139,7 @@ def TestIndexes(sourcestext, archlist, bar, message, progressmessage, download):
                 contentheader = 0
                 message.set_markup(progressmessage % (arch, section))
                 requesturl = url+'/dists/'+branch+'/'+section+'/binary-'+arch+'/Packages.gz'
-
+                terminal.feed(requesturl+'\n')
                 if download:
                     urlname = replace_all(url, forbidden_filename_chars)
                     pkgcache = tempfile.NamedTemporaryFile(
@@ -213,7 +204,12 @@ def TestIndexes(sourcestext, archlist, bar, message, progressmessage, download):
                 else:
                     bar.pulse()
 
-    return errorcounter, errorcode
+    q_bar.put(bar)
+    q_msg.put(message)
+    q_code.put(errorcode)
+    q_counter.put(errorcounter)
+
+    return bar, message, errorcounter, errorcode
 
 def ParseProfileConfig(profile, get):
     conffile = PROFILEDIR+'/'+profile+'/profile.conf'

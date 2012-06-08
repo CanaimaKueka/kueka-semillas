@@ -47,18 +47,15 @@ class Build():
 
         self.profile_name, self.profilename = Combo(
             class_id = self, indent = True, combolist = self.profilelist,
-            combodefault = self.profiledefault, entry = False,
-            f_1 = Dummy, p_1 = {},
-            f_2 = Dummy, p_2 = {},
-            f_3 = Dummy, p_3 = {}
+            combodefault = self.profiledefault, entry = False
             )
 
         self.profile_arch, self.profilearch = OptionList(
-            class_id = self, indent = True, optionlist = supported_arch, optiondefault = ''
+            class_id = self, indent = True, optionlist = supported_arch
             )
 
         self.profile_media, self.profilemedia = OptionList(
-            class_id = self, indent = True, optionlist = supported_media, optiondefault = ''
+            class_id = self, indent = True, optionlist = supported_media
             )
 
         if self.nativearch == 'i686':
@@ -67,68 +64,68 @@ class Build():
                     child.set_sensitive(False)
 
         self.bottombuttons = BottomButtons(
-            classid = self, bwidth = 80, bheight = 30,
+            class_id = self, width = 80, height = 30,
             fclose = ThreadGenerator,
-            pclose = {
-                'function': UserMessage,
-                'params': (
-                    BUILD_CONFIRM_CANCEL_MSG, BUILD_CONFIRM_CANCEL_TITLE,
-                    gtk.MESSAGE_QUESTION, gtk.BUTTONS_YES_NO, True,
-                    gtk.RESPONSE_YES, KillProcess, (['lb', 'live-build', 'c-s'],),
-                    gtk.RESPONSE_YES, self.window.destroy, '',
-                    gtk.RESPONSE_YES, gtk.main_quit, ()
-                    ),
-                'gtk': True,
-                'hide': ''
-                },
+            pclose = (
+                True, False, UserMessage, {
+                    'message': BUILD_CONFIRM_CANCEL_MSG,
+                    'title': BUILD_CONFIRM_CANCEL_TITLE,
+                    'type': gtk.MESSAGE_QUESTION,
+                    'buttons': gtk.BUTTONS_YES_NO,
+                    'c_1': gtk.RESPONSE_YES,
+                    'f_1': KillProcess, 'p_1': (['lb', 'live-build', 'c-s'],),
+                    'c_2': gtk.RESPONSE_YES,
+                    'f_2': self.window.destroy, 'p_2': '',
+                    'c_3': gtk.RESPONSE_YES,
+                    'f_3': gtk.main_quit, 'p_3': ''
+                    }
+                ),
             fhelp = ThreadGenerator,
-            phelp = {
-                'function': ProcessGenerator,
-                'params': (['/usr/bin/yelp', DOCDIR+'/index.html'],),
-                'gtk': False
-                },
+            phelp = (
+                False, False, ProcessGenerator, {
+                    'command': ['/usr/bin/yelp', DOCDIR+'/index.html']
+                    }
+            ),
             fabout = ThreadGenerator,
-            pabout = {
-                'function': AboutWindow,
-                'params': (
-                    GUIDIR+'/images/logo.png', app_name, app_version,
-                    app_url, app_copyright, app_description,
-                    SHAREDIR+'/AUTHORS', SHAREDIR+'/LICENSE',
-                    SHAREDIR+'/TRANSLATORS'
-                    ),
-                'gtk': True,
-                'hide': ''
-                },
+            pabout = (
+                True, False, AboutWindow, {
+                    'img': GUIDIR+'/images/logo.png', 'name': app_name,
+                    'version': app_version, 'url': app_url,
+                    'copyright': app_copyright, 'description': app_description,
+                    'authorsfile': SHAREDIR+'/AUTHORS',
+                    'licensefile': SHAREDIR+'/LICENSE',
+                    'translatorsfile': SHAREDIR+'/TRANSLATORS'
+                    }
+                ),
             fback = ThreadGenerator,
-            pback = {
-                'function': UserMessage,
-                'params': (
-                    BUILD_CONFIRM_CANCEL_MSG, BUILD_CONFIRM_CANCEL_TITLE,
-                    gtk.MESSAGE_QUESTION, gtk.BUTTONS_YES_NO, True,
-                    gtk.RESPONSE_YES, KillProcess, (['lb', 'live-build', 'c-s'],),
-                    gtk.RESPONSE_YES, self.window.hide, (),
-                    gtk.RESPONSE_YES, main.Main, ()
-                    ),
-                'gtk': True,
-                'hide': ''
-                },
+            pback = (
+                True, False, UserMessage, {
+                    'message': BUILD_CONFIRM_CANCEL_MSG,
+                    'title': BUILD_CONFIRM_CANCEL_TITLE,
+                    'type': gtk.MESSAGE_QUESTION,
+                    'buttons': gtk.BUTTONS_YES_NO,
+                    'c_1': gtk.RESPONSE_YES,
+                    'f_1': KillProcess, 'p_1': (['lb', 'live-build', 'c-s'],),
+                    'c_2': gtk.RESPONSE_YES,
+                    'f_2': self.window.hide, 'p_2': '',
+                    'c_3': gtk.RESPONSE_YES,
+                    'f_3': main.Main, 'p_3': ''
+                    }
+                ),
             fgo = ThreadGenerator,
-            pgo = {
-                'function': UserMessage,
-                'params': (
-                    BUILD_CONFIRM_OK_MSG, BUILD_CONFIRM_OK_TITLE,
-                    gtk.MESSAGE_QUESTION, gtk.BUTTONS_YES_NO, True,
-                    gtk.RESPONSE_YES, BuildImage,(
-                        self.profilename, self.profilearch,
+            pgo = (
+                True, False, UserMessage, {
+                    'message': BUILD_CONFIRM_OK_MSG,
+                    'title': BUILD_CONFIRM_OK_TITLE,
+                    'type': gtk.MESSAGE_QUESTION,
+                    'buttons': gtk.BUTTONS_YES_NO,
+                    'c_1': gtk.RESPONSE_YES,
+                    'f_1': BuildImage, 'p_1': (
+                        self, self.profilename, self.profilearch,
                         self.profilemedia, self.inbox
-                    ),
-                    gtk.RESPONSE_YES, Dummy, (),
-                    gtk.RESPONSE_YES, Dummy, ()
-                    ),
-                'gtk': True,
-                'hide': ''
-                },
-            fdummy = Dummy, pdummy = {}
+                        )
+                    }
+                )
             )
 
         self.vbox.pack_start(self.banner, expand, fill, padding)

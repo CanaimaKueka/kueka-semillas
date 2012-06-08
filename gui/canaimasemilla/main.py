@@ -7,8 +7,8 @@ import gtk, sys
 # Librerías Locales
 import build, profile, test, save
 from library.vocabulary import *
-from library.creativity import *
-from library.intelligence import *
+from library.creativity import Banner, IconButton, BottomButtons, AboutWindow
+from library.intelligence import ThreadGenerator, ProcessGenerator
 from config import *
 
 gtk.gdk.threads_init()
@@ -32,74 +32,55 @@ class Main():
         self.button_box.set_border_width(10)
         self.button_row1 = gtk.HBox(homogeneous, spacing)
         self.button_row2 = gtk.HBox(homogeneous, spacing)
+
         self.create_profile = IconButton(
             class_id = self, icon = GUIDIR+'/images/create-profile.png',
             text_1 = MAIN_CREATE_PROFILE_TITLE, text_2 = MAIN_CREATE_PROFILE_TEXT,
             width = 330, height = 170, f_1 = ThreadGenerator,
-            p_1 = {
-                'function': profile.Profile,
-                'params': (),
-                'gtk': True,
-                'hide': self.window,
-                }
+            p_1 = (True, self.window, profile.Profile, {})
             )
+
         self.build_image = IconButton(
             class_id = self, icon = GUIDIR+'/images/build-image.png',
             text_1 = MAIN_BUILD_IMAGE_TITLE, text_2 = MAIN_BUILD_IMAGE_TEXT,
             width = 330, height = 170, f_1 = ThreadGenerator,
-            p_1 = {
-                'function': build.Build,
-                'params': (),
-                'gtk': True,
-                'hide': self.window,
-                }
+            p_1 = (True, self.window, build.Build, {})
             )
+
         self.test_image = IconButton(
             class_id = self, icon = GUIDIR+'/images/test-image.png',
             text_1 = MAIN_TEST_IMAGE_TITLE, text_2 = MAIN_TEST_IMAGE_TEXT,
             width = 330, height = 170, f_1 = ThreadGenerator,
-            p_1 = {
-                'function': test.Test,
-                'params': (),
-                'gtk': True,
-                'hide': self.window,
-                }
+            p_1 = (True, self.window, test.Test, {})
             )
+
         self.save_image = IconButton(
             class_id = self, icon = GUIDIR+'/images/save-image.png',
             text_1 = MAIN_SAVE_IMAGE_TITLE, text_2 = MAIN_SAVE_IMAGE_TEXT,
             width = 330, height = 170, f_1 = ThreadGenerator,
-            p_1 = {
-                'function': save.Save,
-                'params': (),
-                'gtk': True,
-                'hide': self.window,
-                }
+            p_1 = (True, self.window, save.Save, {})
             )
+
         self.bottombuttons = BottomButtons(
-            classid = self, bwidth = 80, bheight = 30,
-            fclose = gtk.main_quit, pclose = {},
+            class_id = self, width = 80, height = 30,
+            fclose = gtk.main_quit, pclose = (),
             fhelp = ThreadGenerator,
-            phelp = {
-                'function': ProcessGenerator,
-                'params': (['/usr/bin/yelp', DOCDIR+'/index.html']),
-                'gtk': False
-                },
+            phelp = (
+                False, False, ProcessGenerator, {
+                    'command': ['/usr/bin/yelp', DOCDIR+'/index.html']
+                    }
+                ),
             fabout = ThreadGenerator,
-            pabout = {
-                'function': AboutWindow,
-                'params': (
-                    GUIDIR+'/images/logo.png', app_name, app_version,
-                    app_url, app_copyright, app_description,
-                    SHAREDIR+'/AUTHORS', SHAREDIR+'/LICENSE',
-                    SHAREDIR+'/TRANSLATORS'
-                    ),
-                'gtk': True,
-                'hide': ''
-                },
-            fback = Dummy, pback = {},
-            fgo = Dummy, pgo = {},
-            fdummy = Dummy, pdummy = {}
+            pabout = (
+                True, False, AboutWindow, {
+                    'img': GUIDIR+'/images/logo.png', 'name': app_name,
+                    'version': app_version, 'url': app_url,
+                    'copyright': app_copyright, 'description': app_description,
+                    'authorsfile': SHAREDIR+'/AUTHORS',
+                    'licensefile': SHAREDIR+'/LICENSE',
+                    'translatorsfile': SHAREDIR+'/TRANSLATORS'
+                    }
+                )
             )
 
         # Packing Objects

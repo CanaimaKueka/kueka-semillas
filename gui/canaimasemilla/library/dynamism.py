@@ -369,7 +369,7 @@ def AddPackagesThread(repolist, packages, archs, packageslistframe,
         gobject.source_remove(timer)
     window.destroy()
 
-def BuildImage(profile_container, arch_container, media_container,
+def BuildImage(class_id, profile_container, arch_container, media_container,
                 window_container):
 
     profile = profile_container.get_active_text()
@@ -377,29 +377,17 @@ def BuildImage(profile_container, arch_container, media_container,
     media_children = media_container.get_children()
     progressmessage = BUILD_VALIDATE_SOURCES_MSG
     progresstitle = BUILD_WINDOW_TITLE
+    q_window = Queue.Queue()
+    q_bar = Queue.Queue()
+    q_msg = Queue.Queue()
+    q_terminal = Queue.Queue()
+    q_code = Queue.Queue()
+    q_counter = Queue.Queue()
 
     Toggle(
         dont = None, do = window_container, children = False,
         morechildren = False, alwaysoff = True
         )
-
-    q_window = Queue.Queue()
-    q_bar = Queue.Queue()
-    q_msg = Queue.Queue()
-    q_terminal = Queue.Queue()
-
-    thread = ThreadGenerator(
-        window_container, {
-        'function': ProgressWindow,
-        'params': (
-        progressmessage, progresstitle, True,
-        KillProcess, ['lb', 'live-build', 'c-s'],
-        q_window, q_bar, q_msg, q_terminal
-        ),
-        'gtk': True,
-        'hide': ''
-        }
-    )
 
     for child in arch_children:
         if child.get_active():
@@ -422,24 +410,77 @@ def BuildImage(profile_container, arch_container, media_container,
 
     sourcestext = mainrepo+extrarepos
 
+    window_thread = ThreadGenerator(
+        reference = class_id, gtk = False, window = False,
+        function = ProgressWindow, kwargs = {
+            'text': progressmessage,
+            'title': progresstitle,
+            'term': True,
+            'fcancel': KillProcess,
+            'pcancel': (['lb', 'live-build', 'c-s'],),
+            'q_window': q_window,
+            'q_bar': q_bar,
+            'q_msg': q_msg,
+            'q_terminal': q_terminal
+            }
+        )
 
+    index_thread = ThreadGenerator(
+        reference = class_id, gtk = False, window = False,
+        function = TestIndexes, kwargs = {
+            'sourcestext': sourcestext,
+            'archlist': [arch,],
+            'progressmessage': progressmessage,
+            'download': False,
+            'q_bar': q_bar,
+            'q_msg': q_msg,
+            'q_terminal': q_terminal,
+            'q_code': q_code,
+            'q_counter': q_counter
+            }
+        )
 
-#    message = q_msg.get()
-#    window = q_window.get()
-#    bar = q_bar.get()
-#    terminal = q_terminal.get()
+    build_thread = ThreadGenerator(
+        reference = class_id, gtk = False, window = False,
+        function = StartCS, kwargs = {
+            'q_bar': q_bar,
+            'q_msg': q_msg,
+            'q_terminal': q_terminal,
+            'q_code': q_code,
+            'q_counter': q_counter
+            }
+        )
 
+def StartCS(q_bar, q_msg, q_terminal, q_code, q_counter):
 
-    errorcounter, errorcode = TestIndexes(
-        sourcestext = sourcestext, archlist = arch, bar = q_bar, message = q_msg,
-        progressmessage = progressmessage, download = False)
+        bar = q_bar.get()
+        message = q_msg.get()
+        terminal = q_terminal.get()
+        errorcode = q_code.get()
+        errorcounter = q_counter.get()
 
-    print errorcounter, errorcode
-#    buildimage = subprocess.Popen(
-#        [BINDIR+'/'+CSBIN, '-a', arch, '-m', media, '-s', profile],
-#        shell = False, stdout = subprocess.PIPE
-#        )
-#        
+    if errorcode != 0:
+        build_thread = ThreadGenerator(
+            reference = class_id, gtk = True, window = False,
+            function = UserMessage, kwargs = {
+                'message': BUILD_CONFIRM_OK_MSG,
+                'title': BUILD_CONFIRM_OK_TITLE,
+                'type': gtk.MESSAGE_QUESTION,
+                'buttons': gtk.BUTTONS_YES_NO,
+                'c_1': gtk.RESPONSE_YES,
+                'f_1': BuildImage, 'p_1': (
+                    self, self.profilename, self.profilearch,
+                    self.profilemedia, self.inbox
+                    )
+                }
+            )
+    else:
+        build = ProcessGenerator(['dmesg'])
+            #[BINDIR+'/'+CSBIN, '-a', arch, '-m', media, '-s', profile]
+#            )
+        output = build.stdout()
+        print output
+
 #                    if buildimage == 0:
 #                    pbar.set_fraction(1)
 #                    pbar.set_text(DoneLabel)
