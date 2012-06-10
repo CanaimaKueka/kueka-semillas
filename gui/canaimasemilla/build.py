@@ -67,54 +67,54 @@ class Build():
             class_id = self, width = 80, height = 30,
             fclose = ThreadGenerator,
             pclose = (
-                True, False, UserMessage, {
+                UserMessage, {
                     'message': BUILD_CONFIRM_CANCEL_MSG,
                     'title': BUILD_CONFIRM_CANCEL_TITLE,
                     'type': gtk.MESSAGE_QUESTION,
                     'buttons': gtk.BUTTONS_YES_NO,
                     'c_1': gtk.RESPONSE_YES,
-                    'f_1': KillProcess, 'p_1': (['lb', 'live-build', 'c-s'],),
+                    'f_1': self.window.destroy, 'p_1': '',
                     'c_2': gtk.RESPONSE_YES,
-                    'f_2': self.window.destroy, 'p_2': '',
-                    'c_3': gtk.RESPONSE_YES,
-                    'f_3': gtk.main_quit, 'p_3': ''
-                    }
+                    'f_2': gtk.main_quit, 'p_2': ''
+                    },
+                True, False
                 ),
             fhelp = ThreadGenerator,
             phelp = (
-                False, False, ProcessGenerator, {
+                ProcessGenerator, {
                     'command': ['/usr/bin/yelp', DOCDIR+'/index.html']
-                    }
+                    },
+                True, False
             ),
             fabout = ThreadGenerator,
             pabout = (
-                True, False, AboutWindow, {
+                AboutWindow, {
                     'img': GUIDIR+'/images/logo.png', 'name': app_name,
                     'version': app_version, 'url': app_url,
                     'copyright': app_copyright, 'description': app_description,
                     'authorsfile': SHAREDIR+'/AUTHORS',
                     'licensefile': SHAREDIR+'/LICENSE',
                     'translatorsfile': SHAREDIR+'/TRANSLATORS'
-                    }
+                    },
+                True, False
                 ),
             fback = ThreadGenerator,
             pback = (
-                True, False, UserMessage, {
+                UserMessage, {
                     'message': BUILD_CONFIRM_CANCEL_MSG,
                     'title': BUILD_CONFIRM_CANCEL_TITLE,
                     'type': gtk.MESSAGE_QUESTION,
                     'buttons': gtk.BUTTONS_YES_NO,
                     'c_1': gtk.RESPONSE_YES,
-                    'f_1': KillProcess, 'p_1': (['lb', 'live-build', 'c-s'],),
+                    'f_1': self.window.hide, 'p_1': '',
                     'c_2': gtk.RESPONSE_YES,
-                    'f_2': self.window.hide, 'p_2': '',
-                    'c_3': gtk.RESPONSE_YES,
-                    'f_3': main.Main, 'p_3': ''
-                    }
+                    'f_2': main.Main, 'p_2': ''
+                    },
+                True, False
                 ),
             fgo = ThreadGenerator,
             pgo = (
-                True, False, UserMessage, {
+                UserMessage, {
                     'message': BUILD_CONFIRM_OK_MSG,
                     'title': BUILD_CONFIRM_OK_TITLE,
                     'type': gtk.MESSAGE_QUESTION,
@@ -124,7 +124,8 @@ class Build():
                         self, self.profilename, self.profilearch,
                         self.profilemedia, self.inbox
                         )
-                    }
+                    },
+                True, False
                 )
             )
 

@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import gtk, os, re, urllib2, fnmatch, threading, subprocess
+import gtk, os, re, urllib2, fnmatch, threading, subprocess, hashlib, random, gobject, tempfile
 
 from aptsources.distinfo import DistInfo
 from config import *
@@ -12,10 +12,8 @@ def Dummy(*args, **kwargs):
 def ProfileList(class_id, profiledir):
     profilelist = []
     items = next(os.walk(profiledir))[1]
-
     for i in items:
         profilelist.append(i)
-
     return profilelist, 0
 
 def LocaleList(class_id, supported, current):
@@ -65,11 +63,10 @@ def is_valid_url(url):
 def CleanTempDir(tempdir):
     if not os.path.exists(tempdir):
         mktempdir = os.mkdir(tempdir)
-
-    for path in os.listdir(tempdir):
-        if os.path.isfile(tempdir+path) and fnmatch.fnmatch(tempdir+path, '*.gz'):
-            os.unlink(tempdir+path)
-
+    else:
+        for path in os.listdir(tempdir):
+            if os.path.isfile(tempdir+path) and fnmatch.fnmatch(tempdir+path, '*.gz'):
+                os.unlink(tempdir+path)
     return True
 
 class HeadRequest(urllib2.Request):
@@ -82,38 +79,86 @@ def replace_all(text, dic):
     return text
 
 class ThreadGenerator(threading.Thread):
-    def __init__(self, reference, gtk, window, function, kwargs):
+    def __init__(self, reference, function, params,
+                    gtk = False, window = False, event = False):
         threading.Thread.__init__(self)
-        self._function = function
         self._gtk = gtk
         self._window = window
-        self._kwargs = kwargs
+        self._function = function
+        self._params = params
+        self._event = event
         self.start()
 
     def run(self):
         if self._gtk:
             gtk.gdk.threads_enter()
-        self._function(**self._kwargs)
+
+        if self._event:
+            self._event.wait()
+
+        self._function(**self._params)
+
         if self._gtk:
             gtk.gdk.threads_leave()
+
         if self._window:
             self._window.hide()
 
-def ProcessGenerator(command):
-    process = subprocess.Popen(command, shell = False, stdout = subprocess.PIPE)
+def ProcessGenerator(command, terminal = False, bar = False):
+
+    filename = '/tmp/cs-command-'+hashlib.sha1(
+        str(random.getrandbits(random.getrandbits(10)))
+        ).hexdigest()
+
+    if isinstance(command, list):
+        strcmd = ' '.join(command)
+    elif isinstance(command, str):
+        strcmd = command
+
+    cmd = '%s 1>%s 2>&1' % (strcmd, filename)
+
+    try:
+        os.mkfifo(filename)
+        fifo = os.fdopen(os.open(filename, os.O_RDONLY | os.O_NONBLOCK))
+
+        process = subprocess.Popen(
+                cmd, shell = True, stdout = subprocess.PIPE,
+                stderr = subprocess.STDOUT
+                )
+
+        if bar:
+            timer = gobject.timeout_add(100, bar.pulse)
+
+        while process.returncode == None:
+            process.poll()
+            try:
+                line = fifo.readline().strip()
+                if terminal:
+                    terminal.feed(line)
+            except:
+                continue
+
+    finally:
+        os.unlink(filename)
+        if bar:
+            gobject.source_remove(timer)
+
     return process
 
-def KillProcess(reference, process):
-    for killed in process:
-        murder = subprocess.Popen(['/usr/bin/pkill', killed], shell = False, stdout = subprocess.PIPE)
+def KillProcess(reference, shell = [], python = [], terminal = False):
+    for s in shell:
+        k = ProcessGenerator(['/usr/bin/pkill', s], terminal = terminal)
+    for p in python:
+        p.kill()
+    return True
 
-def GetArch():
-    process = subprocess.Popen(['/usr/bin/arch'], shell = False, stdout = subprocess.PIPE)
-    arch = process.stdout.read().split('\n')[0]
-    return arch
+def GetArch(terminal = False):
+    p = ProcessGenerator(['/usr/bin/arch'], terminal = terminal)
+    a = p.stdout.read().split('\n')[0]
+    return a
 
 def TestIndexes(sourcestext, archlist, progressmessage, download,
-                q_bar, q_msg, q_terminal, q_code, q_counter):
+                q_bar, q_msg, q_terminal, q_code, q_counter, event):
 
     bar = q_bar.get()
     message = q_msg.get()
@@ -121,6 +166,10 @@ def TestIndexes(sourcestext, archlist, progressmessage, download,
     errorcounter = 0
     errorcode = ''
     sourceslist = []
+    CleanTempDir(tempdir)
+
+    if not download:
+        timer = gobject.timeout_add(100, bar.pulse)
 
     for line in sourcestext.split('\n'):
         if line:
@@ -140,6 +189,7 @@ def TestIndexes(sourcestext, archlist, progressmessage, download,
                 message.set_markup(progressmessage % (arch, section))
                 requesturl = url+'/dists/'+branch+'/'+section+'/binary-'+arch+'/Packages.gz'
                 terminal.feed(requesturl+'\n')
+
                 if download:
                     urlname = replace_all(url, forbidden_filename_chars)
                     pkgcache = tempfile.NamedTemporaryFile(
@@ -201,15 +251,17 @@ def TestIndexes(sourcestext, archlist, progressmessage, download,
                     if read < contentheader:
                         errorcode = ''
                         errorcounter += 1
-                else:
-                    bar.pulse()
+    if not download:
+        gobject.source_remove(timer)
 
     q_bar.put(bar)
     q_msg.put(message)
+    q_terminal.put(terminal)
     q_code.put(errorcode)
     q_counter.put(errorcounter)
+    event.set()
 
-    return bar, message, errorcounter, errorcode
+#    return bar, message, errorcounter, errorcode
 
 def ParseProfileConfig(profile, get):
     conffile = PROFILEDIR+'/'+profile+'/profile.conf'

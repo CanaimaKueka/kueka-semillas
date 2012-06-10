@@ -8,9 +8,9 @@ DEBUGMSG() {
 	eval "DEBUGVALUE=\${${DEBUGVAR}}"
 
 	if [ -n "${DEBUGVAR}" ]	&& [ -n "${DEBUGVALUE}" ] && [ "${CS_OP_MODE}" = "vardump" ] && [ "${CS_PRINT_MODE}" = "normal" ]; then
-			printf "${YELLOW}${DEBUGVAR}${END}='${DEBUGVALUE}'\n"
+			${BIN_PRINTF} "${YELLOW}${DEBUGVAR}${END}='${DEBUGVALUE}'\n"
 		if [ "${SWITCHLOG}" = "on" ]; then
-			printf "[DEBUG] ${DEBUGVAR}='${DEBUGVALUE}'\n" >> "${ISOS}/${LOGFILE}"
+			${BIN_PRINTF} "[DEBUG] ${DEBUGVAR}='${DEBUGVALUE}'\n" >> "${ISOS}/${LOGFILE}"
 		fi
 	fi
 }
@@ -25,10 +25,10 @@ CONFIGMSG() {
 
 	if [ -n "${CONFIGMSG}" ] && [ -n "${CONFIGVAR}" ] && [ "${CS_PRINT_MODE}" = "normal" ]; then
 		LOCALIZED="$( gettext -s "${CONFIGMSG}" )"
-		printf "${UNDERSCORE}${CONFIGVAR}${END}: ${LOCALIZED} ...\n" "${@}"
+		${BIN_PRINTF} "${UNDERSCORE}${CONFIGVAR}${END}: ${LOCALIZED} ...\n" "${@}"
 
 		if [ "${SWITCHLOG}" = "on" ]; then
-			printf "[CONFIG] ${CONFIGVAR}: ${LOCALIZED} ...\n" "${@}" >> "${ISOS}/${LOGFILE}"
+			${BIN_PRINTF} "[CONFIG] ${CONFIGVAR}: ${LOCALIZED} ...\n" "${@}" >> "${ISOS}/${LOGFILE}"
 		fi
 	fi
 }
@@ -40,10 +40,10 @@ INFOMSG() {
 
 	if [ -n "${INFOMSG}" ] && [ "${CS_PRINT_MODE}" = "verbose" ]; then
 		LOCALIZED="$( gettext -s "${INFOMSG}" )"
-		printf "${LOCALIZED}\n" "${@}"
+		${BIN_PRINTF} "${LOCALIZED}\n" "${@}"
 
 		if [ "${SWITCHLOG}" = "on" ]; then
-			printf "[INFO] ${LOCALIZED}\n" "${@}" >> "${ISOS}/${LOGFILE}"
+			${BIN_PRINTF} "[INFO] ${LOCALIZED}\n" "${@}" >> "${ISOS}/${LOGFILE}"
 		fi
 	fi
 }
@@ -55,10 +55,10 @@ WARNINGMSG() {
 
 	if [ -n "${WARNINGMSG}" ] && [ "${CS_PRINT_MODE}" = "verbose" ]; then
 		LOCALIZED="$( gettext -s "${WARNINGMSG}" )"
-		printf "${YELLOW}${LOCALIZED}${END}\n" "${@}"
+		${BIN_PRINTF} "${YELLOW}${LOCALIZED}${END}\n" "${@}"
 
 		if [ "${SWITCHLOG}" = "on" ]; then
-			printf "[WARNING] ${LOCALIZED}\n" "${@}" >> "${ISOS}/${LOGFILE}"
+			${BIN_PRINTF} "[WARNING] ${LOCALIZED}\n" "${@}" >> "${ISOS}/${LOGFILE}"
 		fi
 	fi
 }
@@ -71,10 +71,10 @@ ERRORMSG() {
 
 	if [ -n "${ERRORMSG}" ]; then
 		LOCALIZED="$( gettext -s "${ERRORMSG}" )"
-		printf "${LRED}${LOCALIZED}${END}\n" "${@}"
+		${BIN_PRINTF} "${LRED}${LOCALIZED}${END}\n" "${@}"
 
 		if [ "${SWITCHLOG}" = "on" ]; then
-			printf "[ERROR] ${LOCALIZED}\n" "${@}" >> "${ISOS}/${LOGFILE}"
+			${BIN_PRINTF} "[ERROR] ${LOCALIZED}\n" "${@}" >> "${ISOS}/${LOGFILE}"
 		fi
 	fi
 }
@@ -86,10 +86,10 @@ SUCCESSMSG() {
 
 	if [ -n "${SUCCESSMSG}" ]; then
 		LOCALIZED="$( gettext -s "${SUCCESSMSG}" )"
-		printf "${LGREEN}${LOCALIZED}${END}\n" "${@}"
+		${BIN_PRINTF} "${LGREEN}${LOCALIZED}${END}\n" "${@}"
 
 		if [ "${SWITCHLOG}" = "on" ]; then
-			printf "[SUCCESS] ${LOCALIZED}\n" "${@}" >> "${ISOS}/${LOGFILE}"
+			${BIN_PRINTF} "[SUCCESS] ${LOCALIZED}\n" "${@}" >> "${ISOS}/${LOGFILE}"
 		fi
 	fi
 }

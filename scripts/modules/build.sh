@@ -44,7 +44,7 @@ else
 	exit 1
 fi
 
-OPTIONS="$( getopt --shell="sh" --name="${0}" --options="${SHORTOPTS}" --longoptions="${LONGOPTS}" -- "${@}" )"
+OPTIONS="$( ${BIN_GETOPT} --shell="sh" --name="${0}" --options="${SHORTOPTS}" --longoptions="${LONGOPTS}" -- "${@}" )"
 
 if [ $? != 0 ]; then
 	ERRORMSG "Ocurrió un problema interpretando los parámetros."
@@ -138,7 +138,7 @@ case ${CS_OP_MODE} in
 		fi
 
 		if [ -z "${ARCH}" ]; then
-			ARCH="$( dpkg --print-architecture )"
+			ARCH="$( ${BIN_DPKG} --print-architecture )"
 			INFOMSG "No especificaste una arquitectura, utilizando '%s' presente en el sistema." "${ARCH}"
 		fi
 

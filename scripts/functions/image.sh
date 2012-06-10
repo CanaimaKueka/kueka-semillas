@@ -54,12 +54,12 @@ CS_BUILD_IMAGE() {
 	fi
 
 	WARNINGMSG "[--- INICIANDO CONSTRUCCIÓN ---]"
-	cd "${ISOS}" && lb build ${LB_QUIET} ${LB_VERBOSE} 2>&1 | tee "${ISOS}/${LOGFILE}"
+	cd "${ISOS}" && ${BIN_LB} build ${LB_QUIET} ${LB_VERBOSE} 2>&1 | ${BIN_TEE} "${ISOS}/${LOGFILE}"
 
 	if [ -e "${ISOS}/${MEDIO_LBNAME}" ] && [ -n "${MEDIO_CSNAME}" ] && [ -n "${MEDIO_LBNAME}" ]; then
 
-		PESO="$( echo "scale=2;$( stat --format=%s "${ISOS}/${MEDIO_LBNAME}" )/1048576" | bc )MB"
-		mv "${ISOS}/${MEDIO_LBNAME}" "${ISOS}/${MEDIO_CSNAME}"
+		PESO="$( ${BIN_ECHO} "scale=2;$( ${BIN_STAT} --format=%s "${ISOS}/${MEDIO_LBNAME}" )/1048576" | ${BIN_BC} )MB"
+		${BIN_MV} "${ISOS}/${MEDIO_LBNAME}" "${ISOS}/${MEDIO_CSNAME}"
 
 		SUCCESSMSG "Se ha creado una imagen %s con un peso de %s." "${MEDIO}" "${PESO}"
 		SUCCESSMSG "Puedes encontrar la imagen '%s' en el directorio %s" "${MEDIO_CSNAME}" "${ISOS}"

@@ -11,9 +11,9 @@ IMG_VALIDATOR() {
 	TYPE="${1}"
 	shift || true
 
-	if [ "$( file -ib "${IMG}" )" = "${TYPE}" ]; then
+	if [ "$( ${BIN_FILE} -ib "${IMG}" )" = "${TYPE}" ]; then
 
-		IMG_SIZE="$( identify "${IMG}" | awk '{print $3}' )"
+		IMG_SIZE="$( ${BIN_IDENTIFY} "${IMG}" | ${BIN_AWK} '{print $3}' )"
 		IMG_HSIZE="${IMG_SIZE%x*}"
 		IMG_VSIZE="${IMG_SIZE#${IMG_HSIZE}x}"
 

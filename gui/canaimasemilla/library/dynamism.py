@@ -1,11 +1,12 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import gtk, sys, re, threading, Queue, gzip, urllib2, tempfile, fnmatch, gobject
+import gtk, sys, re, threading, Queue, gzip, urllib2, tempfile, fnmatch, gobject, subprocess
 
-from library.vocabulary import BUILD_VALIDATE_SOURCES_MSG, BUILD_WINDOW_TITLE
-from library.intelligence import ThreadGenerator, KillProcess, ParseProfileConfig, TestIndexes
-from library.creativity import ProgressWindow
+from library.vocabulary import *
+from library.intelligence import ThreadGenerator, KillProcess, ProcessGenerator
+from library.intelligence import ParseProfileConfig, TestIndexes
+from library.creativity import ProgressWindow, UserMessage
 from config import *
 
 def Dummy(signaled, class_id):
@@ -383,6 +384,7 @@ def BuildImage(class_id, profile_container, arch_container, media_container,
     q_terminal = Queue.Queue()
     q_code = Queue.Queue()
     q_counter = Queue.Queue()
+    event = threading.Event()
 
     Toggle(
         dont = None, do = window_container, children = False,
@@ -411,8 +413,8 @@ def BuildImage(class_id, profile_container, arch_container, media_container,
     sourcestext = mainrepo+extrarepos
 
     window_thread = ThreadGenerator(
-        reference = class_id, gtk = False, window = False,
-        function = ProgressWindow, kwargs = {
+        reference = class_id, function = ProgressWindow,
+        params = {
             'text': progressmessage,
             'title': progresstitle,
             'term': True,
@@ -426,8 +428,8 @@ def BuildImage(class_id, profile_container, arch_container, media_container,
         )
 
     index_thread = ThreadGenerator(
-        reference = class_id, gtk = False, window = False,
-        function = TestIndexes, kwargs = {
+        reference = class_id, function = TestIndexes,
+        params = {
             'sourcestext': sourcestext,
             'archlist': [arch,],
             'progressmessage': progressmessage,
@@ -436,100 +438,60 @@ def BuildImage(class_id, profile_container, arch_container, media_container,
             'q_msg': q_msg,
             'q_terminal': q_terminal,
             'q_code': q_code,
-            'q_counter': q_counter
+            'q_counter': q_counter,
+            'event': event
             }
         )
 
     build_thread = ThreadGenerator(
-        reference = class_id, gtk = False, window = False,
-        function = StartCS, kwargs = {
+        reference = class_id, function = StartCS,
+        params = {
+            'class_id': class_id,
             'q_bar': q_bar,
             'q_msg': q_msg,
             'q_terminal': q_terminal,
             'q_code': q_code,
             'q_counter': q_counter
-            }
+            },
+        event = event
         )
 
-def StartCS(q_bar, q_msg, q_terminal, q_code, q_counter):
+def StartCS(class_id, q_bar, q_msg, q_terminal, q_code, q_counter):
 
-        bar = q_bar.get()
-        message = q_msg.get()
-        terminal = q_terminal.get()
-        errorcode = q_code.get()
-        errorcounter = q_counter.get()
+    bar = q_bar.get()
+    message = q_msg.get()
+    terminal = q_terminal.get()
+    errorcode = q_code.get()
+    errorcounter = q_counter.get()
 
-    if errorcode != 0:
+    if errorcounter != 0:
         build_thread = ThreadGenerator(
             reference = class_id, gtk = True, window = False,
-            function = UserMessage, kwargs = {
+            function = UserMessage, params = {
                 'message': BUILD_CONFIRM_OK_MSG,
                 'title': BUILD_CONFIRM_OK_TITLE,
                 'type': gtk.MESSAGE_QUESTION,
-                'buttons': gtk.BUTTONS_YES_NO,
-                'c_1': gtk.RESPONSE_YES,
-                'f_1': BuildImage, 'p_1': (
-                    self, self.profilename, self.profilearch,
-                    self.profilemedia, self.inbox
-                    )
+                'buttons': gtk.BUTTONS_YES_NO
                 }
             )
     else:
-        build = ProcessGenerator(['dmesg'])
-            #[BINDIR+'/'+CSBIN, '-a', arch, '-m', media, '-s', profile]
-#            )
-        output = build.stdout()
-        print output
+        process = ProcessGenerator(
+            [BINDIR+'/'+CSBIN, '-a', arch, '-m', media, '-s', profile],
+            terminal, bar
+            )
 
-#                    if buildimage == 0:
-#                    pbar.set_fraction(1)
-#                    pbar.set_text(DoneLabel)
-#                    timer_2 = gobject.source_remove(timer_1)
-#                    gtk.gdk.threads_enter()
-#                    md = gtk.MessageDialog( parent = None,
-#                                            flags = 0,
-#                                            buttons = gtk.BUTTONS_OK,
-#                                            message_format = ImageBuiltSuccessfully % (sabor, sabor))
-#                    md.set_title(DoneLabel)
-#                    md.run()
-#                    md.destroy()
-#                    gtk.gdk.threads_leave()
-#                    pbar.set_text(" ")
-#                                
-#                if buildimage == 256:
-#                    pbar.set_fraction(0.0)
-#                    pbar.set_text(ErrorLabel)
-#                    timer_2 = gobject.source_remove(timer_1)
-#                    gtk.gdk.threads_enter()
-#                    md = gtk.MessageDialog( parent = None,
-#                                            flags = 0,
-#                                            type = gtk.MESSAGE_ERROR,
-#                                            buttons = gtk.BUTTONS_CLOSE,
-#                                            message_format = ImageBuiltError)
-#                    md.set_title(ErrorLabel)
-#                    md.run()
-#                    md.destroy()
-#                    gtk.gdk.threads_leave()
-#                    pbar.set_text(" ")
+        if process.returncode == 0:
+            build_thread = ThreadGenerator(
+                reference = class_id, gtk = True, window = False,
+                function = UserMessage, params = {
+                    'message': BUILD_CONFIRM_OK_MSG,
+                    'title': BUILD_CONFIRM_OK_TITLE,
+                    'type': gtk.MESSAGE_QUESTION,
+                    'buttons': gtk.BUTTONS_YES_NO
+                    }
+                )
 
-#                if buildimage == 36608:
-#                    pbar.set_fraction(0.0)
-#                    pbar.set_text(CancelledLabel)
-#                    timer_2 = gobject.source_remove(timer_1)
-#                    gtk.gdk.threads_enter()
-#                    md = gtk.MessageDialog( parent = None,
-#                                            flags = 0,
-#                                            type = gtk.MESSAGE_ERROR,
-#                                            buttons = gtk.BUTTONS_CLOSE,
-#                                            message_format = ImageBuiltCancelled % sabor)
-#                    md.set_title(CancelledLabel)
-#                    md.run()
-#                    md.destroy()
-#                    gtk.gdk.threads_leave()
-#                    pbar.set_text(" ")
-#                    
-#                    
-#    Toggle(
-#        dont = None, do = box_container, children = True,
-#        morechildren = True, alwaysoff = True
-#        )
+    Toggle(
+        dont = None, do = box_container, children = True,
+        morechildren = True, alwaysoff = True
+        )
