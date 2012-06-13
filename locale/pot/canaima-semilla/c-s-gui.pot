@@ -28,10 +28,10 @@
 #: ../../../gui/canaimasemilla/library/vocabulary.py:113
 msgid ""
 msgstr ""
-"Project-Id-Version: Canaima Semilla 3.0\n"
+"Project-Id-Version: Canaima Semilla VERSION=3.0\n"
 "Report-Msgid-Bugs-To: desarrolladores@canaima.softwarelibre.gob.ve\n"
-"POT-Creation-Date: 2012-06-08 18:10-0430\n"
-"PO-Revision-Date: 2012-06-08 18:10-0430\n"
+"POT-Creation-Date: 2012-06-13 11:51-0430\n"
+"PO-Revision-Date: 2012-06-13 11:51-0430\n"
 "Last-Translator: Luis Alejandro Martínez Faneyth <luis@huntingbears.com.ve>\n"
 "Language-Team: Equipo de Traducción de Canaima Semilla <desarrolladores@canaima.softwarelibre.gob.ve>\n"
 "Language: English\n"

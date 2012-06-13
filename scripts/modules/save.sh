@@ -1,17 +1,30 @@
 #!/bin/sh -e
 #
 # ==============================================================================
-# PACKAGE: canaima-semilla
-# FILE: scripts/modules/build.sh
-# DESCRIPCIÓN: Script de sh principal del paquete canaima-desarrollador
+# PAQUETE: canaima-semilla
+# ARCHIVO: scripts/modules/save.sh
+# DESCRIPCIÓN: Módulo para grabar imágenes en médios de almacenamiento digitales
+#              u ópticos.
 # COPYRIGHT:
-# (C) 2010 Luis Alejandro Martínez Faneyth <luis@huntingbears.com.ve>
-# (C) 2012 Niv Sardi <xaiki@debian.org>
-# LICENCIA: GPL3
+#       (C) 2010-2012 Luis Alejandro Martínez Faneyth <luis@huntingbears.com.ve>
+#       (C) 2012 Niv Sardi <xaiki@debian.org>
+# LICENCIA: GPL-3
 # ==============================================================================
 #
-# Este programa es software libre. Puede redistribuirlo y/o modificarlo bajo los
-# términos de la Licencia Pública General de GNU (versión 3).
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# COPYING file for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+# CODE IS POETRY
 
 ACTION="${1}"
 shift || true
@@ -78,11 +91,23 @@ while true; do
 done
 
 case ${DEVICE} in
-	/dev/cdrom|/dev/cdrw|/dev/dvd|/dev/dvdrw|/dev/scd0|/dev/sr0)
+	/dev/cdrom|/dev/cdrw|/dev/dvd|/dev/dvdrw|/dev/scd0|/dev/sr0|cd|dvd)
 		BURNDEVICE="$( wodim -devices | grep '/dev/' | awk '{print $2}' )"
-		wodim ${BURNDEVICE} -data ''
+		if wodim ${BURNDEVICE} -data ''; then
+			SUCCESSMSG ""
+			exit 0
+		else
+			ERRORMSG ""
+			exit 1
+		fi
 	;;
 	*)
-		dd if="${IMAGE}" of="${DEVICE}"
+		if dd if="${IMAGE}" of="${DEVICE}"; then
+			SUCCESSMSG ""
+			exit 0
+		else
+			ERRORMSG ""
+			exit 1
+		fi
 	;;
 esac

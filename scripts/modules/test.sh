@@ -133,7 +133,7 @@ if [ ${FREE_MEM} -lt ${MEM} ]; then
 	exit 1
 fi
 
-if kvm-img info ${KVM_IMG} > /dev/null 2>&1 ; then
+if kvm-img info ${KVM_IMG} 1>/dev/null 2>&1 ; then
 	if [ "$( kvm-img info hola.img | grep "virtual size: " | sed 's/virtual size: //g' | awk '{print $1}' )" != "${DISK_SIZE}G" ]; then
 		rm -rf ${KVM_IMG}
 		kvm-img -f qcow2 "${KVM_IMG}" "${DISK_SIZE}G"
