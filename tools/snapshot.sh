@@ -98,8 +98,8 @@ fi
 
 git log > ${CHANGES}
 
-OLDVERSION="$( cat ${VERSION} | grep "VERSION" | sed 's/VERSION = //g' )"
-OLDCOMMIT="$( cat ${VERSION} | grep "COMMIT" | sed 's/COMMIT = //g' )"
+OLDVERSION="$( cat ${VERSION} | grep "VERSION" | sed 's/VERSION=//g;s/"//g' )"
+OLDCOMMIT="$( cat ${VERSION} | grep "COMMIT" | sed 's/COMMIT=//g;s/"//g' )"
 OLDCOMMITLINE="$( cat ${CHANGES}  | grep -n "${OLDCOMMIT}" | awk -F: '{print $1}' )"
 
 read -p "Enter new version (last version was ${OLDVERSION}): " REPLY
@@ -116,8 +116,9 @@ rm ${CHANGES}
 
 LASTCOMMIT="$( git rev-parse HEAD )"
 
-echo "VERSION = ${NEWVERSION}+${SNAPSHOT}" > ${VERSION}
-echo "COMMIT = ${LASTCOMMIT}" >> ${VERSION}
+echo "VERSION=\"${NEWVERSION}+${SNAPSHOT}\"" > ${VERSION}
+echo "COMMIT=\"${LASTCOMMIT}\"" >> ${VERSION}
+echo "RELDATE=\"${DATE}\"" >> ${VERSION}
 
 WARNING "Commiting changes ..."
 git add .

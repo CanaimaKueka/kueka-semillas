@@ -1,23 +1,63 @@
 #!/bin/sh -e
+#
+# ==============================================================================
+# PAQUETE: canaima-semilla
+# ARCHIVO: scripts/functions/profile.sh
+# DESCRIPCIÓN: Funciones para la carga y validación de los perfiles.
+# COPYRIGHT:
+#       (C) 2010-2012 Luis Alejandro Martínez Faneyth <luis@huntingbears.com.ve>
+#       (C) 2012 Niv Sardi <xaiki@debian.org>
+# LICENCIA: GPL-3
+# ==============================================================================
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# COPYING file for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+# CODE IS POETRY
 
 CS_LOAD_PROFILE() {
 
+	# ======================================================================
+	# FUNCIÓN: CS_LOAD_PROFILE
+	# DESCRIPCIÓN: Lee, valida y exporta las variables presentes en un
+	#	      perfil de configuración.
+	# ENTRADAS:
+	#       [ISOS]: Directorio donde se encuentra el árbol de configuración.
+	#       [PROFILES]: Directorio donde se encuentran los perfiles.
+	#       [SABOR]: Nombre del sabor a construir.
+	#       [ARCH]: Arquitectura de la imagen a construir.
+	#       [MEDIO]: Formato de la imagen a construir.
+	#       [CS_OP_MODE]: Modo de operación. 
+	#       [CS_PRINT_MODE]: Modo de verbosidad.
+	#       [EXTRACONF]: Archivo de configuraciones adicionales.
+	# ======================================================================
+
 	ISOS="${1}"
-	shift || true
+	[ -n "${ISOS}" ] && shift 1 || true
 	PROFILES="${1}"
-	shift || true
+	[ -n "${PROFILES}" ] && shift 1 || true
 	SABOR="${1}"
-	shift || true
+	[ -n "${SABOR}" ] && shift 1 || true
 	ARCH="${1}"
-	shift || true
+	[ -n "${ARCH}" ] && shift 1 || true
 	MEDIO="${1}"
-	shift || true
+	[ -n "${MEDIO}" ] && shift 1 || true
 	CS_OP_MODE="${1}"
-	shift || true
+	[ -n "${CS_OP_MODE}" ] && shift 1 || true
 	CS_PRINT_MODE="${1}"
-	shift || true
+	[ -n "${CS_PRINT_MODE}" ] && shift 1 || true
 	EXTRACONF="${1}"
-	shift || true
+	[ -n "${EXTRACONF}" ] && shift 1 || true
 
 	PCONFDIR="${PROFILES}/${SABOR}"
 	PCONFFILE="${PCONFDIR}/profile.conf"
@@ -34,6 +74,22 @@ CS_LOAD_PROFILE() {
 	if [ -n "${EXTRACONF}" ] && [ -f "${EXTRACONF}" ]; then
 		. "${EXTRACONF}"
 	fi
+
+	CONFIGMSG "Leyendo estado del nombre del perfil" "PROFILE_NAME"
+	if [ -z "${PROFILE_NAME}" ] || [ "${PROFILE_NAME}" = "none" ]; then
+		PROFILE_NAME="${SABOR}"
+		WARNINGMSG "No se ha especificado el nombre del perfil para el sabor en construcción."
+	fi
+	INFOMSG "Seleccionando '%s' para identificar el perfil del sabor." "${PROFILE_NAME}"
+	DEBUGMSG "PROFILE_NAME"
+
+	CONFIGMSG "Leyendo estado de las arquitecturas habilitadas para este perfil" "PROFILE_ARCH"
+	if [ -z "${PROFILE_ARCH}" ] || [ "${PROFILE_ARCH}" = "none" ]; then
+		PROFILE_ARCH="${SUPPORTED_ARCH}"
+		WARNINGMSG "No se han especificado las arquitecturas habilitadas para el sabor en construcción."
+	fi
+	INFOMSG "Seleccionando '%s' como arquitecturas habilitadas." "${PROFILE_ARCH}"
+	DEBUGMSG "PROFILE_ARCH"
 
 	CONFIGMSG "Leyendo estado del nombre del autor" "AUTHOR_NAME"
 	if [ -z "${AUTHOR_NAME}" ] || [ "${AUTHOR_NAME}" = "none" ]; then
@@ -87,13 +143,28 @@ CS_LOAD_PROFILE() {
 	CONFIGMSG "Leyendo estado de la arquitectura de construcción" "ARCH"
 	case ${ARCH} in
 		amd64)
-			ARCH="amd64"
-			KERNEL_ARCH="amd64"
+			if [ $( echo ${PROFILE_ARCH} | grep -wc "${ARCH}") -ge 1 ]; then
+				ARCH="amd64"
+				KERNEL_ARCH="amd64"
+			else
+				ERRORMSG "Arquitectura '%s' no soportada por el perfil '%s'. Abortando." "${ARCH}" "${SABOR}"
+				exit 1
+			fi
+
+			if [ "${NATIVE_ARCH}" = "i386" ]; then
+				ERRORMSG "Una imagen con arquitectura '%s' no puede ser generada en una máquina '%s'. Abortando." "${ARCH}" "${NATIVE_ARCH}"
+				exit 1
+			fi
 		;;
 
 		i386)
-			ARCH="i386"
-			KERNEL_ARCH="686"
+			if [ $( echo ${PROFILE_ARCH} | grep -wc "${ARCH}") -ge 1 ]; then
+				ARCH="i386"
+				KERNEL_ARCH="686"
+			else
+				ERRORMSG "Arquitectura '%s' no soportada por el perfil '%s'. Abortando." "${ARCH}" "${SABOR}"
+				exit 1
+			fi
 		;;
 
 		*)
@@ -106,28 +177,28 @@ CS_LOAD_PROFILE() {
 
 	CONFIGMSG "Leyendo estado del formato de imagen a utilizar" "MEDIO"
 	case ${MEDIO} in
-		img)
-			if dpkg --compare-versions "${LB_VERSION}" ge 3.0; then
+		img|hdd|usb|usb-hdd)
+			if ${BIN_DPKG} --compare-versions "${LB_VERSION}" ge 3.0; then
 				MEDIO="hdd"
 			else
 				MEDIO="usb-hdd"
 			fi
 			MEDIO_LBNAME="binary.img"
-			MEDIO_CSNAME="${META_DISTRO}-${SABOR}~${DATE}_${ARCH}.img"
+			MEDIO_CSNAME="${META_DISTRO}-${PROFILE_NAME}~${DATE}_${ARCH}.img"
 			LB_BOOTLOADER="syslinux"
 		;;
 
-		iso)
+		iso|cd|dvd)
 			MEDIO="iso"
 			MEDIO_LBNAME="binary.iso"
-			MEDIO_CSNAME="${META_DISTRO}-${SABOR}~${DATE}_${ARCH}.iso"
+			MEDIO_CSNAME="${META_DISTRO}-${PROFILE_NAME}~${DATE}_${ARCH}.iso"
 			LB_BOOTLOADER="isolinux"
 		;;
 
-		mixto|hybrid)
+		mixto|hybrid|iso-hybrid)
 			MEDIO="iso-hybrid"
 			MEDIO_LBNAME="binary-hybrid.iso"
-			MEDIO_CSNAME="${META_DISTRO}-${SABOR}~${DATE}_${ARCH}.iso"
+			MEDIO_CSNAME="${META_DISTRO}-${PROFILE_NAME}~${DATE}_${ARCH}.iso"
 			LB_BOOTLOADER="isolinux"
 		;;
 
@@ -244,7 +315,7 @@ CS_LOAD_PROFILE() {
 	fi
 	DEBUGMSG "IMG_HOOKS"
 
-	if dpkg --compare-versions "${LB_VERSION}" ge 3.0; then
+	if ${BIN_DPKG} --compare-versions "${LB_VERSION}" ge 3.0; then
 		IMG_SYSLINUX_TEMPLATE="${TEMPLATES}/${LB_BOOTLOADER}/3.0/${META_DISTRO}"
 	else
 		IMG_SYSLINUX_TEMPLATE="${TEMPLATES}/${LB_BOOTLOADER}/2.0/${META_DISTRO}"
@@ -263,16 +334,15 @@ CS_LOAD_PROFILE() {
 			ERRORMSG "Debe utilizar una imagen PNG de dimensiones menores o iguales a 640x480px."
 			exit 1
 		fi
-	elif [ -f "${TEMPLATES}profile/${META_DISTRO}/default/syslinux.png" ]; then
+	elif [ -f "${TEMPLATES}/profile/${META_DISTRO}/default/syslinux.png" ]; then
 		IMG_SYSLINUX_SPLASH="${TEMPLATES}/profile/${META_DISTRO}/default/syslinux.png"
-		INFOMSG "Seleccionando la imagen predeterminada para la portada de arranque." "${IMG_SYSLINUX_SPLASH}"
+		INFOMSG "Seleccionando la imagen predeterminada para la portada de arranque."
 	else
 		ERRORMSG "Resultó imposible seleccionar una imagen para la portada de arranque."
 		ERRORMSG "La instalación de %s puede estar corrupta, por favor reinstala." "${CS_NAME}"
 		exit 1
 	fi	
 	DEBUGMSG "IMG_SYSLINUX_SPLASH"
-
 
 	CONFIGMSG "Leyendo estado del instalador nativo" "IMG_DEBIAN_INSTALLER"
 	case ${IMG_DEBIAN_INSTALLER} in
@@ -347,41 +417,41 @@ CS_LOAD_PROFILE() {
 	fi
 	DEBUGMSG "IMG_DEBIAN_INSTALLER_GTK"
 
-        case ${CS_PRINT_MODE} in
-                normal)
-                        LB_QUIET=""
-                        LB_VERBOSE=""
-                ;;
+	case ${CS_PRINT_MODE} in
+		normal)
+			LB_QUIET=""
+			LB_VERBOSE=""
+		;;
 
-                quiet)
-                        LB_QUIET="--quiet"
-                        LB_VERBOSE=""
-                ;;
+		quiet)
+			LB_QUIET="--quiet"
+			LB_VERBOSE=""
+		;;
 
-                verbose)
-                        LB_QUIET=""
-                        LB_VERBOSE="--verbose"
-                ;;
-        esac
+		verbose)
+			LB_QUIET=""
+			LB_VERBOSE="--verbose"
+		;;
+	esac
 
 	OS_INCLUDES="${OS_INCLUDES%/}"
 	OS_HOOKS="${OS_HOOKS%/}"
 	IMG_INCLUDES="${IMG_INCLUDES%/}"
 	IMG_HOOKS="${IMG_HOOKS%/}"
 	IMG_SYSLINUX_TEMPLATE="${IMG_SYSLINUX_TEMPLATE%/}"
-        OS_LANG="$( echo "${OS_LOCALE}" | sed 's/_.*//g' )"
-        CS_ISO_PREPARER="${CS_ISO_PREPARER:-${CS_NAME}; http://code.google.com/p/canaima-semilla/}"
-        CS_ISO_VOLUME="${CS_ISO_VOLUME:-${META_DISTRO}-${SABOR}}"
-        CS_ISO_VOLUME="$( echo "${CS_ISO_VOLUME}" | cut -c1-32 )"
-        CS_ISO_PUBLISHER="${CS_ISO_PUBLISHER:-${AUTHOR_NAME}; ${AUTHOR_EMAIL}; ${AUTHOR_URL}}"
-        CS_ISO_APPLICATION="${CS_ISO_APPLICATION:-${META_DISTRO} Live}"
-        CS_BOOTAPPEND_LIVE="live-config.locales=${OS_LOCALE} \
-live-config.hostname=${META_DISTRO} \
-live-config.username=${META_DISTRO}-${SABOR} \
+	OS_LANG="$( ${BIN_ECHO} "${OS_LOCALE}" | sed 's/_.*//g' )"
+	CS_ISO_PREPARER="${CS_ISO_PREPARER:-${CS_NAME}; http://code.google.com/p/canaima-semilla/}"
+	CS_ISO_VOLUME="${CS_ISO_VOLUME:-${META_DISTRO}-${PROFILE_NAME}}"
+	CS_ISO_VOLUME="$( ${BIN_ECHO} "${CS_ISO_VOLUME}" | ${BIN_CUT} -c1-32 )"
+	CS_ISO_PUBLISHER="${CS_ISO_PUBLISHER:-${AUTHOR_NAME}; ${AUTHOR_EMAIL}; ${AUTHOR_URL}}"
+	CS_ISO_APPLICATION="${CS_ISO_APPLICATION:-${META_DISTRO}-${PROFILE_NAME}}"
+	CS_BOOTAPPEND_LIVE="live-config.locales=${OS_LOCALE} \
+live-config.hostname=${META_DISTRO}-${PROFILE_NAME} \
+live-config.username=${META_DISTRO} \
 live-config.user-fullname=${META_DISTRO} \
 keyb=${OS_LANG} quiet splash vga=791"
 
-	PVARIABLES="SABOR=\"${SABOR}\"\nARCH=\"${ARCH}\"\nKERNEL_ARCH=\"${KERNEL_ARCH}\"\nMEDIO=\"${MEDIO}\"\nMEDIO_LBNAME=\"${MEDIO_LBNAME}\"\nMEDIO_CS_NAME=\"${MEDIO_CSNAME}\"\n\nAUTHOR_NAME=\"${AUTHOR_NAME}\"\nAUTHOR_EMAIL=\"${AUTHOR_EMAIL}\"\nAUTHOR_URL=\"${AUTHOR_URL}\"\n\nOS_LOCALE=\"${OS_LOCALE}\"\nOS_LANG=\"${OS_LANG}\"\n\nMETA_MODE=\"${META_MODE}\"\nMETA_CODENAME=\"${META_CODENAME}\"\nMETA_DISTRO=\"${META_DISTRO}\"\nMETA_REPO=\"${META_REPO}\"\nMETA_REPOSECTIONS=\"${META_REPOSECTIONS}\"\n\nOS_PACKAGES=\"${OS_PACKAGES}\"\nOS_EXTRAREPOS=\"${OS_EXTRAREPOS}\"\nOS_INCLUDES=\"${OS_INCLUDES}\"\nOS_HOOKS=\"${OS_HOOKS}\"\nIMG_POOL_PACKAGES=\"${IMG_POOL_PACKAGES}\"\nIMG_INCLUDES=\"${IMG_INCLUDES}\"\nIMG_HOOKS=\"${IMG_HOOKS}\"\n\nLB_BOOTLOADER=\"${LB_BOOTLOADER}\"\nIMG_SYSLINUX_SPLASH=\"${IMG_SYSLINUX_SPLASH}\"\nIMG_SYSLINUX_TEMPLATE=\"${IMG_SYSLINUX_TEMPLATE}\"\nIMG_DEBIAN_INSTALLER=\"${IMG_DEBIAN_INSTALLER}\"\nIMG_DEBIAN_INSTALLER_BANNER=\"${IMG_DEBIAN_INSTALLER_BANNER}\"\nIMG_DEBIAN_INSTALLER_PRESEED=\"${IMG_DEBIAN_INSTALLER_PRESEED}\"\nIMG_DEBIAN_INSTALLER_GTK=\"${IMG_DEBIAN_INSTALLER_GTK}\"\n\nCS_ISO_PREPARER=\"${CS_ISO_PREPARER}\"\nCS_ISO_VOLUME=\"${CS_ISO_VOLUME}\"\nCS_ISO_PUBLISHER=\"${CS_ISO_PUBLISHER}\"\nCS_ISO_APPLICATION=\"${CS_ISO_APPLICATION}\"\nCS_BOOTAPPEND_LIVE=\"${CS_BOOTAPPEND_LIVE}\"\nCS_BOOTAPPEND_INSTALL=\"${CS_BOOTAPPEND_INSTALL}\"\n\nLB_QUIET=\"${LB_QUIET}\"\nLB_VERBOSE=\"${LB_VERBOSE}\""
+	PVARIABLES="SABOR=\"${SABOR}\"\nARCH=\"${ARCH}\"\nKERNEL_ARCH=\"${KERNEL_ARCH}\"\nMEDIO=\"${MEDIO}\"\nMEDIO_LBNAME=\"${MEDIO_LBNAME}\"\nMEDIO_CS_NAME=\"${MEDIO_CSNAME}\"\n\nPROFILE_NAME=\"${PROFILE_NAME}\"\nPROFILE_ARCH=\"${PROFILE_ARCH}\"\n\nAUTHOR_NAME=\"${AUTHOR_NAME}\"\nAUTHOR_EMAIL=\"${AUTHOR_EMAIL}\"\nAUTHOR_URL=\"${AUTHOR_URL}\"\n\nOS_LOCALE=\"${OS_LOCALE}\"\nOS_LANG=\"${OS_LANG}\"\n\nMETA_MODE=\"${META_MODE}\"\nMETA_CODENAME=\"${META_CODENAME}\"\nMETA_DISTRO=\"${META_DISTRO}\"\nMETA_REPO=\"${META_REPO}\"\nMETA_REPOSECTIONS=\"${META_REPOSECTIONS}\"\n\nOS_PACKAGES=\"${OS_PACKAGES}\"\nOS_EXTRAREPOS=\"${OS_EXTRAREPOS}\"\nOS_INCLUDES=\"${OS_INCLUDES}\"\nOS_HOOKS=\"${OS_HOOKS}\"\nIMG_POOL_PACKAGES=\"${IMG_POOL_PACKAGES}\"\nIMG_INCLUDES=\"${IMG_INCLUDES}\"\nIMG_HOOKS=\"${IMG_HOOKS}\"\n\nLB_BOOTLOADER=\"${LB_BOOTLOADER}\"\nIMG_SYSLINUX_SPLASH=\"${IMG_SYSLINUX_SPLASH}\"\nIMG_SYSLINUX_TEMPLATE=\"${IMG_SYSLINUX_TEMPLATE}\"\nIMG_DEBIAN_INSTALLER=\"${IMG_DEBIAN_INSTALLER}\"\nIMG_DEBIAN_INSTALLER_BANNER=\"${IMG_DEBIAN_INSTALLER_BANNER}\"\nIMG_DEBIAN_INSTALLER_PRESEED=\"${IMG_DEBIAN_INSTALLER_PRESEED}\"\nIMG_DEBIAN_INSTALLER_GTK=\"${IMG_DEBIAN_INSTALLER_GTK}\"\n\nCS_ISO_PREPARER=\"${CS_ISO_PREPARER}\"\nCS_ISO_VOLUME=\"${CS_ISO_VOLUME}\"\nCS_ISO_PUBLISHER=\"${CS_ISO_PUBLISHER}\"\nCS_ISO_APPLICATION=\"${CS_ISO_APPLICATION}\"\nCS_BOOTAPPEND_LIVE=\"${CS_BOOTAPPEND_LIVE}\"\nCS_BOOTAPPEND_INSTALL=\"${CS_BOOTAPPEND_INSTALL}\"\n\nLB_QUIET=\"${LB_QUIET}\"\nLB_VERBOSE=\"${LB_VERBOSE}\""
 
 	case ${CS_OP_MODE} in
 		configonly|normal)

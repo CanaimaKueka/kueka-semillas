@@ -235,7 +235,7 @@ gen-pot: check-maintdep
 	@echo "../../../$(PYLOCALE)" > $(GUIPOTLIST)
 	@cd locale/pot/canaima-semilla/ && $(XGETTEXT) --msgid-bugs-address="$(MAILIST)" \
 		--package-version="$(VERSION)" --package-name="$(PACKAGE)" --copyright-holder="$(AUTHOR)" \
-		--no-wrap --from-code=utf-8 --language=Shell -kERRORMSG -kCONFIGMSG -kDEBUGMSG -kWARNINGMSG \
+		--no-wrap --from-code=utf-8 --language=Shell -kERRORMSG -kCONFIGMSG -kMSG -kWARNINGMSG \
 		-kINFOMSG -kSUCCESSMSG -s -j -o $(COREPOTNAME) -f $(COREPOTLISTNAME)
 	@cd locale/pot/canaima-semilla/ && $(XGETTEXT) --msgid-bugs-address="$(MAILIST)" \
 		--package-version="$(VERSION)" --package-name="$(PACKAGE)" --copyright-holder="$(AUTHOR)" \

@@ -1,6 +1,41 @@
 #!/bin/sh -e
+#
+# ==============================================================================
+# PAQUETE: canaima-semilla
+# ARCHIVO: scripts/functions/modules.sh
+# DESCRIPCIÓN: Funciones encargadas de delegar acciones a los módulos.
+# COPYRIGHT:
+#       (C) 2010-2012 Luis Alejandro Martínez Faneyth <luis@huntingbears.com.ve>
+#       (C) 2012 Niv Sardi <xaiki@debian.org>
+# LICENCIA: GPL-3
+# ==============================================================================
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# COPYING file for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+# CODE IS POETRY
 
 MODULE() {
+
+	# ======================================================================
+	# FUNCIÓN: MODULE
+	# DESCRIPCIÓN: Función que se encarga de validar e invocar al módulo
+	#	      apropiado según los parámetros introducidos.
+	# ENTRADAS:
+	#       [MODULE]: Nombre de módulo.
+	#       [ACTION]: Palabra con la cuál fue invocado el módulo.
+	#       [BINDIR]: Directorio actual del script principal de c-s.
+	# ======================================================================
 
 	MODULE="${1}"
 	shift || true

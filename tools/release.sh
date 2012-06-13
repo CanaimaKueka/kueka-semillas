@@ -93,9 +93,9 @@ git checkout release
 git clean -fd
 git reset --hard
 
-OLDCOMMIT="$( cat ${VERSION} | grep "COMMIT" | sed 's/COMMIT = //g' )"
+OLDCOMMIT="$( cat ${VERSION} | grep "COMMIT" | sed 's/COMMIT=//g;s/"//g' )"
 OLDCOMMITLINE="$( cat ${CHANGES}  | grep -n "${OLDCOMMIT}" | awk -F: '{print $1}' )"
-NEWVERSION="$( cat ${DEVERSION} | grep "VERSION" | sed 's/VERSION = //g;s/+.*//g' )"
+NEWVERSION="$( cat ${DEVERSION} | grep "VERSION" | sed 's/VERSION=//g;s/"//g;s/+.*//g' )"
 
 echo "STABLE RELEASE v${NEWVERSION} (${DATE})" > ${NEWCHANGES}
 cat ${CHANGES} | sed -n 1,${OLDCOMMITLINE}p | sed 's/commit.*//g;s/Author:.*//g;s/Date:.*//g;s/Merge.*//g;/^$/d;' >> ${NEWCHANGES}
@@ -113,8 +113,9 @@ rm ${CHANGES} ${DEVERSION}
 
 LASTCOMMIT="$( git rev-parse HEAD )"
 
-echo "VERSION = ${NEWVERSION}" > ${VERSION}
-echo "COMMIT = ${LASTCOMMIT}" >> ${VERSION}
+echo "VERSION=\"${NEWVERSION}\"" > ${VERSION}
+echo "COMMIT=\"${LASTCOMMIT}\"" >> ${VERSION}
+echo "RELDATE=\"${DATE}\"" >> ${VERSION}
 
 WARNING "Updating submodules ..."
 make prepare

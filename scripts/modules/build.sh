@@ -1,30 +1,43 @@
 #!/bin/sh -e
 #
 # ==============================================================================
-# PACKAGE: canaima-semilla
-# FILE: scripts/modules/build.sh
-# DESCRIPCIÓN: Script de sh principal del paquete canaima-desarrollador
+# PAQUETE: canaima-semilla
+# ARCHIVO: scripts/modules/build.sh
+# DESCRIPCIÓN: Módulo para la construcción de imágenes instalables basadas
+#	      en perfiles predefinidos.
 # COPYRIGHT:
-# (C) 2010 Luis Alejandro Martínez Faneyth <luis@huntingbears.com.ve>
-# (C) 2012 Niv Sardi <xaiki@debian.org>
-# LICENCIA: GPL3
+#       (C) 2010-2012 Luis Alejandro Martínez Faneyth <luis@huntingbears.com.ve>
+#       (C) 2012 Niv Sardi <xaiki@debian.org>
+# LICENCIA: GPL-3
 # ==============================================================================
 #
-# Este programa es software libre. Puede redistribuirlo y/o modificarlo bajo los
-# términos de la Licencia Pública General de GNU (versión 3).
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# COPYING file for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+# CODE IS POETRY
 
 ACTION="${1}"
-shift || true
+[ -n "${ACTION}" ] && shift 1 || true
 BINDIR="${1}"
-shift || true
+[ -n "${BINDIR}" ] && shift 1 || true
 
 # Asignando directorios de trabajo
 if [ "${BINDIR}" = "/usr/bin" ]; then
-        BASEDIR="/usr/share/canaima-semilla"
-        CONFDIR="/etc/canaima-semilla"
+	BASEDIR="/usr/share/canaima-semilla"
+	CONFDIR="/etc/canaima-semilla"
 else
-        BASEDIR="$( dirname "${BINDIR}" )"
-        CONFDIR="${BASEDIR}"
+	BASEDIR="$( dirname "${BINDIR}" )"
+	CONFDIR="${BASEDIR}"
 fi
 
 # Cargando valores predeterminados
@@ -34,15 +47,46 @@ fi
 . "${BASEDIR}/scripts/init.sh"
 
 if [ "${ACTION}" = "construir" ]; then
-	SHORTOPTS="a:m:s:f:d:bcpvq"
-	LONGOPTS="arquitectura:,medio:,sabor:,archivo-config:,dir-construir:,solo-construir,solo-configurar,mostrar-variables,expresivo,silencioso"
+	LONGOPTS="arquitectura:,medio:,sabor:,archivo-config:,dir-construir:,solo-construir,solo-configurar,mostrar-variables,expresivo,silencioso,ayuda,uso,acerca"
+	COMMAND="construir"
+	PARAMETERS="[-a|--arquitectura i386|amd64]\n\
+\t[-m|--medio usb|iso|hybrid]\n\
+\t[-s|--sabor popular|primera-base|...]\n\
+\t[-f|--archivo-config ARCHIVO]\n\
+\t[-d|--dir-construir DIR]\n\
+\t[-b|--solo-construir]\n\
+\t[-c|--solo-configurar]\n\
+\t[-D|--mostrar-variables]\n\
+\t[-v|--expresivo]\n\
+\t[-q|--silencioso]\n\
+\t[-h|--ayuda]\n\
+\t[-u|--uso]\n\
+\t[-A|--acerca]\n"
+
 elif [ "${ACTION}" = "build" ]; then
-	SHORTOPTS="a:m:s:f:d:bcpvq"
-	LONGOPTS="architecture:,image:,profile:,config-file:,build-dir:,build-only,config-only,var-dump,verbose,quiet"
+	LONGOPTS="architecture:,image:,profile:,config-file:,build-dir:,build-only,config-only,var-dump,verbose,quiet,help,usage,about"
+	COMMAND="build"
+	PARAMETERS="[-a|--architecture i386|amd64]\n\
+\t[-m|--image usb|iso|hybrid]\n\
+\t[-s|--profile popular|primera-base|...]\n\
+\t[-f|--config-file FILE]\n\
+\t[-d|--build-dir DIR]\n\
+\t[-b|--build-only]\n\
+\t[-c|--config-only]\n\
+\t[-D|--var-dump]\n\
+\t[-v|--verbose]\n\
+\t[-q|--quiet]\n\
+\t[-h|--help]\n\
+\t[-u|--usage]\n\
+\t[-A|--about]\n"
+
 else
 	ERRORMSG "Error interno"
 	exit 1
 fi
+
+SHORTOPTS="a:m:s:f:d:bcDvqhuA"
+DESCRIPTION="$( NORMALMSG "Comando para la construcción de imágenes instalables." )"
 
 OPTIONS="$( ${BIN_GETOPT} --shell="sh" --name="${0}" --options="${SHORTOPTS}" --longoptions="${LONGOPTS}" -- "${@}" )"
 
@@ -90,7 +134,7 @@ while true; do
 			shift 1 || true
 		;;
 
-		-p|--mostrar-variables|--var-dump)
+		-D|--mostrar-variables|--var-dump)
 			CS_OP_MODE="vardump"
 			shift 1 || true
 		;;
@@ -105,12 +149,29 @@ while true; do
 			shift 1 || true
 		;;
 
-                --)
+		-h|--ayuda|--help)
+			if ${BIN_MAN} -w "${CS_CMD}_${COMMAND}" 1>/dev/null 2>&1; then
+				${BIN_MAN} "${CS_CMD}_${COMMAND}"
+				exit 0
+			else
+				USAGE "${COMMAND}" "${DESCRIPTION}" "${PARAMETERS}"
+			fi
+		;;
+
+		-u|--uso|--usage)
+			USAGE "${COMMAND}" "${DESCRIPTION}" "${PARAMETERS}"
+		;;
+
+		-A|--acerca|--about)
+			ABOUT
+		;;
+
+		--)
 			shift
 			break
 		;;
 
-                *)
+		*)
 			ERRORMSG "Ocurrió un problema interpretando los parámetros."
 			exit 1
 		;;
@@ -138,7 +199,7 @@ case ${CS_OP_MODE} in
 		fi
 
 		if [ -z "${ARCH}" ]; then
-			ARCH="$( ${BIN_DPKG} --print-architecture )"
+			ARCH="${NATIVE_ARCH}"
 			INFOMSG "No especificaste una arquitectura, utilizando '%s' presente en el sistema." "${ARCH}"
 		fi
 
@@ -147,10 +208,10 @@ case ${CS_OP_MODE} in
 			INFOMSG "No especificaste un tipo de formato para la imagen, utilizando medio '%s' por defecto." "${MEDIO}"
 		fi
 
-	        if [ ! -d "${ISOS}" ]; then
-	                ERRORMSG "El directorio de construcción de imágenes '%s' no existe." "${ISOS}"
+		if [ ! -d "${ISOS}" ]; then
+			ERRORMSG "El directorio de construcción de imágenes '%s' no existe." "${ISOS}"
 			exit 1
-        	fi
+		fi
 
 		if [ ! -d "${PROFILES}" ]; then
 			ERRORMSG "La carpeta de perfiles '%s' no existe o no es un directorio válido." "${PROFILES}"
@@ -162,7 +223,7 @@ case ${CS_OP_MODE} in
 			exit 1
 		fi
 
-       	        CS_CLEAN_TREE "${ISOS}" "${CS_OP_MODE}" "${CS_PRINT_MODE}"
+       		CS_CLEAN_TREE "${ISOS}" "${CS_OP_MODE}" "${CS_PRINT_MODE}"
 		CS_LOAD_PROFILE "${ISOS}" "${PROFILES}" "${SABOR}" "${ARCH}" "${MEDIO}" "${CS_OP_MODE}" "${CS_PRINT_MODE}" "${EXTRACONF}"
 		CS_CREATE_TREE "${ISOS}" "${CS_OP_MODE}" "${CS_PRINT_MODE}"
 	;;
@@ -171,10 +232,10 @@ esac
 case ${CS_OP_MODE} in
 	buildonly|normal)
 
-	        if [ ! -d "${ISOS}" ]; then
-	                ERRORMSG "El directorio de construcción de imágenes '%s' no existe." "${ISOS}"
+		if [ ! -d "${ISOS}" ]; then
+			ERRORMSG "El directorio de construcción de imágenes '%s' no existe." "${ISOS}"
 			exit 1
-        	fi
+		fi
 
 		CS_BUILD_IMAGE "${ISOS}" "${CS_OP_MODE}" "${CS_PRINT_MODE}"
 	;;

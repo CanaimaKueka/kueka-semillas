@@ -1,14 +1,15 @@
 #!/bin/sh -e
 #
 # ==============================================================================
-# PACKAGE: canaima-semilla
-# FILE: c-s.sh
-# DESCRIPTION: script principal de shell para la aplicación Canaima Semilla
-# USAGE: 
+# PAQUETE: canaima-semilla
+# ARCHIVO: scripts/c-s.sh
+# DESCRIPCIÓN: Script principal. Se encarga de invocar a los demás módulos y
+#	      funciones según los parámetros proporcionados.
+# USO: ./c-s.sh [MÓDULO] [PARÁMETROS] [...]
 # COPYRIGHT:
-#  (C) 2010 Luis Alejandro Martínez Faneyth <luis@huntingbears.com.ve>
-#  (C) 2012 Niv Sardi <xaiki@debian.org>
-# LICENCIA: GPL3
+#       (C) 2010-2012 Luis Alejandro Martínez Faneyth <luis@huntingbears.com.ve>
+#       (C) 2012 Niv Sardi <xaiki@debian.org>
+# LICENCIA: GPL-3
 # ==============================================================================
 #
 # This program is free software: you can redistribute it and/or modify
@@ -27,7 +28,7 @@
 # CODE IS POETRY
 
 # Determinando directorio de ejecución
-BINDIR="$( dirname "$(readlink -f "${0}")" )"
+BINDIR="$( dirname "$( readlink -f "${0}")" )"
 
 # Asignando directorios de trabajo
 if [ "${BINDIR}" = "/usr/bin" ]; then
@@ -44,28 +45,37 @@ fi
 # Corriendo rutinas de inicio
 . "${BASEDIR}/scripts/init.sh"
 
+# Determinando acción invocada
 ACTION=${1}
-shift || true
+[ -n "${ACTION}" ] && shift 1 || true
+
+# Asignando información para --help, --usage
+COMMAND="c-s"
+DESCRIPTION="$( NORMALMSG "Generador de distribuciones derivadas" )"
+PARAMETERS="\t[construir|build] [...] [--help]\n\
+\t[perfil|profile] [...] [--help]\n\
+\t[grabar|save] [...] [--help]\n\
+\t[probar|test] [...] [--help]\n"
 
 # Delegando acciones a los módulos/comandos
 case ${ACTION} in
 	-h|--ayuda|--help)
-		if [ -x "$( which man 2>/dev/null )" ]; then
-			man canaima-semilla
+		if ${BIN_MAN} -w "${COMMAND}" 1>/dev/null 2>&1; then
+			${BIN_MAN} "${COMMAND}"
 			exit 0
 		else
-			USAGE
+			USAGE "${COMMAND}" "${DESCRIPTION}" "${PARAMETERS}"
 			exit 0
 		fi
 	;;
 
 	-u|--uso|--usage|'')
-		USAGE
+		USAGE "${COMMAND}" "${DESCRIPTION}" "${PARAMETERS}"
 		exit 0
 	;;
 
-	-v|--version|--about)
-		VERSION
+	-A|--acerca|--about)
+		ABOUT
 		exit 0
 	;;
 

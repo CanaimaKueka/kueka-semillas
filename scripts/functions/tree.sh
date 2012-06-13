@@ -1,13 +1,47 @@
 #!/bin/sh -e
+#
+# ==============================================================================
+# PAQUETE: canaima-semilla
+# ARCHIVO: scripts/functions/image.sh
+# DESCRIPCIÓN: Funciones para la modificación del árbol de configuración.
+# COPYRIGHT:
+#       (C) 2010-2012 Luis Alejandro Martínez Faneyth <luis@huntingbears.com.ve>
+#       (C) 2012 Niv Sardi <xaiki@debian.org>
+# LICENCIA: GPL-3
+# ==============================================================================
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# COPYING file for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+# CODE IS POETRY
 
 CS_CLEAN_TREE() {
 
+	# ======================================================================
+	# FUNCIÓN: CS_CLEAN_TREE
+	# DESCRIPCIÓN: Limpia el árbol de configuración.
+	# ENTRADAS:
+	#       [ISOS]: Directorio donde se encuentra el árbol de configuración.
+	#       [CS_OP_MODE]: Modo de operación. 
+	#       [CS_PRINT_MODE]: Modo de verbosidad.
+	# ======================================================================
+
 	ISOS="${1}"
-	shift || true
+	[ -n "${ISOS}" ] && shift 1 || true
 	CS_OP_MODE="${1}"
-	shift || true
+	[ -n "${CS_OP_MODE}" ] && shift 1 || true
 	CS_PRINT_MODE="${1}"
-	shift || true
+	[ -n "${CS_PRINT_MODE}" ] && shift 1 || true
 
 	THISTORYCONF="${ISOS}/history/config"
 	THISTORYLOG="${ISOS}/history/log"
@@ -17,25 +51,39 @@ CS_CLEAN_TREE() {
 	if [ "${CS_OP_MODE}" != "vardump" ]; then
 		if [ -d "${TCONF}" ]; then
 			INFOMSG "Respaldando árbol de configuraciones previo en '%s'." "${TCONFBKP}"
-			mkdir -p "${THISTORYCONF}"
-			mkdir -p "${THISTORYLOG}"
-			mv "${TCONF}" "${TCONFBKP}"
-			mv ${ISOS}/*.log "${THISTORYLOG}/"
+			${BIN_MKDIR} -p "${THISTORYCONF}"
+			${BIN_MKDIR} -p "${THISTORYLOG}"
+			${BIN_MV} "${TCONF}" "${TCONFBKP}"
+			for LOGFILEBKP in ${ISOS}/*.log; do
+				if [ "${LOGFILEBKP}" != "${ISOS}/${LOGFILE}" ]; then
+					${BIN_MV} ${LOGFILEBKP} "${THISTORYLOG}/"
+				fi
+			done
 		fi
 
 		WARNINGMSG "Limpiando residuos de construcciones anteriores ..."
-		cd "${ISOS}" && lb clean --all > /dev/null 2>&1
+		cd "${ISOS}" && ${BIN_LB} clean --all 1>/dev/null 2>&1
 	fi
 }
 
 CS_CREATE_TREE() {
 
+	# ======================================================================
+	# FUNCIÓN: CS_CREATE_TREE
+	# DESCRIPCIÓN: Crea el árbol de configuración a partir de los valores
+	#	      del perfil procesados por CS_LOAD_PROFILE.
+	# ENTRADAS:
+	#       [ISOS]: Directorio donde se encuentra el árbol de configuración.
+	#       [CS_OP_MODE]: Modo de operación. 
+	#       [CS_PRINT_MODE]: Modo de verbosidad.
+	# ======================================================================
+
 	ISOS="${1}"
-	shift || true
+	[ -n "${ISOS}" ] && shift 1 || true
 	CS_OP_MODE="${1}"
-	shift || true
+	[ -n "${CS_OP_MODE}" ] && shift 1 || true
 	CS_PRINT_MODE="${1}"
-	shift || true
+	[ -n "${CS_PRINT_MODE}" ] && shift 1 || true
 
 	TCSCONFFILE="${ISOS}/config/c-s/tree.conf"
 
@@ -56,7 +104,7 @@ CS_CREATE_TREE() {
 		;;
 	esac
 
-	if dpkg --compare-versions "${LB_VERSION}" ge 3.0; then
+	if ${BIN_DPKG} --compare-versions "${LB_VERSION}" ge 3.0; then
 		LB_PARENTS="--parent-mirror-bootstrap=\"${META_REPO}\" \
 --parent-mirror-chroot=\"${META_REPO}\" \
 --parent-mirror-binary=\"${META_REPO}\" \
@@ -124,24 +172,34 @@ ${LB_QUIET} ${LB_VERBOSE}"
 	case ${CS_OP_MODE} in
 		configonly|normal)
 			WARNINGMSG "Generando árbol de configuraciones ..."
-			cd "${ISOS}" && eval "lb config ${LB_ARGUMENTS} 2>&1 | tee \"${ISOS}/${LOGFILE}\""
+			cd "${ISOS}" && eval "${BIN_LB} config ${LB_ARGUMENTS} 2>&1 | ${BIN_TEE} -a \"${ISOS}/${LOGFILE}\""
 			CS_POPULATE_TREE "${ISOS}" "${CS_OP_MODE}" "${CS_PRINT_MODE}"
 		;;
 
 		vardump)
-			echo "lb config ${LB_ARGUMENTS}"
+			${BIN_ECHO} "${BIN_LB} config ${LB_ARGUMENTS}"
 		;;
 	esac
 }
 
 CS_POPULATE_TREE() {
 
+	# ======================================================================
+	# FUNCIÓN: CS_POPULATE_TREE
+	# DESCRIPCIÓN: Copia los archivos desde el perfil hasta el árbol de
+	#	      configuración.
+	# ENTRADAS:
+	#       [ISOS]: Directorio donde se encuentra el árbol de configuración.
+	#       [CS_OP_MODE]: Modo de operación. 
+	#       [CS_PRINT_MODE]: Modo de verbosidad.
+	# ======================================================================
+
 	ISOS="${1}"
-	shift || true
+	[ -n "${ISOS}" ] && shift 1 || true
 	CS_OP_MODE="${1}"
-	shift || true
+	[ -n "${CS_OP_MODE}" ] && shift 1 || true
 	CS_PRINT_MODE="${1}"
-	shift || true
+	[ -n "${CS_PRINT_MODE}" ] && shift 1 || true
 
 	TCSCONFFILE="${ISOS}/config/c-s/tree.conf"
 
@@ -157,7 +215,7 @@ CS_POPULATE_TREE() {
 		exit 1
 	fi
 
-	if dpkg --compare-versions "${LB_VERSION}" ge 3.0; then
+	if ${BIN_DPKG} --compare-versions "${LB_VERSION}" ge 3.0; then
 		LB_IMG_SYSLINUX_TEMPLATE_DIR="${ISOS}/config/bootloaders/${LB_BOOTLOADER}"
 		LB_IMG_SYSLINUX_TEMPLATE_SPLASH_DIR="${ISOS}/config/bootloaders/${LB_BOOTLOADER}"
 		LB_IMG_SYSLINUX_SPLASH_DIR="${ISOS}/config/binary_syslinux"
@@ -203,56 +261,56 @@ CS_POPULATE_TREE() {
 		LB_IMG_DEBIAN_INSTALLER_GTK_FILE="${LB_IMG_DEBIAN_INSTALLER_GTK_DIR}/gtkrc"
 	fi
 
-	mkdir -p "${LB_IMG_SYSLINUX_TEMPLATE_DIR}"
-	mkdir -p "${LB_IMG_SYSLINUX_TEMPLATE_SPLASH_DIR}"
-	mkdir -p "${LB_IMG_SYSLINUX_SPLASH_DIR}"
-	mkdir -p "${LB_IMG_INCLUDES_DIR}"
-	mkdir -p "${LB_OS_INCLUDES_DIR}"
-	mkdir -p "${LB_IMG_HOOKS_DIR}"
-	mkdir -p "${LB_OS_HOOKS_DIR}"
-	mkdir -p "${LB_OS_EXTRAREPOS_DIR}"
-	mkdir -p "${LB_IMG_EXTRAREPOS_DIR}"
-	mkdir -p "${LB_OS_PACKAGES_DIR}"
-	mkdir -p "${LB_IMG_POOL_PACKAGES_DIR}"
-	mkdir -p "${LB_IMG_DEBIAN_INSTALLER_BANNER_DIR}"
-	mkdir -p "${LB_IMG_DEBIAN_INSTALLER_PRESEED_DIR}"
-	mkdir -p "${LB_IMG_DEBIAN_INSTALLER_GTK_DIR}"
+	${BIN_MKDIR} -p "${LB_IMG_SYSLINUX_TEMPLATE_DIR}"
+	${BIN_MKDIR} -p "${LB_IMG_SYSLINUX_TEMPLATE_SPLASH_DIR}"
+	${BIN_MKDIR} -p "${LB_IMG_SYSLINUX_SPLASH_DIR}"
+	${BIN_MKDIR} -p "${LB_IMG_INCLUDES_DIR}"
+	${BIN_MKDIR} -p "${LB_OS_INCLUDES_DIR}"
+	${BIN_MKDIR} -p "${LB_IMG_HOOKS_DIR}"
+	${BIN_MKDIR} -p "${LB_OS_HOOKS_DIR}"
+	${BIN_MKDIR} -p "${LB_OS_EXTRAREPOS_DIR}"
+	${BIN_MKDIR} -p "${LB_IMG_EXTRAREPOS_DIR}"
+	${BIN_MKDIR} -p "${LB_OS_PACKAGES_DIR}"
+	${BIN_MKDIR} -p "${LB_IMG_POOL_PACKAGES_DIR}"
+	${BIN_MKDIR} -p "${LB_IMG_DEBIAN_INSTALLER_BANNER_DIR}"
+	${BIN_MKDIR} -p "${LB_IMG_DEBIAN_INSTALLER_PRESEED_DIR}"
+	${BIN_MKDIR} -p "${LB_IMG_DEBIAN_INSTALLER_GTK_DIR}"
 
-	cp -r ${IMG_SYSLINUX_TEMPLATE}/* "${LB_IMG_SYSLINUX_TEMPLATE_DIR}/"
-	cp "${IMG_SYSLINUX_SPLASH}" "${LB_IMG_SYSLINUX_TEMPLATE_SPLASH_DIR}/"
-	cp "${IMG_SYSLINUX_SPLASH}" "${LB_IMG_SYSLINUX_SPLASH_DIR}/"
+	${BIN_CP} -r ${IMG_SYSLINUX_TEMPLATE}/* "${LB_IMG_SYSLINUX_TEMPLATE_DIR}/"
+	${BIN_CP} "${IMG_SYSLINUX_SPLASH}" "${LB_IMG_SYSLINUX_TEMPLATE_SPLASH_DIR}/"
+	${BIN_CP} "${IMG_SYSLINUX_SPLASH}" "${LB_IMG_SYSLINUX_SPLASH_DIR}/"
 
 	if [ "${IMG_INCLUDES}" != "none" ]; then
-		cp -r ${IMG_INCLUDES}/* "${LB_IMG_INCLUDES_DIR}/"
+		${BIN_CP} -r ${IMG_INCLUDES}/* "${LB_IMG_INCLUDES_DIR}/"
 	fi
 
 	if [ "${OS_INCLUDES}" != "none" ]; then
-		cp -r ${OS_INCLUDES}/* "${LB_OS_INCLUDES_DIR}/"
+		${BIN_CP} -r ${OS_INCLUDES}/* "${LB_OS_INCLUDES_DIR}/"
 	fi
 
 	if [ "${IMG_HOOKS}" != "none" ]; then
 		for IMGHOOK in ${IMG_HOOKS}/*; do
-			cp "${IMGHOOK}" "${LB_IMG_HOOKS_DIR}/$( basename "${IMGHOOK}").binary"
+			${BIN_CP} "${IMGHOOK}" "${LB_IMG_HOOKS_DIR}/$( basename "${IMGHOOK}").binary"
 		done
 	fi
 
 	if [ "${OS_HOOKS}" != "none" ]; then
 		for OSHOOK in ${OS_HOOKS}/*; do
-			cp "${OSHOOK}" "${LB_OS_HOOKS_DIR}/$( basename "${OSHOOK}").chroot"
+			${BIN_CP} "${OSHOOK}" "${LB_OS_HOOKS_DIR}/$( basename "${OSHOOK}").chroot"
 		done
 	fi
 
 	if [ "${OS_EXTRAREPOS}" != "none" ]; then
-		cp "${OS_EXTRAREPOS}" "${LB_OS_EXTRAREPOS_FILE}"
-		cp "${OS_EXTRAREPOS}" "${LB_IMG_EXTRAREPOS_FILE}"
+		${BIN_CP} "${OS_EXTRAREPOS}" "${LB_OS_EXTRAREPOS_FILE}"
+		${BIN_CP} "${OS_EXTRAREPOS}" "${LB_IMG_EXTRAREPOS_FILE}"
 	fi
 
-	echo "${OS_PACKAGES}" > "${LB_OS_PACKAGES_FILE}"
-	echo "${IMG_POOL_PACKAGES}" > "${LB_IMG_POOL_PACKAGES_FILE}"
+	${BIN_ECHO} "${OS_PACKAGES}" > "${LB_OS_PACKAGES_FILE}"
+	${BIN_ECHO} "${IMG_POOL_PACKAGES}" > "${LB_IMG_POOL_PACKAGES_FILE}"
 
 	if [ "${IMG_DEBIAN_INSTALLER}" = "live" ]; then
-		cp "${IMG_DEBIAN_INSTALLER_BANNER}" "${LB_IMG_DEBIAN_INSTALLER_BANNER_FILE}"
-		cp "${IMG_DEBIAN_INSTALLER_PRESEED}" "${LB_IMG_DEBIAN_INSTALLER_PRESEED_FILE}"
-		cp "${IMG_DEBIAN_INSTALLER_GTK}" "${LB_IMG_DEBIAN_INSTALLER_GTK_FILE}"
+		${BIN_CP} "${IMG_DEBIAN_INSTALLER_BANNER}" "${LB_IMG_DEBIAN_INSTALLER_BANNER_FILE}"
+		${BIN_CP} "${IMG_DEBIAN_INSTALLER_PRESEED}" "${LB_IMG_DEBIAN_INSTALLER_PRESEED_FILE}"
+		${BIN_CP} "${IMG_DEBIAN_INSTALLER_GTK}" "${LB_IMG_DEBIAN_INSTALLER_GTK_FILE}"
 	fi
 }

@@ -1,14 +1,70 @@
 #!/bin/sh -e
+#
+# ==============================================================================
+# PAQUETE: canaima-semilla
+# ARCHIVO: scripts/functions/messages.sh
+# DESCRIPCIÓN: Funciones encargadas de mostrar, traducir e introducir mensajes
+#	      en los archivos de log.
+# COPYRIGHT:
+#       (C) 2010-2012 Luis Alejandro Martínez Faneyth <luis@huntingbears.com.ve>
+#       (C) 2012 Niv Sardi <xaiki@debian.org>
+# LICENCIA: GPL-3
+# ==============================================================================
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# COPYING file for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+# CODE IS POETRY
+
+NORMALMSG() {
+
+	# ======================================================================
+	# FUNCIÓN: NORMALMSG
+	# DESCRIPCIÓN: Función simple para mostrar un texto traducido y
+	#	      guardarlo en el log.
+	# ENTRADAS:
+	#       [NORMALMSG]: Texto.
+	# ======================================================================
+
+	NORMALMSG="${1}"
+
+	if [ -n "${NORMALMSG}" ]; then
+		shift 1 || true
+		LOCALIZED="$( ${BIN_GETTEXT} -s "${NORMALMSG}" )"
+		${BIN_PRINTF} "${LOCALIZED}\n" "${@}"
+		if [ "${SWITCHLOG}" = "on" ]; then
+			${BIN_PRINTF} "${LOCALIZED}\n" >> "${ISOS}/${LOGFILE}"
+		fi
+
+	fi
+}
 
 DEBUGMSG() {
 
+	# ======================================================================
+	# FUNCIÓN: DEBUGMSG
+	# DESCRIPCIÓN: Función para mostrar y añadir al log una variable y su
+	#	      valor.
+	# ENTRADAS:
+	#       [DEBUGVAR]: Variable a evaluar.
+	# ======================================================================
+
 	DEBUGVAR="${1}"
-	shift || true
+	eval "DEBUGVALUE=\"\${${DEBUGVAR}}\""
 
-	eval "DEBUGVALUE=\${${DEBUGVAR}}"
-
-	if [ -n "${DEBUGVAR}" ]	&& [ -n "${DEBUGVALUE}" ] && [ "${CS_OP_MODE}" = "vardump" ] && [ "${CS_PRINT_MODE}" = "normal" ]; then
-			${BIN_PRINTF} "${YELLOW}${DEBUGVAR}${END}='${DEBUGVALUE}'\n"
+	if [ -n "${DEBUGVAR}" ]	&& [ -n "${DEBUGVALUE}" ] && [ "${CS_OP_MODE}" = "vardump" ]; then
+		shift 1 || true
+		${BIN_PRINTF} "${YELLOW}${DEBUGVAR}${END}='${DEBUGVALUE}'\n"
 		if [ "${SWITCHLOG}" = "on" ]; then
 			${BIN_PRINTF} "[DEBUG] ${DEBUGVAR}='${DEBUGVALUE}'\n" >> "${ISOS}/${LOGFILE}"
 		fi
@@ -17,16 +73,26 @@ DEBUGMSG() {
 
 CONFIGMSG() {
 
+	# ======================================================================
+	# FUNCIÓN: CONFIGMSG
+	# DESCRIPCIÓN: Función para mostrar, traducir y añadir al log un
+	#	      mensaje de configuración en conjunto con la variable
+	#	      que está siendo modificada.
+	# ENTRADAS:
+	#       [CONFIGMSG]: Texto de configuración.
+	#       [CONFIGVAR]: Variable de configuración.
+	# ======================================================================
+
+
 	CONFIGMSG="${1}"
-	shift || true
+	[ -n "${CONFIGMSG}" ] && shift 1 || true
 
 	CONFIGVAR="${1}"
-	shift || true
+	[ -n "${CONFIGVAR}" ] && shift 1 || true
 
 	if [ -n "${CONFIGMSG}" ] && [ -n "${CONFIGVAR}" ] && [ "${CS_PRINT_MODE}" = "normal" ]; then
-		LOCALIZED="$( gettext -s "${CONFIGMSG}" )"
+		LOCALIZED="$( ${BIN_GETTEXT} -s "${CONFIGMSG}" )"
 		${BIN_PRINTF} "${UNDERSCORE}${CONFIGVAR}${END}: ${LOCALIZED} ...\n" "${@}"
-
 		if [ "${SWITCHLOG}" = "on" ]; then
 			${BIN_PRINTF} "[CONFIG] ${CONFIGVAR}: ${LOCALIZED} ...\n" "${@}" >> "${ISOS}/${LOGFILE}"
 		fi
@@ -35,13 +101,20 @@ CONFIGMSG() {
 
 INFOMSG() {
 
+	# ======================================================================
+	# FUNCIÓN: INFOMSG
+	# DESCRIPCIÓN: Función simple para mostrar, traducir y añadir al log un
+	#	      mensaje de información.
+	# ENTRADAS:
+	#       [INFOMSG]: Texto.
+	# ======================================================================
+
 	INFOMSG="${1}"
-	shift || true
 
 	if [ -n "${INFOMSG}" ] && [ "${CS_PRINT_MODE}" = "verbose" ]; then
-		LOCALIZED="$( gettext -s "${INFOMSG}" )"
+		shift 1 || true
+		LOCALIZED="$( ${BIN_GETTEXT} -s "${INFOMSG}" )"
 		${BIN_PRINTF} "${LOCALIZED}\n" "${@}"
-
 		if [ "${SWITCHLOG}" = "on" ]; then
 			${BIN_PRINTF} "[INFO] ${LOCALIZED}\n" "${@}" >> "${ISOS}/${LOGFILE}"
 		fi
@@ -50,29 +123,42 @@ INFOMSG() {
 
 WARNINGMSG() {
 
+	# ======================================================================
+	# FUNCIÓN: WARNINGMSG
+	# DESCRIPCIÓN: Función simple para mostrar, traducir y añadir al log un
+	#	      mensaje de advertencia.
+	# ENTRADAS:
+	#       [WARNINGMSG]: Texto.
+	# ======================================================================
+
 	WARNINGMSG="${1}"
-	shift || true
 
 	if [ -n "${WARNINGMSG}" ] && [ "${CS_PRINT_MODE}" = "verbose" ]; then
-		LOCALIZED="$( gettext -s "${WARNINGMSG}" )"
+		shift 1 || true
+		LOCALIZED="$( ${BIN_GETTEXT} -s "${WARNINGMSG}" )"
 		${BIN_PRINTF} "${YELLOW}${LOCALIZED}${END}\n" "${@}"
-
 		if [ "${SWITCHLOG}" = "on" ]; then
 			${BIN_PRINTF} "[WARNING] ${LOCALIZED}\n" "${@}" >> "${ISOS}/${LOGFILE}"
 		fi
 	fi
 }
 
-
 ERRORMSG() {
 
+	# ======================================================================
+	# FUNCIÓN: ERRORMSG
+	# DESCRIPCIÓN: Función simple para mostrar, traducir y añadir al log un
+	#	      mensaje de error.
+	# ENTRADAS:
+	#       [ERRORMSG]: Texto.
+	# ======================================================================
+
 	ERRORMSG="${1}"
-	shift || true
 
 	if [ -n "${ERRORMSG}" ]; then
-		LOCALIZED="$( gettext -s "${ERRORMSG}" )"
+		shift 1 || true
+		LOCALIZED="$( ${BIN_GETTEXT} -s "${ERRORMSG}" )"
 		${BIN_PRINTF} "${LRED}${LOCALIZED}${END}\n" "${@}"
-
 		if [ "${SWITCHLOG}" = "on" ]; then
 			${BIN_PRINTF} "[ERROR] ${LOCALIZED}\n" "${@}" >> "${ISOS}/${LOGFILE}"
 		fi
@@ -81,13 +167,20 @@ ERRORMSG() {
 
 SUCCESSMSG() {
 
+	# ======================================================================
+	# FUNCIÓN: SUCCESSMSG
+	# DESCRIPCIÓN: Función simple para mostrar, traducir y añadir al log un
+	#	      mensaje de éxito.
+	# ENTRADAS:
+	#       [SUCCESSMSG]: Texto.
+	# ======================================================================
+
 	SUCCESSMSG="${1}"
-	shift || true
 
 	if [ -n "${SUCCESSMSG}" ]; then
-		LOCALIZED="$( gettext -s "${SUCCESSMSG}" )"
+		shift 1 || true
+		LOCALIZED="$( ${BIN_GETTEXT} -s "${SUCCESSMSG}" )"
 		${BIN_PRINTF} "${LGREEN}${LOCALIZED}${END}\n" "${@}"
-
 		if [ "${SWITCHLOG}" = "on" ]; then
 			${BIN_PRINTF} "[SUCCESS] ${LOCALIZED}\n" "${@}" >> "${ISOS}/${LOGFILE}"
 		fi
