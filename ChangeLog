@@ -1,3 +1,17 @@
+DEVELOPMENT RELEASE v3.0+20120613115157 (06/13/12)
+Completando módulo para grabar imágenes.
+Completando módulo para probar imágenes.
+Actualizando traducciones de la gui y el core.
+Actualizando documentación.
+Mejorando la documentación de las funciones.
+Mejorando la forma en que se determinan los campos por defecto cuando se genera un nuevo perfil a través del módulo "profile/perfil".
+Mejorando las plantillas de perfiles para Canaima, Debian y Ubuntu.
+Corrigiendo errores en las rutinas del mantenedor (release/snapshot).
+Completando módulo para la gestión de perfiles (profile/perfil).
+Migrando el perfil 'popular' al nuevo formato.
+Eliminando archivos de prueba innecesarios.
+Mejorando función BuildImage de la gui.
+
 DEVELOPMENT RELEASE v3.0+20120608181049 (06/08/12)
 Implementando hilos en build.py y main.py.
 Actualizando cadenas de traducción.
