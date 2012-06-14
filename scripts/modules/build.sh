@@ -88,9 +88,9 @@ fi
 SHORTOPTS="a:m:s:f:d:bcDvqhuA"
 DESCRIPTION="$( NORMALMSG "Comando para la construcción de imágenes instalables." )"
 
-OPTIONS="$( ${BIN_GETOPT} --shell="sh" --name="${0}" --options="${SHORTOPTS}" --longoptions="${LONGOPTS}" -- "${@}" )"
+OPTIONS="$( ${GETOPT} --shell="sh" --name="${0}" --options="${SHORTOPTS}" --longoptions="${LONGOPTS}" -- "${@}" )"
 
-if [ $? != 0 ]; then
+if [ ${?} != 0 ]; then
 	ERRORMSG "Ocurrió un problema interpretando los parámetros."
 	exit 1
 fi
@@ -125,33 +125,33 @@ while true; do
 		;;
 
 		-b|--solo-construir|--build-only)
-			CS_OP_MODE="buildonly"
+			BUILD_OP_MODE="buildonly"
 			shift 1 || true
 		;;
 
 		-c|--solo-configurar|--config-only)
-			CS_OP_MODE="configonly"
+			BUILD_OP_MODE="configonly"
 			shift 1 || true
 		;;
 
 		-D|--mostrar-variables|--var-dump)
-			CS_OP_MODE="vardump"
+			BUILD_OP_MODE="vardump"
 			shift 1 || true
 		;;
 
 		-v|--expresivo|--verbose)
-			CS_PRINT_MODE="verbose"
+			BUILD_PRINT_MODE="verbose"
 			shift 1 || true
 		;;
 
 		-q|--silencioso|--quiet)
-			CS_PRINT_MODE="quiet"
+			BUILD_PRINT_MODE="quiet"
 			shift 1 || true
 		;;
 
 		-h|--ayuda|--help)
-			if ${BIN_MAN} -w "${CS_CMD}_${COMMAND}" 1>/dev/null 2>&1; then
-				${BIN_MAN} "${CS_CMD}_${COMMAND}"
+			if ${MAN} -w "${CS_CMD}_${COMMAND}" 1>/dev/null 2>&1; then
+				${MAN} "${CS_CMD}_${COMMAND}"
 				exit 0
 			else
 				USAGE "${COMMAND}" "${DESCRIPTION}" "${PARAMETERS}"
@@ -190,7 +190,7 @@ if [ -n "${BUILDDIR}" ]; then
 	fi
 fi
 
-case ${CS_OP_MODE} in
+case ${BUILD_OP_MODE} in
 	configonly|vardump|normal)
 
 		if [ -z "${SABOR}" ]; then
@@ -223,13 +223,13 @@ case ${CS_OP_MODE} in
 			exit 1
 		fi
 
-       		CS_CLEAN_TREE "${ISOS}" "${CS_OP_MODE}" "${CS_PRINT_MODE}"
-		CS_LOAD_PROFILE "${ISOS}" "${PROFILES}" "${SABOR}" "${ARCH}" "${MEDIO}" "${CS_OP_MODE}" "${CS_PRINT_MODE}" "${EXTRACONF}"
-		CS_CREATE_TREE "${ISOS}" "${CS_OP_MODE}" "${CS_PRINT_MODE}"
+       		CS_CLEAN_TREE "${ISOS}" "${BUILD_OP_MODE}" "${BUILD_PRINT_MODE}"
+		CS_LOAD_PROFILE "${ISOS}" "${PROFILES}" "${SABOR}" "${ARCH}" "${MEDIO}" "${BUILD_OP_MODE}" "${BUILD_PRINT_MODE}" "${EXTRACONF}"
+		CS_CREATE_TREE "${ISOS}" "${BUILD_OP_MODE}" "${BUILD_PRINT_MODE}"
 	;;
 esac
 
-case ${CS_OP_MODE} in
+case ${BUILD_OP_MODE} in
 	buildonly|normal)
 
 		if [ ! -d "${ISOS}" ]; then
@@ -237,6 +237,6 @@ case ${CS_OP_MODE} in
 			exit 1
 		fi
 
-		CS_BUILD_IMAGE "${ISOS}" "${CS_OP_MODE}" "${CS_PRINT_MODE}"
+		CS_BUILD_IMAGE "${ISOS}" "${BUILD_OP_MODE}" "${BUILD_PRINT_MODE}"
 	;;
 esac

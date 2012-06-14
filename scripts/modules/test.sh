@@ -134,12 +134,12 @@ if [ ${FREE_MEM} -lt ${MEM} ]; then
 fi
 
 if kvm-img info ${KVM_IMG} 1>/dev/null 2>&1 ; then
-	if [ "$( kvm-img info hola.img | grep "virtual size: " | sed 's/virtual size: //g' | awk '{print $1}' )" != "${DISK_SIZE}G" ]; then
+	if [ "$( kvm-img info ${KVM_IMG} | grep "virtual size: " | sed 's/virtual size: //g' | awk '{print $1}' )" != "${DISK_SIZE}G" ]; then
 		rm -rf ${KVM_IMG}
-		kvm-img -f qcow2 "${KVM_IMG}" "${DISK_SIZE}G"
+		kvm-img create -f qcow2 "${KVM_IMG}" "${DISK_SIZE}G"
 	fi
 else
-	kvm-img -f qcow2 "${KVM_IMG}" "${DISK_SIZE}G"
+	kvm-img create -f qcow2 "${KVM_IMG}" "${DISK_SIZE}G"
 fi
 
-kvm -snapshot -m "${MEM}" -smp "${PROC}" -boot "${KVM_DISK_MODE}" -hda "${KVM_IMG}" ${IMAGE}
+kvm -snapshot -m "${MEM}" -smp "${PROC}" -boot "${KVM_DISK_MODE}" -hda "${KVM_IMG}" -cdrom "${IMAGE}"

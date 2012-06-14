@@ -46,9 +46,9 @@ IMG_VALIDATOR() {
 	TYPE="${1}"
 	[ -n "${TYPE}" ] && shift 1 || true
 
-	if [ "$( ${BIN_FILE} -ib "${IMG}" )" = "${TYPE}" ]; then
+	if [ "$( ${FILE} -ib "${IMG}" )" = "${TYPE}" ]; then
 
-		IMG_SIZE="$( ${BIN_IDENTIFY} "${IMG}" | ${BIN_AWK} '{print $3}' )"
+		IMG_SIZE="$( ${IDENTIFY} "${IMG}" | ${AWK} '{print $3}' )"
 		IMG_HSIZE="${IMG_SIZE%x*}"
 		IMG_VSIZE="${IMG_SIZE#${IMG_HSIZE}x}"
 
@@ -91,20 +91,20 @@ USAGE() {
 	fi
 
 	NORMALMSG "%s, version %s - %s" "${CS_NAME}" "${VERSION}" "${RELDATE}"
-	printf "%s - %s\n" "${CS_AUTHOR}" "${CS_URL}"
-	echo
-	printf "%s - %s\n" "${USAGE_CMD}" "${DESCRIPTION}"
-	echo
+	${PRINTF} "%s - %s\n" "${CS_AUTHOR}" "${CS_URL}"
+	${ECHO}
+	${PRINTF} "%s - %s\n" "${USAGE_CMD}" "${DESCRIPTION}"
+	${ECHO}
 	NORMALMSG "Uso:"
-	echo
-	printf "  %s [-h|--ayuda|--help]\n" "${USAGE_CMD}"
-	printf "  %s [-u|--uso|--usage]\n" "${USAGE_CMD}"
-	printf "  %s [-A|--acerca|--about]\n" "${USAGE_CMD}"
-	echo
-	printf "  %s ${PARAMETERS}\n" "${USAGE_CMD}"
-	echo
+	${ECHO}
+	${PRINTF} "  %s [-h|--ayuda|--help]\n" "${USAGE_CMD}"
+	${PRINTF} "  %s [-u|--uso|--usage]\n" "${USAGE_CMD}"
+	${PRINTF} "  %s [-A|--acerca|--about]\n" "${USAGE_CMD}"
+	${ECHO}
+	${PRINTF} "  %s ${PARAMETERS}\n" "${USAGE_CMD}"
+	${ECHO}
 	NORMALMSG "Puede ejecutar 'man %s' para mayor información." "${MAN_CMD}"
-	echo
+	${ECHO}
 
 	exit 0
 }
@@ -118,32 +118,32 @@ ABOUT() {
 
 	. "${BASEDIR}/VERSION"
 
-	printf "%s, version %s\n" "${CS_NAME}" "${VERSION}"
-	printf "Code state (Git Commit): %s\n" "${COMMIT}"
-	echo
-	printf "This program is a part of %s\n" "${CS_PKG}"
-	echo
-	echo "(C) 2010-2012 Luis Alejandro Martínez Faneyth <luis@huntingbears.com.ve>"
-	echo "(C) 2012 Niv Sardi <xaiki@debian.org>"
-	echo
-	echo "This program is free software: you can redistribute it and/or modify"
-	echo "it under the terms of the GNU General Public License as published by"
-	echo "the Free Software Foundation, either version 3 of the License, or"
-	echo "(at your option) any later version."
-	echo
-	echo "This program is distributed in the hope that it will be useful,"
-	echo "but WITHOUT ANY WARRANTY; without even the implied warranty of"
-	echo "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the"
-	echo "GNU General Public License for more details."
-	echo
-	echo "You should have received a copy of the GNU General Public License"
-	echo "along with this program. If not, see <http://www.gnu.org/licenses/>."
-	echo
-	echo "On Debian systems, the complete text of the GNU General Public License"
-	echo "can be found in /usr/share/common-licenses/GPL-3 file."
-	echo
-	echo "Homepage: <http://code.google.com/p/canaima-semilla/>"
-	echo
+	${PRINTF} "%s, version %s\n" "${CS_NAME}" "${VERSION}"
+	${PRINTF} "Code state (Git Commit): %s\n" "${COMMIT}"
+	${ECHO}
+	${PRINTF} "This program is a part of %s\n" "${CS_PKG}"
+	${ECHO}
+	${ECHO} "(C) 2010-2012 Luis Alejandro Martínez Faneyth <luis@huntingbears.com.ve>"
+	${ECHO} "(C) 2012 Niv Sardi <xaiki@debian.org>"
+	${ECHO}
+	${ECHO} "This program is free software: you can redistribute it and/or modify"
+	${ECHO} "it under the terms of the GNU General Public License as published by"
+	${ECHO} "the Free Software Foundation, either version 3 of the License, or"
+	${ECHO} "(at your option) any later version."
+	${ECHO}
+	${ECHO} "This program is distributed in the hope that it will be useful,"
+	${ECHO} "but WITHOUT ANY WARRANTY; without even the implied warranty of"
+	${ECHO} "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the"
+	${ECHO} "GNU General Public License for more details."
+	${ECHO}
+	${ECHO} "You should have received a copy of the GNU General Public License"
+	${ECHO} "along with this program. If not, see <http://www.gnu.org/licenses/>."
+	${ECHO}
+	${ECHO} "On Debian systems, the complete text of the GNU General Public License"
+	${ECHO} "can be found in /usr/share/common-licenses/GPL-3 file."
+	${ECHO}
+	${ECHO} "Homepage: <http://code.google.com/p/canaima-semilla/>"
+	${ECHO}
 
 	exit 0
 }

@@ -37,28 +37,28 @@ class Main():
             class_id = self, icon = GUIDIR+'/images/create-profile.png',
             text_1 = MAIN_CREATE_PROFILE_TITLE, text_2 = MAIN_CREATE_PROFILE_TEXT,
             width = 330, height = 170, f_1 = ThreadGenerator,
-            p_1 = (True, self.window, profile.Profile, {})
+            p_1 = (profile.Profile, {}, True, self.window)
             )
 
         self.build_image = IconButton(
             class_id = self, icon = GUIDIR+'/images/build-image.png',
             text_1 = MAIN_BUILD_IMAGE_TITLE, text_2 = MAIN_BUILD_IMAGE_TEXT,
             width = 330, height = 170, f_1 = ThreadGenerator,
-            p_1 = (True, self.window, build.Build, {})
+            p_1 = (build.Build, {}, True, self.window)
             )
 
         self.test_image = IconButton(
             class_id = self, icon = GUIDIR+'/images/test-image.png',
             text_1 = MAIN_TEST_IMAGE_TITLE, text_2 = MAIN_TEST_IMAGE_TEXT,
             width = 330, height = 170, f_1 = ThreadGenerator,
-            p_1 = (True, self.window, test.Test, {})
+            p_1 = (test.Test, {}, True, self.window)
             )
 
         self.save_image = IconButton(
             class_id = self, icon = GUIDIR+'/images/save-image.png',
             text_1 = MAIN_SAVE_IMAGE_TITLE, text_2 = MAIN_SAVE_IMAGE_TEXT,
             width = 330, height = 170, f_1 = ThreadGenerator,
-            p_1 = (True, self.window, save.Save, {})
+            p_1 = (save.Save, {}, True, self.window)
             )
 
         self.bottombuttons = BottomButtons(
@@ -66,20 +66,22 @@ class Main():
             fclose = gtk.main_quit, pclose = (),
             fhelp = ThreadGenerator,
             phelp = (
-                False, False, ProcessGenerator, {
+                ProcessGenerator, {
                     'command': ['/usr/bin/yelp', DOCDIR+'/index.html']
-                    }
+                    },
+                False, False
                 ),
             fabout = ThreadGenerator,
             pabout = (
-                True, False, AboutWindow, {
+                AboutWindow, {
                     'img': GUIDIR+'/images/logo.png', 'name': app_name,
                     'version': app_version, 'url': app_url,
                     'copyright': app_copyright, 'description': app_description,
                     'authorsfile': SHAREDIR+'/AUTHORS',
                     'licensefile': SHAREDIR+'/LICENSE',
                     'translatorsfile': SHAREDIR+'/TRANSLATORS'
-                    }
+                    },
+                True, False
                 )
             )
 

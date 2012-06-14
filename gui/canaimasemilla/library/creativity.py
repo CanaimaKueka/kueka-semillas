@@ -265,7 +265,7 @@ def ProgressWindow(text, title, term, fcancel, pcancel,
     dialogarea = dialog.get_content_area()
     dialog.set_position(gtk.WIN_POS_CENTER_ALWAYS)
     if term:
-        dialog.set_size_request(window_width*3/4, window_height*3/4)
+        dialog.set_size_request(window_width*4/3, window_height*3/4)
     else:
         dialog.set_size_request(window_width*3/4, window_height/4)
     dialog.set_resizable(False)
@@ -281,10 +281,11 @@ def ProgressWindow(text, title, term, fcancel, pcancel,
         terminal = vte.Terminal()
         terminal.set_cursor_blinks(True)
         terminal.set_emulation('xterm')
-        terminal.set_font_from_string('fixed 8')
+#        terminal.set_font_from_string('fixed 10')
         terminal.set_scrollback_lines(1000)
         terminal.set_audible_bell(True)
         terminal.set_visible_bell(False)
+        terminal.fork_command()
 
     box.pack_start(label, expand, fill, padding)
     box.pack_start(progress, expand, fill, padding)

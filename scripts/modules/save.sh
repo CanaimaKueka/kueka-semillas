@@ -78,6 +78,16 @@ while true; do
 			shift 2 || true
 		;;
 
+		-v|--expresivo|--verbose)
+			SAVE_PRINT_MODE="verbose"
+			shift 2 || true
+		;;
+
+		-q|--silencioso|--quiet)
+			SAVE_PRINT_MODE="quiet"
+			shift 2 || true
+		;;
+
                 --)
 			shift
 			break
@@ -93,7 +103,7 @@ done
 case ${DEVICE} in
 	/dev/cdrom|/dev/cdrw|/dev/dvd|/dev/dvdrw|/dev/scd0|/dev/sr0|cd|dvd)
 		BURNDEVICE="$( wodim -devices | grep '/dev/' | awk '{print $2}' )"
-		if wodim ${BURNDEVICE} -data ''; then
+		if wodim ${BURNDEVICE} -data ${IMAGE}; then
 			SUCCESSMSG ""
 			exit 0
 		else

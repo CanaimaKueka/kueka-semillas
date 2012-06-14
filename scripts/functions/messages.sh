@@ -40,10 +40,10 @@ NORMALMSG() {
 
 	if [ -n "${NORMALMSG}" ]; then
 		shift 1 || true
-		LOCALIZED="$( ${BIN_GETTEXT} -s "${NORMALMSG}" )"
-		${BIN_PRINTF} "${LOCALIZED}\n" "${@}"
+		LOCALIZED="$( ${GETTEXT} -s "${NORMALMSG}" )"
+		${PRINTF} "${LOCALIZED}\n" "${@}"
 		if [ "${SWITCHLOG}" = "on" ]; then
-			${BIN_PRINTF} "${LOCALIZED}\n" >> "${ISOS}/${LOGFILE}"
+			${PRINTF} "${LOCALIZED}\n" >> "${ISOS}/${LOGFILE}"
 		fi
 
 	fi
@@ -62,11 +62,11 @@ DEBUGMSG() {
 	DEBUGVAR="${1}"
 	eval "DEBUGVALUE=\"\${${DEBUGVAR}}\""
 
-	if [ -n "${DEBUGVAR}" ]	&& [ -n "${DEBUGVALUE}" ] && [ "${CS_OP_MODE}" = "vardump" ]; then
+	if [ -n "${DEBUGVAR}" ]	&& [ -n "${DEBUGVALUE}" ] && [ "${BUILD_OP_MODE}" = "vardump" ]; then
 		shift 1 || true
-		${BIN_PRINTF} "${YELLOW}${DEBUGVAR}${END}='${DEBUGVALUE}'\n"
+		${PRINTF} "${YELLOW}${DEBUGVAR}${END}='${DEBUGVALUE}'\n"
 		if [ "${SWITCHLOG}" = "on" ]; then
-			${BIN_PRINTF} "[DEBUG] ${DEBUGVAR}='${DEBUGVALUE}'\n" >> "${ISOS}/${LOGFILE}"
+			${PRINTF} "[DEBUG] ${DEBUGVAR}='${DEBUGVALUE}'\n" >> "${ISOS}/${LOGFILE}"
 		fi
 	fi
 }
@@ -90,11 +90,11 @@ CONFIGMSG() {
 	CONFIGVAR="${1}"
 	[ -n "${CONFIGVAR}" ] && shift 1 || true
 
-	if [ -n "${CONFIGMSG}" ] && [ -n "${CONFIGVAR}" ] && [ "${CS_PRINT_MODE}" = "normal" ]; then
-		LOCALIZED="$( ${BIN_GETTEXT} -s "${CONFIGMSG}" )"
-		${BIN_PRINTF} "${UNDERSCORE}${CONFIGVAR}${END}: ${LOCALIZED} ...\n" "${@}"
+	if [ -n "${CONFIGMSG}" ] && [ -n "${CONFIGVAR}" ] && [ "${BUILD_PRINT_MODE}" = "normal" ]; then
+		LOCALIZED="$( ${GETTEXT} -s "${CONFIGMSG}" )"
+		${PRINTF} "${UNDERSCORE}${CONFIGVAR}${END}: ${LOCALIZED} ...\n" "${@}"
 		if [ "${SWITCHLOG}" = "on" ]; then
-			${BIN_PRINTF} "[CONFIG] ${CONFIGVAR}: ${LOCALIZED} ...\n" "${@}" >> "${ISOS}/${LOGFILE}"
+			${PRINTF} "[CONFIG] ${CONFIGVAR}: ${LOCALIZED} ...\n" "${@}" >> "${ISOS}/${LOGFILE}"
 		fi
 	fi
 }
@@ -111,12 +111,12 @@ INFOMSG() {
 
 	INFOMSG="${1}"
 
-	if [ -n "${INFOMSG}" ] && [ "${CS_PRINT_MODE}" = "verbose" ]; then
+	if [ -n "${INFOMSG}" ] && [ "${BUILD_PRINT_MODE}" = "verbose" ]; then
 		shift 1 || true
-		LOCALIZED="$( ${BIN_GETTEXT} -s "${INFOMSG}" )"
-		${BIN_PRINTF} "${LOCALIZED}\n" "${@}"
+		LOCALIZED="$( ${GETTEXT} -s "${INFOMSG}" )"
+		${PRINTF} "${LOCALIZED}\n" "${@}"
 		if [ "${SWITCHLOG}" = "on" ]; then
-			${BIN_PRINTF} "[INFO] ${LOCALIZED}\n" "${@}" >> "${ISOS}/${LOGFILE}"
+			${PRINTF} "[INFO] ${LOCALIZED}\n" "${@}" >> "${ISOS}/${LOGFILE}"
 		fi
 	fi
 }
@@ -133,12 +133,12 @@ WARNINGMSG() {
 
 	WARNINGMSG="${1}"
 
-	if [ -n "${WARNINGMSG}" ] && [ "${CS_PRINT_MODE}" = "verbose" ]; then
+	if [ -n "${WARNINGMSG}" ] && [ "${BUILD_PRINT_MODE}" = "verbose" ]; then
 		shift 1 || true
-		LOCALIZED="$( ${BIN_GETTEXT} -s "${WARNINGMSG}" )"
-		${BIN_PRINTF} "${YELLOW}${LOCALIZED}${END}\n" "${@}"
+		LOCALIZED="$( ${GETTEXT} -s "${WARNINGMSG}" )"
+		${PRINTF} "${YELLOW}${LOCALIZED}${END}\n" "${@}"
 		if [ "${SWITCHLOG}" = "on" ]; then
-			${BIN_PRINTF} "[WARNING] ${LOCALIZED}\n" "${@}" >> "${ISOS}/${LOGFILE}"
+			${PRINTF} "[WARNING] ${LOCALIZED}\n" "${@}" >> "${ISOS}/${LOGFILE}"
 		fi
 	fi
 }
@@ -157,10 +157,10 @@ ERRORMSG() {
 
 	if [ -n "${ERRORMSG}" ]; then
 		shift 1 || true
-		LOCALIZED="$( ${BIN_GETTEXT} -s "${ERRORMSG}" )"
-		${BIN_PRINTF} "${LRED}${LOCALIZED}${END}\n" "${@}"
+		LOCALIZED="$( ${GETTEXT} -s "${ERRORMSG}" )"
+		${PRINTF} "${LRED}${LOCALIZED}${END}\n" "${@}"
 		if [ "${SWITCHLOG}" = "on" ]; then
-			${BIN_PRINTF} "[ERROR] ${LOCALIZED}\n" "${@}" >> "${ISOS}/${LOGFILE}"
+			${PRINTF} "[ERROR] ${LOCALIZED}\n" "${@}" >> "${ISOS}/${LOGFILE}"
 		fi
 	fi
 }
@@ -179,10 +179,10 @@ SUCCESSMSG() {
 
 	if [ -n "${SUCCESSMSG}" ]; then
 		shift 1 || true
-		LOCALIZED="$( ${BIN_GETTEXT} -s "${SUCCESSMSG}" )"
-		${BIN_PRINTF} "${LGREEN}${LOCALIZED}${END}\n" "${@}"
+		LOCALIZED="$( ${GETTEXT} -s "${SUCCESSMSG}" )"
+		${PRINTF} "${LGREEN}${LOCALIZED}${END}\n" "${@}"
 		if [ "${SWITCHLOG}" = "on" ]; then
-			${BIN_PRINTF} "[SUCCESS] ${LOCALIZED}\n" "${@}" >> "${ISOS}/${LOGFILE}"
+			${PRINTF} "[SUCCESS] ${LOCALIZED}\n" "${@}" >> "${ISOS}/${LOGFILE}"
 		fi
 	fi
 }

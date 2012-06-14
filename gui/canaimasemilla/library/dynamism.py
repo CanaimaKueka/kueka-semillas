@@ -399,16 +399,22 @@ def BuildImage(class_id, profile_container, arch_container, media_container,
         if child.get_active():
             media = child.get_label()
 
-    get = ['META_REPO', 'META_CODENAME', 'META_REPOSECTIONS']
-    config = ParseProfileConfig(profile, get)
+    if os.path.exists(PROFILEDIR+'/'+profile+'/profile.conf'):
+        get = ['META_REPO', 'META_CODENAME', 'META_REPOSECTIONS']
+        config = ParseProfileConfig(profile, get)
 
-    meta_repo = config['META_REPO']
-    meta_reposections = config['META_REPOSECTIONS']
-    meta_codename = config['META_CODENAME']
-    mainrepo = 'deb '+meta_repo+' '+meta_codename+' '+meta_reposections+'\n'
+        meta_repo = config['META_REPO']
+        meta_reposections = config['META_REPOSECTIONS']
+        meta_codename = config['META_CODENAME']
+        mainrepo = 'deb '+meta_repo+' '+meta_codename+' '+meta_reposections+'\n'
+    else:
+        mainrepo = ''
 
-    f = open(PROFILEDIR+'/'+profile+'/extra-repos.list', 'r')
-    extrarepos = f.read()
+    if os.path.exists(PROFILEDIR+'/'+profile+'/extra-repos.list'):
+        f = open(PROFILEDIR+'/'+profile+'/extra-repos.list', 'r')
+        extrarepos = f.read()
+    else:
+        extrarepos = ''
 
     sourcestext = mainrepo+extrarepos
 
@@ -447,6 +453,9 @@ def BuildImage(class_id, profile_container, arch_container, media_container,
         reference = class_id, function = StartCS,
         params = {
             'class_id': class_id,
+            'arch': arch,
+            'media': media,
+            'profile': profile,
             'q_bar': q_bar,
             'q_msg': q_msg,
             'q_terminal': q_terminal,
@@ -455,8 +464,13 @@ def BuildImage(class_id, profile_container, arch_container, media_container,
             },
         event = event
         )
+        
+#    Toggle(
+#        dont = None, do = window_container, children = False,
+#        morechildren = False, alwaysoff = True
+#        )
 
-def StartCS(class_id, q_bar, q_msg, q_terminal, q_code, q_counter):
+def StartCS(class_id, arch, media, profile, q_bar, q_msg, q_terminal, q_code, q_counter):
 
     bar = q_bar.get()
     message = q_msg.get()
@@ -475,8 +489,9 @@ def StartCS(class_id, q_bar, q_msg, q_terminal, q_code, q_counter):
                 }
             )
     else:
+        message.set_markup('hola')
         process = ProcessGenerator(
-            [BINDIR+'/'+CSBIN, '-a', arch, '-m', media, '-s', profile],
+            ['/bin/sh', BINDIR+'/'+CSBIN, 'build', '-a', arch, '-m', media, '-s', profile],
             terminal, bar
             )
 
@@ -491,7 +506,6 @@ def StartCS(class_id, q_bar, q_msg, q_terminal, q_code, q_counter):
                     }
                 )
 
-    Toggle(
-        dont = None, do = box_container, children = True,
-        morechildren = True, alwaysoff = True
-        )
+def ProgressPulse(bar):
+    bar.pulse()
+    return True

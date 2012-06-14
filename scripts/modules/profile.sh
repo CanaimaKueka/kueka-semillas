@@ -71,9 +71,9 @@ fi
 SHORTOPTS="clhuA"
 DESCRIPTION="$( NORMALMSG "Comando para la gestión de perfiles de distribuciones derivadas." )"
 
-OPTIONS="$( ${BIN_GETOPT} --shell="sh" --name="${0}" --options="${SHORTOPTS}" --longoptions="${LONGOPTS}" -- "${@}" )"
+OPTIONS="$( ${GETOPT} --shell="sh" --name="${0}" --options="${SHORTOPTS}" --longoptions="${LONGOPTS}" -- "${@}" )"
 
-if [ $? != 0 ]; then
+if [ ${?} != 0 ]; then
 	ERRORMSG "Ocurrió un problema interpretando los parámetros."
 	exit 1
 fi
@@ -93,8 +93,8 @@ while true; do
 		;;
 
 	        -h|--ayuda|--help)
-        	        if ${BIN_MAN} -w "${CS_CMD}_${COMMAND}" 1>/dev/null 2>&1; then
-                	        ${BIN_MAN} "${CS_CMD}_${COMMAND}"
+        	        if ${MAN} -w "${CS_CMD}_${COMMAND}" 1>/dev/null 2>&1; then
+                	        ${MAN} "${CS_CMD}_${COMMAND}"
                         	exit 0
 	                else
         	                USAGE "${COMMAND}" "${DESCRIPTION}" "${PARAMETERS}"
@@ -124,43 +124,43 @@ done
 case ${PROFILE_OP_MODE} in
 	create)
 		PTEMPLATE="${FUNCTIONS}/newprofile.sh"
-		PTMP="$( tempfile )"
-		VARTMP="$( tempfile )"
-		COMTMP="$( tempfile )"
-		COPYTMP="$( tempfile )"
+		PTMP="$( ${TEMPFILE} )"
+		VARTMP="$( ${TEMPFILE} )"
+		COMTMP="$( ${TEMPFILE} )"
+		COPYTMP="$( ${TEMPFILE} )"
 
-		echo
+		${ECHO}
 		NORMALMSG "Vamos a hacerte algunas preguntas con respecto a la distribución que deseas crear."
 		NORMALMSG "Si no estás seguro de la información que se te pide, puedes presionar CTRL+C"
 		NORMALMSG "en cualquier momento y volver a ejecutar el asistente cuando estés listo."
-		echo
+		${ECHO}
 		NORMALMSG "Estás listo para crear el perfil? Presiona Y para continuar o N para cancelar."
 
 		read -p "[Y/N]" CONTINUE
 
 		if [ "${CONTINUE}" = "Y" ]; then
-		        ${BIN_CP} ${PTEMPLATE} ${PTMP}
-		        ${BIN_CAT} ${PTEMPLATE} | ${BIN_GREP} "#.*=.*@@.*" > ${VARTMP}
-        		${BIN_CAT} ${PTEMPLATE} | ${BIN_GREP} "INFOMSG" > ${COMTMP}
-        		${BIN_CAT} ${PTEMPLATE} | ${BIN_GREP} "# WHERE" > ${COPYTMP}
-		        COUNT=$( ${BIN_CAT} ${VARTMP} | ${BIN_WC} -l )
+		        ${CP} ${PTEMPLATE} ${PTMP}
+		        ${CAT} ${PTEMPLATE} | ${GREP} "#.*=.*@@.*" > ${VARTMP}
+        		${CAT} ${PTEMPLATE} | ${GREP} "INFOMSG" > ${COMTMP}
+        		${CAT} ${PTEMPLATE} | ${GREP} "# WHERE" > ${COPYTMP}
+		        COUNT=$( ${CAT} ${VARTMP} | ${WC} -l )
 			PROFILE_CREATED=0
 
-		        echo
+		        ${ECHO}
 		        NORMALMSG "Completa la siguiente información y luego presiona la tecla enter para confirmar:"
-		        echo
+		        ${ECHO}
 
-		        for LINE in $( ${BIN_SEQ} 1 ${COUNT} ); do
-		                DESCRIPTION="$( ${BIN_SED} -n ${LINE}p ${COMTMP} | ${BIN_SED} 's|INFOMSG ||g;s|"||g' )"
-				eval "COPY=\"$( ${BIN_SED} -n ${LINE}p ${COPYTMP} | ${BIN_AWK} '{print $4}' )\""
-                		COPYTYPE="$( ${BIN_SED} -n ${LINE}p ${COPYTMP} | ${BIN_AWK} '{print $3}' )"
-                		VARONLY="$( ${BIN_SED} -n ${LINE}p ${VARTMP} | ${BIN_SED} "s/=.*//g;s/# //g" )"
+		        for LINE in $( ${SEQ} 1 ${COUNT} ); do
+		                DESCRIPTION="$( ${SED} -n ${LINE}p ${COMTMP} | ${SED} 's|INFOMSG ||g;s|"||g' )"
+				eval "COPY=\"$( ${SED} -n ${LINE}p ${COPYTMP} | ${AWK} '{print $4}' )\""
+                		COPYTYPE="$( ${SED} -n ${LINE}p ${COPYTMP} | ${AWK} '{print $3}' )"
+                		VARONLY="$( ${SED} -n ${LINE}p ${VARTMP} | ${SED} "s/=.*//g;s/# //g" )"
 
-		                ${BIN_ECHO} ${DESCRIPTION}
+		                ${ECHO} ${DESCRIPTION}
 		                read -p "${VARONLY}=" VALUE
 
 				eval "${VARONLY}=\"${VALUE}\""
-                		echo
+                		${ECHO}
 
 				if [ -z "${PROFILE_NAME}" ]; then
 					ERRORMSG "No puede dejar el campo 'PROFILE_NAME' vacío."
@@ -176,29 +176,29 @@ case ${PROFILE_OP_MODE} in
 					if  [ -e "${VALUE}" ]; then
 
 						if [ "${COPYTYPE}" = "FOLDER" ]; then
-							mkdir -p "${COPY}"
+							${MKDIR} -p "${COPY}"
 						elif [ "${COPYTYPE}" = "FILE" ]; then
-							mkdir -p "$( dirname "${COPY}" )"
+							${MKDIR} -p "$( ${DIRNAME} "${COPY}" )"
 						fi
 
 						PROFILE_CREATED=1
-						${BIN_CP} "${VALUE}" "${COPY}"
-						${BIN_SED} -i "s|# ${VARONLY}=.*|${VARONLY}=\"profile\"|g" ${VARTMP}
+						${CP} "${VALUE}" "${COPY}"
+						${SED} -i "s|# ${VARONLY}=.*|${VARONLY}=\"profile\"|g" ${VARTMP}
 
 					else
 						ERRORMSG "La ruta '%s' no existe." "${VALUE}"
 						exit 1
 					fi
 				else
-					${BIN_SED} -i "s|# ${VARONLY}=.*|${VARONLY}=\"${VALUE}\"|g" ${VARTMP}
+					${SED} -i "s|# ${VARONLY}=.*|${VARONLY}=\"${VALUE}\"|g" ${VARTMP}
 				fi
 
         		done
 
-			${BIN_MKDIR} -p "${PROFILES}/${PROFILE_NAME}"
-			${BIN_CP} "${VARTMP}" "${PROFILES}/${PROFILE_NAME}/profile.conf"
-			${BIN_CHMOD} 644 "${PROFILES}/${PROFILE_NAME}/profile.conf"
-			${BIN_RM} -rf "${PTMP}" "${VARTMP}" "${COMTMP}" "${COPYTMP}"
+			${MKDIR} -p "${PROFILES}/${PROFILE_NAME}"
+			${CP} "${VARTMP}" "${PROFILES}/${PROFILE_NAME}/profile.conf"
+			${CHMOD} 644 "${PROFILES}/${PROFILE_NAME}/profile.conf"
+			${RM} -rf "${PTMP}" "${VARTMP}" "${COMTMP}" "${COPYTMP}"
 
 		elif [ "${CONTINUE}" = "N" ]; then
 		        ERRORMSG "Cancelado."
@@ -210,7 +210,7 @@ case ${PROFILE_OP_MODE} in
 	;;
 
 	list)
-		ls -1 "${PROFILES}/"
+		${LS} -1 "${PROFILES}/"
 		exit 0
 	;;
 

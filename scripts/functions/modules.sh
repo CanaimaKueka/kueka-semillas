@@ -38,25 +38,27 @@ MODULE() {
 	# ======================================================================
 
 	MODULE="${1}"
-	shift || true
+	[ -n "${MODULE}" ] && shift 1 || true
 	ACTION="${1}"
-	shift || true
+	[ -n "${ACTION}" ] && shift 1 || true
 	BINDIR="${1}"
-	shift || true
+	[ -n "${BINDIR}" ] && shift 1 || true
 
 	if [ -z "${MODULE}" ]; then
 		ERRORMSG "La función '%s' necesita el nombre de un módulo como primer argumento." "${FUNCNAME}"
+		exit 1
 	fi
 
 	if [ -z "${BINDIR}" ]; then
 		ERRORMSG "La función '%s' necesita el nombre de un directorio como segundo argumento." "${FUNCNAME}"
+		exit 1
 	fi
 
 	if [ -x "${MODULES}/${MODULE}" ]; then
 		exec "${MODULES}/${MODULE}" "${ACTION}" "${BINDIR}" "${@}"
 	elif [ -x "/usr/share/canaima-semilla/scripts/modules/${MODULE}" ]; then
 		exec "/usr/share/canaima-semilla/scripts/modules/${MODULE}" "${ACTION}" "${BINDIR}" "${@}"
-	elif [ -x "$( which "${MODULE}" 2>/dev/null )" ]; then
+	elif [ -x "$( ${WHICH} "${MODULE}" 2>/dev/null )" ]; then
 		exec "${MODULE}" "${ACTION}" "${BINDIR}" "${@}"
 	else
 		ERRORMSG "'%s' no parece ser un módulo válido de '%s'." "${MODULE}" "${CS_NAME}"

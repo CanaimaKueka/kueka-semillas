@@ -3,6 +3,7 @@
 
 import gtk, os, re, urllib2, fnmatch, threading, subprocess, hashlib, random, gobject, tempfile
 
+from library.dynamism import ProgressPulse
 from aptsources.distinfo import DistInfo
 from config import *
 
@@ -106,6 +107,8 @@ class ThreadGenerator(threading.Thread):
 
 def ProcessGenerator(command, terminal = False, bar = False):
 
+
+
     filename = '/tmp/cs-command-'+hashlib.sha1(
         str(random.getrandbits(random.getrandbits(10)))
         ).hexdigest()
@@ -127,14 +130,14 @@ def ProcessGenerator(command, terminal = False, bar = False):
                 )
 
         if bar:
-            timer = gobject.timeout_add(100, bar.pulse)
+            timer = gobject.timeout_add(100, ProgressPulse, bar)
 
         while process.returncode == None:
             process.poll()
             try:
                 line = fifo.readline().strip()
                 if terminal:
-                    terminal.feed(line)
+                    terminal.feed(line+'\r\n')
             except:
                 continue
 
@@ -169,7 +172,7 @@ def TestIndexes(sourcestext, archlist, progressmessage, download,
     CleanTempDir(tempdir)
 
     if not download:
-        timer = gobject.timeout_add(100, bar.pulse)
+        timer = gobject.timeout_add(100, ProgressPulse, bar)
 
     for line in sourcestext.split('\n'):
         if line:
@@ -260,8 +263,6 @@ def TestIndexes(sourcestext, archlist, progressmessage, download,
     q_code.put(errorcode)
     q_counter.put(errorcounter)
     event.set()
-
-#    return bar, message, errorcounter, errorcode
 
 def ParseProfileConfig(profile, get):
     conffile = PROFILEDIR+'/'+profile+'/profile.conf'

@@ -26,19 +26,41 @@
 #
 # CODE IS POETRY
 
+BINLIST="/usr/bin/kvm /usr/bin/kvm-img /bin/cat /bin/df /bin/echo /usr/bin/awk /bin/rm /usr/bin/getopt /usr/bin/dpkg /usr/bin/lb /usr/bin/tee /bin/mv /usr/bin/stat /usr/bin/bc /usr/bin/gettext /usr/bin/printf /usr/bin/file /usr/bin/identify /usr/bin/dirname /bin/readlink /usr/bin/man /bin/mkdir /bin/cp /usr/bin/cut /bin/grep /bin/sed /usr/bin/seq /usr/bin/wc /bin/chmod /usr/bin/id /bin/date /usr/bin/dpkg-query /usr/bin/which /bin/ls /usr/bin/basename /bin/tempfile /usr/bin/tr"
+
+for BIN in ${BINLIST}; do
+	CMDNAME="$( basename ${BIN} )"
+	VARNAME="$( echo ${CMDNAME} | tr '[:lower:]' '[:upper:]' | tr '-' '_' )"
+	if which "${CMDNAME}" 1>/dev/null 2>&1; then
+		eval "${VARNAME}=\"$( which "${CMDNAME}" )\""
+	elif [ -x "${BIN}" ]; then
+		eval "${VARNAME}=\"${BIN}\""
+	else
+		ERRORMSG "No se ha podido encontrar un reemplazo para '%s', la instalación de Canaima Semilla puede estar corrupta." "${BIN}"
+		exit 1
+	fi
+done
+
+if ${DPKG_QUERY} --show --showformat='${Version}\n' live-build 1>/dev/null 2>&1; then
+	LB_VERSION="$( ${DPKG_QUERY} --show --showformat='${Version}\n' live-build )"
+else
+	ERRORMSG "No se ha podido encontrar el paquete ." "${BIN}"
+	exit 1
+fi
+
 # Inicializando variables
 # Un archivo variables.conf en ${ISOS} sobreescribe la configuración por defecto
-for FILE in ${CONFIG}; do
-	if [ -f "${FILE}" ]; then
-		. "${FILE}"
+for _FILE in ${CONFIG}; do
+	if [ -f "${_FILE}" ]; then
+		. "${_FILE}"
 	fi
 done
 
 # Inicializando funciones
 # Un archivo lib.sh en ${ISOS} sobreescribe la configuración por defecto
-for FILE in ${LIBRARY}; do
-	if [ -f "${FILE}" ]; then
-		. "${FILE}"
+for _FILE in ${LIBRARY}; do
+	if [ -f "${_FILE}" ]; then
+		. "${_FILE}"
 	fi
 done
 
@@ -47,7 +69,7 @@ done
 export PATH="${BINDIR%/}:${SCRIPTS%/}:${MODULES%/}:${PATH}"
 
 # Comprobando estado previo a la ejecución de módulos
-if [ $( id -u ) != 0 ]; then
+if [ $( ${ID} -u ) != 0 ]; then
 	ERRORMSG "Canaima Semilla debe ser ejecutado como usuario root."
 	exit 1
 fi

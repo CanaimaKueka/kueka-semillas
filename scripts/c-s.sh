@@ -60,8 +60,8 @@ PARAMETERS="\t[construir|build] [...] [--help]\n\
 # Delegando acciones a los módulos/comandos
 case ${ACTION} in
 	-h|--ayuda|--help)
-		if ${BIN_MAN} -w "${COMMAND}" 1>/dev/null 2>&1; then
-			${BIN_MAN} "${COMMAND}"
+		if ${MAN} -w "${COMMAND}" 1>/dev/null 2>&1; then
+			${MAN} "${COMMAND}"
 			exit 0
 		else
 			USAGE "${COMMAND}" "${DESCRIPTION}" "${PARAMETERS}"

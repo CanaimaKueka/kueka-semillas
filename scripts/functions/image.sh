@@ -33,8 +33,8 @@ CS_BUILD_IMAGE() {
 	#	      generada por CS_POPULATE_TREE.
 	# ENTRADAS:
 	#	[ISOS]: Directorio donde se encuentra el árbol de configuración.
-	#	[CS_OP_MODE]: Modo de operación. 
-	#	[CS_PRINT_MODE]: Modo de verbosidad.
+	#	[BUILD_OP_MODE]: Modo de operación. 
+	#	[BUILD_PRINT_MODE]: Modo de verbosidad.
 	# SALIDAS:
 	#	[0]: La imagen se construyó satisfactoriamente.
 	#	[1]: La construcción de la imagen falló
@@ -42,10 +42,10 @@ CS_BUILD_IMAGE() {
 
 	ISOS="${1}"
 	[ -n "${ISOS}" ] && shift 1 || true
-	CS_OP_MODE="${1}"
-	[ -n "${CS_OP_MODE}" ] && shift 1 || true
-	CS_PRINT_MODE="${1}"
-	[ -n "${CS_PRINT_MODE}" ] && shift 1 || true
+	BUILD_OP_MODE="${1}"
+	[ -n "${BUILD_OP_MODE}" ] && shift 1 || true
+	BUILD_PRINT_MODE="${1}"
+	[ -n "${BUILD_PRINT_MODE}" ] && shift 1 || true
 
 	TCSCONFFILE="${ISOS}/config/c-s/tree.conf"
 
@@ -90,19 +90,19 @@ CS_BUILD_IMAGE() {
 	fi
 
 	WARNINGMSG "[--- INICIANDO CONSTRUCCIÓN ---]"
-	cd "${ISOS}" && ${BIN_LB} build ${LB_QUIET} ${LB_VERBOSE} 2>&1 | ${BIN_TEE} -a "${ISOS}/${LOGFILE}"
+	cd "${ISOS}" && ${LB} build ${LB_QUIET} ${LB_VERBOSE} 2>&1 | ${TEE} -a "${ISOS}/${LOGFILE}"
 
 	if [ -e "${ISOS}/${MEDIO_LBNAME}" ] && [ -n "${MEDIO_CSNAME}" ] && [ -n "${MEDIO_LBNAME}" ]; then
 
-		PESO="$( ${BIN_ECHO} "scale=2;$( ${BIN_STAT} --format=%s "${ISOS}/${MEDIO_LBNAME}" )/1048576" | ${BIN_BC} )MB"
-		${BIN_MV} "${ISOS}/${MEDIO_LBNAME}" "${ISOS}/${MEDIO_CSNAME}"
+		PESO="$( ${ECHO} "scale=2;$( ${STAT} --format=%s "${ISOS}/${MEDIO_LBNAME}" )/1048576" | ${BC} )MB"
+		${MV} "${ISOS}/${MEDIO_LBNAME}" "${ISOS}/${MEDIO_CSNAME}"
 
 		SUCCESSMSG "Se ha creado una imagen %s con un peso de %s." "${MEDIO}" "${PESO}"
 		SUCCESSMSG "Puedes encontrar la imagen '%s' en el directorio %s" "${MEDIO_CSNAME}" "${ISOS}"
-
+		exit 0
 	else
 		ERRORMSG "Ocurrió un error durante la generación de la imagen."
 		ERRORMSG "Si deseas asistencia, puedes enviar un correo a %s con el contenido del archivo '%s'" "${CS_LOG_MAIL}" "${ISOS}/${LOGFILE}"
-
+		exit 1
 	fi
 }

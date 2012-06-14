@@ -37,8 +37,8 @@ CS_LOAD_PROFILE() {
 	#       [SABOR]: Nombre del sabor a construir.
 	#       [ARCH]: Arquitectura de la imagen a construir.
 	#       [MEDIO]: Formato de la imagen a construir.
-	#       [CS_OP_MODE]: Modo de operación. 
-	#       [CS_PRINT_MODE]: Modo de verbosidad.
+	#       [BUILD_OP_MODE]: Modo de operación. 
+	#       [BUILD_PRINT_MODE]: Modo de verbosidad.
 	#       [EXTRACONF]: Archivo de configuraciones adicionales.
 	# ======================================================================
 
@@ -52,10 +52,10 @@ CS_LOAD_PROFILE() {
 	[ -n "${ARCH}" ] && shift 1 || true
 	MEDIO="${1}"
 	[ -n "${MEDIO}" ] && shift 1 || true
-	CS_OP_MODE="${1}"
-	[ -n "${CS_OP_MODE}" ] && shift 1 || true
-	CS_PRINT_MODE="${1}"
-	[ -n "${CS_PRINT_MODE}" ] && shift 1 || true
+	BUILD_OP_MODE="${1}"
+	[ -n "${BUILD_OP_MODE}" ] && shift 1 || true
+	BUILD_PRINT_MODE="${1}"
+	[ -n "${BUILD_PRINT_MODE}" ] && shift 1 || true
 	EXTRACONF="${1}"
 	[ -n "${EXTRACONF}" ] && shift 1 || true
 
@@ -93,7 +93,7 @@ CS_LOAD_PROFILE() {
 
 	CONFIGMSG "Leyendo estado del nombre del autor" "AUTHOR_NAME"
 	if [ -z "${AUTHOR_NAME}" ] || [ "${AUTHOR_NAME}" = "none" ]; then
-		AUTHOR_NAME="${CS_NAME}"
+		AUTHOR_NAME="${DEFAULT_AUTHOR_NAME}"
 		WARNINGMSG "No se ha especificado el nombre del autor para el sabor en construcción."
 	fi
 	INFOMSG "Seleccionando '%s' para identificar al autor del sabor." "${AUTHOR_NAME}"
@@ -101,7 +101,7 @@ CS_LOAD_PROFILE() {
 
 	CONFIGMSG "Leyendo estado del correo electrónico del autor" "AUTHOR_EMAIL"
 	if [ -z "${AUTHOR_EMAIL}" ] || [ "${AUTHOR_EMAIL}" = "none" ]; then
-		AUTHOR_EMAIL="desarrolladores@canaima.softwarelibre.gob.ve"
+		AUTHOR_EMAIL="${DEFAULT_AUTHOR_EMAIL}"
 		WARNINGMSG "No se ha especificado un correo para el autor del sabor en construcción."
 	fi
 	INFOMSG "Seleccionando '%s' como correo para el autor del sabor." "${AUTHOR_EMAIL}"
@@ -109,7 +109,7 @@ CS_LOAD_PROFILE() {
 
 	CONFIGMSG "Leyendo estado de la dirección web del autor" "AUTHOR_URL"
 	if [ -z "${AUTHOR_URL}" ] || [ "${AUTHOR_URL}" = "none" ]; then
-		AUTHOR_URL="http://canaima.softwarelibre.gob.ve/"
+		AUTHOR_URL="${DEFAULT_AUTHOR_URL}"
 		WARNINGMSG "No se ha especificado una dirección web para el autor del sabor en construcción."
 	fi
 	INFOMSG "Seleccionando '%s' como dirección web para el autor del sabor." "${AUTHOR_URL}"
@@ -120,7 +120,7 @@ CS_LOAD_PROFILE() {
 		OS_LOCALE="${LC_ALL}"
 		WARNINGMSG "No se ha definido un lenguaje de sistema para el sabor en construcción."
 	fi
-	if [ $( cat "${SUPPORTED_LOCALES}" | grep -wc "${OS_LOCALE}" ) = 0 ]; then
+	if [ $( ${CAT} "${SUPPORTED_LOCALES}" | ${GREP} -wc "${OS_LOCALE}" ) = 0 ]; then
 		ERRORMSG "El lenguaje de sistema '%s' no está soportado por %s." "${OS_LOCALE}" "${CS_NAME}"
 		exit 1
 	fi
@@ -128,7 +128,7 @@ CS_LOAD_PROFILE() {
 	DEBUGMSG "OS_LOCALE"
 
 	CONFIGMSG "Leyendo estado de la Metadistribución base" "META_DISTRO"
-	case "$( echo ${META_DISTRO} | tr '[:upper:]' '[:lower:]' )" in
+	case "$( ${ECHO} ${META_DISTRO} | ${TR} '[:upper:]' '[:lower:]' )" in
 		debian)		META_MODE="debian";;
 		ubuntu)		META_MODE="ubuntu";;
 		canaima)	META_MODE="debian";;
@@ -143,7 +143,7 @@ CS_LOAD_PROFILE() {
 	CONFIGMSG "Leyendo estado de la arquitectura de construcción" "ARCH"
 	case ${ARCH} in
 		amd64)
-			if [ $( echo ${PROFILE_ARCH} | grep -wc "${ARCH}") -ge 1 ]; then
+			if [ $( ${ECHO} ${PROFILE_ARCH} | ${GREP} -wc "${ARCH}") -ge 1 ]; then
 				ARCH="amd64"
 				KERNEL_ARCH="amd64"
 			else
@@ -158,7 +158,7 @@ CS_LOAD_PROFILE() {
 		;;
 
 		i386)
-			if [ $( echo ${PROFILE_ARCH} | grep -wc "${ARCH}") -ge 1 ]; then
+			if [ $( ${ECHO} ${PROFILE_ARCH} | ${GREP} -wc "${ARCH}") -ge 1 ]; then
 				ARCH="i386"
 				KERNEL_ARCH="686"
 			else
@@ -178,27 +178,27 @@ CS_LOAD_PROFILE() {
 	CONFIGMSG "Leyendo estado del formato de imagen a utilizar" "MEDIO"
 	case ${MEDIO} in
 		img|hdd|usb|usb-hdd)
-			if ${BIN_DPKG} --compare-versions "${LB_VERSION}" ge 3.0; then
+			if ${DPKG} --compare-versions "${LB_VERSION}" ge 3.0; then
 				MEDIO="hdd"
 			else
 				MEDIO="usb-hdd"
 			fi
 			MEDIO_LBNAME="binary.img"
-			MEDIO_CSNAME="${META_DISTRO}-${PROFILE_NAME}~${DATE}_${ARCH}.img"
+			MEDIO_CSNAME="${META_DISTRO}-${PROFILE_NAME}~${TIMESTAMP}_${ARCH}.img"
 			LB_BOOTLOADER="syslinux"
 		;;
 
 		iso|cd|dvd)
 			MEDIO="iso"
 			MEDIO_LBNAME="binary.iso"
-			MEDIO_CSNAME="${META_DISTRO}-${PROFILE_NAME}~${DATE}_${ARCH}.iso"
+			MEDIO_CSNAME="${META_DISTRO}-${PROFILE_NAME}~${TIMESTAMP}_${ARCH}.iso"
 			LB_BOOTLOADER="isolinux"
 		;;
 
 		mixto|hybrid|iso-hybrid)
 			MEDIO="iso-hybrid"
 			MEDIO_LBNAME="binary-hybrid.iso"
-			MEDIO_CSNAME="${META_DISTRO}-${PROFILE_NAME}~${DATE}_${ARCH}.iso"
+			MEDIO_CSNAME="${META_DISTRO}-${PROFILE_NAME}~${TIMESTAMP}_${ARCH}.iso"
 			LB_BOOTLOADER="isolinux"
 		;;
 
@@ -212,7 +212,7 @@ CS_LOAD_PROFILE() {
 
 	CONFIGMSG "Leyendo estado de la versión para la Metadistribución base" "META_CODENAME"
 	if [ -z "${META_CODENAME}" ] || [ "${META_CODENAME}" = "none" ]; then
-		eval "META_CODENAME=\${$( echo ${META_DISTRO} | tr '[:lower:]' '[:upper:]' )_DEFAULT_CODENAME}"
+		eval "META_CODENAME=\"\${$( ${ECHO} ${META_DISTRO} | ${TR} '[:lower:]' '[:upper:]' )_DEFAULT_CODENAME}\""
 		WARNINGMSG "No se ha especificado una versión para la Metadistribución base."
 	fi
 	INFOMSG "Seleccionando '%s' como versión de la Metadistribución base." "${META_CODENAME}"
@@ -220,7 +220,7 @@ CS_LOAD_PROFILE() {
 
 	CONFIGMSG "Leyendo estado del repositorio para la Metadistribución base" "META_REPO"
 	if [ -z "${META_REPO}" ] || [ "${META_REPO}" = "none" ]; then
-		eval "META_REPO=\${$( echo ${META_DISTRO} | tr '[:lower:]' '[:upper:]' )_DEFAULT_REPO}"
+		eval "META_REPO=\"\${$( ${ECHO} ${META_DISTRO} | ${TR} '[:lower:]' '[:upper:]' )_DEFAULT_REPO}\""
 		WARNINGMSG "No se ha especificado un repositorio para la Metadistribución base."
 	fi
 	INFOMSG "Seleccionando '%s' como repositorio para la Metadistribución base." "${META_REPO}"
@@ -228,7 +228,7 @@ CS_LOAD_PROFILE() {
 
 	CONFIGMSG "Leyendo estado de las secciones para el repositorio de la Metadistribución base" "META_REPOSECTIONS"
 	if [ -z "${META_REPOSECTIONS}" ] || [ "${META_REPOSECTIONS}" = "none" ]; then
-		eval "META_REPOSECTIONS=\${$( echo ${META_DISTRO} | tr '[:lower:]' '[:upper:]' )_DEFAULT_REPOSECTIONS}"
+		eval "META_REPOSECTIONS=\${$( ${ECHO} ${META_DISTRO} | ${TR} '[:lower:]' '[:upper:]' )_DEFAULT_REPOSECTIONS}"
 		WARNINGMSG "No se han especificado las secciones para el repositorio de la Metadistribución base."
 	fi
 	INFOMSG "Seleccionando '%s' como secciones para el repositorio de la Metadistribución base." "${META_REPOSECTIONS}"
@@ -255,7 +255,7 @@ CS_LOAD_PROFILE() {
 		OS_EXTRAREPOS="${PROFILES}/${SABOR}/extra-repos.list"
 		WARNINGMSG "No se han definido repositorios adicionales para incluir en el sistema."
 	fi
-	if [ -f "${OS_EXTRAREPOS}" ] && [ $( cat "${OS_EXTRAREPOS}" | wc -l ) -ge 1 ]; then
+	if [ -f "${OS_EXTRAREPOS}" ] && [ $( ${CAT} "${OS_EXTRAREPOS}" | ${WC} -l ) -ge 1 ]; then
 		INFOMSG "Se incluirán en el sistema los repositorios adicionales presentes en el archivo '%s'." "${OS_EXTRAREPOS}"
 	else
 		INFOMSG "'%s' está vacío o no es un archivo válido. Ningún repositorio adicional se incluirá en el sistema." "${OS_EXTRAREPOS}"
@@ -268,7 +268,7 @@ CS_LOAD_PROFILE() {
 		OS_INCLUDES="${PROFILES}/${SABOR}/OS_INCLUDES/"
 		WARNINGMSG "No se han definido archivos para incluir en el sistema."
 	fi
-	if [ -d "${OS_INCLUDES}" ] && [ $( ls -1 "${OS_INCLUDES}" 2>/dev/null | wc -l ) -ge 1 ]; then
+	if [ -d "${OS_INCLUDES}" ] && [ $( ${LS} -1 "${OS_INCLUDES}" 2>/dev/null | ${WC} -l ) -ge 1 ]; then
 		INFOMSG "Se incluirán en el sistema los archivos presentes en el directorio '%s'." "${OS_INCLUDES}"
 	else
 		INFOMSG "'%s' está vacío o no es un directorio. Ningún archivo se incluirá en el sistema." "${OS_INCLUDES}"
@@ -281,7 +281,7 @@ CS_LOAD_PROFILE() {
 		OS_HOOKS="${PROFILES}/${SABOR}/OS_HOOKS/"
 		WARNINGMSG "No se han definido ganchos para ejecutar en el sistema."
 	fi
-	if [ -d "${OS_HOOKS}" ] && [ $( ls -1 "${OS_HOOKS}" 2>/dev/null | wc -l ) -ge 1 ]; then
+	if [ -d "${OS_HOOKS}" ] && [ $( ${LS} -1 "${OS_HOOKS}" 2>/dev/null | ${WC} -l ) -ge 1 ]; then
 		INFOMSG "Se ejecutarán en el sistema los ganchos presentes en el directorio '%s'." "${OS_HOOKS}"
 	else
 		INFOMSG "'%s' está vacío o no es un directorio. Ningún gancho se ejecutará en el sistema." "${OS_HOOKS}"
@@ -294,7 +294,7 @@ CS_LOAD_PROFILE() {
 		IMG_INCLUDES="${PROFILES}/${SABOR}/IMG_INCLUDES/"
 		WARNINGMSG "No se han definido archivos para incluir en la imagen."
 	fi
-	if [ -d "${IMG_INCLUDES}" ] && [ $( ls -1 "${IMG_INCLUDES}" 2>/dev/null | wc -l ) -ge 1 ]; then
+	if [ -d "${IMG_INCLUDES}" ] && [ $( ${LS} -1 "${IMG_INCLUDES}" 2>/dev/null | ${WC} -l ) -ge 1 ]; then
 		INFOMSG "Se incluirán en la imagen los archivos presentes en el directorio '%s'." "${IMG_INCLUDES}"
 	else
 		INFOMSG "'%s' está vacío o no es un directorio. Ningún archivo se incluirá en la imagen." "${IMG_INCLUDES}"
@@ -307,7 +307,7 @@ CS_LOAD_PROFILE() {
 		IMG_HOOKS="${PROFILES}/${SABOR}/IMG_HOOKS/"
 		WARNINGMSG "No se han definido ganchos para incluir en la imagen."
 	fi
-	if [ -d "${IMG_HOOKS}" ] && [ $( ls -1 "${IMG_HOOKS}" 2>/dev/null | wc -l ) -ge 1 ]; then
+	if [ -d "${IMG_HOOKS}" ] && [ $( ${LS} -1 "${IMG_HOOKS}" 2>/dev/null | ${WC} -l ) -ge 1 ]; then
 		INFOMSG "Se incluirán en la imagen los ganchos presentes en el directorio '%s'." "${IMG_HOOKS}"
 	else
 		INFOMSG "'%s' está vacío o no es un directorio. Ningún gancho se ejecutará en la imagen." "${IMG_HOOKS}"
@@ -315,7 +315,7 @@ CS_LOAD_PROFILE() {
 	fi
 	DEBUGMSG "IMG_HOOKS"
 
-	if ${BIN_DPKG} --compare-versions "${LB_VERSION}" ge 3.0; then
+	if ${DPKG} --compare-versions "${LB_VERSION}" ge 3.0; then
 		IMG_SYSLINUX_TEMPLATE="${TEMPLATES}/${LB_BOOTLOADER}/3.0/${META_DISTRO}"
 	else
 		IMG_SYSLINUX_TEMPLATE="${TEMPLATES}/${LB_BOOTLOADER}/2.0/${META_DISTRO}"
@@ -417,7 +417,7 @@ CS_LOAD_PROFILE() {
 	fi
 	DEBUGMSG "IMG_DEBIAN_INSTALLER_GTK"
 
-	case ${CS_PRINT_MODE} in
+	case ${BUILD_PRINT_MODE} in
 		normal)
 			LB_QUIET=""
 			LB_VERBOSE=""
@@ -439,10 +439,10 @@ CS_LOAD_PROFILE() {
 	IMG_INCLUDES="${IMG_INCLUDES%/}"
 	IMG_HOOKS="${IMG_HOOKS%/}"
 	IMG_SYSLINUX_TEMPLATE="${IMG_SYSLINUX_TEMPLATE%/}"
-	OS_LANG="$( ${BIN_ECHO} "${OS_LOCALE}" | sed 's/_.*//g' )"
+	OS_LANG="$( ${ECHO} "${OS_LOCALE}" | ${SED} 's/_.*//g' )"
 	CS_ISO_PREPARER="${CS_ISO_PREPARER:-${CS_NAME}; http://code.google.com/p/canaima-semilla/}"
 	CS_ISO_VOLUME="${CS_ISO_VOLUME:-${META_DISTRO}-${PROFILE_NAME}}"
-	CS_ISO_VOLUME="$( ${BIN_ECHO} "${CS_ISO_VOLUME}" | ${BIN_CUT} -c1-32 )"
+	CS_ISO_VOLUME="$( ${ECHO} "${CS_ISO_VOLUME}" | ${CUT} -c1-32 )"
 	CS_ISO_PUBLISHER="${CS_ISO_PUBLISHER:-${AUTHOR_NAME}; ${AUTHOR_EMAIL}; ${AUTHOR_URL}}"
 	CS_ISO_APPLICATION="${CS_ISO_APPLICATION:-${META_DISTRO}-${PROFILE_NAME}}"
 	CS_BOOTAPPEND_LIVE="live-config.locales=${OS_LOCALE} \
@@ -453,16 +453,16 @@ keyb=${OS_LANG} quiet splash vga=791"
 
 	PVARIABLES="SABOR=\"${SABOR}\"\nARCH=\"${ARCH}\"\nKERNEL_ARCH=\"${KERNEL_ARCH}\"\nMEDIO=\"${MEDIO}\"\nMEDIO_LBNAME=\"${MEDIO_LBNAME}\"\nMEDIO_CS_NAME=\"${MEDIO_CSNAME}\"\n\nPROFILE_NAME=\"${PROFILE_NAME}\"\nPROFILE_ARCH=\"${PROFILE_ARCH}\"\n\nAUTHOR_NAME=\"${AUTHOR_NAME}\"\nAUTHOR_EMAIL=\"${AUTHOR_EMAIL}\"\nAUTHOR_URL=\"${AUTHOR_URL}\"\n\nOS_LOCALE=\"${OS_LOCALE}\"\nOS_LANG=\"${OS_LANG}\"\n\nMETA_MODE=\"${META_MODE}\"\nMETA_CODENAME=\"${META_CODENAME}\"\nMETA_DISTRO=\"${META_DISTRO}\"\nMETA_REPO=\"${META_REPO}\"\nMETA_REPOSECTIONS=\"${META_REPOSECTIONS}\"\n\nOS_PACKAGES=\"${OS_PACKAGES}\"\nOS_EXTRAREPOS=\"${OS_EXTRAREPOS}\"\nOS_INCLUDES=\"${OS_INCLUDES}\"\nOS_HOOKS=\"${OS_HOOKS}\"\nIMG_POOL_PACKAGES=\"${IMG_POOL_PACKAGES}\"\nIMG_INCLUDES=\"${IMG_INCLUDES}\"\nIMG_HOOKS=\"${IMG_HOOKS}\"\n\nLB_BOOTLOADER=\"${LB_BOOTLOADER}\"\nIMG_SYSLINUX_SPLASH=\"${IMG_SYSLINUX_SPLASH}\"\nIMG_SYSLINUX_TEMPLATE=\"${IMG_SYSLINUX_TEMPLATE}\"\nIMG_DEBIAN_INSTALLER=\"${IMG_DEBIAN_INSTALLER}\"\nIMG_DEBIAN_INSTALLER_BANNER=\"${IMG_DEBIAN_INSTALLER_BANNER}\"\nIMG_DEBIAN_INSTALLER_PRESEED=\"${IMG_DEBIAN_INSTALLER_PRESEED}\"\nIMG_DEBIAN_INSTALLER_GTK=\"${IMG_DEBIAN_INSTALLER_GTK}\"\n\nCS_ISO_PREPARER=\"${CS_ISO_PREPARER}\"\nCS_ISO_VOLUME=\"${CS_ISO_VOLUME}\"\nCS_ISO_PUBLISHER=\"${CS_ISO_PUBLISHER}\"\nCS_ISO_APPLICATION=\"${CS_ISO_APPLICATION}\"\nCS_BOOTAPPEND_LIVE=\"${CS_BOOTAPPEND_LIVE}\"\nCS_BOOTAPPEND_INSTALL=\"${CS_BOOTAPPEND_INSTALL}\"\n\nLB_QUIET=\"${LB_QUIET}\"\nLB_VERBOSE=\"${LB_VERBOSE}\""
 
-	case ${CS_OP_MODE} in
+	case ${BUILD_OP_MODE} in
 		configonly|normal)
 			if [ ! -d "${TCSCONFDIR}" ]; then
-				mkdir -p "${TCSCONFDIR}"
+				${MKDIR} -p "${TCSCONFDIR}"
 			fi
-			echo "${PVARIABLES}" > "${TCSCONFFILE}"
+			${ECHO} "${PVARIABLES}" > "${TCSCONFFILE}"
 		;;
 
 		vardump)
-			echo "${PVARIABLES}"
+			${ECHO} "${PVARIABLES}"
 		;;
 	esac
 }
