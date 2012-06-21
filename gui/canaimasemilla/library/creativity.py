@@ -1,9 +1,27 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import gtk, pango, vte
+import gtk, pango, vte, re
 
 from config import *
+
+def LimitEntry(editable, new_text, new_text_length, position, regex):
+    limit = re.compile(regex)
+    if limit.match(new_text) is None:
+        editable.stop_emission('insert-text')
+
+def CleanEntry(editable, textbuffer):
+    textbuffer.set_text('')
+
+def ClearEntry(editable, new_text, text):
+    content = editable.get_text()
+    if content == text:
+        editable.set_text('')
+
+def FillEntry(editable, new_text, text):
+    content = editable.get_text()
+    if content == '':
+        editable.set_text(text)
 
 def Banner(class_id, image):
     box = gtk.HBox(homogeneous, spacing)
@@ -50,7 +68,7 @@ def Description(class_id, text):
 
     return box
 
-def TextEntry(class_id, indent, maxlength, length, text, regex, flimit, fclear, ffill):
+def TextEntry(class_id, indent, maxlength, length, text, regex):
     box = gtk.HBox(homogeneous, spacing)
     if indent:
         box.set_border_width(borderwidth)
@@ -66,9 +84,9 @@ def TextEntry(class_id, indent, maxlength, length, text, regex, flimit, fclear, 
     textentry.set_sensitive(True)
     textentry.set_editable(True)
     textentry.set_visibility(True)
-    textentry.connect('insert-text', flimit, regex)
-    textentry.connect('focus-in-event', fclear, text)
-    textentry.connect('focus-out-event', ffill, text)
+    textentry.connect('insert-text', LimitEntry, regex)
+    textentry.connect('focus-in-event', ClearEntry, text)
+    textentry.connect('focus-out-event', FillEntry, text)
     textentry.show()
 
     box.pack_start(textentry, expand, fill, padding)
@@ -96,13 +114,13 @@ def Combo(class_id, indent, combolist, combodefault, entry,
         combo.append_text(item)
 
     if f_1:
-        combo.connect('changed', f_1, p_1)
+        combo.connect('changed', f_1, *p_1)
 
     if f_2:
-        combo.connect('changed', f_2, p_2)
+        combo.connect('changed', f_2, *p_2)
 
     if f_3:
-        combo.connect('changed', f_3, p_3)
+        combo.connect('changed', f_3, *p_3)
 
     combo.set_active(combodefault)
     combo.show()
@@ -218,13 +236,13 @@ def ActiveCheck(class_id, text, active,
         check.set_active(True)
 
     if f_1:
-        check.connect('toggled', f_1, p_1)
+        check.connect('toggled', f_1, *p_1)
 
     if f_2:
-        check.connect('toggled', f_2, p_2)
+        check.connect('toggled', f_2, *p_2)
 
     if f_3:
-        check.connect('toggled', f_3, p_3)
+        check.connect('toggled', f_3, *p_3)
 
     check.show()
 
@@ -243,29 +261,29 @@ def UserMessage(message, title, type, buttons,
         buttons = buttons, message_format = message
         )
     dialog.set_title(title)
-    answer = dialog.run()
+    response = dialog.run()
     dialog.destroy()
 
-    if answer == c_1:
+    if response == c_1:
         f_1(*p_1)
 
-    if answer == c_2:
+    if response == c_2:
         f_2(*p_2)
 
-    if answer == c_3:
+    if response == c_3:
         f_3(*p_3)
 
-    return answer
+    return response
 
-def ProgressWindow(text, title, term, fcancel, pcancel,
-                    q_window, q_bar, q_msg, q_terminal):
+def ProgressWindow(text, title, q_window, q_bar, q_msg, term = False,
+                    q_terminal = '', fcancel = False, pcancel = ()):
 
     dialog = gtk.Dialog()
     dialog.set_title(title)
     dialogarea = dialog.get_content_area()
     dialog.set_position(gtk.WIN_POS_CENTER_ALWAYS)
     if term:
-        dialog.set_size_request(window_width*4/3, window_height*3/4)
+        dialog.set_size_request(window_width, window_height)
     else:
         dialog.set_size_request(window_width*3/4, window_height/4)
     dialog.set_resizable(False)
@@ -275,29 +293,33 @@ def ProgressWindow(text, title, term, fcancel, pcancel,
 
     label = gtk.Label()
     label.set_markup(text)
+    label.set_justify(gtk.JUSTIFY_CENTER)
     progress = gtk.ProgressBar()
 
     if term:
+        scroll = gtk.ScrolledWindow()
+        scroll.set_policy(gtk.POLICY_NEVER, gtk.POLICY_AUTOMATIC)
         terminal = vte.Terminal()
         terminal.set_cursor_blinks(True)
         terminal.set_emulation('xterm')
-#        terminal.set_font_from_string('fixed 10')
         terminal.set_scrollback_lines(1000)
         terminal.set_audible_bell(True)
         terminal.set_visible_bell(False)
-        terminal.fork_command()
+        scroll.add(terminal)
 
-    box.pack_start(label, expand, fill, padding)
-    box.pack_start(progress, expand, fill, padding)
+    box.pack_start(label, expand, fill, 5)
+    box.pack_start(progress, True, True, padding)
 
     if term:
         box.pack_start(gtk.HSeparator(), expand, fill, padding)
-        box.pack_start(terminal, expand, fill, padding)
+        box.pack_start(scroll, True, True, padding)
 
     button = gtk.Button(stock = gtk.STOCK_CANCEL)
+    button.connect_object("clicked", gtk.Window.destroy, dialog)
+
     if fcancel:
         button.connect("clicked", fcancel, *pcancel)
-    button.connect_object("clicked", gtk.Window.destroy, dialog)
+
     box.pack_start(gtk.HSeparator(), expand, fill, padding)
     box.pack_start(button, expand, fill, padding)
 
@@ -341,7 +363,7 @@ def IconButton(class_id, icon, text_1, text_2, width, height, f_1, p_1):
 
     inbox.pack_start(image, expand, fill, padding)
     inbox.pack_start(title, expand, fill, padding)
-    inbox.pack_start(gtk.HSeparator(), expand, fill, padding)
+    inbox.pack_start(gtk.HSeparator(), expand, fill, 5)
     inbox.pack_start(description, expand, fill, padding)
     button.add(inbox)
     box.pack_start(button, expand, fill, padding)
@@ -394,6 +416,7 @@ def BottomButtons(class_id, width, height, fclose = False, pclose = False,
         fback = False, pback = False, fgo = False, pgo = False
         ):
 
+    spacing = 2
     box = gtk.VBox(homogeneous, spacing)
     hbox = gtk.HBox(homogeneous, spacing)
 
@@ -404,7 +427,7 @@ def BottomButtons(class_id, width, height, fclose = False, pclose = False,
             f_1 = fclose, p_1 = pclose
         )
 
-        hbox.pack_start(close_button, expand, fill, padding)
+        hbox.pack_start(close_button, expand, fill, spacing)
 
     if fhelp:
         help_button, help = ActiveButton(
@@ -448,3 +471,37 @@ def BottomButtons(class_id, width, height, fclose = False, pclose = False,
     box.pack_start(hbox, expand, fill, padding)
 
     return box
+
+def UserSelect(class_id, title, action, entry, allfiltertitle, filter = False):
+
+    dialog = gtk.FileChooserDialog(
+        title = title, parent = None, action = action,
+        buttons = (
+            gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL,
+            gtk.STOCK_OPEN, gtk.RESPONSE_OK
+            )
+        )
+
+    dialog.set_default_response(gtk.RESPONSE_OK)
+
+    f = gtk.FileFilter()
+    f.set_name(allfiltertitle)
+    f.add_pattern('*')
+    dialog.add_filter(f)
+
+    if filter:
+        f = gtk.FileFilter()
+        f.set_name(filter['name'])
+        for mimetype in filter['mimetypes']:
+            f.add_mime_type(mimetype)
+        dialog.add_filter(f)
+
+    response = dialog.run()
+
+    if response == gtk.RESPONSE_OK:
+        entry.set_text(dialog.get_filename())
+
+    dialog.destroy()
+
+    return response
+

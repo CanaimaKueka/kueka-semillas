@@ -8,7 +8,7 @@ EMAIL = luis@huntingbears.com.ve
 MAILIST = desarrolladores@canaima.softwarelibre.gob.ve
 PACKAGE = Canaima Semilla
 CHARSET = UTF-8
-VERSION = $(shell cat VERSION | grep "VERSION" | sed 's/VERSION = //g;s/+.*//g')
+VERSION = $(shell cat VERSION | grep "VERSION" | sed 's/VERSION="//g;s/+.*//g')
 YEAR = $(shell date +%Y)
 
 # Datos de traducción
