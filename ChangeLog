@@ -1,3 +1,9 @@
+DEVELOPMENT RELEASE v3.0+20120621060642 (06/21/12)
+Removiendo módulos inactivos de la gui.
+Moviendo definiciones de elementos GTK principales a library.controller.
+Actualizando traducciones-
+Mejorando el reconocimiento de binarios.
+
 DEVELOPMENT RELEASE v3.0+20120613115157 (06/13/12)
 Completando módulo para grabar imágenes.
 Completando módulo para probar imágenes.
