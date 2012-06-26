@@ -458,11 +458,11 @@ keyb=${OS_LANG} quiet splash vga=791"
 			if [ ! -d "${TCSCONFDIR}" ]; then
 				${MKDIR} -p "${TCSCONFDIR}"
 			fi
-			${ECHO} "${PVARIABLES}" > "${TCSCONFFILE}"
+			${ECHO} -e "${PVARIABLES}" > "${TCSCONFFILE}"
 		;;
 
 		vardump)
-			${ECHO} "${PVARIABLES}"
+			${ECHO} -e "${PVARIABLES}"
 		;;
 	esac
 }

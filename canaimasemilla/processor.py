@@ -1,15 +1,41 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+#
+# ==============================================================================
+# PAQUETE: canaima-semilla
+# ARCHIVO: scripts/c-s.sh
+# DESCRIPCIÓN: Script principal. Se encarga de invocar a los demás módulos y
+#              funciones según los parámetros proporcionados.
+# USO: ./c-s.sh [MÓDULO] [PARÁMETROS] [...]
+# COPYRIGHT:
+#       (C) 2010-2012 Luis Alejandro Martínez Faneyth <luis@huntingbears.com.ve>
+#       (C) 2012 Niv Sardi <xaiki@debian.org>
+# LICENCIA: GPL-3
+# ==============================================================================
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# COPYING file for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+# CODE IS POETRY
 
-import gtk, sys, os, re, urllib2, fnmatch, threading, subprocess, hashlib, random, gobject, tempfile, Queue, gzip, tempfile, subprocess, time, shutil
-from aptsources.distinfo import DistInfo
+import gtk, sys, os, re, urllib2, fnmatch, threading, subprocess, random, gzip
+import gobject, tempfile, Queue, hashlib, tempfile, subprocess, time, shutil
+import aptsources.distinfo, ConfigParser
 
-from library.vocabulary import *
-from library.creativity import ProgressWindow, UserMessage
-from config import *
-
-def listdirfullpath(d):
-    return [os.path.join(d, f) for f in os.listdir(d)]
+from canaimasemilla.constructor import ProgressWindow, UserMessage
+from canaimasemilla.translator import *
+from canaimasemilla.common import *
+from canaimasemilla.config import *
 
 def replace_all(text, dic):
     for i, j in dic.iteritems():
@@ -18,22 +44,94 @@ def replace_all(text, dic):
 
 def is_valid_url(url):
     regex = re.compile(
-        r'^(http|ftp|file):///?'  # http:// or https://
-        r'(?:(?:[A-Z0-9](?:[A-Z0-9-]{0,61}[A-Z0-9])?\.)+[A-Z]{2,6}\.?|'  # domain...
-        r'localhost|[a-zA-Z0-9-]*|'  # localhost...
-        r'\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})' # ...or ip
-        r'(?::\d+)?'  # optional port
-        r'(?:/?|[/?]\S+)$', re.IGNORECASE)
+        r'^(http|ftp|file):///?'
+        r'(?:(?:[A-Z0-9](?:[A-Z0-9-]{0,61}[A-Z0-9])?\.)+[A-Z]{2,6}\.?|'
+        r'localhost|[a-zA-Z0-9-]*|'
+        r'\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})'
+        r'(?::\d+)?'
+        r'(?:/?|[/?]\S+)$',
+        re.IGNORECASE
+        )
     return regex.search(url)
 
 class HeadRequest(urllib2.Request):
     def get_method(self):
         return "HEAD"
 
-def ProfileList(class_id, profiledir):
-    return listdirfullpath(profiledir), 0
+def KillProcess(reference, shell = [], python = [], terminal = False):
+    for s in shell:
+        k = ProcessGenerator(['/usr/bin/pkill', s], terminal = terminal)
+    for p in python:
+        p.kill()
+    return True
 
-def LocaleList(class_id, supported, current):
+def GetArch(terminal = False):
+    p = ProcessGenerator(['/usr/bin/arch'], terminal = terminal)
+    a = p.stdout.read().split('\n')[0]
+    return a
+
+def ParseProfileConfig(profile, get):
+    conffile = PROFILEDIR+'/'+profile+'/profile.conf'
+    f = open(conffile, 'r')
+    ask = []
+    give = []
+    for line in f.readlines():
+        for variable in get:
+            if line.find(variable+'=') != -1:
+                value = replace_all(line, {variable+'=':'', '"':'', '\n':''})
+                ask.append(variable)
+                give.append(value)
+    f.close()
+    return dict(zip(ask, give))
+
+def copy2destination(items):
+    try:
+        for what, where in items:
+            if what and os.path.exists(what):
+                if os.path.isdir(f):
+                    if os.path.exists(where):
+                        return False
+                    shutil.copytree(os.path.realpath(f), where)
+                else:
+                    if not os.path.exists(where):
+                        os.mkdir(where)
+                    shutil.copy2(os.path.realpath(f), where)
+    except Exception, msg:
+        return False
+    return True
+
+def GetFreeDisk():
+    return float(subprocess.Popen(
+        'echo "scale=1;$( df '+SHAREDIR+' | grep "/" | awk \'{print $4}\' )/(10^6)" | bc',
+        shell = True, stdout = subprocess.PIPE, stderr = subprocess.STDOUT,
+    ).communicate()[0].split('\n')[0])
+
+def GetFreeRam():
+    return float(subprocess.Popen(
+        'echo "scale=1;$( cat "/proc/meminfo" | grep "MemFree:" | awk \'{print $2}\' )/(10^3)" | bc',
+        shell = True, stdout = subprocess.PIPE, stderr = subprocess.STDOUT,
+    ).communicate()[0].split('\n')[0])
+
+def GetProcessors():
+    return float(subprocess.Popen(
+        'echo "scale=1;$( cat "/proc/cpuinfo" | grep -c "processor" )" | bc',
+        shell = True, stdout = subprocess.PIPE, stderr = subprocess.STDOUT,
+    ).communicate()[0].split('\n')[0])
+
+def GetWritableDrives():
+    return subprocess.Popen(
+        'echo "scale=1;$( cat "/proc/cpuinfo" | grep -c "processor" )" | bc',
+        shell = True, stdout = subprocess.PIPE, stderr = subprocess.STDOUT,
+    ).communicate()[0].split('\n')
+
+def ProfileList(c, profiledir):
+    profilelist = []
+    items = next(os.walk(profiledir))[1]
+    for i in items:
+        profilelist.append(i)
+    return profilelist, 0
+
+def LocaleList(c, supported, current):
     localecount = 0
     localeactive = 0
     localelist = []
@@ -47,11 +145,11 @@ def LocaleList(class_id, supported, current):
 
     return localelist, localeactive
 
-def CodenameList(class_id, dist, db):
+def CodenameList(c, dist, db):
     codenamelist = []
     codenameactive = 0
     udist = dist.get_active_text().title()
-    d = DistInfo(udist, db)
+    d = aptsources.distinfo.DistInfo(udist, db)
 
     for template in d.templates:
         if not template.name in codenamelist:
@@ -59,7 +157,7 @@ def CodenameList(class_id, dist, db):
 
     return codenamelist, codenameactive
 
-def SectionList(class_id, dist):
+def SectionList(c, dist):
     text = dist.get_active_text()
     exec "sectionlist = "+text+"_sections"
     return sectionlist
@@ -140,17 +238,7 @@ def ProcessGenerator(command, terminal = False, bar = False):
 
     return process
 
-def KillProcess(reference, shell = [], python = [], terminal = False):
-    for s in shell:
-        k = ProcessGenerator(['/usr/bin/pkill', s], terminal = terminal)
-    for p in python:
-        p.kill()
-    return True
 
-def GetArch(terminal = False):
-    p = ProcessGenerator(['/usr/bin/arch'], terminal = terminal)
-    a = p.stdout.read().split('\n')[0]
-    return a
 
 def TestIndexes(sourcestext, archlist, progressmessage, download,
                 q_bar, q_msg, q_code, q_counter, event):
@@ -255,21 +343,9 @@ def TestIndexes(sourcestext, archlist, progressmessage, download,
     q_counter.put(errorcounter)
     event.set()
 
-def ParseProfileConfig(profile, get):
-    conffile = PROFILEDIR+'/'+profile+'/profile.conf'
-    f = open(conffile, 'r')
-    ask = []
-    give = []
-    for line in f.readlines():
-        for variable in get:
-            if line.find(variable+'=') != -1:
-                value = replace_all(line, {variable+'=':'', '"':'', '\n':''})
-                ask.append(variable)
-                give.append(value)
-    f.close()
-    return dict(zip(ask, give))
+def Toggle(r, do, dont = False, children = False,
+    morechildren = False, alwaysoff = False):
 
-def Toggle(r, dont, do, children, morechildren, alwaysoff):
     if children:
         widgetlist = do.get_children()
         if morechildren:
@@ -287,20 +363,20 @@ def Toggle(r, dont, do, children, morechildren, alwaysoff):
                 setting = True
             widget.set_sensitive(setting)
 
-def ChangeCodename(r, class_id, codenamecombo, db):
-    codenamelist, codenameactive = CodenameList(class_id, r, db)
+def ChangeCodename(r, c, codenamecombo, db):
+    codenamelist, codenameactive = CodenameList(c, r, db)
     codenamecombo.get_model().clear()
     for item in codenamelist:
         codenamecombo.append_text(item)
     codenamecombo.set_active(codenameactive)
 
-def ChangeRepo(r, class_id, repoentry):
+def ChangeRepo(r, c, repoentry):
     dist = r.get_active_text()
     exec "newrepotext = "+dist+"_repo"
     repoentry.set_text(newrepotext)
 
-def ChangeSections(r, class_id, sections):
-    checklist = SectionList(class_id, r)
+def ChangeSections(r, c, sections):
+    checklist = SectionList(c, r)
     checkdefault = section_default
     children = sections.get_children()
     for child in children:
@@ -313,7 +389,7 @@ def ChangeSections(r, class_id, sections):
         check.show()
         sections.pack_start(check, expand, fill, padding)
 
-def AddExtraRepos(class_id, url_entry, branch_entry, sections_entry, arch_container,
+def AddExtraRepos(c, url_entry, branch_entry, sections_entry, arch_container,
                 repolistframe):
 
     archs = []
@@ -339,7 +415,7 @@ def AddExtraRepos(class_id, url_entry, branch_entry, sections_entry, arch_contai
         if archs:
             if repolist.find(sourcestext) == -1:
                 window_thread = ThreadGenerator(
-                    reference = class_id, function = ProgressWindow,
+                    reference = c, function = ProgressWindow,
                     params = {
                         'text': PROFILE_OS_EXTRAREPOS_VALIDATE_MSG,
                         'title': PROFILE_OS_EXTRAREPOS_VALIDATE_TITLE,
@@ -350,7 +426,7 @@ def AddExtraRepos(class_id, url_entry, branch_entry, sections_entry, arch_contai
                     )
 
                 index_thread = ThreadGenerator(
-                    reference = class_id, function = TestIndexes,
+                    reference = c, function = TestIndexes,
                     params = {
                         'sourcestext': sourcestext,
                         'archlist': archs,
@@ -365,9 +441,9 @@ def AddExtraRepos(class_id, url_entry, branch_entry, sections_entry, arch_contai
                     )
 
                 write_thread = ThreadGenerator(
-                    reference = class_id, function = WriteExtraRepos,
+                    reference = c, function = WriteExtraRepos,
                     params = {
-                        'class_id': class_id,
+                        'c': c,
                         'url': url,
                         'branch': branch,
                         'sections': sections,
@@ -381,7 +457,7 @@ def AddExtraRepos(class_id, url_entry, branch_entry, sections_entry, arch_contai
                     )
         else:
             msg_thread = ThreadGenerator(
-                reference = class_id, gtk = True, window = False,
+                reference = c, gtk = True, window = False,
                 function = UserMessage, params = {
                     'message': PROFILE_OS_EXTRAREPOS_VALIDATE_ARCH_ERROR_MSG % '\n\n',
                     'title': PROFILE_OS_EXTRAREPOS_VALIDATE_ARCH_ERROR_TITLE,
@@ -391,7 +467,7 @@ def AddExtraRepos(class_id, url_entry, branch_entry, sections_entry, arch_contai
                 )
     else:
         msg_thread = ThreadGenerator(
-            reference = class_id, gtk = True, window = False,
+            reference = c, gtk = True, window = False,
             function = UserMessage, params = {
                 'message': PROFILE_OS_EXTRAREPOS_VALIDATE_URL_ERROR_MSG % (url, '\n\n'),
                 'title': PROFILE_OS_EXTRAREPOS_VALIDATE_URL_ERROR_TITLE,
@@ -400,7 +476,7 @@ def AddExtraRepos(class_id, url_entry, branch_entry, sections_entry, arch_contai
                 }
             )
 
-def WriteExtraRepos(class_id, url, branch, sections, repolistframe, repolist,
+def WriteExtraRepos(c, url, branch, sections, repolistframe, repolist,
                     q_window, q_code, q_counter):
 
     window = q_window.get()
@@ -409,7 +485,7 @@ def WriteExtraRepos(class_id, url, branch, sections, repolistframe, repolist,
 
     if errorcounter != 0:
         msg_thread = ThreadGenerator(
-            reference = class_id, gtk = True, window = False,
+            reference = c, gtk = True, window = False,
             function = UserMessage, params = {
                 'message': PROFILE_OS_EXTRAREPOS_VALIDATE_REPO_ERROR_MSG % (errorcode, '\n\n', '\n\n'),
                 'title': PROFILE_OS_EXTRAREPOS_VALIDATE_REPO_ERROR_TITLE,
@@ -422,7 +498,7 @@ def WriteExtraRepos(class_id, url, branch, sections, repolistframe, repolist,
 
     window.destroy()
 
-def AddPackages(class_id, url_entry, branch_entry, section_container, arch_container,
+def AddPackages(c, url_entry, branch_entry, section_container, arch_container,
                     extrareposframe, packages_entry, packageslistframe):
 
     archs = []
@@ -453,7 +529,7 @@ def AddPackages(class_id, url_entry, branch_entry, section_container, arch_conta
 
     if archs:
         window_thread = ThreadGenerator(
-            reference = class_id, function = ProgressWindow,
+            reference = c, function = ProgressWindow,
             params = {
                 'text': PROFILE_OS_PACKAGES_VALIDATE_MSG,
                 'title': PROFILE_OS_PACKAGES_VALIDATE_TITLE,
@@ -464,7 +540,7 @@ def AddPackages(class_id, url_entry, branch_entry, section_container, arch_conta
             )
 
         index_thread = ThreadGenerator(
-            reference = class_id, function = TestIndexes,
+            reference = c, function = TestIndexes,
             params = {
                 'sourcestext': sourcestext,
                 'archlist': archs,
@@ -479,9 +555,9 @@ def AddPackages(class_id, url_entry, branch_entry, section_container, arch_conta
             )
 
         write_thread = ThreadGenerator(
-            reference = class_id, function = WritePackages,
+            reference = c, function = WritePackages,
             params = {
-                'class_id': class_id,
+                'c': c,
                 'packages': packages,
                 'packageslistframe': packageslistframe,
                 'packageslist': packageslist,
@@ -495,7 +571,7 @@ def AddPackages(class_id, url_entry, branch_entry, section_container, arch_conta
             )
     else:
         msg_thread = ThreadGenerator(
-            reference = class_id, gtk = True, window = False,
+            reference = c, gtk = True, window = False,
             function = UserMessage, params = {
                 'message': PROFILE_OS_PACKAGES_VALIDATE_ARCH_ERROR_MSG % '\n\n',
                 'title': PROFILE_OS_PACKAGES_VALIDATE_ARCH_ERROR_TITLE,
@@ -504,7 +580,7 @@ def AddPackages(class_id, url_entry, branch_entry, section_container, arch_conta
                 }
             )
 
-def WritePackages(class_id, packages, packageslistframe, packageslist,
+def WritePackages(c, packages, packageslistframe, packageslist,
                     q_window, q_msg, q_bar, q_code, q_counter):
 
     window = q_window.get()
@@ -515,7 +591,7 @@ def WritePackages(class_id, packages, packageslistframe, packageslist,
 
     if errorcounter > 0:
         build_thread = ThreadGenerator(
-            reference = class_id, gtk = True, window = False,
+            reference = c, gtk = True, window = False,
             function = UserMessage, params = {
                 'message': PROFILE_OS_PACKAGES_VALIDATE_REPO_ERROR_MSG % (errorcode, '\n\n', '\n\n'),
                 'title': PROFILE_OS_PACKAGES_VALIDATE_REPO_ERROR_TITLE,
@@ -541,7 +617,7 @@ def WritePackages(class_id, packages, packageslistframe, packageslist,
                 packageslistframe.set_text(packageslist+' '+package)
             else:
                 build_thread = ThreadGenerator(
-                    reference = class_id, gtk = True, window = False,
+                    reference = c, gtk = True, window = False,
                     function = UserMessage, params = {
                         'message': PROFILE_OS_PACKAGES_VALIDATE_PKG_ERROR_MSG  % package,
                         'title': PROFILE_OS_PACKAGES_VALIDATE_PKG_ERROR_TITLE,
@@ -552,14 +628,12 @@ def WritePackages(class_id, packages, packageslistframe, packageslist,
         gobject.source_remove(timer)
     window.destroy()
 
-def BuildImage(class_id, profile_container, arch_container, media_container,
+def BuildImage(c, profile_container, arch_container, media_container,
                 window_container):
 
     profile = profile_container.get_active_text()
     arch_children = arch_container.get_children()
     media_children = media_container.get_children()
-    progressmessage = BUILD_VALIDATE_SOURCES_MSG
-    progresstitle = BUILD_WINDOW_TITLE
     q_window = Queue.Queue()
     q_bar = Queue.Queue()
     q_msg = Queue.Queue()
@@ -569,7 +643,7 @@ def BuildImage(class_id, profile_container, arch_container, media_container,
     event = threading.Event()
 
     Toggle(
-        dont = None, do = window_container, children = False,
+        r = c, dont = None, do = window_container, children = False,
         morechildren = False, alwaysoff = True
         )
 
@@ -601,10 +675,10 @@ def BuildImage(class_id, profile_container, arch_container, media_container,
     sourcestext = mainrepo+extrarepos
 
     window_thread = ThreadGenerator(
-        reference = class_id, function = ProgressWindow,
+        reference = c, function = ProgressWindow,
         params = {
-            'text': progressmessage,
-            'title': progresstitle,
+            'text': BUILD_VALIDATE_SOURCES_MSG,
+            'title': BUILD_WINDOW_TITLE,
             'term': True,
             'fcancel': KillProcess,
             'pcancel': (['lb', 'live-build', 'c-s'],),
@@ -616,15 +690,14 @@ def BuildImage(class_id, profile_container, arch_container, media_container,
         )
 
     index_thread = ThreadGenerator(
-        reference = class_id, function = TestIndexes,
+        reference = c, function = TestIndexes,
         params = {
             'sourcestext': sourcestext,
             'archlist': [arch,],
-            'progressmessage': progressmessage,
+            'progressmessage': BUILD_VALIDATE_SOURCES_MSG,
             'download': False,
             'q_bar': q_bar,
             'q_msg': q_msg,
-            'q_terminal': q_terminal,
             'q_code': q_code,
             'q_counter': q_counter,
             'event': event
@@ -632,9 +705,9 @@ def BuildImage(class_id, profile_container, arch_container, media_container,
         )
 
     build_thread = ThreadGenerator(
-        reference = class_id, function = StartCS,
+        reference = c, function = StartCS,
         params = {
-            'class_id': class_id,
+            'c': c,
             'arch': arch,
             'media': media,
             'profile': profile,
@@ -648,7 +721,7 @@ def BuildImage(class_id, profile_container, arch_container, media_container,
         event = event
         )
 
-def StartCS(class_id, arch, media, profile, q_bar, q_msg, q_terminal,
+def StartCS(c, arch, media, profile, q_bar, q_msg, q_terminal,
             q_code, q_counter, window):
 
     bar = q_bar.get()
@@ -659,14 +732,14 @@ def StartCS(class_id, arch, media, profile, q_bar, q_msg, q_terminal,
 
     if errorcounter != 0:
         build_thread = ThreadGenerator(
-            reference = class_id, gtk = True, window = False,
+            reference = c, gtk = True, window = False,
             function = UserMessage, params = {
                 'message': BUILD_VALIDATE_SOURCES_ERROR_MSG % '\n\n',
                 'title': BUILD_VALIDATE_SOURCES_ERROR_TITLE,
                 'type': gtk.MESSAGE_ERROR,
                 'buttons': gtk.BUTTONS_CLOSE,
                 'c_1': gtk.RESPONSE_CLOSE, 'f_1': Toggle,
-                'p_1': (None, window, False, False, False)
+                'p_1': (c, None, window, False, False, False)
                 }
             )
     else:
@@ -678,26 +751,26 @@ def StartCS(class_id, arch, media, profile, q_bar, q_msg, q_terminal,
 
         if process.returncode == 0:
             build_thread = ThreadGenerator(
-                reference = class_id, gtk = True, window = False,
+                reference = c, gtk = True, window = False,
                 function = UserMessage, params = {
                     'message': BUILD_SUCCESSFUL_MSG,
                     'title': BUILD_SUCCESSFUL_TITLE,
                     'type': gtk.MESSAGE_ERROR,
                     'buttons': gtk.BUTTONS_CLOSE,
                     'c_1': gtk.RESPONSE_CLOSE, 'f_1': Toggle,
-                    'p_1': (None, window, False, False, False)
+                    'p_1': (c, None, window, False, False, False)
                     }
                 )
         else:
             build_thread = ThreadGenerator(
-                reference = class_id, gtk = True, window = False,
+                reference = c, gtk = True, window = False,
                 function = UserMessage, params = {
                     'message': BUILD_FAILED_MSG,
                     'title': BUILD_FAILED_TITLE,
                     'type': gtk.MESSAGE_INFO,
                     'buttons': gtk.BUTTONS_OK,
                     'c_1': gtk.RESPONSE_OK, 'f_1': Toggle,
-                    'p_1': (None, window, False, False, False)
+                    'p_1': (c, None, window, False, False, False)
                     }
                 )
 
@@ -705,7 +778,7 @@ def ProgressPulse(bar):
     bar.pulse()
     return True
 
-def CreateProfile(class_id, profilename, profilearch, authorname, authoremail,
+def CreateProfile(c, profilename, profilearch, authorname, authoremail,
                     authorurl, oslocale, metadist, metacodename, metarepo,
                     metareposections, osextrarepos, ospackages, imgpoolpackages,
                     osincludes, imgincludes, oshooks, imghooks,
@@ -794,7 +867,7 @@ def CreateProfile(class_id, profilename, profilearch, authorname, authoremail,
 
         if copy2destination(copythis):
             success_thread = ThreadGenerator(
-                reference = class_id, gtk = True, window = False,
+                reference = c, gtk = True, window = False,
                 function = UserMessage, params = {
                     'message': PROFILE_CREATING_SUCCESS_MSG,
                     'title': PROFILE_CREATING_SUCCESS_TITLE,
@@ -804,7 +877,7 @@ def CreateProfile(class_id, profilename, profilearch, authorname, authoremail,
                 )
         else:
             error_thread = ThreadGenerator(
-                reference = class_id, gtk = True, window = False,
+                reference = c, gtk = True, window = False,
                 function = UserMessage, params = {
                     'message': PROFILE_CREATING_UNKNOWN_ERROR_MSG,
                     'title': PROFILE_CREATING_UNKNOWN_ERROR_TITLE,
@@ -814,7 +887,7 @@ def CreateProfile(class_id, profilename, profilearch, authorname, authoremail,
                 )
     else:
         error_thread = ThreadGenerator(
-            reference = class_id, gtk = True, window = False,
+            reference = c, gtk = True, window = False,
             function = UserMessage, params = {
                 'message': PROFILE_CREATING_EXISTS_ERROR_MSG,
                 'title': PROFILE_CREATING_EXISTS_ERROR_TITLE,
@@ -823,19 +896,24 @@ def CreateProfile(class_id, profilename, profilearch, authorname, authoremail,
                 }
             )
 
-def copy2destination(items):
-    try:
-        for what, where in items:
-            if what and os.path.exists(what):
-                for f in listdirfullpath(what):
-                    if os.path.isdir(f):
-                        shutil.copytree(os.path.realpath(f), where)
-                    else:
-                        if not os.path.exists(where):
-                            os.mkdir(where)
-                        shutil.copy2(os.path.realpath(f), where)
-    except Exception, msg:
-        print msg
-        return False
+def TestImage(c, image_entry, memory_entry, processors_entry, start_container):
 
-    return True
+    image = image_entry.get_text()
+    memory = memory_entry.get_value()
+    processors = processors_entry.get_value()
+
+    for child in start_container.get_children():
+        if child.get_active():
+            start = child.get_label()
+
+    build_thread = ThreadGenerator(
+        reference = c, gtk = False, window = False,
+        function = ProcessGenerator, params = {
+            'command': [
+                '/bin/sh', BINDIR+'/'+CSBIN, 'test', '-i', image,
+                '-m', str(int(memory)), '-p', str(int(processors)), start, '-n',
+                '-s', '10'
+                ]
+            }
+        )
+

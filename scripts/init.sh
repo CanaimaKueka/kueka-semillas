@@ -44,7 +44,7 @@ done
 if ${DPKG_QUERY} --show --showformat='${Version}\n' live-build 1>/dev/null 2>&1; then
 	LB_VERSION="$( ${DPKG_QUERY} --show --showformat='${Version}\n' live-build )"
 else
-	ERRORMSG "No se ha podido encontrar el paquete ." "${BIN}"
+	ERRORMSG "No se ha podido encontrar el paquete 'live-build'."
 	exit 1
 fi
 
@@ -108,6 +108,10 @@ if [ ! -d "${ISOS}" ]; then
 	ERRORMSG "El directorio de construcción de imágenes '%s' no existe." "${ISOS}"
 	exit 1
 fi
+
+SYS_FREE_MEM="$( ${ECHO} "scale=0;$( ${CAT} "/proc/meminfo" | ${GREP} "MemFree:" | ${AWK} '{print $2}' )/(10^3)" | ${BC} )"
+SYS_FREE_DISK="$( ${ECHO} "scale=0;$( ${DF} "${BASEDIR}" | ${GREP} "/" | ${AWK} '{print $4}' )/(10^6)" | ${BC} )"
+SYS_PROC_NUM="$( ${CAT} "/proc/cpuinfo" | ${GREP} -c "processor" )"
 
 FUNCTIONS="${FUNCTIONS%/}"
 MODULES="${MODULES%/}"

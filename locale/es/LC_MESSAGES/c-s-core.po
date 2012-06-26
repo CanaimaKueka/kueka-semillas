@@ -1,29 +1,51 @@
+# Plantilla de Traducción para Canaima Semilla.
+# Copyright (C) 2012 Luis Alejandro Martínez Faneyth
+# This file is distributed under the same license as the Canaima Semilla package.
+#
+# Translators:
+# Luis Alejandro Martínez Faneyth <luis@huntingbears.com.ve>, 2012
+#
+#: ../../../scripts/modules/save.sh:172 ../../../scripts/modules/save.sh:175
+#: ../../../scripts/modules/save.sh:181 ../../../scripts/modules/save.sh:184
+msgid ""
+msgstr ""
+"Project-Id-Version: Canaima Semilla 3.0\n"
+"Report-Msgid-Bugs-To: desarrolladores@canaima.softwarelibre.gob.ve\n"
+"POT-Creation-Date: 2012-06-26 16:39-0430\n"
+"PO-Revision-Date: 2012-06-21 06:06-0430\n"
+"Last-Translator: Luis Alejandro Martínez Faneyth <luis@huntingbears.com.ve>\n"
+"Language-Team: Equipo de Traducción de Canaima Semilla <desarrolladores@canaima.softwarelibre.gob.ve>\n"
+"Language: English\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
 #: ../../../scripts/functions/image.sh:87
-msgid "%s no pudo encontrar una configuracin apropiada en %s."
+msgid "%s no pudo encontrar una configuración apropiada en %s."
 msgstr ""
 
 #: ../../../scripts/functions/profile.sh:261
-msgid "'%s' est vaco o no es un archivo vlido. Ningn repositorio adicional se incluir en el sistema."
+msgid "'%s' está vacío o no es un archivo válido. Ningún repositorio adicional se incluirá en el sistema."
 msgstr ""
 
 #: ../../../scripts/functions/profile.sh:274
-msgid "'%s' est vaco o no es un directorio. Ningn archivo se incluir en el sistema."
+msgid "'%s' está vacío o no es un directorio. Ningún archivo se incluirá en el sistema."
 msgstr ""
 
 #: ../../../scripts/functions/profile.sh:300
-msgid "'%s' est vaco o no es un directorio. Ningn archivo se incluir en la imagen."
+msgid "'%s' está vacío o no es un directorio. Ningún archivo se incluirá en la imagen."
 msgstr ""
 
 #: ../../../scripts/functions/profile.sh:287
-msgid "'%s' est vaco o no es un directorio. Ningn gancho se ejecutar en el sistema."
+msgid "'%s' está vacío o no es un directorio. Ningún gancho se ejecutará en el sistema."
 msgstr ""
 
 #: ../../../scripts/functions/profile.sh:313
-msgid "'%s' est vaco o no es un directorio. Ningn gancho se ejecutar en la imagen."
+msgid "'%s' está vacío o no es un directorio. Ningún gancho se ejecutará en la imagen."
 msgstr ""
 
 #: ../../../scripts/functions/modules.sh:64
-msgid "'%s' no parece ser un mdulo vlido de '%s'."
+msgid "'%s' no parece ser un módulo válido de '%s'."
 msgstr ""
 
 #: ../../../scripts/functions/profile.sh:171
@@ -36,7 +58,7 @@ msgid "Arquitectura '%s' no soportada por el perfil '%s'. Abortando."
 msgstr ""
 
 #: ../../../scripts/functions/newprofile.sh:34
-msgid "Arquitecturas habilitadas para la construccin de la distribucin [ej: i386 amd64]"
+msgid "Arquitecturas habilitadas para la construcción de la distribución [ej: i386 amd64]"
 msgstr ""
 
 #: ../../../scripts/init.sh:73
@@ -52,11 +74,11 @@ msgid "Correo de la persona o grupo responsable"
 msgstr ""
 
 #: ../../../scripts/functions/newprofile.sh:66
-msgid "Cdigo de lenguage para la distribucin derivada [ej: es_VE.UTF-8]"
+msgid "Código de lenguage para la distribución derivada [ej: es_VE.UTF-8]"
 msgstr ""
 
 #: ../../../scripts/functions/newprofile.sh:54
-msgid "Cdigo nombre de la Metadistribucin base [ej: squeeze]"
+msgid "Código nombre de la Metadistribución base [ej: squeeze]"
 msgstr ""
 
 #: ../../../scripts/functions/profile.sh:334
@@ -70,26 +92,26 @@ msgstr ""
 #: ../../../scripts/functions/tree.sh:101
 #: ../../../scripts/functions/tree.sh:214
 #: ../../../scripts/functions/profile.sh:70
-msgid "El archivo de configuraciones '%s' no existe o no es un archivo vlido."
+msgid "El archivo de configuraciones '%s' no existe o no es un archivo válido."
 msgstr ""
 
 #: ../../../scripts/init.sh:78
-msgid "El archivo de configuracin '%s' no existe o no es ejecutable."
+msgid "El archivo de configuración '%s' no existe o no es ejecutable."
 msgstr ""
 
 #: ../../../scripts/functions/image.sh:55
-msgid "El contenedor de construccin parece haber sido configurado manualmente."
+msgid "El contenedor de construcción parece haber sido configurado manualmente."
 msgstr ""
 
 #: ../../../scripts/modules/build.sh:188
-msgid "El directorio '%s' establecido a travs de la opcin --dir-construir no existe."
+msgid "El directorio '%s' establecido a través de la opción --dir-construir no existe."
 msgstr ""
 
 #: ../../../scripts/functions/tree.sh:94
 #: ../../../scripts/functions/tree.sh:207
 #: ../../../scripts/modules/build.sh:212 ../../../scripts/modules/build.sh:236
 #: ../../../scripts/init.sh:108
-msgid "El directorio de construccin de imgenes '%s' no existe."
+msgid "El directorio de construcción de imágenes '%s' no existe."
 msgstr ""
 
 #: ../../../scripts/init.sh:88
@@ -97,7 +119,7 @@ msgid "El directorio que contiene las funciones '%s' no existe."
 msgstr ""
 
 #: ../../../scripts/init.sh:93
-msgid "El directorio que contiene los mdulos '%s' no existe."
+msgid "El directorio que contiene los módulos '%s' no existe."
 msgstr ""
 
 #: ../../../scripts/init.sh:98
@@ -112,12 +134,16 @@ msgstr ""
 msgid "El espacio en disco es insuficiente para crear el disco virtual para la prueba. Abortando."
 msgstr ""
 
-#: ../../../scripts/modules/test.sh:132
+#: ../../../scripts/modules/test.sh:166
+msgid "El espacio libre en disco es insuficiente para crear el disco virtual para la prueba. Abortando."
+msgstr ""
+
+#: ../../../scripts/modules/test.sh:132 ../../../scripts/modules/test.sh:171
 msgid "El espacio libre en memoria es menor al asignado para la prueba. Abortando."
 msgstr ""
 
 #: ../../../scripts/functions/profile.sh:124
-msgid "El lenguaje de sistema '%s' no est soportado por %s."
+msgid "El lenguaje de sistema '%s' no está soportado por %s."
 msgstr ""
 
 #: ../../../scripts/modules/build.sh:222
@@ -126,23 +152,36 @@ msgstr ""
 
 #: ../../../scripts/modules/save.sh:56 ../../../scripts/modules/build.sh:84
 #: ../../../scripts/modules/test.sh:43 ../../../scripts/modules/profile.sh:67
+#: ../../../scripts/modules/save.sh:78 ../../../scripts/modules/test.sh:78
 msgid "Error interno"
 msgstr ""
 
 #: ../../../scripts/functions/tree.sh:174
-msgid "Generando rbol de configuraciones ..."
+msgid "Generando árbol de configuraciones ..."
+msgstr ""
+
+#: ../../../scripts/modules/test.sh:202
+msgid "Ha ocurrido un error inesperado durante el inicio de la emulación de la imagen ubicada en %s."
+msgstr ""
+
+#: ../../../scripts/modules/test.sh:193
+msgid "Ha ocurrido un error inesperado durante la creación un nuevo disco virtual en %s."
+msgstr ""
+
+#: ../../../scripts/modules/test.sh:184
+msgid "Ha ocurrido un error inesperado durante la remoción del disco virtual obsoleto ubicado en %s."
 msgstr ""
 
 #: ../../../scripts/modules/build.sh:217
-msgid "La carpeta de perfiles '%s' no existe o no es un directorio vlido."
+msgid "La carpeta de perfiles '%s' no existe o no es un directorio válido."
 msgstr ""
 
 #: ../../../scripts/functions/modules.sh:53
-msgid "La funcin '%s' necesita el nombre de un directorio como segundo argumento."
+msgid "La función '%s' necesita el nombre de un directorio como segundo argumento."
 msgstr ""
 
 #: ../../../scripts/functions/modules.sh:48
-msgid "La funcin '%s' necesita el nombre de un mdulo como primer argumento."
+msgid "La función '%s' necesita el nombre de un módulo como primer argumento."
 msgstr ""
 
 #: ../../../scripts/functions/profile.sh:372
@@ -157,11 +196,11 @@ msgstr ""
 #: ../../../scripts/functions/profile.sh:381
 #: ../../../scripts/functions/profile.sh:398
 #: ../../../scripts/functions/profile.sh:415
-msgid "La instalacin de %s puede estar corrupta, por favor reinstala."
+msgid "La instalación de %s puede estar corrupta, por favor reinstala."
 msgstr ""
 
 #: ../../../scripts/init.sh:83
-msgid "La librera de funciones principales '%s' no existe o no es ejecutable."
+msgid "La librería de funciones principales '%s' no existe o no es ejecutable."
 msgstr ""
 
 #: ../../../scripts/modules/profile.sh:189
@@ -169,23 +208,23 @@ msgid "La ruta '%s' no existe."
 msgstr ""
 
 #: ../../../scripts/functions/profile.sh:130
-msgid "Leyendo estado de la Metadistribucin base"
+msgid "Leyendo estado de la Metadistribución base"
 msgstr ""
 
 #: ../../../scripts/functions/profile.sh:143
-msgid "Leyendo estado de la arquitectura de construccin"
+msgid "Leyendo estado de la arquitectura de construcción"
 msgstr ""
 
 #: ../../../scripts/functions/profile.sh:110
-msgid "Leyendo estado de la direccin web del autor"
+msgid "Leyendo estado de la dirección web del autor"
 msgstr ""
 
 #: ../../../scripts/functions/profile.sh:279
-msgid "Leyendo estado de la ejecucin de ganchos en el sistema"
+msgid "Leyendo estado de la ejecución de ganchos en el sistema"
 msgstr ""
 
 #: ../../../scripts/functions/profile.sh:305
-msgid "Leyendo estado de la ejecucin de ganchos en la imagen"
+msgid "Leyendo estado de la ejecución de ganchos en la imagen"
 msgstr ""
 
 #: ../../../scripts/functions/profile.sh:363
@@ -197,15 +236,15 @@ msgid "Leyendo estado de la imagen para la portada de arranque"
 msgstr ""
 
 #: ../../../scripts/functions/profile.sh:266
-msgid "Leyendo estado de la inclusin de archivos en el sistema"
+msgid "Leyendo estado de la inclusión de archivos en el sistema"
 msgstr ""
 
 #: ../../../scripts/functions/profile.sh:292
-msgid "Leyendo estado de la inclusin de archivos en la imagen"
+msgid "Leyendo estado de la inclusión de archivos en la imagen"
 msgstr ""
 
 #: ../../../scripts/functions/profile.sh:253
-msgid "Leyendo estado de la inclusin de repositorios adicionales en el sistema"
+msgid "Leyendo estado de la inclusión de repositorios adicionales en el sistema"
 msgstr ""
 
 #: ../../../scripts/functions/profile.sh:245
@@ -217,11 +256,11 @@ msgid "Leyendo estado de la lista de paquetes de sistema"
 msgstr ""
 
 #: ../../../scripts/functions/profile.sh:386
-msgid "Leyendo estado de la preconfiguracin para el instalador"
+msgid "Leyendo estado de la preconfiguración para el instalador"
 msgstr ""
 
 #: ../../../scripts/functions/profile.sh:213
-msgid "Leyendo estado de la versin para la Metadistribucin base"
+msgid "Leyendo estado de la versión para la Metadistribución base"
 msgstr ""
 
 #: ../../../scripts/functions/profile.sh:86
@@ -229,11 +268,11 @@ msgid "Leyendo estado de las arquitecturas habilitadas para este perfil"
 msgstr ""
 
 #: ../../../scripts/functions/profile.sh:229
-msgid "Leyendo estado de las secciones para el repositorio de la Metadistribucin base"
+msgid "Leyendo estado de las secciones para el repositorio de la Metadistribución base"
 msgstr ""
 
 #: ../../../scripts/functions/profile.sh:102
-msgid "Leyendo estado del correo electrnico del autor"
+msgid "Leyendo estado del correo electrónico del autor"
 msgstr ""
 
 #: ../../../scripts/functions/profile.sh:403
@@ -261,7 +300,7 @@ msgid "Leyendo estado del nombre del perfil"
 msgstr ""
 
 #: ../../../scripts/functions/profile.sh:221
-msgid "Leyendo estado del repositorio para la Metadistribucin base"
+msgid "Leyendo estado del repositorio para la Metadistribución base"
 msgstr ""
 
 #: ../../../scripts/functions/tree.sh:64
@@ -269,11 +308,11 @@ msgid "Limpiando residuos de construcciones anteriores ..."
 msgstr ""
 
 #: ../../../scripts/functions/profile.sh:136
-msgid "Metadistribucin '%s' no soportada por %s. Abortando."
+msgid "Metadistribución '%s' no soportada por %s. Abortando."
 msgstr ""
 
 #: ../../../scripts/functions/newprofile.sh:50
-msgid "Metadistribucin base para la distribucin derivada [ej: debian]"
+msgid "Metadistribución base para la distribución derivada [ej: debian]"
 msgstr ""
 
 #: ../../../scripts/modules/build.sh:198
@@ -288,12 +327,12 @@ msgstr ""
 msgid "No especificaste una arquitectura, utilizando '%s' presente en el sistema."
 msgstr ""
 
-#: ../../../scripts/modules/test.sh:105
+#: ../../../scripts/modules/test.sh:105 ../../../scripts/modules/test.sh:161
 msgid "No especificaste una imagen. Abortando."
 msgstr ""
 
 #: ../../../scripts/modules/profile.sh:166
-msgid "No puede dejar el campo 'PROFILE_NAME' vaco."
+msgid "No puede dejar el campo 'PROFILE_NAME' vacío."
 msgstr ""
 
 #: ../../../scripts/functions/profile.sh:406
@@ -301,7 +340,7 @@ msgid "No se ha definido un estilo visual para el instalador."
 msgstr ""
 
 #: ../../../scripts/functions/profile.sh:121
-msgid "No se ha definido un lenguaje de sistema para el sabor en construccin."
+msgid "No se ha definido un lenguaje de sistema para el sabor en construcción."
 msgstr ""
 
 #: ../../../scripts/functions/profile.sh:366
@@ -313,31 +352,35 @@ msgid "No se ha definido una imagen para la portada de arranque."
 msgstr ""
 
 #: ../../../scripts/functions/profile.sh:389
-msgid "No se ha definido una preconfiguracin para el instalador."
+msgid "No se ha definido una preconfiguración para el instalador."
 msgstr ""
 
 #: ../../../scripts/functions/profile.sh:97
-msgid "No se ha especificado el nombre del autor para el sabor en construccin."
+msgid "No se ha especificado el nombre del autor para el sabor en construcción."
 msgstr ""
 
 #: ../../../scripts/functions/profile.sh:81
-msgid "No se ha especificado el nombre del perfil para el sabor en construccin."
+msgid "No se ha especificado el nombre del perfil para el sabor en construcción."
 msgstr ""
 
 #: ../../../scripts/functions/profile.sh:105
-msgid "No se ha especificado un correo para el autor del sabor en construccin."
+msgid "No se ha especificado un correo para el autor del sabor en construcción."
 msgstr ""
 
 #: ../../../scripts/functions/profile.sh:224
-msgid "No se ha especificado un repositorio para la Metadistribucin base."
+msgid "No se ha especificado un repositorio para la Metadistribución base."
 msgstr ""
 
 #: ../../../scripts/functions/profile.sh:113
-msgid "No se ha especificado una direccin web para el autor del sabor en construccin."
+msgid "No se ha especificado una dirección web para el autor del sabor en construcción."
 msgstr ""
 
 #: ../../../scripts/functions/profile.sh:216
-msgid "No se ha especificado una versin para la Metadistribucin base."
+msgid "No se ha especificado una versión para la Metadistribución base."
+msgstr ""
+
+#: ../../../scripts/init.sh:47
+msgid "No se ha podido encontrar el paquete 'live-build'."
 msgstr ""
 
 #: ../../../scripts/init.sh:47
@@ -345,7 +388,7 @@ msgid "No se ha podido encontrar el paquete ."
 msgstr ""
 
 #: ../../../scripts/init.sh:39
-msgid "No se ha podido encontrar un reemplazo para '%s', la instalacin de Canaima Semilla puede estar corrupta."
+msgid "No se ha podido encontrar un reemplazo para '%s', la instalación de Canaima Semilla puede estar corrupta."
 msgstr ""
 
 #: ../../../scripts/functions/profile.sh:269
@@ -369,27 +412,27 @@ msgid "No se han definido repositorios adicionales para incluir en el sistema."
 msgstr ""
 
 #: ../../../scripts/functions/profile.sh:89
-msgid "No se han especificado las arquitecturas habilitadas para el sabor en construccin."
+msgid "No se han especificado las arquitecturas habilitadas para el sabor en construcción."
 msgstr ""
 
 #: ../../../scripts/functions/profile.sh:232
-msgid "No se han especificado las secciones para el repositorio de la Metadistribucin base."
+msgid "No se han especificado las secciones para el repositorio de la Metadistribución base."
 msgstr ""
 
 #: ../../../scripts/functions/profile.sh:248
-msgid "No se han includo elementos dentro de la lista de paquetes para el repositorio interno."
+msgid "No se han incluído elementos dentro de la lista de paquetes para el repositorio interno."
 msgstr ""
 
 #: ../../../scripts/functions/profile.sh:240
-msgid "No se han includo elementos dentro de la lista de paquetes para el sistema operativo."
+msgid "No se han incluído elementos dentro de la lista de paquetes para el sistema operativo."
 msgstr ""
 
 #: ../../../scripts/functions/profile.sh:356
-msgid "No se incluir el instalador en la imagen."
+msgid "No se incluirá el instalador en la imagen."
 msgstr ""
 
 #: ../../../scripts/functions/newprofile.sh:38
-msgid "Nombre de la persona o grupo responsable del mantenimiento de la distribucin derivada"
+msgid "Nombre de la persona o grupo responsable del mantenimiento de la distribución derivada"
 msgstr ""
 
 #: ../../../scripts/functions/newprofile.sh:30
@@ -397,23 +440,25 @@ msgid "Nombre del perfil"
 msgstr ""
 
 #: ../../../scripts/functions/image.sh:104
-msgid "Ocurri un error durante la generacin de la imagen."
+msgid "Ocurrió un error durante la generación de la imagen."
 msgstr ""
 
 #: ../../../scripts/modules/save.sh:63 ../../../scripts/modules/save.sh:97
 #: ../../../scripts/modules/build.sh:94 ../../../scripts/modules/build.sh:175
 #: ../../../scripts/modules/test.sh:50 ../../../scripts/modules/test.sh:94
 #: ../../../scripts/modules/profile.sh:77
-#: ../../../scripts/modules/profile.sh:118
-msgid "Ocurri un problema interpretando los parmetros."
+#: ../../../scripts/modules/profile.sh:118 ../../../scripts/modules/save.sh:88
+#: ../../../scripts/modules/save.sh:149 ../../../scripts/modules/test.sh:88
+#: ../../../scripts/modules/test.sh:154
+msgid "Ocurrió un problema interpretando los parámetros."
 msgstr ""
 
 #: ../../../scripts/modules/profile.sh:207
-msgid "Opcin '%s' desconocida, cancelando."
+msgid "Opción '%s' desconocida, cancelando."
 msgstr ""
 
 #: ../../../scripts/functions/newprofile.sh:70
-msgid "Paquetes que conformarn la distribucin derivada [ej: gnome-core libreoffice]"
+msgid "Paquetes que conformarán la distribución derivada [ej: gnome-core libreoffice]"
 msgstr ""
 
 #: ../../../scripts/functions/modules.sh:65
@@ -421,7 +466,7 @@ msgid "Por favor reinstala canaima-semilla o verifica que has escrito bien el co
 msgstr ""
 
 #: ../../../scripts/functions/image.sh:56
-msgid "Puede que algunas caractersticas de %s no estn disponibles."
+msgid "Puede que algunas características de %s no estén disponibles."
 msgstr ""
 
 #: ../../../scripts/functions/image.sh:101
@@ -429,39 +474,47 @@ msgid "Puedes encontrar la imagen '%s' en el directorio %s"
 msgstr ""
 
 #: ../../../scripts/functions/newprofile.sh:46
-msgid "Pgina web de la persona o grupo responsable"
+msgid "Página web de la persona o grupo responsable"
+msgstr ""
+
+#: ../../../scripts/modules/test.sh:182
+msgid "Removiendo disco virtual obsoleto en %s."
 msgstr ""
 
 #: ../../../scripts/functions/newprofile.sh:58
-msgid "Repositorio para la Metadistribucin base [ej: http://http.us.debian.org/debian]"
+msgid "Repositorio para la Metadistribución base [ej: http://http.us.debian.org/debian]"
 msgstr ""
 
 #: ../../../scripts/functions/tree.sh:53
-msgid "Respaldando rbol de configuraciones previo en '%s'."
+msgid "Respaldando árbol de configuraciones previo en '%s'."
 msgstr ""
 
 #: ../../../scripts/functions/profile.sh:414
-msgid "Result imposible seleccionar un estilo visual para el instalador."
+msgid "Resultó imposible seleccionar un estilo visual para el instalador."
 msgstr ""
 
 #: ../../../scripts/functions/profile.sh:380
-msgid "Result imposible seleccionar una imagen de encabezado."
+msgid "Resultó imposible seleccionar una imagen de encabezado."
 msgstr ""
 
 #: ../../../scripts/functions/profile.sh:341
-msgid "Result imposible seleccionar una imagen para la portada de arranque."
+msgid "Resultó imposible seleccionar una imagen para la portada de arranque."
 msgstr ""
 
 #: ../../../scripts/functions/profile.sh:397
-msgid "Result imposible seleccionar una preconfiguracin para el instalador."
+msgid "Resultó imposible seleccionar una preconfiguración para el instalador."
 msgstr ""
 
 #: ../../../scripts/functions/profile.sh:285
-msgid "Se ejecutarn en el sistema los ganchos presentes en el directorio '%s'."
+msgid "Se ejecutarán en el sistema los ganchos presentes en el directorio '%s'."
 msgstr ""
 
-#: ../../../scripts/modules/test.sh:123
-msgid "Se ha asignado un nmero de procesadores mayor al presente en el sistema. Abortando."
+#: ../../../scripts/modules/test.sh:123 ../../../scripts/modules/test.sh:176
+msgid "Se ha asignado un número de procesadores mayor al presente en el sistema. Abortando."
+msgstr ""
+
+#: ../../../scripts/modules/test.sh:191
+msgid "Se ha creado un nuevo disco virtual de %sG en %s."
 msgstr ""
 
 #: ../../../scripts/functions/image.sh:100
@@ -469,31 +522,31 @@ msgid "Se ha creado una imagen %s con un peso de %s."
 msgstr ""
 
 #: ../../../scripts/functions/profile.sh:350
-msgid "Se incluir el instalador en la imagen."
+msgid "Se incluirá el instalador en la imagen."
 msgstr ""
 
 #: ../../../scripts/functions/profile.sh:272
-msgid "Se incluirn en el sistema los archivos presentes en el directorio '%s'."
+msgid "Se incluirán en el sistema los archivos presentes en el directorio '%s'."
 msgstr ""
 
 #: ../../../scripts/functions/profile.sh:259
-msgid "Se incluirn en el sistema los repositorios adicionales presentes en el archivo '%s'."
+msgid "Se incluirán en el sistema los repositorios adicionales presentes en el archivo '%s'."
 msgstr ""
 
 #: ../../../scripts/functions/profile.sh:298
-msgid "Se incluirn en la imagen los archivos presentes en el directorio '%s'."
+msgid "Se incluirán en la imagen los archivos presentes en el directorio '%s'."
 msgstr ""
 
 #: ../../../scripts/functions/profile.sh:311
-msgid "Se incluirn en la imagen los ganchos presentes en el directorio '%s'."
+msgid "Se incluirán en la imagen los ganchos presentes en el directorio '%s'."
 msgstr ""
 
 #: ../../../scripts/functions/newprofile.sh:62
-msgid "Secciones del repositorio para la Metadistribucin base [ej: main contrib]"
+msgid "Secciones del repositorio para la Metadistribución base [ej: main contrib]"
 msgstr ""
 
 #: ../../../scripts/functions/profile.sh:175
-msgid "Seleccionando '%s' como arquitectura de construccin para la imagen"
+msgid "Seleccionando '%s' como arquitectura de construcción para la imagen"
 msgstr ""
 
 #: ../../../scripts/functions/profile.sh:91
@@ -505,27 +558,27 @@ msgid "Seleccionando '%s' como correo para el autor del sabor."
 msgstr ""
 
 #: ../../../scripts/functions/profile.sh:115
-msgid "Seleccionando '%s' como direccin web para el autor del sabor."
+msgid "Seleccionando '%s' como dirección web para el autor del sabor."
 msgstr ""
 
 #: ../../../scripts/functions/profile.sh:210
-msgid "Seleccionando '%s' como formato de construccin para la imagen"
+msgid "Seleccionando '%s' como formato de construcción para la imagen"
 msgstr ""
 
 #: ../../../scripts/functions/profile.sh:127
-msgid "Seleccionando '%s' como lenguaje de sistema para el sabor en construccin."
+msgid "Seleccionando '%s' como lenguaje de sistema para el sabor en construcción."
 msgstr ""
 
 #: ../../../scripts/functions/profile.sh:226
-msgid "Seleccionando '%s' como repositorio para la Metadistribucin base."
+msgid "Seleccionando '%s' como repositorio para la Metadistribución base."
 msgstr ""
 
 #: ../../../scripts/functions/profile.sh:234
-msgid "Seleccionando '%s' como secciones para el repositorio de la Metadistribucin base."
+msgid "Seleccionando '%s' como secciones para el repositorio de la Metadistribución base."
 msgstr ""
 
 #: ../../../scripts/functions/profile.sh:218
-msgid "Seleccionando '%s' como versin de la Metadistribucin base."
+msgid "Seleccionando '%s' como versión de la Metadistribución base."
 msgstr ""
 
 #: ../../../scripts/functions/profile.sh:99
@@ -537,7 +590,7 @@ msgid "Seleccionando '%s' para identificar el perfil del sabor."
 msgstr ""
 
 #: ../../../scripts/functions/profile.sh:140
-msgid "Seleccionando Metadistribucin base '%s' para la construccin del sistema."
+msgid "Seleccionando Metadistribución base '%s' para la construcción del sistema."
 msgstr ""
 
 #: ../../../scripts/functions/profile.sh:409
@@ -565,7 +618,7 @@ msgid "Seleccionando la imagen predeterminada para la portada de arranque."
 msgstr ""
 
 #: ../../../scripts/functions/profile.sh:395
-msgid "Seleccionando los valores predeterminados de preconfiguracin para el instalador."
+msgid "Seleccionando los valores predeterminados de preconfiguración para el instalador."
 msgstr ""
 
 #: ../../../scripts/functions/profile.sh:242
@@ -577,7 +630,7 @@ msgid "Seleccionando paquetes '%s' para incluir en el repositorio interno."
 msgstr ""
 
 #: ../../../scripts/functions/profile.sh:392
-msgid "Seleccionando preconfiguracin para el instalador presente en el perfil"
+msgid "Seleccionando preconfiguración para el instalador presente en el perfil"
 msgstr ""
 
 #: ../../../scripts/functions/image.sh:105
@@ -589,7 +642,7 @@ msgid "Tipo de formato '%s' no reconocido por %s. Abortando."
 msgstr ""
 
 #: ../../../scripts/functions/profile.sh:155
-msgid "Una imagen con arquitectura '%s' no puede ser generada en una mquina '%s'. Abortando."
+msgid "Una imagen con arquitectura '%s' no puede ser generada en una máquina '%s'. Abortando."
 msgstr ""
 
 #: ../../../scripts/modules/build.sh:186
@@ -601,11 +654,11 @@ msgid "Ya existe un perfil con nombre '%s'"
 msgstr ""
 
 #: ../../../scripts/functions/image.sh:92
-msgid "[--- INICIANDO CONSTRUCCIN ---]"
+msgid "[--- INICIANDO CONSTRUCCIÓN ---]"
 msgstr ""
 
 #: ../../../scripts/functions/newprofile.sh:110
-msgid "[OPCIONAL] Archivo de preconfiguracin para el Instalador Debian [ej: /home/usuario/preseed.cfg]"
+msgid "[OPCIONAL] Archivo de preconfiguración para el Instalador Debian [ej: /home/usuario/preseed.cfg]"
 msgstr ""
 
 #: ../../../scripts/functions/newprofile.sh:114
@@ -617,19 +670,19 @@ msgid "[OPCIONAL] Archivo que contiene todos los repositorios adicionales [ej: /
 msgstr ""
 
 #: ../../../scripts/functions/newprofile.sh:78
-msgid "[OPCIONAL] Carpeta que contiene los archivos que se incluirn en el Sistema Operativo [ej: /home/usuario/inclusiones/]"
+msgid "[OPCIONAL] Carpeta que contiene los archivos que se incluirán en el Sistema Operativo [ej: /home/usuario/inclusiones/]"
 msgstr ""
 
 #: ../../../scripts/functions/newprofile.sh:94
-msgid "[OPCIONAL] Carpeta que contiene los archivos que se incluirn en la imagen [ej: /home/usuario/inclusiones/]"
+msgid "[OPCIONAL] Carpeta que contiene los archivos que se incluirán en la imagen [ej: /home/usuario/inclusiones/]"
 msgstr ""
 
 #: ../../../scripts/functions/newprofile.sh:98
-msgid "[OPCIONAL] Carpeta que contiene los scripts que se ejecutarn durante la construccin de la imagen [ej: /home/usuario/inclusiones/]"
+msgid "[OPCIONAL] Carpeta que contiene los scripts que se ejecutarán durante la construcción de la imagen [ej: /home/usuario/inclusiones/]"
 msgstr ""
 
 #: ../../../scripts/functions/newprofile.sh:82
-msgid "[OPCIONAL] Carpeta que contiene los scripts que se ejecutarn durante la construccin del Sistema Operativo [ej: /home/usuario/inclusiones/]"
+msgid "[OPCIONAL] Carpeta que contiene los scripts que se ejecutarán durante la construcción del Sistema Operativo [ej: /home/usuario/inclusiones/]"
 msgstr ""
 
 #: ../../../scripts/functions/newprofile.sh:106
@@ -637,13 +690,13 @@ msgid "[OPCIONAL] Imagen de banner para el Instalador Debian [ej: /home/usuario/
 msgstr ""
 
 #: ../../../scripts/functions/newprofile.sh:86
-msgid "[OPCIONAL] Imagen que se utilizar para el arranque del modo live [ej: /home/usuario/syslinux.png]"
+msgid "[OPCIONAL] Imagen que se utilizará para el arranque del modo live [ej: /home/usuario/syslinux.png]"
 msgstr ""
 
 #: ../../../scripts/functions/newprofile.sh:90
-msgid "[OPCIONAL] Paquetes que se incluirn en el repositorio interno de la imagen [ej: grub grub-pc]"
+msgid "[OPCIONAL] Paquetes que se incluirán en el repositorio interno de la imagen [ej: grub grub-pc]"
 msgstr ""
 
 #: ../../../scripts/functions/newprofile.sh:102
-msgid "[OPCIONAL] Desea incluir el Instalador Debian? true/false"
+msgid "[OPCIONAL] ¿Desea incluir el Instalador Debian? true/false"
 msgstr ""

@@ -35,8 +35,8 @@ if [ "${BINDIR}" = "/usr/bin" ]; then
         BASEDIR="/usr/share/canaima-semilla"
         CONFDIR="/etc/canaima-semilla"
 else
-        BASEDIR="$( dirname "${BINDIR}" )"
-        CONFDIR="${BASEDIR}"
+	BASEDIR="${BINDIR}"
+	CONFDIR="${BASEDIR}"
 fi
 
 # Cargando valores predeterminados

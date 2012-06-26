@@ -16,7 +16,7 @@ LANGTEAM = Equipo de Traducción de Canaima Semilla <desarrolladores@canaima.sof
 POTITLE = Plantilla de Traducción para Canaima Semilla
 POTEAM = Equipo de Traducción de Canaima Semilla
 PODATE = $(shell date +%F\ %R%z)
-PYLOCALE = gui/canaimasemilla/library/vocabulary.py
+PYLOCALE = canaimasemilla/translator.py
 POTDIR = locale/pot/canaima-semilla/
 GUIPOTNAME = c-s-gui.pot
 COREPOTNAME = c-s-core.pot
@@ -31,7 +31,7 @@ LOCALETYPES = core gui
 # Listas de Archivos
 SCRIPTS = $(shell find ./scripts -type f -iname "*.sh")
 DOCIMAGES = $(shell ls -1 documentation/rest/images/ | grep "\.svg" | sed 's/\.svg//g')
-GUIIMAGES = $(shell ls -1 gui/canaimasemilla/images/ | grep "\.svg" | sed 's/\.svg//g')
+GUIIMAGES = $(shell ls -1 canaimasemilla/images/ | grep "\.svg" | sed 's/\.svg//g')
 ICOIMAGES = $(shell ls -1 icons/hicolor/scalable/apps/ | grep "\.svg" | sed 's/\.svg//g')
 LOCALES = $(shell find locale -mindepth 1 -maxdepth 1 -type d | sed 's|locale/pot||g;s|locale/||g')
 PYCS = $(shell find . -type f -iname "*.pyc")
@@ -129,8 +129,8 @@ gen-img: check-buildep clean-img
 		printf "."; \
 	done;
 	@for IMAGE in $(GUIIMAGES); do \
-		$(CONVERT) -background None gui/canaimasemilla/images/$${IMAGE}.svg \
-			gui/canaimasemilla/images/$${IMAGE}.png; \
+		$(CONVERT) -background None canaimasemilla/images/$${IMAGE}.svg \
+			canaimasemilla/images/$${IMAGE}.png; \
 		printf "."; \
 	done;
 	@for IMAGE in $(ICOIMAGES); do \
@@ -314,7 +314,7 @@ clean-img:
 		printf "."; \
 	done
 	@for IMAGE in $(GUIIMAGES); do \
-		rm -rf gui/canaimasemilla/images/$${IMAGE}.png; \
+		rm -rf canaimasemilla/images/$${IMAGE}.png; \
 		printf "."; \
 	done
 	@for IMAGE in $(ICOIMAGES); do \

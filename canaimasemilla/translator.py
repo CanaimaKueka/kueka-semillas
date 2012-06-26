@@ -1,22 +1,40 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+#
+# ==============================================================================
+# PAQUETE: canaima-semilla
+# ARCHIVO: scripts/c-s.sh
+# DESCRIPCIÓN: Script principal. Se encarga de invocar a los demás módulos y
+#              funciones según los parámetros proporcionados.
+# USO: ./c-s.sh [MÓDULO] [PARÁMETROS] [...]
+# COPYRIGHT:
+#       (C) 2010-2012 Luis Alejandro Martínez Faneyth <luis@huntingbears.com.ve>
+#       (C) 2012 Niv Sardi <xaiki@debian.org>
+# LICENCIA: GPL-3
+# ==============================================================================
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# COPYING file for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+# CODE IS POETRY
 
-import gettext, locale
 from gettext import gettext as _
 
-from config import *
-
-settinglocale = locale.setlocale(locale.LC_ALL, '')
-naminglocale = LOCALEDIR+'/'+locale.getlocale()[0]+'/LC_MESSAGES/c-s-gui.mo'
-
-try:
-    trans = gettext.GNUTranslations(open(naminglocale, 'rb'))
-except IOError:
-    trans = gettext.NullTranslations()
-
-installinglocale = trans.install()
-
 # library.controller.Main() strings
+MAIN_ROOT_ERROR_MSG = _('Canaima Semilla debe ser ejecutado con permisos de superusuario.')
+MAIN_ROOT_ERROR_TITLE = _('Error de permisología')
+MAIN_INIT_THREADS_ERROR_MSG = _('Ocurrió un error mientras se inicializaba el soporte para ejecución bajo multihilos:{0}{1}')
+MAIN_INIT_LOCALE_ERROR_MSG = _('Ocurrió un error mientras se inicializaba el soporte para multilenguage:{0}{1}{2}Se utilizará el lenguage nativo de la aplicación.')
 MAIN_TITLE = _('Generador de Distribuciones Derivadas')
 MAIN_CREATE_PROFILE_TITLE = _('Crear perfil')
 MAIN_BUILD_IMAGE_TITLE = _('Construir imagen')
@@ -45,17 +63,23 @@ BUILD_CONFIRM_CANCEL_MSG = _('¿Está seguro que desea cancelar la creación de 
 BUILD_CONFIRM_OK_TITLE = _('Creación de imagen')
 BUILD_CONFIRM_OK_MSG = _('Todo está preparado para empezar a construir la imagen.%sPresione aceptar para continuar o cancelar para volver a la pantalla anterior.')
 BUILD_WINDOW_TITLE = _('Creación de imagen')
-BUILD_VALIDATE_SOURCES_MSG = _('Validando arquitectura "%s" de la rama "%s" ...')
+BUILD_VALIDATE_SOURCES_MSG = _('Validando sección "%s" de la rama "%s"%spara el repositorio "%s" (%s)')
 BUILD_VALIDATE_SOURCES_ERROR_TITLE = _('Error validando repositorios')
 BUILD_VALIDATE_SOURCES_ERROR_MSG = _('Ha ocurrido un error mientras se intentaba comprobar la existencia de los repositorios especificados.%sPor favor verifica que estás conectado a internet o que la ruta es la correcta.')
 BUILD_SUCCESSFUL_TITLE = _('Completado')
 BUILD_SUCCESSFUL_MSG = _('¡Felicidades! La generación de la imagen se ha completado')
 BUILD_FAILED_TITLE = _('Se ha interrumpido la construcción')
-BUILD_SUCCESSFUL_MSG = _('Ha ocurrido un error mientras se realizaba la construcción de la imagen.')
+BUILD_FAILED_MSG = _('Ha ocurrido un error mientras se realizaba la construcción de la imagen.')
 BUILD_PROCESS_STATUS = _('Construyendo imagen ...')
 
 # library.controller.Profile() strings
 PROFILE_TITLE = _('Creación de perfiles para distribuciones derivadas')
+PROFILE_ID_TAB = _('Identificación')
+PROFILE_DISTRO_TAB = _('Distribución')
+PROFILE_PACKAGES_TAB = _('Paquetes')
+PROFILE_INSTALLER_TAB = _('Instalador')
+PROFILE_EXTRAREPOS_TAB = _('Repositorios')
+PROFILE_INCLUDES_TAB = _('Inclusiones')
 PROFILE_PROFILE_NAME_1 = _('Introduzca el nombre del sabor a crear:')
 PROFILE_PROFILE_NAME_2 = _('Debe introducir el nombre con el que desea identificar la distribución derivada que está creando, en minúsculas y sin espacios.')
 PROFILE_PROFILE_ARCH_1 = _('Seleccione las arquitecturas habilitadas para el sabor:')
@@ -150,6 +174,25 @@ PROFILE_CREATING_EXISTS_ERROR_MSG = _('El nombre de perfil seleccionado ya se en
 PROFILE_CREATING_SUCCESS_TITLE = _('Perfil creado')
 PROFILE_CREATING_SUCCESS_MSG = _('¡Felicidades! Su perfil ha sido creado.')
 
-
-
-
+# library.controller.Test() strings
+TEST_START_CD_LABEL = _('Iniciar desde la imagen seleccionada.')
+TEST_START_HD_LABEL = _('Iniciar desde el disco duro virtual.')
+TEST_DISK_CHECK_LABEL = _('')
+TEST_IMAGE_1 = _('')
+TEST_IMAGE_2 = _('')
+TEST_IMAGE_ENTRY = _('')
+TEST_IMAGE_SELECT_TITLE = _('')
+TEST_MEMORY_1 = _('')
+TEST_MEMORY_2 = _('')
+TEST_MIMETYPE_ALL_NAME = _('')
+TEST_MIMETYPE_ISO_NAME = _('')
+TEST_PROCESSORS_1 = _('')
+TEST_PROCESSORS_2 = _('')
+TEST_START_1 = _('')
+TEST_START_2 = _('')
+TEST_DISK_2 = _('')
+TEST_TITLE = _('')
+TEST_CONFIRM_CANCEL_MSG = _('')
+TEST_CONFIRM_CANCEL_TITLE = _('')
+TEST_CONFIRM_OK_MSG = _('')
+TEST_CONFIRM_OK_TITLE = _('')

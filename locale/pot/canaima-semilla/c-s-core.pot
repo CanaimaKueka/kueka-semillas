@@ -5,14 +5,14 @@
 # Translators:
 # Luis Alejandro Martínez Faneyth <luis@huntingbears.com.ve>, 2012
 #
-#: ../../../scripts/modules/save.sh:107 ../../../scripts/modules/save.sh:110
-#: ../../../scripts/modules/save.sh:116 ../../../scripts/modules/save.sh:119
+#: ../../../scripts/modules/save.sh:172 ../../../scripts/modules/save.sh:175
+#: ../../../scripts/modules/save.sh:181 ../../../scripts/modules/save.sh:184
 msgid ""
 msgstr ""
 "Project-Id-Version: Canaima Semilla 3.0\n"
 "Report-Msgid-Bugs-To: desarrolladores@canaima.softwarelibre.gob.ve\n"
-"POT-Creation-Date: 2012-06-21 06:06-0430\n"
-"PO-Revision-Date: 2012-06-21 06:06-0430\n"
+"POT-Creation-Date: 2012-06-26 16:43-0430\n"
+"PO-Revision-Date: 2012-06-26 16:43-0430\n"
 "Last-Translator: Luis Alejandro Martínez Faneyth <luis@huntingbears.com.ve>\n"
 "Language-Team: Equipo de Traducción de Canaima Semilla <desarrolladores@canaima.softwarelibre.gob.ve>\n"
 "Language: English\n"
@@ -134,7 +134,11 @@ msgstr ""
 msgid "El espacio en disco es insuficiente para crear el disco virtual para la prueba. Abortando."
 msgstr ""
 
-#: ../../../scripts/modules/test.sh:132
+#: ../../../scripts/modules/test.sh:166
+msgid "El espacio libre en disco es insuficiente para crear el disco virtual para la prueba. Abortando."
+msgstr ""
+
+#: ../../../scripts/modules/test.sh:132 ../../../scripts/modules/test.sh:171
 msgid "El espacio libre en memoria es menor al asignado para la prueba. Abortando."
 msgstr ""
 
@@ -148,11 +152,24 @@ msgstr ""
 
 #: ../../../scripts/modules/save.sh:56 ../../../scripts/modules/build.sh:84
 #: ../../../scripts/modules/test.sh:43 ../../../scripts/modules/profile.sh:67
+#: ../../../scripts/modules/save.sh:78 ../../../scripts/modules/test.sh:78
 msgid "Error interno"
 msgstr ""
 
 #: ../../../scripts/functions/tree.sh:174
 msgid "Generando árbol de configuraciones ..."
+msgstr ""
+
+#: ../../../scripts/modules/test.sh:202
+msgid "Ha ocurrido un error inesperado durante el inicio de la emulación de la imagen ubicada en %s."
+msgstr ""
+
+#: ../../../scripts/modules/test.sh:193
+msgid "Ha ocurrido un error inesperado durante la creación un nuevo disco virtual en %s."
+msgstr ""
+
+#: ../../../scripts/modules/test.sh:184
+msgid "Ha ocurrido un error inesperado durante la remoción del disco virtual obsoleto ubicado en %s."
 msgstr ""
 
 #: ../../../scripts/modules/build.sh:217
@@ -310,7 +327,7 @@ msgstr ""
 msgid "No especificaste una arquitectura, utilizando '%s' presente en el sistema."
 msgstr ""
 
-#: ../../../scripts/modules/test.sh:105
+#: ../../../scripts/modules/test.sh:105 ../../../scripts/modules/test.sh:161
 msgid "No especificaste una imagen. Abortando."
 msgstr ""
 
@@ -360,6 +377,10 @@ msgstr ""
 
 #: ../../../scripts/functions/profile.sh:216
 msgid "No se ha especificado una versión para la Metadistribución base."
+msgstr ""
+
+#: ../../../scripts/init.sh:47
+msgid "No se ha podido encontrar el paquete 'live-build'."
 msgstr ""
 
 #: ../../../scripts/init.sh:47
@@ -426,7 +447,9 @@ msgstr ""
 #: ../../../scripts/modules/build.sh:94 ../../../scripts/modules/build.sh:175
 #: ../../../scripts/modules/test.sh:50 ../../../scripts/modules/test.sh:94
 #: ../../../scripts/modules/profile.sh:77
-#: ../../../scripts/modules/profile.sh:118
+#: ../../../scripts/modules/profile.sh:118 ../../../scripts/modules/save.sh:88
+#: ../../../scripts/modules/save.sh:149 ../../../scripts/modules/test.sh:88
+#: ../../../scripts/modules/test.sh:154
 msgid "Ocurrió un problema interpretando los parámetros."
 msgstr ""
 
@@ -452,6 +475,10 @@ msgstr ""
 
 #: ../../../scripts/functions/newprofile.sh:46
 msgid "Página web de la persona o grupo responsable"
+msgstr ""
+
+#: ../../../scripts/modules/test.sh:182
+msgid "Removiendo disco virtual obsoleto en %s."
 msgstr ""
 
 #: ../../../scripts/functions/newprofile.sh:58
@@ -482,8 +509,12 @@ msgstr ""
 msgid "Se ejecutarán en el sistema los ganchos presentes en el directorio '%s'."
 msgstr ""
 
-#: ../../../scripts/modules/test.sh:123
+#: ../../../scripts/modules/test.sh:123 ../../../scripts/modules/test.sh:176
 msgid "Se ha asignado un número de procesadores mayor al presente en el sistema. Abortando."
+msgstr ""
+
+#: ../../../scripts/modules/test.sh:191
+msgid "Se ha creado un nuevo disco virtual de %sG en %s."
 msgstr ""
 
 #: ../../../scripts/functions/image.sh:100

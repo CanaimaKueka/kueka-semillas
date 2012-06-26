@@ -4,7 +4,7 @@
 # PAQUETE: canaima-semilla
 # ARCHIVO: scripts/c-s.sh
 # DESCRIPCIÓN: Script principal. Se encarga de invocar a los demás módulos y
-#	      funciones según los parámetros proporcionados.
+#              funciones según los parámetros proporcionados.
 # USO: ./c-s.sh [MÓDULO] [PARÁMETROS] [...]
 # COPYRIGHT:
 #       (C) 2010-2012 Luis Alejandro Martínez Faneyth <luis@huntingbears.com.ve>
@@ -35,7 +35,7 @@ if [ "${BINDIR}" = "/usr/bin" ]; then
 	BASEDIR="/usr/share/canaima-semilla"
 	CONFDIR="/etc/canaima-semilla"
 else
-	BASEDIR="$( dirname "${BINDIR}" )"
+	BASEDIR="${BINDIR}"
 	CONFDIR="${BASEDIR}"
 fi
 

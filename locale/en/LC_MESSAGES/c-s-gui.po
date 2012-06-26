@@ -1,358 +1,543 @@
+# Plantilla de Traducción para Canaima Semilla.
+# Copyright (C) 2012 Luis Alejandro Martínez Faneyth
+# This file is distributed under the same license as the Canaima Semilla package.
+#
+# Translators:
+# Luis Alejandro Martínez Faneyth <luis@huntingbears.com.ve>, 2012
+#
+#: ../../../canaimasemilla/translator.py:180
+#: ../../../canaimasemilla/translator.py:181
+#: ../../../canaimasemilla/translator.py:182
+#: ../../../canaimasemilla/translator.py:183
+#: ../../../canaimasemilla/translator.py:184
+#: ../../../canaimasemilla/translator.py:185
+#: ../../../canaimasemilla/translator.py:186
+#: ../../../canaimasemilla/translator.py:187
+#: ../../../canaimasemilla/translator.py:188
+#: ../../../canaimasemilla/translator.py:189
+#: ../../../canaimasemilla/translator.py:190
+#: ../../../canaimasemilla/translator.py:191
+#: ../../../canaimasemilla/translator.py:192
+#: ../../../canaimasemilla/translator.py:193
+#: ../../../canaimasemilla/translator.py:194
+#: ../../../canaimasemilla/translator.py:195
+#: ../../../canaimasemilla/translator.py:196
+#: ../../../canaimasemilla/translator.py:197
+#: ../../../canaimasemilla/translator.py:198
+msgid ""
+msgstr ""
+"Project-Id-Version: Canaima Semilla 3.0\n"
+"Report-Msgid-Bugs-To: desarrolladores@canaima.softwarelibre.gob.ve\n"
+"POT-Creation-Date: 2012-06-26 16:39-0430\n"
+"PO-Revision-Date: 2012-06-21 06:06-0430\n"
+"Last-Translator: Luis Alejandro Martínez Faneyth <luis@huntingbears.com.ve>\n"
+"Language-Team: Equipo de Traducción de Canaima Semilla <desarrolladores@canaima.softwarelibre.gob.ve>\n"
+"Language: English\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
 #: ../../../gui/canaimasemilla/library/vocabulary.py:90
 #: ../../../gui/canaimasemilla/library/vocabulary.py:103
+#: ../../../canaimasemilla/translator.py:114
+#: ../../../canaimasemilla/translator.py:127
 #, python-format
-msgid "%s%sHa ocurrido un error mientras se intentaba comprobar la existencia de los repositorios especificados.%sPor favor verifica que ests conectado a internet o que los datos proporcionados son correctos."
+msgid "%s%sHa ocurrido un error mientras se intentaba comprobar la existencia de los repositorios especificados.%sPor favor verifica que estás conectado a internet o que los datos proporcionados son correctos."
 msgstr ""
 
 #: ../../../gui/canaimasemilla/library/vocabulary.py:129
-msgid "Al incluir el instalador Debian en la imagen, se agregar una opcin de instalacin en el men de presentacin de la imagen que permitir instalar a travs del debian-installer."
+#: ../../../canaimasemilla/translator.py:153
+msgid "Al incluir el instalador Debian en la imagen, se agregará una opción de instalación en el menú de presentación de la imagen que permitirá instalar a través del debian-installer."
 msgstr ""
 
 #: ../../../gui/canaimasemilla/library/vocabulary.py:145
+#: ../../../canaimasemilla/translator.py:169
 msgid "Archivo de imagen PNG"
 msgstr ""
 
 #: ../../../gui/canaimasemilla/library/vocabulary.py:89
 #: ../../../gui/canaimasemilla/library/vocabulary.py:102
+#: ../../../canaimasemilla/translator.py:113
+#: ../../../canaimasemilla/translator.py:126
 msgid "Arquitecturas soportadas no encontradas"
 msgstr ""
 
 #: ../../../gui/canaimasemilla/library/vocabulary.py:76
-msgid "Cada Metadistribucin tiene secciones del repositorio particulares. Seleccione segun su conveniencia."
+#: ../../../canaimasemilla/translator.py:100
+msgid "Cada Metadistribución tiene secciones del repositorio particulares. Seleccione segun su conveniencia."
+msgstr ""
+
+#: ../../../canaimasemilla/translator.py:34
+msgid "Canaima Semilla debe ser ejecutado con permisos de superusuario."
 msgstr ""
 
 #: ../../../gui/canaimasemilla/library/vocabulary.py:144
+#: ../../../canaimasemilla/translator.py:168
 msgid "Carpetas"
 msgstr ""
 
 #: ../../../gui/canaimasemilla/library/vocabulary.py:51
+#: ../../../canaimasemilla/translator.py:69
 msgid "Completado"
 msgstr ""
 
 #: ../../../gui/canaimasemilla/library/vocabulary.py:22
+#: ../../../canaimasemilla/translator.py:40
 msgid "Construir imagen"
 msgstr ""
 
 #: ../../../gui/canaimasemilla/library/vocabulary.py:55
+#: ../../../canaimasemilla/translator.py:73
 msgid "Construyendo imagen ..."
 msgstr ""
 
 #: ../../../gui/canaimasemilla/library/vocabulary.py:26
+#: ../../../canaimasemilla/translator.py:44
 msgid "Crea una imagen de un Sistema Operativo construido en base a un perfil."
 msgstr ""
 
 #: ../../../gui/canaimasemilla/library/vocabulary.py:43
 #: ../../../gui/canaimasemilla/library/vocabulary.py:45
 #: ../../../gui/canaimasemilla/library/vocabulary.py:47
-msgid "Creacin de imagen"
+#: ../../../canaimasemilla/translator.py:61
+#: ../../../canaimasemilla/translator.py:63
+#: ../../../canaimasemilla/translator.py:65
+msgid "Creación de imagen"
 msgstr ""
 
 #: ../../../gui/canaimasemilla/library/vocabulary.py:31
-msgid "Creacin de imgenes a partir de perfiles existentes"
+#: ../../../canaimasemilla/translator.py:49
+msgid "Creación de imágenes a partir de perfiles existentes"
 msgstr ""
 
 #: ../../../gui/canaimasemilla/library/vocabulary.py:139
 #: ../../../gui/canaimasemilla/library/vocabulary.py:141
-msgid "Creacin de perfil"
+#: ../../../canaimasemilla/translator.py:163
+#: ../../../canaimasemilla/translator.py:165
+msgid "Creación de perfil"
 msgstr ""
 
 #: ../../../gui/canaimasemilla/library/vocabulary.py:58
-msgid "Creacin de perfiles para distribuciones derivadas"
+#: ../../../canaimasemilla/translator.py:76
+msgid "Creación de perfiles para distribuciones derivadas"
 msgstr ""
 
 #: ../../../gui/canaimasemilla/library/vocabulary.py:21
+#: ../../../canaimasemilla/translator.py:39
 msgid "Crear perfil"
 msgstr ""
 
 #: ../../../gui/canaimasemilla/library/vocabulary.py:60
-msgid "Debe introducir el nombre con el que desea identificar la distribucin derivada que est creando, en minsculas y sin espacios."
+#: ../../../canaimasemilla/translator.py:84
+msgid "Debe introducir el nombre con el que desea identificar la distribución derivada que está creando, en minúsculas y sin espacios."
 msgstr ""
 
 #: ../../../gui/canaimasemilla/library/vocabulary.py:64
-msgid "Debe introducir el nombre de la persona o grupo responsable de la creacin y mantenimiento del sabor."
+#: ../../../canaimasemilla/translator.py:88
+msgid "Debe introducir el nombre de la persona o grupo responsable de la creación y mantenimiento del sabor."
 msgstr ""
 
 #: ../../../gui/canaimasemilla/library/vocabulary.py:66
-msgid "Debe introducir un correo electrnico vlido para contacto de la persona o grupo responsable de la creacin y mantenimiento del sabor."
+#: ../../../canaimasemilla/translator.py:90
+msgid "Debe introducir un correo electrónico válido para contacto de la persona o grupo responsable de la creación y mantenimiento del sabor."
 msgstr ""
 
 #: ../../../gui/canaimasemilla/library/vocabulary.py:78
-msgid "Debe seleccionar de la lista el idioma que vendr configurado en la imagen resultante."
+#: ../../../canaimasemilla/translator.py:102
+msgid "Debe seleccionar de la lista el idioma que vendrá configurado en la imagen resultante."
 msgstr ""
 
 #: ../../../gui/canaimasemilla/library/vocabulary.py:128
+#: ../../../canaimasemilla/translator.py:152
 msgid "Deseo incluir el instalador Debian (opcional)."
 msgstr ""
 
 #: ../../../gui/canaimasemilla/library/vocabulary.py:93
+#: ../../../canaimasemilla/translator.py:117
 msgid "Deseo incluir repositorios adicionales (opcional)."
 msgstr ""
 
 #: ../../../gui/canaimasemilla/library/vocabulary.py:94
-msgid "Direccin URL"
+#: ../../../canaimasemilla/translator.py:118
+msgid "Dirección URL"
 msgstr ""
 
 #: ../../../gui/canaimasemilla/library/vocabulary.py:100
-msgid "Direcin no vlida"
+#: ../../../canaimasemilla/translator.py:124
+msgid "Direción no válida"
+msgstr ""
+
+#: ../../../canaimasemilla/translator.py:78
+msgid "Distribución"
 msgstr ""
 
 #: ../../../gui/canaimasemilla/library/vocabulary.py:149
+#: ../../../canaimasemilla/translator.py:173
 msgid "El nombre de perfil seleccionado ya se encuentra en uso. Por favor selecciona otro y vuelve a intentarlo."
 msgstr ""
 
 #: ../../../gui/canaimasemilla/library/vocabulary.py:148
+#: ../../../canaimasemilla/translator.py:172
 msgid "El perfil ya existe"
 msgstr ""
 
 #: ../../../gui/canaimasemilla/library/vocabulary.py:88
 #: ../../../gui/canaimasemilla/library/vocabulary.py:101
+#: ../../../canaimasemilla/translator.py:112
+#: ../../../canaimasemilla/translator.py:125
 #, python-format
-msgid "El soporte para arquitectura i386 y/o amd64 se encuentra vaco.%sDebes seleccionar las arquitecturas soportadas para poder realizar la validacin de los repositorios y paquetes que se incluirn dentro de la imagen instalable."
+msgid "El soporte para arquitectura i386 y/o amd64 se encuentra vacío.%sDebes seleccionar las arquitecturas soportadas para poder realizar la validación de los repositorios y paquetes que se incluirán dentro de la imagen instalable."
+msgstr ""
+
+#: ../../../canaimasemilla/translator.py:35
+msgid "Error de permisología"
 msgstr ""
 
 #: ../../../gui/canaimasemilla/library/vocabulary.py:146
+#: ../../../canaimasemilla/translator.py:170
 msgid "Error desconocido"
 msgstr ""
 
 #: ../../../gui/canaimasemilla/library/vocabulary.py:86
-msgid "Error en la validacin de paquetes"
+#: ../../../canaimasemilla/translator.py:110
+msgid "Error en la validación de paquetes"
 msgstr ""
 
 #: ../../../gui/canaimasemilla/library/vocabulary.py:49
+#: ../../../canaimasemilla/translator.py:67
 msgid "Error validando repositorios"
 msgstr ""
 
 #: ../../../gui/canaimasemilla/library/vocabulary.py:62
-msgid "Estas sern las arquitecturas disponibles para la construccin de imgenes basadas en el perfil de este nuevo sabor. Las arquitecturas que seleccione sern utilizadas para validar paquetes y repositorios."
+#: ../../../canaimasemilla/translator.py:86
+msgid "Estas serán las arquitecturas disponibles para la construcción de imágenes basadas en el perfil de este nuevo sabor. Las arquitecturas que seleccione serán utilizadas para validar paquetes y repositorios."
 msgstr ""
 
 #: ../../../gui/canaimasemilla/library/vocabulary.py:20
+#: ../../../canaimasemilla/translator.py:38
 msgid "Generador de Distribuciones Derivadas"
 msgstr ""
 
 #: ../../../gui/canaimasemilla/library/vocabulary.py:24
+#: ../../../canaimasemilla/translator.py:42
 msgid "Grabar imagen"
 msgstr ""
 
 #: ../../../gui/canaimasemilla/library/vocabulary.py:147
+#: ../../../canaimasemilla/translator.py:171
 msgid "Ha ocurrido un error desconocido durante la copia de los archivos al nuevo perfil. Por favor revisa los datos introducidos y vuelve a intentarlo."
 msgstr ""
 
 #: ../../../gui/canaimasemilla/library/vocabulary.py:50
+#: ../../../canaimasemilla/translator.py:68
 #, python-format
-msgid "Ha ocurrido un error mientras se intentaba comprobar la existencia de los repositorios especificados.%sPor favor verifica que ests conectado a internet o que la ruta es la correcta."
+msgid "Ha ocurrido un error mientras se intentaba comprobar la existencia de los repositorios especificados.%sPor favor verifica que estás conectado a internet o que la ruta es la correcta."
 msgstr ""
 
 #: ../../../gui/canaimasemilla/library/vocabulary.py:54
-msgid "Ha ocurrido un error mientras se realizaba la construccin de la imagen."
+#: ../../../canaimasemilla/translator.py:72
+msgid "Ha ocurrido un error mientras se realizaba la construcción de la imagen."
 msgstr ""
 
 #: ../../../gui/canaimasemilla/library/vocabulary.py:36
-msgid "HBRIDA: Imagen mixta para dispositivos variados (CD/DVD/USB) [Recomendado]."
+#: ../../../canaimasemilla/translator.py:54
+msgid "HÍBRIDA: Imagen mixta para dispositivos variados (CD/DVD/USB) [Recomendado]."
 msgstr ""
 
 #: ../../../gui/canaimasemilla/library/vocabulary.py:35
-msgid "IMG: Imagen para dispositivos de almacenamiento extrable (USB)."
+#: ../../../canaimasemilla/translator.py:53
+msgid "IMG: Imagen para dispositivos de almacenamiento extraíble (USB)."
 msgstr ""
 
 #: ../../../gui/canaimasemilla/library/vocabulary.py:34
-msgid "ISO: Imagen para dispositivos pticos de almacenamiento (CD/DVD)."
+#: ../../../canaimasemilla/translator.py:52
+msgid "ISO: Imagen para dispositivos ópticos de almacenamiento (CD/DVD)."
+msgstr ""
+
+#: ../../../canaimasemilla/translator.py:77
+msgid "Identificación"
+msgstr ""
+
+#: ../../../canaimasemilla/translator.py:82
+msgid "Inclusiones"
 msgstr ""
 
 #: ../../../gui/canaimasemilla/library/vocabulary.py:25
-msgid "Inicia un asistente que permite construir un perfil para una nueva distribucin derivada."
+#: ../../../canaimasemilla/translator.py:43
+msgid "Inicia un asistente que permite construir un perfil para una nueva distribución derivada."
 msgstr ""
 
 #: ../../../gui/canaimasemilla/library/vocabulary.py:28
+#: ../../../canaimasemilla/translator.py:46
 msgid "Inicia un asistente que permite grabar una imagen en un dispositivo de almacenamiento."
 msgstr ""
 
 #: ../../../gui/canaimasemilla/library/vocabulary.py:27
+#: ../../../canaimasemilla/translator.py:45
 msgid "Inicia un emulador que permite ejecutar el Sistema Operativo contenido en una imagen."
 msgstr ""
 
+#: ../../../canaimasemilla/translator.py:179
+msgid "Iniciar desde el disco duro virtual."
+msgstr ""
+
+#: ../../../canaimasemilla/translator.py:178
+msgid "Iniciar desde la imagen seleccionada."
+msgstr ""
+
+#: ../../../canaimasemilla/translator.py:80
+msgid "Instalador"
+msgstr ""
+
 #: ../../../gui/canaimasemilla/library/vocabulary.py:65
-msgid "Introduzca el correo electrnico de la persona o grupo responsable:"
+#: ../../../canaimasemilla/translator.py:89
+msgid "Introduzca el correo electrónico de la persona o grupo responsable:"
 msgstr ""
 
 #: ../../../gui/canaimasemilla/library/vocabulary.py:73
+#: ../../../canaimasemilla/translator.py:97
 msgid "Introduzca el espejo del repositorio a utilizar:"
 msgstr ""
 
 #: ../../../gui/canaimasemilla/library/vocabulary.py:63
+#: ../../../canaimasemilla/translator.py:87
 msgid "Introduzca el nombre de la persona o grupo responsable:"
 msgstr ""
 
 #: ../../../gui/canaimasemilla/library/vocabulary.py:59
+#: ../../../canaimasemilla/translator.py:83
 msgid "Introduzca el nombre del sabor a crear:"
 msgstr ""
 
 #: ../../../gui/canaimasemilla/library/vocabulary.py:79
-msgid "Introduzca los paquetes que conformarn el Sistema Operativo:"
+#: ../../../canaimasemilla/translator.py:103
+msgid "Introduzca los paquetes que conformarán el Sistema Operativo:"
 msgstr ""
 
 #: ../../../gui/canaimasemilla/library/vocabulary.py:117
-msgid "Introduzca los paquetes que se incluirn en el repositorio interno de la imagen (opcional):"
+#: ../../../canaimasemilla/translator.py:141
+msgid "Introduzca los paquetes que se incluirán en el repositorio interno de la imagen (opcional):"
 msgstr ""
 
 #: ../../../gui/canaimasemilla/library/vocabulary.py:80
-msgid "Introduzca los paquetes separados por espacios. Los paquetes que se listen ac deben estar presentes en el espejo de la Metadistribucin seleccionada o en los repositorios adicionales. Deben incluirse los componentes escenciales de un Sistema Operativo para poder generar una imagen instalable y funcional."
+#: ../../../canaimasemilla/translator.py:104
+msgid "Introduzca los paquetes separados por espacios. Los paquetes que se listen acá deben estar presentes en el espejo de la Metadistribución seleccionada o en los repositorios adicionales. Deben incluirse los componentes escenciales de un Sistema Operativo para poder generar una imagen instalable y funcional."
 msgstr ""
 
 #: ../../../gui/canaimasemilla/library/vocabulary.py:67
-msgid "Introduzca una direccin web para la persona o grupo responsable:"
+#: ../../../canaimasemilla/translator.py:91
+msgid "Introduzca una dirección web para la persona o grupo responsable:"
 msgstr ""
 
 #: ../../../gui/canaimasemilla/library/vocabulary.py:99
+#: ../../../canaimasemilla/translator.py:123
 #, python-format
-msgid "La direccin URL \"%s\" es invlida.%sComprueba que has introducido correctamente los datos y vuelve a intentarlo."
+msgid "La dirección URL \"%s\" es inválida.%sComprueba que has introducido correctamente los datos y vuelve a intentarlo."
 msgstr ""
 
 #: ../../../gui/canaimasemilla/library/vocabulary.py:118
-msgid "Los paquetes ac listados se incluirn en el repositorio interno de la imagen, con el propsito de que estn disponibles para otros procesos posteriores (como por ejemplo instaladores o configuradores)."
+#: ../../../canaimasemilla/translator.py:142
+msgid "Los paquetes acá listados se incluirán en el repositorio interno de la imagen, con el propósito de que estén disponibles para otros procesos posteriores (como por ejemplo instaladores o configuradores)."
 msgstr ""
 
 #: ../../../gui/canaimasemilla/library/vocabulary.py:92
-msgid "Los repositorios adicionales permiten agregar software no oficial o desarrollado localmente a la imagen en construccin. Introduzca la direccin web, la rama y las secciones (separadas por espacios) correspondientes al repositorio."
+#: ../../../canaimasemilla/translator.py:116
+msgid "Los repositorios adicionales permiten agregar software no oficial o desarrollado localmente a la imagen en construcción. Introduzca la dirección web, la rama y las secciones (separadas por espacios) correspondientes al repositorio."
 msgstr ""
 
 #: ../../../gui/canaimasemilla/library/vocabulary.py:87
+#: ../../../canaimasemilla/translator.py:111
 #, python-format
 msgid "No se ha encontrado el paquete \"%s\" dentro de los repositorios provistos."
 msgstr ""
 
+#: ../../../canaimasemilla/translator.py:36
+msgid "Ocurrió un error mientras se inicializaba el soporte para ejecución bajo multihilos:{0}{1}"
+msgstr ""
+
+#: ../../../canaimasemilla/translator.py:37
+msgid "Ocurrió un error mientras se inicializaba el soporte para multilenguage:{0}{1}{2}Se utilizará el lenguage nativo de la aplicación."
+msgstr ""
+
+#: ../../../canaimasemilla/translator.py:79
+msgid "Paquetes"
+msgstr ""
+
 #: ../../../gui/canaimasemilla/library/vocabulary.py:81
 #: ../../../gui/canaimasemilla/library/vocabulary.py:119
+#: ../../../canaimasemilla/translator.py:105
+#: ../../../canaimasemilla/translator.py:143
 msgid "Paquetes (separados por espacios)"
 msgstr ""
 
 #: ../../../gui/canaimasemilla/library/vocabulary.py:150
+#: ../../../canaimasemilla/translator.py:174
 msgid "Perfil creado"
 msgstr ""
 
 #: ../../../gui/canaimasemilla/library/vocabulary.py:23
+#: ../../../canaimasemilla/translator.py:41
 msgid "Probar imagen"
 msgstr ""
 
 #: ../../../gui/canaimasemilla/library/vocabulary.py:68
-msgid "Puede introducir una direccin web de referencia para mayor informacin acerca del sabor."
+#: ../../../canaimasemilla/translator.py:92
+msgid "Puede introducir una dirección web de referencia para mayor información acerca del sabor."
 msgstr ""
 
 #: ../../../gui/canaimasemilla/library/vocabulary.py:121
-msgid "Puede seleccionar una carpeta que contenga la estructura de directorios y archivos que desea incluir directamente en la imagen. Debe incluir los directorios en el mismo orden jerrquico que quiere que aparezcan."
+#: ../../../canaimasemilla/translator.py:145
+msgid "Puede seleccionar una carpeta que contenga la estructura de directorios y archivos que desea incluir directamente en la imagen. Debe incluir los directorios en el mismo orden jerárquico que quiere que aparezcan."
 msgstr ""
 
 #: ../../../gui/canaimasemilla/library/vocabulary.py:106
-msgid "Puede seleccionar una carpeta que contenga la estructura de directorios y archivos que desea incluir en el Sistema Operativo de la imagen. Debe incluir los directorios en el mismo orden jerrquico que quiere que aparezcan."
+#: ../../../canaimasemilla/translator.py:130
+msgid "Puede seleccionar una carpeta que contenga la estructura de directorios y archivos que desea incluir en el Sistema Operativo de la imagen. Debe incluir los directorios en el mismo orden jerárquico que quiere que aparezcan."
 msgstr ""
 
 #: ../../../gui/canaimasemilla/library/vocabulary.py:110
-msgid "Puede seleccionar una carpeta que contenga scripts de shell (sh/bash) que necesite ejecutar durante la construccin del Sistema Operativo que va a ser includo en la imagen."
+#: ../../../canaimasemilla/translator.py:134
+msgid "Puede seleccionar una carpeta que contenga scripts de shell (sh/bash) que necesite ejecutar durante la construcción del Sistema Operativo que va a ser incluído en la imagen."
 msgstr ""
 
 #: ../../../gui/canaimasemilla/library/vocabulary.py:125
-msgid "Puede seleccionar una carpeta que contenga scripts de shell (sh/bash) que necesite ejecutar durante la generacin de la imagen."
+#: ../../../canaimasemilla/translator.py:149
+msgid "Puede seleccionar una carpeta que contenga scripts de shell (sh/bash) que necesite ejecutar durante la generación de la imagen."
 msgstr ""
 
 #: ../../../gui/canaimasemilla/library/vocabulary.py:114
-msgid "Puede selecionar una imagen PNG de no ms de 800 por 600 pixeles de tamao para mostrar en el fondo del men (syslinux) de presentacin de la imagen."
+#: ../../../canaimasemilla/translator.py:138
+msgid "Puede selecionar una imagen PNG de no más de 800 por 600 pixeles de tamaño para mostrar en el fondo del menú (syslinux) de presentación de la imagen."
 msgstr ""
 
 #: ../../../gui/canaimasemilla/library/vocabulary.py:74
-msgid "Puede utilizar el espejo del repositorio de la Metadistribucin que ms le convenga. Se recomienda la utilizacin de un espejo local para mayor rapidez. Si no est seguro, deje el valor por defecto."
+#: ../../../canaimasemilla/translator.py:98
+msgid "Puede utilizar el espejo del repositorio de la Metadistribución que más le convenga. Se recomienda la utilización de un espejo local para mayor rapidez. Si no está seguro, deje el valor por defecto."
 msgstr ""
 
 #: ../../../gui/canaimasemilla/library/vocabulary.py:95
+#: ../../../canaimasemilla/translator.py:119
 msgid "Rama"
 msgstr ""
 
 #: ../../../gui/canaimasemilla/library/vocabulary.py:91
 #: ../../../gui/canaimasemilla/library/vocabulary.py:104
+#: ../../../canaimasemilla/translator.py:115
+#: ../../../canaimasemilla/translator.py:128
 msgid "Repositorio inexistente o inconsistente"
 msgstr ""
 
+#: ../../../canaimasemilla/translator.py:81
+msgid "Repositorios"
+msgstr ""
+
 #: ../../../gui/canaimasemilla/library/vocabulary.py:53
-msgid "Se ha interrumpido la construccin"
+#: ../../../canaimasemilla/translator.py:71
+msgid "Se ha interrumpido la construcción"
 msgstr ""
 
 #: ../../../gui/canaimasemilla/library/vocabulary.py:96
+#: ../../../canaimasemilla/translator.py:120
 msgid "Secciones"
 msgstr ""
 
 #: ../../../gui/canaimasemilla/library/vocabulary.py:133
+#: ../../../canaimasemilla/translator.py:157
 msgid "Seleccione el archivo de presembrado (preseed) para el instalador Debian:"
 msgstr ""
 
 #: ../../../gui/canaimasemilla/library/vocabulary.py:136
+#: ../../../canaimasemilla/translator.py:160
 msgid "Seleccione el archivo de temas GTK (gtkrc) para el instalador Debian:"
 msgstr ""
 
 #: ../../../gui/canaimasemilla/library/vocabulary.py:130
+#: ../../../canaimasemilla/translator.py:154
 msgid "Seleccione el banner para el instalador Debian (800x75px, PNG):"
 msgstr ""
 
 #: ../../../gui/canaimasemilla/library/vocabulary.py:32
 #: ../../../gui/canaimasemilla/library/vocabulary.py:33
+#: ../../../canaimasemilla/translator.py:50
+#: ../../../canaimasemilla/translator.py:51
 msgid "Seleccione el formato de archivo de la imagen:"
 msgstr ""
 
 #: ../../../gui/canaimasemilla/library/vocabulary.py:77
+#: ../../../canaimasemilla/translator.py:101
 msgid "Seleccione el idioma predeterminado del Sistema Operativo:"
 msgstr ""
 
 #: ../../../gui/canaimasemilla/library/vocabulary.py:71
-msgid "Seleccione el nombre cdigo de la Metadistribucin:"
+#: ../../../canaimasemilla/translator.py:95
+msgid "Seleccione el nombre código de la Metadistribución:"
 msgstr ""
 
 #: ../../../gui/canaimasemilla/library/vocabulary.py:41
 #: ../../../gui/canaimasemilla/library/vocabulary.py:42
+#: ../../../canaimasemilla/translator.py:59
+#: ../../../canaimasemilla/translator.py:60
 msgid "Seleccione el perfil del sistema operativo a incluir en la imagen:"
 msgstr ""
 
 #: ../../../gui/canaimasemilla/library/vocabulary.py:37
 #: ../../../gui/canaimasemilla/library/vocabulary.py:38
+#: ../../../canaimasemilla/translator.py:55
+#: ../../../canaimasemilla/translator.py:56
 msgid "Seleccione el tipo de arquitectura de la imagen:"
 msgstr ""
 
 #: ../../../gui/canaimasemilla/library/vocabulary.py:69
-msgid "Seleccione la Metadistribucin base de sabor:"
+#: ../../../canaimasemilla/translator.py:93
+msgid "Seleccione la Metadistribución base de sabor:"
 msgstr ""
 
 #: ../../../gui/canaimasemilla/library/vocabulary.py:70
 #: ../../../gui/canaimasemilla/library/vocabulary.py:72
-msgid "Seleccione la Metadistribucin que ser la base del sabor en construccin."
+#: ../../../canaimasemilla/translator.py:94
+#: ../../../canaimasemilla/translator.py:96
+msgid "Seleccione la Metadistribución que será la base del sabor en construcción."
 msgstr ""
 
 #: ../../../gui/canaimasemilla/library/vocabulary.py:113
+#: ../../../canaimasemilla/translator.py:137
 msgid "Seleccione la imagen de arranque o portada para la imagen (opcional):"
 msgstr ""
 
 #: ../../../gui/canaimasemilla/library/vocabulary.py:61
+#: ../../../canaimasemilla/translator.py:85
 msgid "Seleccione las arquitecturas habilitadas para el sabor:"
 msgstr ""
 
 #: ../../../gui/canaimasemilla/library/vocabulary.py:105
+#: ../../../canaimasemilla/translator.py:129
 msgid "Seleccione las inclusiones de Sistema Operativo (opcional):"
 msgstr ""
 
 #: ../../../gui/canaimasemilla/library/vocabulary.py:120
+#: ../../../canaimasemilla/translator.py:144
 msgid "Seleccione las inclusiones de imagen (opcional):"
 msgstr ""
 
 #: ../../../gui/canaimasemilla/library/vocabulary.py:75
-msgid "Seleccione las secciones que estarn disponibles:"
+#: ../../../canaimasemilla/translator.py:99
+msgid "Seleccione las secciones que estarán disponibles:"
 msgstr ""
 
 #: ../../../gui/canaimasemilla/library/vocabulary.py:109
+#: ../../../canaimasemilla/translator.py:133
 msgid "Seleccione los scripts o \"ganchos\" de Sistema Operativo (opcional):"
 msgstr ""
 
 #: ../../../gui/canaimasemilla/library/vocabulary.py:124
+#: ../../../canaimasemilla/translator.py:148
 msgid "Seleccione los scripts o \"ganchos\" de imagen (opcional):"
 msgstr ""
 
 #: ../../../gui/canaimasemilla/library/vocabulary.py:135
 #: ../../../gui/canaimasemilla/library/vocabulary.py:138
+#: ../../../canaimasemilla/translator.py:159
+#: ../../../canaimasemilla/translator.py:162
 msgid "Seleccione un archivo"
 msgstr ""
 
@@ -360,30 +545,41 @@ msgstr ""
 #: ../../../gui/canaimasemilla/library/vocabulary.py:112
 #: ../../../gui/canaimasemilla/library/vocabulary.py:123
 #: ../../../gui/canaimasemilla/library/vocabulary.py:127
+#: ../../../canaimasemilla/translator.py:132
+#: ../../../canaimasemilla/translator.py:136
+#: ../../../canaimasemilla/translator.py:147
+#: ../../../canaimasemilla/translator.py:151
 msgid "Seleccione una carpeta"
 msgstr ""
 
 #: ../../../gui/canaimasemilla/library/vocabulary.py:116
 #: ../../../gui/canaimasemilla/library/vocabulary.py:132
+#: ../../../canaimasemilla/translator.py:140
+#: ../../../canaimasemilla/translator.py:156
 msgid "Seleccione una imagen"
 msgstr ""
 
 #: ../../../gui/canaimasemilla/library/vocabulary.py:46
+#: ../../../canaimasemilla/translator.py:64
 #, python-format
-msgid "Todo est preparado para empezar a construir la imagen.%sPresione aceptar para continuar o cancelar para volver a la pantalla anterior."
+msgid "Todo está preparado para empezar a construir la imagen.%sPresione aceptar para continuar o cancelar para volver a la pantalla anterior."
 msgstr ""
 
 #: ../../../gui/canaimasemilla/library/vocabulary.py:143
+#: ../../../canaimasemilla/translator.py:167
 msgid "Todos los archivos"
 msgstr ""
 
 #: ../../../gui/canaimasemilla/library/vocabulary.py:82
 #: ../../../gui/canaimasemilla/library/vocabulary.py:84
-msgid "Validacin de paquetes"
+#: ../../../canaimasemilla/translator.py:106
+#: ../../../canaimasemilla/translator.py:108
+msgid "Validación de paquetes"
 msgstr ""
 
 #: ../../../gui/canaimasemilla/library/vocabulary.py:97
-msgid "Validacin de repositorios"
+#: ../../../canaimasemilla/translator.py:121
+msgid "Validación de repositorios"
 msgstr ""
 
 #: ../../../gui/canaimasemilla/library/vocabulary.py:48
@@ -392,39 +588,50 @@ msgid "Validando arquitectura \"%s\" de la rama \"%s\" ..."
 msgstr ""
 
 #: ../../../gui/canaimasemilla/library/vocabulary.py:85
+#: ../../../canaimasemilla/translator.py:109
 #, python-format
 msgid "Validando presencia del paquete \"%s\" dentro%sdel repositorio principal y repositorios adicionales ..."
 msgstr ""
 
 #: ../../../gui/canaimasemilla/library/vocabulary.py:83
 #: ../../../gui/canaimasemilla/library/vocabulary.py:98
+#: ../../../canaimasemilla/translator.py:66
+#: ../../../canaimasemilla/translator.py:107
+#: ../../../canaimasemilla/translator.py:122
 #, python-format
-msgid "Validando seccin \"%s\" de la rama \"%s\"%spara el repositorio \"%s\" (%s)"
+msgid "Validando sección \"%s\" de la rama \"%s\"%spara el repositorio \"%s\" (%s)"
 msgstr ""
 
 #: ../../../gui/canaimasemilla/library/vocabulary.py:39
+#: ../../../canaimasemilla/translator.py:57
 msgid "x86: Arquitectura de procesadores con soporte para 32 bits [Recomendado]."
 msgstr ""
 
 #: ../../../gui/canaimasemilla/library/vocabulary.py:40
+#: ../../../canaimasemilla/translator.py:58
 msgid "x86_64: Arquitectura de procesadores con soporte para 64 bits."
 msgstr ""
 
 #: ../../../gui/canaimasemilla/library/vocabulary.py:52
-msgid "Felicidades! La generacin de la imagen se ha completado"
+#: ../../../canaimasemilla/translator.py:70
+msgid "¡Felicidades! La generación de la imagen se ha completado"
 msgstr ""
 
 #: ../../../gui/canaimasemilla/library/vocabulary.py:151
-msgid "Felicidades! Su perfil ha sido creado."
+#: ../../../canaimasemilla/translator.py:175
+msgid "¡Felicidades! Su perfil ha sido creado."
 msgstr ""
 
 #: ../../../gui/canaimasemilla/library/vocabulary.py:44
+#: ../../../canaimasemilla/translator.py:62
 #, python-format
-msgid "Est seguro que desea cancelar la creacin de la imagen?%sPresione aceptar para interrumpir la creacin de la imagen o cancelar para continuar con el proceso."
+msgid "¿Está seguro que desea cancelar la creación de la imagen?%sPresione aceptar para interrumpir la creación de la imagen o cancelar para continuar con el proceso."
 msgstr ""
 
 #: ../../../gui/canaimasemilla/library/vocabulary.py:140
 #: ../../../gui/canaimasemilla/library/vocabulary.py:142
+#: ../../../canaimasemilla/translator.py:164
+#: ../../../canaimasemilla/translator.py:166
 #, python-format
-msgid "Est seguro que desea cancelar la creacin del perfil?%sPresione aceptar para interrumpir la creacin del perfil o cancelar para continuar con el proceso."
+msgid "¿Está seguro que desea cancelar la creación del perfil?%sPresione aceptar para interrumpir la creación del perfil o cancelar para continuar con el proceso."
 msgstr ""
