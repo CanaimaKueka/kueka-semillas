@@ -228,7 +228,9 @@ gen-po: check-maintdep gen-pot
 gen-pot: check-maintdep
 
 	@echo "Actualizando plantilla de traducción [ POT ] ..."
-	@rm -rf $(GUIPOTLIST) $(COREPOTLIST)
+	@rm -rf $(COREPOTLIST) $(GUIPOTLIST)
+	@cp locale/pot/canaima-semilla/c-s-gui.pot.in locale/pot/canaima-semilla/c-s-gui.pot
+	@cp locale/pot/canaima-semilla/c-s-core.pot.in locale/pot/canaima-semilla/c-s-core.pot
 	@for FILE in $(SCRIPTS); do \
 		echo "../../.$${FILE}" >> $(COREPOTLIST); \
 	done

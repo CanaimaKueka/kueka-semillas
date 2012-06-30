@@ -119,10 +119,15 @@ def GetProcessors():
     ).communicate()[0].split('\n')[0])
 
 def GetWritableDrives():
-    return subprocess.Popen(
-        'echo "scale=1;$( cat "/proc/cpuinfo" | grep -c "processor" )" | bc',
+    usb = subprocess.Popen(
+        '/bin/sh '+BINDIR+'/'+CSBIN+' save -L',
         shell = True, stdout = subprocess.PIPE, stderr = subprocess.STDOUT,
     ).communicate()[0].split('\n')
+    opt = subprocess.Popen(
+        '/bin/sh '+BINDIR+'/'+CSBIN+' save -l',
+        shell = True, stdout = subprocess.PIPE, stderr = subprocess.STDOUT,
+    ).communicate()[0].split('\n')
+    return opt+usb
 
 def ProfileList(c, profiledir):
     profilelist = []
@@ -208,7 +213,7 @@ def ProcessGenerator(command, terminal = False, bar = False):
     elif isinstance(command, str):
         strcmd = command
 
-    cmd = '%s 1>%s 2>&1' % (strcmd, filename)
+    cmd = '{0} 1>{1} 2>&1'.format(strcmd, filename)
 
     try:
         os.mkfifo(filename)
@@ -237,8 +242,6 @@ def ProcessGenerator(command, terminal = False, bar = False):
             gobject.source_remove(timer)
 
     return process
-
-
 
 def TestIndexes(sourcestext, archlist, progressmessage, download,
                 q_bar, q_msg, q_code, q_counter, event):
@@ -269,7 +272,7 @@ def TestIndexes(sourcestext, archlist, progressmessage, download,
                 read = 0
                 blocknum = 0
                 contentheader = 0
-                message.set_markup(progressmessage % (section, branch, '\n', url, arch))
+                message.set_markup(progressmessage.format(section, branch, '\n', url, arch))
                 requesturl = url+'/dists/'+branch+'/'+section+'/binary-'+arch+'/Packages.gz'
                 time.sleep(1)
 
@@ -459,7 +462,7 @@ def AddExtraRepos(c, url_entry, branch_entry, sections_entry, arch_container,
             msg_thread = ThreadGenerator(
                 reference = c, gtk = True, window = False,
                 function = UserMessage, params = {
-                    'message': PROFILE_OS_EXTRAREPOS_VALIDATE_ARCH_ERROR_MSG % '\n\n',
+                    'message': PROFILE_OS_EXTRAREPOS_VALIDATE_ARCH_ERROR_MSG.format('\n\n'),
                     'title': PROFILE_OS_EXTRAREPOS_VALIDATE_ARCH_ERROR_TITLE,
                     'type': gtk.MESSAGE_ERROR,
                     'buttons': gtk.BUTTONS_CLOSE
@@ -469,7 +472,7 @@ def AddExtraRepos(c, url_entry, branch_entry, sections_entry, arch_container,
         msg_thread = ThreadGenerator(
             reference = c, gtk = True, window = False,
             function = UserMessage, params = {
-                'message': PROFILE_OS_EXTRAREPOS_VALIDATE_URL_ERROR_MSG % (url, '\n\n'),
+                'message': PROFILE_OS_EXTRAREPOS_VALIDATE_URL_ERROR_MSG.format(url, '\n\n'),
                 'title': PROFILE_OS_EXTRAREPOS_VALIDATE_URL_ERROR_TITLE,
                 'type': gtk.MESSAGE_ERROR,
                 'buttons': gtk.BUTTONS_CLOSE
@@ -487,7 +490,7 @@ def WriteExtraRepos(c, url, branch, sections, repolistframe, repolist,
         msg_thread = ThreadGenerator(
             reference = c, gtk = True, window = False,
             function = UserMessage, params = {
-                'message': PROFILE_OS_EXTRAREPOS_VALIDATE_REPO_ERROR_MSG % (errorcode, '\n\n', '\n\n'),
+                'message': PROFILE_OS_EXTRAREPOS_VALIDATE_REPO_ERROR_MSG.format(errorcode, '\n\n', '\n\n'),
                 'title': PROFILE_OS_EXTRAREPOS_VALIDATE_REPO_ERROR_TITLE,
                 'type': gtk.MESSAGE_ERROR,
                 'buttons': gtk.BUTTONS_CLOSE
@@ -573,7 +576,7 @@ def AddPackages(c, url_entry, branch_entry, section_container, arch_container,
         msg_thread = ThreadGenerator(
             reference = c, gtk = True, window = False,
             function = UserMessage, params = {
-                'message': PROFILE_OS_PACKAGES_VALIDATE_ARCH_ERROR_MSG % '\n\n',
+                'message': PROFILE_OS_PACKAGES_VALIDATE_ARCH_ERROR_MSG.format('\n\n'),
                 'title': PROFILE_OS_PACKAGES_VALIDATE_ARCH_ERROR_TITLE,
                 'type': gtk.MESSAGE_ERROR,
                 'buttons': gtk.BUTTONS_CLOSE
@@ -593,7 +596,7 @@ def WritePackages(c, packages, packageslistframe, packageslist,
         build_thread = ThreadGenerator(
             reference = c, gtk = True, window = False,
             function = UserMessage, params = {
-                'message': PROFILE_OS_PACKAGES_VALIDATE_REPO_ERROR_MSG % (errorcode, '\n\n', '\n\n'),
+                'message': PROFILE_OS_PACKAGES_VALIDATE_REPO_ERROR_MSG.format(errorcode, '\n\n', '\n\n'),
                 'title': PROFILE_OS_PACKAGES_VALIDATE_REPO_ERROR_TITLE,
                 'type': gtk.MESSAGE_ERROR,
                 'buttons': gtk.BUTTONS_CLOSE
@@ -603,7 +606,7 @@ def WritePackages(c, packages, packageslistframe, packageslist,
         timer = gobject.timeout_add(100, ProgressPulse, bar)
         for package in packages.split(' '):
             found = 0
-            message.set_markup(PROFILE_OS_PACKAGES_VALIDATE_PKG_MSG % (package, '\n'))
+            message.set_markup(PROFILE_OS_PACKAGES_VALIDATE_PKG_MSG.format(package, '\n'))
             for path in os.listdir(tempdir):
                 if os.path.isfile(tempdir+path) and fnmatch.fnmatch(tempdir+path, '*.gz'):
                     zipfile = gzip.open(tempdir+path)
@@ -619,7 +622,7 @@ def WritePackages(c, packages, packageslistframe, packageslist,
                 build_thread = ThreadGenerator(
                     reference = c, gtk = True, window = False,
                     function = UserMessage, params = {
-                        'message': PROFILE_OS_PACKAGES_VALIDATE_PKG_ERROR_MSG  % package,
+                        'message': PROFILE_OS_PACKAGES_VALIDATE_PKG_ERROR_MSG.format(package),
                         'title': PROFILE_OS_PACKAGES_VALIDATE_PKG_ERROR_TITLE,
                         'type': gtk.MESSAGE_ERROR,
                         'buttons': gtk.BUTTONS_CLOSE
@@ -649,11 +652,19 @@ def BuildImage(c, profile_container, arch_container, media_container,
 
     for child in arch_children:
         if child.get_active():
-            arch = child.get_label()
+            if child.get_label() == BUILD_PROFILE_ARCH_AMD64:
+                arch = 'amd64'
+            else:
+                arch = 'i386'
 
     for child in media_children:
         if child.get_active():
-            media = child.get_label()
+            if child.get_label() == BUILD_PROFILE_MEDIA_ISO:
+                media = 'iso'
+            elif child.get_label() == BUILD_PROFILE_MEDIA_IMG:
+                media = 'usb'
+            else:
+                media = 'iso-hybrid'
 
     if os.path.exists(PROFILEDIR+'/'+profile+'/profile.conf'):
         get = ['META_REPO', 'META_CODENAME', 'META_REPOSECTIONS']
@@ -734,7 +745,7 @@ def StartCS(c, arch, media, profile, q_bar, q_msg, q_terminal,
         build_thread = ThreadGenerator(
             reference = c, gtk = True, window = False,
             function = UserMessage, params = {
-                'message': BUILD_VALIDATE_SOURCES_ERROR_MSG % '\n\n',
+                'message': BUILD_VALIDATE_SOURCES_ERROR_MSG.format('\n\n'),
                 'title': BUILD_VALIDATE_SOURCES_ERROR_TITLE,
                 'type': gtk.MESSAGE_ERROR,
                 'buttons': gtk.BUTTONS_CLOSE,
@@ -904,7 +915,10 @@ def TestImage(c, image_entry, memory_entry, processors_entry, start_container):
 
     for child in start_container.get_children():
         if child.get_active():
-            start = child.get_label()
+            if child.get_label() == TEST_START_CD_LABEL:
+                start = '-c'
+            else:
+                start = '-d'
 
     build_thread = ThreadGenerator(
         reference = c, gtk = False, window = False,
@@ -917,3 +931,75 @@ def TestImage(c, image_entry, memory_entry, processors_entry, start_container):
             }
         )
 
+def SaveImage(c, device_combo, image_entry, window_container):
+
+    device = device_combo.get_active_text()
+    image = image_entry.get_text()
+    q_window = Queue.Queue()
+    q_bar = Queue.Queue()
+    q_msg = Queue.Queue()
+    q_terminal = Queue.Queue()
+
+    window_thread = ThreadGenerator(
+        reference = c, function = ProgressWindow,
+        params = {
+            'text': SAVE_WRITE_MSG,
+            'title': SAVE_WRITE_TITLE,
+            'term': True,
+            'fcancel': KillProcess,
+            'pcancel': (['wodim', 'c-s', 'dd'],),
+            'q_window': q_window,
+            'q_bar': q_bar,
+            'q_msg': q_msg,
+            'q_terminal': q_terminal
+            }
+        )
+
+    window_thread = ThreadGenerator(
+        reference = c, function = SaveImage2,
+        params = {
+            'c': c,
+            'image': image,
+            'device': device,
+            'q_bar': q_bar,
+            'q_msg': q_msg,
+            'q_terminal': q_terminal,
+            'window': window_container
+            }
+        )
+
+def SaveImage2(c, image, device, q_bar, q_msg, q_terminal, window):
+
+    bar = q_bar.get()
+    message = q_msg.get()
+    terminal = q_terminal.get()
+
+    process = ProcessGenerator(
+        ['/bin/sh', BINDIR+'/'+CSBIN, 'save', '-i', image, '-d', device, '-q'],
+        terminal, bar
+        )
+
+    if process.returncode == 0:
+        build_thread = ThreadGenerator(
+            reference = c, gtk = True, window = False,
+            function = UserMessage, params = {
+                'message': SAVE_SUCCESSFUL_MSG,
+                'title': SAVE_SUCCESSFUL_TITLE,
+                'type': gtk.MESSAGE_ERROR,
+                'buttons': gtk.BUTTONS_CLOSE,
+                'c_1': gtk.RESPONSE_CLOSE, 'f_1': Toggle,
+                'p_1': (c, window)
+                }
+            )
+    else:
+        build_thread = ThreadGenerator(
+            reference = c, gtk = True, window = False,
+            function = UserMessage, params = {
+                'message': SAVE_FAILED_MSG,
+                'title': SAVE_FAILED_TITLE,
+                'type': gtk.MESSAGE_INFO,
+                'buttons': gtk.BUTTONS_OK,
+                'c_1': gtk.RESPONSE_OK, 'f_1': Toggle,
+                'p_1': (c, window)
+                }
+            )

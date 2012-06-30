@@ -27,9 +27,9 @@
 # CODE IS POETRY
 
 ROOTDIR="$( pwd )"
-POT="${ROOTDIR}/locale/pot/aguilas/messages.pot"
+POT="${ROOTDIR}/locale/pot/canaima-semilla/messages.pot"
 TMP="$( tempfile )"
-FILES=$( find ../.. -name *.php )
+FILES="$( find ${ROOTDIR} -iname "*.py" ) $( find ${ROOTDIR} -iname "*.sh" )"
 
 cp ${POT} ${TMP}
 

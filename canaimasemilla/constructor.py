@@ -101,7 +101,7 @@ def Title(c, box, text):
     title = gtk.Label()
     title.set_markup(text)
     title.set_line_wrap(True)
-    title.set_size_request(window_width - (borderwidth*10), -1)
+    title.set_size_request(window_width - box.get_border_width()*4, -1)
 
     box.pack_start(title, False, False, 0)
 
@@ -115,7 +115,7 @@ def Description(c, box, text):
     description = gtk.Label()
     description.set_markup(text)
     description.set_line_wrap(True)
-    description.set_size_request(window_width - (borderwidth*10), -1)
+    description.set_size_request(window_width - box.get_border_width()*4, -1)
     description.set_attributes(style)
 
     box.pack_start(description, expand, fill, padding)
@@ -149,7 +149,7 @@ def NumericSelector(c, box, init, lower, upper, inc_1, inc_2):
 
     return spinner
 
-def Combo(c, box, combolist, combodefault, entry, f_1 = False, p_1 = False,
+def ActiveCombo(c, box, combolist, combodefault, entry, f_1 = False, p_1 = False,
     f_2 = False, p_2 = False, f_3 = False, p_3 = False
     ):
 
@@ -216,7 +216,7 @@ def ScrolledFrame(c, box):
 
     scrolledwindow.add(textview)
     frame.add(scrolledwindow)
-    box.pack_start(frame, False, False, 0)
+    box.pack_start(frame, True, True, 0)
 
     return text
 
@@ -407,27 +407,24 @@ def UserMessage(message, title, type, buttons,
 
     return response
 
-def AboutWindow(img, name, version, url, copyright, description,
-    authorsfile, licensefile, translatorsfile):
-
+def AboutWindow():
     about = gtk.AboutDialog()
     about.set_position(gtk.WIN_POS_CENTER_ON_PARENT)
-    about.set_logo(gtk.gdk.pixbuf_new_from_file(img))
-    about.set_name(name)
-    about.set_version(version)
-    about.set_copyright(copyright)
-    about.set_comments(description)
-    about.set_website(url)
+    about.set_logo(gtk.gdk.pixbuf_new_from_file(ABOUT_IMAGE))
+    about.set_name(app_name)
+    about.set_copyright(app_copyright)
+    about.set_comments(app_description)
+    about.set_website(app_url)
 
     try:
-        f = open(licensefile, 'r')
+        f = open(LICENSE_FILE, 'r')
         license = f.read()
         f.close()
     except Exception, msg:
         license =  'NOT FOUND'
 
     try:
-        f = open(authorsfile, 'r')
+        f = open(AUTHORS_FILE, 'r')
         a = f.read()
         authors = a.split('\n')
         f.close()
@@ -435,15 +432,23 @@ def AboutWindow(img, name, version, url, copyright, description,
         authors = 'NOT FOUND'
 
     try:
-        f = open(translatorsfile, 'r')
+        f = open(TRANSLATORS_FILE, 'r')
         translators = f.read()
         f.close()
     except Exception, msg:
         translators = 'NOT FOUND'
 
+    try:
+        f = open(VERSION_FILE, 'r')
+        version = f.read().split('\n')[0].split('=')[1].strip('"')
+        f.close()
+    except Exception, msg:
+        version = 'NOT FOUND'
+
     about.set_translator_credits(translators)
     about.set_authors(authors)
     about.set_license(license)
+    about.set_version(version)
 
     about.run()
     about.destroy()

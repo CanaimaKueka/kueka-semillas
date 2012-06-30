@@ -32,14 +32,26 @@ LIST_DEV() {
         # FUNCIÓN: LIST_DEV
         # DESCRIPCIÓN: Lista los dispositivos ópticos y/o usb disponibles.
         # ENTRADAS:
-        #       [ISOS]: Directorio donde se encuentra el árbol de configuración.
-        #       [BUILD_OP_MODE]: Modo de operación. 
-        #       [BUILD_PRINT_MODE]: Modo de verbosidad.
+        #       [TYPE]: Tipo de Dispositivo
         # ======================================================================
 
         TYPE="${1}"
         [ -n "${TYPE}" ] && shift 1 || true
 
+	DEVICELIST="$( ls -1 "/sys/block/" )"
 
+	if [ "${TYPE}" = "list-optical" ]; then
+		wodim -devices | grep '/dev/' | awk '{print $2}' | awk -F= '{print $2}'
+	elif [ "${TYPE}" = "list-usb" ]; then
+		for DEVICE in ${DEVICELIST}; do
+			DEVICEID="$( basename ${DEVICE})"
+			DEVICEBUS="$( udevadm info --query="all" --name="${DEVICEID}" | grep "ID_BUS" | awk -F= '{print $2}' )"
+			DEVICETYPE="$( udevadm info --query="all" --name="${DEVICEID}" | grep "ID_TYPE" | awk -F= '{print $2}' )"
+			DEVICENAME="$( udevadm info --query="all" --name="${DEVICEID}" | grep "DEVNAME" | awk -F= '{print $2}' )"
+			if [ "${DEVICETYPE}" = "disk" ] && [ "${DEVICEBUS}" = "usb" ]; then
+				echo "${DEVICENAME}"
+			fi
+		done
+	fi
 
 }

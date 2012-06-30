@@ -50,6 +50,8 @@ class Main():
             c = self, box = self.outbox, image = BANNER_IMAGE
             )
 
+        self.outbox.pack_start(gtk.HBox(), False, False, 10)
+
         self.row_1 = CustomBox(
             c = self, box = self.inbox, align = 'horizontal'
             )
@@ -87,6 +89,7 @@ class Main():
             )
 
         self.outbox.pack_start(self.inbox, False, False, 0)
+        self.outbox.pack_start(gtk.HBox(), False, False, 5)
 
         self.bottom_buttons = BottomButtons(
             c = self, box = self.outbox, width = 80, height = 30,
@@ -99,16 +102,7 @@ class Main():
                 False, False
                 ),
             fabout = ThreadGenerator,
-            pabout = (
-                AboutWindow, {
-                    'img': ABOUT_IMAGE, 'name': app_name,
-                    'version': app_version, 'url': app_url,
-                    'copyright': app_copyright, 'description': app_description,
-                    'authorsfile': AUTHORS_FILE, 'licensefile': LICENCE_FILE,
-                    'translatorsfile': TRANSLATORS_FILE
-                    },
-                True, False
-                )
+            pabout = (AboutWindow, {}, True, False)
             )
 
         # Showing
@@ -120,7 +114,7 @@ class Build():
         # Creating Window
         self.window, self.outbox , self.inbox = WindowContainer(
             c = self, title = BUILD_TITLE, outpad = 0, inpad = 10,
-            spacing = 10
+            spacing = 5
             )
 
         # Creating Objects
@@ -134,11 +128,13 @@ class Build():
             c = self, box = self.outbox, image = BANNER_IMAGE
             )
 
+        self.outbox.pack_start(gtk.HBox(), False, False, 11)
+
         self.profile_name_title = Title(
             c = self, box = self.inbox, text = BUILD_PROFILE_NAME_1
             )
 
-        self.profile_name = Combo(
+        self.profile_name = ActiveCombo(
             c = self, box = self.inbox, combolist = self.profile_list,
             combodefault = self.profile_default, entry = False
             )
@@ -156,7 +152,9 @@ class Build():
             )
 
         self.profile_arch = OptionList(
-            c = self, box = self.inbox, optionlist = supported_arch
+            c = self, box = self.inbox, optionlist = [
+                BUILD_PROFILE_ARCH_AMD64, BUILD_PROFILE_ARCH_I386
+                ]
             )
 
         self.profile_arch_description = Description(
@@ -172,7 +170,10 @@ class Build():
             )
 
         self.profile_media = OptionList(
-            c = self, box = self.inbox, optionlist = supported_media
+            c = self, box = self.inbox, optionlist = [
+                BUILD_PROFILE_MEDIA_ISO, BUILD_PROFILE_MEDIA_IMG,
+                BUILD_PROFILE_MEDIA_HYBRID
+                ]
             )
 
         self.profile_media_description = Description(
@@ -180,7 +181,7 @@ class Build():
             )
 
         self.outbox.pack_start(self.inbox, False, False, 0)
-        self.outbox.pack_start(gtk.HBox(), False, False, 25)
+        self.outbox.pack_start(gtk.HBox(), False, False, 55)
 
         self.bottom_buttons = BottomButtons(
             c = self, box = self.outbox, width = 80, height = 30,
@@ -206,20 +207,11 @@ class Build():
                 True, False
             ),
             fabout = ThreadGenerator,
-            pabout = (
-                AboutWindow, {
-                    'img': ABOUT_IMAGE, 'name': app_name,
-                    'version': app_version, 'url': app_url,
-                    'copyright': app_copyright, 'description': app_description,
-                    'authorsfile': AUTHORS_FILE, 'licensefile': LICENCE_FILE,
-                    'translatorsfile': TRANSLATORS_FILE
-                    },
-                True, False
-                ),
+            pabout = (AboutWindow, {}, True, False),
             fback = ThreadGenerator,
             pback = (
                 UserMessage, {
-                    'message': BUILD_CONFIRM_CANCEL_MSG % '\n\n',
+                    'message': BUILD_CONFIRM_CANCEL_MSG.format('\n\n'),
                     'title': BUILD_CONFIRM_CANCEL_TITLE,
                     'type': gtk.MESSAGE_QUESTION,
                     'buttons': gtk.BUTTONS_YES_NO,
@@ -233,7 +225,7 @@ class Build():
             fgo = ThreadGenerator,
             pgo = (
                 UserMessage, {
-                    'message': BUILD_CONFIRM_OK_MSG % '\n\n',
+                    'message': BUILD_CONFIRM_OK_MSG.format('\n\n'),
                     'title': BUILD_CONFIRM_OK_TITLE,
                     'type': gtk.MESSAGE_QUESTION,
                     'buttons': gtk.BUTTONS_YES_NO,
@@ -275,43 +267,29 @@ class Profile():
             c = self, box = self.outbox, image = BANNER_IMAGE
             )
 
-        self.id_tab, self.distro_tab, self.extrarepos_tab, \
-        self.packages_tab, self.includes_tab, self.installer_tab = TabbedBox(
+        self.id_tab, self.distro_tab, self.misc_tab, \
+        self.extrarepos_tab, self.packages_tab, self.includes_tab, \
+        self.installer_tab = TabbedBox(
             c = self, box = self.inbox, pos = gtk.POS_TOP, tabs = [
-                PROFILE_ID_TAB, PROFILE_DISTRO_TAB, PROFILE_EXTRAREPOS_TAB,
-                PROFILE_PACKAGES_TAB, PROFILE_INCLUDES_TAB, PROFILE_INSTALLER_TAB
+                PROFILE_ID_TAB, PROFILE_DISTRO_TAB, PROFILE_MISC_TAB,
+                PROFILE_EXTRAREPOS_TAB, PROFILE_PACKAGES_TAB,
+                PROFILE_INCLUDES_TAB, PROFILE_INSTALLER_TAB
                 ]
             )
 
+        # ID TAB
         self.profile_name_title = Title(
             c = self, box = self.id_tab, text = PROFILE_PROFILE_NAME_1
             )
 
         self.profile_name = TextEntry(
-            c = self, box = self.id_tab, maxlength = 18, length = 18,
+            c = self, box = self.id_tab, maxlength = 1024, length = 60,
             text = default_profile_name, regex = '^[a-z-]*$'
             )
 
         self.profile_name_description = Description(
             c = self, box = self.id_tab, text = PROFILE_PROFILE_NAME_2
             )
-        self.profile_arch = ''
-#        self.custom_separator_1 = CustomSeparator(
-#            c = self, box = self.id_tab, align = 'horizontal'
-#            )
-
-#        self.profile_arch_title = Title(
-#            c = self, box = self.id_tab, text = PROFILE_PROFILE_ARCH_1
-#            )
-
-#        self.profile_arch = CheckList(
-#            c = self, box = self.id_tab, checklist = supported_arch,
-#            checkdefault = ''
-#            )
-
-#        self.profile_arch_description = Description(
-#            c = self, box = self.id_tab, text = PROFILE_PROFILE_ARCH_2
-#            )
 
         self.custom_separator_2 = CustomSeparator(
             c = self, box = self.id_tab, align = 'horizontal'
@@ -322,8 +300,8 @@ class Profile():
             )
 
         self.author_name = TextEntry(
-            c = self, box = self.id_tab, maxlength = 60, length = 60,
-            text = default_profile_author, regex = '\w'
+            c = self, box = self.id_tab, maxlength = 1024, length = 60,
+            text = default_profile_author, regex = '^[\w\ ]*$'
             )
 
         self.author_name_description = Description(
@@ -339,7 +317,7 @@ class Profile():
             )
 
         self.author_email = TextEntry(
-            c = self, box = self.id_tab, maxlength = 60, length = 60,
+            c = self, box = self.id_tab, maxlength = 1024, length = 60,
             text = default_profile_email, regex = '^[_.@0-9A-Za-z-]*$'
             )
 
@@ -356,7 +334,7 @@ class Profile():
             )
 
         self.author_url = TextEntry(
-            c = self, box = self.id_tab, maxlength = 60, length = 60,
+            c = self, box = self.id_tab, maxlength = 1024, length = 60,
             text = default_profile_url, regex = '^[-A-Za-z0-9+&@#/%?=~_()|!:,.;]*$'
             )
 
@@ -364,45 +342,27 @@ class Profile():
             c = self, box = self.id_tab, text = PROFILE_AUTHOR_URL_2
             )
 
-        self.custom_separator_5 = CustomSeparator(
-            c = self, box = self.id_tab, align = 'horizontal'
-            )
-        self.os_locale = ''
-#        self.os_locale_title = Title(
-#            c = self, box = self.id_tab, text = PROFILE_OS_LOCALE_1
-#            )
-
-#        self.os_locale = Combo(
-#            c = self, box = self.id_tab, combolist = self.locale_list,
-#            combodefault = self.locale_active, entry = False
-#            )
-
-#        self.os_locale_description = Description(
-#            c = self, box = self.id_tab, text = PROFILE_OS_LOCALE_2
-#            )
-
-#        self.custom_separator_6 = CustomSeparator(
-#            c = self, box = self.id_tab, align = 'horizontal'
-#            )
-
+        # DISTRO TAB
         self.meta_dist_title = Title(
             c = self, box = self.distro_tab, text = PROFILE_META_DIST_1
             )
 
-        self.meta_dist_box = CustomBox(
+        self.meta_box = CustomBox(
             c = self, box = self.distro_tab, align = 'horizontal'
+            )
+
+        self.meta_box.set_spacing(5)
+
+        self.meta_dist_box = CustomBox(
+            c = self, box = self.meta_box, align = 'horizontal'
+            )
+
+        self.meta_codename_box = CustomBox(
+            c = self, box = self.meta_box, align = 'horizontal'
             )
 
         self.meta_dist_description = Description(
             c = self, box = self.distro_tab, text = PROFILE_META_DIST_2
-            )
-
-        self.custom_separator_7 = CustomSeparator(
-            c = self, box = self.distro_tab, align = 'horizontal'
-            )
-
-        self.meta_codename_title = Title(
-            c = self, box = self.distro_tab, text = PROFILE_META_CODENAME_1
             )
 
         self.meta_dist = gtk.combo_box_new_text()
@@ -413,16 +373,12 @@ class Profile():
             c = self, dist = self.meta_dist, db = apt_templates
             )
 
-        self.meta_codename = Combo(
-            c = self, box = self.distro_tab, combolist = self.codename_list,
+        self.meta_codename = ActiveCombo(
+            c = self, box = self.meta_codename_box, combolist = self.codename_list,
             combodefault = self.codename_active, entry = True
             )
 
-        self.meta_codename_description = Description(
-            c = self, box = self.distro_tab, text = PROFILE_META_CODENAME_2
-            )
-
-        self.custom_separator_8 = CustomSeparator(
+        self.custom_separator_7 = CustomSeparator(
             c = self, box = self.distro_tab, align = 'horizontal'
             )
 
@@ -431,7 +387,7 @@ class Profile():
             )
 
         self.meta_repo = TextEntry(
-            c = self, box = self.distro_tab, maxlength = 60, length = 60,
+            c = self, box = self.distro_tab, maxlength = 1024, length = 60,
             text = canaima_repo, regex = '^[-A-Za-z0-9+&@#/%?=~_()|!:,.;]*$'
             )
 
@@ -454,7 +410,7 @@ class Profile():
             checkdefault = 'main'
             )
 
-        self.meta_dist, = Combo(
+        self.meta_dist = ActiveCombo(
             c = self, box = self.meta_dist_box, combolist = cs_distros,
             combodefault = 2, entry = False,
             f_1 = ChangeCodename,
@@ -469,6 +425,83 @@ class Profile():
             c = self, box = self.distro_tab, text = PROFILE_META_REPOSECTIONS_2
             )
 
+        # MISC TAB
+        self.profile_arch_title = Title(
+            c = self, box = self.misc_tab, text = PROFILE_PROFILE_ARCH_1
+            )
+
+        self.profile_arch = CheckList(
+            c = self, box = self.misc_tab, checklist = supported_arch,
+            checkdefault = ''
+            )
+
+        self.profile_arch_description = Description(
+            c = self, box = self.misc_tab, text = PROFILE_PROFILE_ARCH_2
+            )
+
+        self.custom_separator_1 = CustomSeparator(
+            c = self, box = self.misc_tab, align = 'horizontal'
+            )
+
+        self.os_locale_title = Title(
+            c = self, box = self.misc_tab, text = PROFILE_OS_LOCALE_1
+            )
+
+        self.os_locale = ActiveCombo(
+            c = self, box = self.misc_tab, combolist = self.locale_list,
+            combodefault = self.locale_active, entry = False
+            )
+
+        self.os_locale_description = Description(
+            c = self, box = self.misc_tab, text = PROFILE_OS_LOCALE_2
+            )
+
+        self.custom_separator_6 = CustomSeparator(
+            c = self, box = self.misc_tab, align = 'horizontal'
+            )
+
+        self.img_syslinux_splash_title = Title(
+            c = self, box = self.misc_tab, text = PROFILE_IMG_SYSLINUX_SPLASH_1
+            )
+
+        self.img_syslinux_splash_box = CustomBox(
+            c = self, box = self.misc_tab, align = 'horizontal'
+            )
+
+        self.img_syslinux_splash = TextEntry(
+            c = self, box = self.img_syslinux_splash_box, maxlength = 1024,
+            length = 68, text = PROFILE_IMG_SYSLINUX_SPLASH_ENTRY, regex = '^.*$'
+            )
+
+        self.img_syslinux_splash_choose = ActiveButton(
+            c = self, box = self.img_syslinux_splash_box, text = gtk.STOCK_OPEN,
+            width = 0, height = 0, f_1 = ThreadGenerator, p_1 = (
+                UserSelect, {
+                    'c': self,
+                    'title': PROFILE_IMG_SYSLINUX_SPLASH_SELECT_TITLE,
+                    'action': gtk.FILE_CHOOSER_ACTION_OPEN,
+                    'allfiltertitle': PROFILE_MIMETYPE_ALL_NAME,
+                    'filter': {
+                        'name': PROFILE_MIMETYPE_PNG_NAME,
+                        'mimetypes': ('image/png',)
+                        },
+                    'entry': self.img_syslinux_splash
+                    },
+                True, False
+                )
+            )
+
+        self.img_syslinux_splash_clean = ActiveButton(
+            c = self, box = self.img_syslinux_splash_box, text = gtk.STOCK_CLEAR,
+            width = 0, height = 0, f_1 = CleanEntry,
+            p_1 = (self.img_syslinux_splash,)
+            )
+
+        self.img_syslinux_splash_description = Description(
+            c = self, box = self.misc_tab, text = PROFILE_IMG_SYSLINUX_SPLASH_2
+            )
+
+        # EXTRAREPOS TAB
         self.os_extrarepos_box_1 = CustomBox(
             c = self, box = self.extrarepos_tab, align = 'horizontal'
             )
@@ -477,37 +510,41 @@ class Profile():
             c = self, box = self.extrarepos_tab, align = 'horizontal'
             )
 
+        self.os_extrarepos_box_3 = CustomBox(
+            c = self, box = self.extrarepos_tab, align = 'horizontal'
+            )
+
         self.os_extrarepos_check = ActiveCheck(
-            c = self, box = self.extrarepos_tab,
+            c = self, box = self.os_extrarepos_box_1,
             text = PROFILE_OS_EXTRAREPOS_CHECK, active = False,
-            f_1 = Toggle, p_1 = (self.os_extrarepos_box_1,),
-            f_2 = Toggle, p_2 = (self.os_extrarepos_box_2,)
+            f_1 = Toggle, p_1 = (self.os_extrarepos_box_2,),
+            f_2 = Toggle, p_2 = (self.os_extrarepos_box_3,)
             )
 
         self.os_extrarepos = ScrolledFrame(
-            c = self, box = self.os_extrarepos_box_1
+            c = self, box = self.os_extrarepos_box_2
             )
 
         self.os_extrarepos_url = TextEntry(
-            c = self, box = self.os_extrarepos_box_2,
-            maxlength = 60, length = 38, text = PROFILE_OS_EXTRAREPOS_URL,
+            c = self, box = self.os_extrarepos_box_3,
+            maxlength = 1024, length = 38, text = PROFILE_OS_EXTRAREPOS_URL,
             regex = '^[-A-Za-z0-9+&@#/%?=~_()|!:,.;]*$'
             )
 
         self.os_extrarepos_branch = TextEntry(
-            c = self, box = self.os_extrarepos_box_2,
-            maxlength = 60, length = 10, text = PROFILE_OS_EXTRAREPOS_BRANCH,
+            c = self, box = self.os_extrarepos_box_3,
+            maxlength = 1024, length = 10, text = PROFILE_OS_EXTRAREPOS_BRANCH,
             regex = '^[A-Za-z0-9-]*$'
             )
 
         self.os_extrarepos_sections = TextEntry(
-            c = self, box = self.os_extrarepos_box_2,
-            maxlength = 60, length = 17, text = PROFILE_OS_EXTRAREPOS_SECTIONS,
+            c = self, box = self.os_extrarepos_box_3,
+            maxlength = 1024, length = 17, text = PROFILE_OS_EXTRAREPOS_SECTIONS,
             regex = '^[A-Za-z0-9\ -]*$'
             )
 
         self.os_extrarepos_add = ActiveButton(
-            c = self, box = self.os_extrarepos_box_2, text = gtk.STOCK_ADD,
+            c = self, box = self.os_extrarepos_box_3, text = gtk.STOCK_ADD,
             width = 0, height = 0, f_1 = ThreadGenerator, p_1 = (
                 AddExtraRepos, {
                     'c': self,
@@ -522,7 +559,7 @@ class Profile():
             )
 
         self.os_extrarepos_clean = ActiveButton(
-            c = self, box = self.os_extrarepos_box_2, text = gtk.STOCK_CLEAR,
+            c = self, box = self.os_extrarepos_box_3, text = gtk.STOCK_CLEAR,
             width = 0, height = 0, f_1 = CleanEntry, p_1 = (self.os_extrarepos,)
             )
 
@@ -530,6 +567,7 @@ class Profile():
             c = self, box = self.extrarepos_tab, text = PROFILE_OS_EXTRAREPOS_2
             )
 
+        # PACKAGES TAB
         self.os_packages_title = Title(
             c = self, box = self.packages_tab, text = PROFILE_OS_PACKAGES_1
             )
@@ -548,7 +586,7 @@ class Profile():
 
         self.os_packages_name = TextEntry(
             c = self, box = self.os_packages_box_2,
-            maxlength = 60, length = 68, text = PROFILE_OS_PACKAGES_ENTRY,
+            maxlength = 1024, length = 68, text = PROFILE_OS_PACKAGES_ENTRY,
             regex = '^[A-Za-z0-9\ -]*$'
             )
 
@@ -630,6 +668,7 @@ class Profile():
             c = self, box = self.packages_tab, text = PROFILE_IMG_POOL_PACKAGES_2
             )
 
+        # INCLUDES TAB
         self.os_includes_title = Title(
             c = self, box = self.includes_tab, text = PROFILE_OS_INCLUDES_1
             )
@@ -802,80 +841,39 @@ class Profile():
             c = self, box = self.includes_tab, text = PROFILE_IMG_HOOKS_2
             )
 
-#        self.img_syslinux_splash_title = Title(
-#            c = self, box = self.includes_tab, text = PROFILE_IMG_SYSLINUX_SPLASH_1
-#            )
-        self.img_syslinux_splash = ''
-#        self.img_syslinux_splash_box = CustomBox(
-#            c = self, box = self.includes_tab, align = 'horizontal'
-#            )
-
-#        self.img_syslinux_splash = TextEntry(
-#            c = self, box = self.img_syslinux_splash_box, maxlength = 1024,
-#            length = 68, text = PROFILE_IMG_SYSLINUX_SPLASH_ENTRY, regex = '^.*$'
-#            )
-
-#        self.img_syslinux_splash_choose = ActiveButton(
-#            c = self, box = self.img_syslinux_splash_box, text = gtk.STOCK_OPEN,
-#            width = 0, height = 0, f_1 = ThreadGenerator, p_1 = (
-#                UserSelect, {
-#                    'c': self,
-#                    'title': PROFILE_IMG_SYSLINUX_SPLASH_SELECT_TITLE,
-#                    'action': gtk.FILE_CHOOSER_ACTION_OPEN,
-#                    'allfiltertitle': PROFILE_MIMETYPE_ALL_NAME,
-#                    'filter': {
-#                        'name': PROFILE_MIMETYPE_PNG_NAME,
-#                        'mimetypes': ('image/png',)
-#                        },
-#                    'entry': self.img_syslinux_splash
-#                    },
-#                True, False
-#                )
-#            )
-
-#        self.img_syslinux_splash_clean = ActiveButton(
-#            c = self, box = self.img_syslinux_splash_box, text = gtk.STOCK_CLEAR,
-#            width = 0, height = 0, f_1 = CleanEntry,
-#            p_1 = (self.img_syslinux_splash,)
-#            )
-
-#        self.img_syslinux_splash_description = Description(
-#            c = self, box = self.includes_tab, text = PROFILE_IMG_SYSLINUX_SPLASH_2
-#            )
-
-        self.img_debian_installer_box = gtk.VBox()
-
-        self.img_debian_installer_check = ActiveCheck(
-            c = self, box = self.installer_tab,
-            text = PROFILE_IMG_DEBIAN_INSTALLER_CHECK, active = False,
-            f_1 = Toggle, p_1 = (
-                False, self.img_debian_installer_box, False, False, False
-                ),
-            )
-
-        self.img_debian_installer_box = CustomBox(
+        # INSTALLER TAB
+        self.img_debian_installer_box_1 = CustomBox(
             c = self, box = self.installer_tab, align = 'vertical'
             )
 
+        self.img_debian_installer_box_2 = CustomBox(
+            c = self, box = self.installer_tab, align = 'vertical'
+            )
+
+        self.img_debian_installer_check = ActiveCheck(
+            c = self, box = self.img_debian_installer_box_1,
+            text = PROFILE_IMG_DEBIAN_INSTALLER_CHECK, active = False,
+            f_1 = Toggle, p_1 = (self.img_debian_installer_box_2,),
+            )
+
         self.img_debian_installer_banner_title = Title(
-            c = self, box = self.img_debian_installer_box,
+            c = self, box = self.img_debian_installer_box_2,
             text = PROFILE_IMG_DEBIAN_INSTALLER_BANNER_1
             )
 
         self.img_debian_installer_banner_box = CustomBox(
-            c = self, box = self.img_debian_installer_box, align = 'horizontal'
+            c = self, box = self.img_debian_installer_box_2, align = 'horizontal'
             )
 
         self.img_debian_installer_banner = TextEntry(
-            c = self, box = self.img_debian_installer_banner_box, maxlength = 1024,
-            length = 68, text = PROFILE_IMG_DEBIAN_INSTALLER_BANNER_ENTRY,
-            regex = '^.*$'
+            c = self, box = self.img_debian_installer_banner_box,
+            maxlength = 1024, length = 68,
+            text = PROFILE_IMG_DEBIAN_INSTALLER_BANNER_ENTRY, regex = '^.*$'
             )
 
         self.img_debian_installer_banner_choose = ActiveButton(
-            c = self, box = self.img_debian_installer_banner_box, text = gtk.STOCK_OPEN,
-            width = 0, height = 0,
-            f_1 = ThreadGenerator,
+            c = self, box = self.img_debian_installer_banner_box,
+            text = gtk.STOCK_OPEN, width = 0, height = 0, f_1 = ThreadGenerator,
             p_1 = (
                 UserSelect, {
                     'c': self,
@@ -893,28 +891,29 @@ class Profile():
             )
 
         self.img_debian_installer_banner_clean = ActiveButton(
-            c = self, box = self.img_debian_installer_banner_box, text = gtk.STOCK_CLEAR,
-            width = 0, height = 0,
+            c = self, box = self.img_debian_installer_banner_box,
+            text = gtk.STOCK_CLEAR, width = 0, height = 0,
             f_1 = CleanEntry, p_1 = (self.img_debian_installer_banner,),
             )
 
         self.img_debian_installer_preseed_title = Title(
-            c = self, box = self.img_debian_installer_box, text = PROFILE_IMG_DEBIAN_INSTALLER_PRESEED_1
+            c = self, box = self.img_debian_installer_box_2,
+            text = PROFILE_IMG_DEBIAN_INSTALLER_PRESEED_1
             )
 
         self.img_debian_installer_preseed_box = CustomBox(
-            c = self, box = self.img_debian_installer_box, align = 'horizontal'
+            c = self, box = self.img_debian_installer_box_2, align = 'horizontal'
             )
 
         self.img_debian_installer_preseed = TextEntry(
-            c = self, box = self.img_debian_installer_preseed_box, maxlength = 1024, length = 68,
+            c = self, box = self.img_debian_installer_preseed_box,
+            maxlength = 1024, length = 68,
             text = PROFILE_IMG_DEBIAN_INSTALLER_PRESEED_ENTRY, regex = '^.*$'
             )
 
         self.img_debian_installer_preseed_choose = ActiveButton(
-            c = self, box = self.img_debian_installer_preseed_box, text = gtk.STOCK_OPEN,
-            width = 0, height = 0,
-            f_1 = ThreadGenerator,
+            c = self, box = self.img_debian_installer_preseed_box,
+            text = gtk.STOCK_OPEN, width = 0, height = 0, f_1 = ThreadGenerator,
             p_1 = (
                 UserSelect, {
                     'c': self,
@@ -928,28 +927,29 @@ class Profile():
             )
 
         self.img_debian_installer_preseed_clean = ActiveButton(
-            c = self, box = self.img_debian_installer_preseed_box, text = gtk.STOCK_CLEAR,
-            width = 0, height = 0,
-            f_1 = CleanEntry, p_1 = (self.img_debian_installer_preseed,),
+            c = self, box = self.img_debian_installer_preseed_box,
+            text = gtk.STOCK_CLEAR, width = 0, height = 0, f_1 = CleanEntry,
+            p_1 = (self.img_debian_installer_preseed,),
             )
 
         self.img_debian_installer_gtk_title = Title(
-            c = self, box = self.img_debian_installer_box, text = PROFILE_IMG_DEBIAN_INSTALLER_GTK_1
+            c = self, box = self.img_debian_installer_box_2,
+            text = PROFILE_IMG_DEBIAN_INSTALLER_GTK_1
             )
 
         self.img_debian_installer_gtk_box = CustomBox(
-            c = self, box = self.img_debian_installer_box, align = 'horizontal'
+            c = self, box = self.img_debian_installer_box_2, align = 'horizontal'
             )
 
         self.img_debian_installer_gtk = TextEntry(
-            c = self, box = self.img_debian_installer_gtk_box, maxlength = 1024, length = 68,
+            c = self, box = self.img_debian_installer_gtk_box,
+            maxlength = 1024, length = 68,
             text = PROFILE_IMG_DEBIAN_INSTALLER_GTK_ENTRY, regex = '^.*$'
             )
 
         self.img_debian_installer_gtk_choose = ActiveButton(
-            c = self, box = self.img_debian_installer_gtk_box, text = gtk.STOCK_OPEN,
-            width = 0, height = 0,
-            f_1 = ThreadGenerator,
+            c = self, box = self.img_debian_installer_gtk_box,
+            text = gtk.STOCK_OPEN, width = 0, height = 0, f_1 = ThreadGenerator,
             p_1 = (
                 UserSelect, {
                     'c': self,
@@ -963,8 +963,8 @@ class Profile():
             )
 
         self.img_debian_installer_gtk_clean = ActiveButton(
-            c = self, box = self.img_debian_installer_gtk_box, text = gtk.STOCK_CLEAR,
-            width = 0, height = 0,
+            c = self, box = self.img_debian_installer_gtk_box,
+            text = gtk.STOCK_CLEAR, width = 0, height = 0,
             f_1 = CleanEntry, p_1 = (self.img_debian_installer_gtk,),
             )
 
@@ -974,13 +974,14 @@ class Profile():
             )
 
         self.outbox.pack_start(self.inbox, False, False, 0)
+        self.outbox.pack_start(gtk.HBox(), False, False, 5)
 
         self.bottom_buttons = BottomButtons(
             c = self, box = self.outbox, width = 80, height = 30,
             fclose = ThreadGenerator,
             pclose = (
                 UserMessage, {
-                    'message': PROFILE_CONFIRM_CANCEL_MSG % '\n\n',
+                    'message': PROFILE_CONFIRM_CANCEL_MSG.format('\n\n'),
                     'title': PROFILE_CONFIRM_CANCEL_TITLE,
                     'type': gtk.MESSAGE_QUESTION,
                     'buttons': gtk.BUTTONS_YES_NO,
@@ -999,20 +1000,11 @@ class Profile():
                 True, False
             ),
             fabout = ThreadGenerator,
-            pabout = (
-                AboutWindow, {
-                    'img': ABOUT_IMAGE, 'name': app_name,
-                    'version': app_version, 'url': app_url,
-                    'copyright': app_copyright, 'description': app_description,
-                    'authorsfile': AUTHORS_FILE, 'licensefile': LICENCE_FILE,
-                    'translatorsfile': TRANSLATORS_FILE
-                    },
-                True, False
-                ),
+            pabout = (AboutWindow, {}, True, False),
             fback = ThreadGenerator,
             pback = (
                 UserMessage, {
-                    'message': PROFILE_CONFIRM_CANCEL_MSG % '\n\n',
+                    'message': PROFILE_CONFIRM_CANCEL_MSG.format('\n\n'),
                     'title': PROFILE_CONFIRM_CANCEL_TITLE,
                     'type': gtk.MESSAGE_QUESTION,
                     'buttons': gtk.BUTTONS_YES_NO,
@@ -1026,7 +1018,7 @@ class Profile():
             fgo = ThreadGenerator,
             pgo = (
                 UserMessage, {
-                    'message': PROFILE_CONFIRM_OK_MSG % '\n\n',
+                    'message': PROFILE_CONFIRM_OK_MSG.format('\n\n'),
                     'title': PROFILE_CONFIRM_OK_TITLE,
                     'type': gtk.MESSAGE_QUESTION,
                     'buttons': gtk.BUTTONS_YES_NO,
@@ -1053,342 +1045,341 @@ class Profile():
                 if child.get_label() == 'amd64':
                     child.set_sensitive(False)
 
+        Toggle(self, self.os_extrarepos_box_2)
+        Toggle(self, self.os_extrarepos_box_3)
+        Toggle(self, self.img_debian_installer_box_2)
+
         # Showing
         self.window.add(self.outbox)
         self.window.show_all()
 
-        Toggle(self, self.os_extrarepos_box_1)
-        Toggle(self, self.os_extrarepos_box_2)
-        Toggle(self, self.os_includes_box)
-        Toggle(self, self.os_hooks_box)
-        Toggle(self, self.img_includes_box)
-        Toggle(self, self.img_hooks_box)
-#        Toggle(self, self.img_syslinux_splash_box)
-        Toggle(self, self.img_debian_installer_box)
-
 class Test():
-    pass
-#    def __init__(self):
-#        # Creating Window
-#        self.window = gtk.Window()
-#        self.window.set_border_width(0)
-#        self.window.set_title(TEST_TITLE)
-#        self.window.set_position(gtk.WIN_POS_CENTER_ALWAYS)
-#        self.window.set_size_request(window_width, window_height)
-#        self.window.set_resizable(False)
-#        self.window.connect("destroy", gtk.main_quit)
-#        self.window.connect("delete-event", gtk.main_quit)
-#        self.window.set_icon_from_file(BAR_ICON)
+    def __init__(self):
+        # Creating Window
+        self.window, self.outbox , self.inbox = WindowContainer(
+            c = self, title = TEST_TITLE, outpad = 0, inpad = 10,
+            spacing = 5
+            )
 
-#        self.vbox = gtk.VBox()
-#        self.inbox = gtk.VBox()
-#        self.inbox.set_border_width(10)
+        self.free_disk = GetFreeDisk()
+        self.free_ram = GetFreeRam()
+        self.processors = GetProcessors()
 
-#        self.banner = Banner(self, BANNER_IMAGE)
+        # Creating Objects
+        self.banner = Banner(
+            c = self, box = self.outbox, image = BANNER_IMAGE
+            )
 
-#        self.test_image_title = Title(c = self, text = TEST_IMAGE_1)
-#        self.test_memory_title = Title(c = self, text = TEST_MEMORY_1)
-#        self.test_processors_title = Title(c = self, text = TEST_PROCESSORS_1)
-#        self.test_start_title = Title(c = self, text = TEST_START_1)
+        self.outbox.pack_start(gtk.HBox(), False, False, 5)
 
-#        self.test_image_help = ActiveLink(c = self, text = TEST_IMAGE_2)
-#        self.test_memory_help = ActiveLink(c = self, text = TEST_MEMORY_2)
-#        self.test_processors_help = ActiveLink(c = self, text = TEST_PROCESSORS_2)
-#        self.test_start_help = ActiveLink(c = self, text = TEST_START_2)
-#        self.test_disk_help = ActiveLink(c = self, text = TEST_DISK_2)
+        self.test_image_title = Title(
+            c = self, box = self.inbox, text = TEST_IMAGE_1
+            )
 
-#        self.freedisk = GetFreeDisk()
-#        self.freeram = GetFreeRam()
-#        self.processors = GetProcessors()
+        self.test_image_box = CustomBox(
+            c = self, box = self.inbox, align = 'horizontal'
+            )
 
-#        self.test_image_entries_box = gtk.HBox()
+        self.test_image = TextEntry(
+            c = self, box = self.test_image_box, maxlength = 1024, length = 68,
+            text = TEST_IMAGE_ENTRY, regex = '^.*$'
+            )
 
-#        self.test_image, self.testimage = TextEntry(
-#            c = self, indent = False, maxlength = 1024, length = 68,
-#            text = TEST_IMAGE_ENTRY, regex = '^.*$'
-#            )
+        self.test_image_choose = ActiveButton(
+            c = self, box = self.test_image_box, text = gtk.STOCK_OPEN,
+            width = 0, height = 0, f_1 = ThreadGenerator, p_1 = (
+                UserSelect, {
+                    'c': self,
+                    'title': TEST_IMAGE_SELECT_TITLE,
+                    'action': gtk.FILE_CHOOSER_ACTION_OPEN,
+                    'allfiltertitle': TEST_MIMETYPE_ALL_NAME,
+                    'filter': {
+                        'name': TEST_MIMETYPE_ISO_NAME,
+                        'mimetypes': ('application/octet-stream',)
+                        },
+                    'entry': self.test_image
+                    },
+                True, False
+                )
+            )
 
-#        self.test_image_choose, self.testimagechoose = ActiveButton(
-#            c = self, text = gtk.STOCK_OPEN,
-#            width = 0, height = 0,
-#            f_1 = ThreadGenerator,
-#            p_1 = (
-#                UserSelect, {
-#                    'c': self,
-#                    'title': TEST_IMAGE_SELECT_TITLE,
-#                    'action': gtk.FILE_CHOOSER_ACTION_OPEN,
-#                    'allfiltertitle': TEST_MIMETYPE_ALL_NAME,
-#                    'filter': {
-#                        'name': TEST_MIMETYPE_ISO_NAME,
-#                        'mimetypes': ('application/octet-stream',)
-#                        },
-#                    'entry': self.testimage
-#                    },
-#                True, False
-#                )
-#            )
+        self.test_image_clean = ActiveButton(
+            c = self, box = self.test_image_box, text = gtk.STOCK_CLEAR,
+            width = 0, height = 0, f_1 = CleanEntry, p_1 = (self.test_image,),
+            )
 
-#        self.test_image_clean, self.testimageclean = ActiveButton(
-#            c = self, text = gtk.STOCK_CLEAR,
-#            width = 0, height = 0,
-#            f_1 = CleanEntry, p_1 = (self.testimage,),
-#            )
+        self.test_image_description = Description(
+            c = self, box = self.inbox, text = TEST_IMAGE_2
+            )
 
-#        self.test_memory, self.testmemory = NumericSelector(
-#            c = self, indent = True, init = 256.0, lower = 256.0,
-#            upper = self.freeram, inc_1 = 10.0, inc_2 = 100.0
-#            )
+        self.custom_separator_1 = CustomSeparator(
+            c = self, box = self.inbox, align = 'horizontal'
+            )
 
-#        self.test_processors, self.testprocessors = NumericSelector(
-#            c = self, indent = True, init = 1.0, lower = 1.0,
-#            upper = self.processors, inc_1 = 1.0, inc_2 = 1.0
-#            )
+        self.test_memory_title = Title(
+            c = self, box = self.inbox, text = TEST_MEMORY_1
+            )
 
-#        self.test_start, self.teststart = OptionList(
-#            c = self, indent = True, optionlist = [
-##                TEST_START_CD_LABEL, TEST_START_HD_LABEL
-#                '-c', '-d'
-#                ]
-#            )
+        self.test_memory = NumericSelector(
+            c = self, box = self.inbox, init = 256.0, lower = 256.0,
+            upper = self.free_ram, inc_1 = 10.0, inc_2 = 100.0
+            )
 
-#        self.test_disk, self.testdisk = NumericSelector(
-#            c = self, indent = True, init = 10.0, lower = 5.0,
-#            upper = self.freedisk, inc_1 = 1.0, inc_2 = 10.0
-#            )
+        self.test_memory_description = Description(
+            c = self, box = self.inbox, text = TEST_MEMORY_2
+            )
 
-#        self.test_disk_check, self.testdiskcheck = ActiveCheck(
-#            c = self, text = TEST_DISK_CHECK_LABEL,
-#            active = False,
-#            f_1 = Toggle, p_1 = (
-#                False, self.test_disk,
-#                False, False, False
-#                ),
-#            )
+        self.custom_separator_2 = CustomSeparator(
+            c = self, box = self.inbox, align = 'horizontal'
+            )
 
-#        self.bottombuttons = BottomButtons(
-#            c = self, width = 80, height = 30,
-#            fclose = ThreadGenerator,
-#            pclose = (
-#                UserMessage, {
-#                    'message': TEST_CONFIRM_CANCEL_MSG,
-#                    'title': TEST_CONFIRM_CANCEL_TITLE,
-#                    'type': gtk.MESSAGE_QUESTION,
-#                    'buttons': gtk.BUTTONS_YES_NO,
-#                    'c_1': gtk.RESPONSE_YES,
-#                    'f_1': self.window.destroy, 'p_1': '',
-#                    'c_2': gtk.RESPONSE_YES,
-#                    'f_2': gtk.main_quit, 'p_2': ''
-#                    },
-#                True, False
-#                ),
-#            fhelp = ThreadGenerator,
-#            phelp = (
-#                ProcessGenerator, {
-#                    'command': ['/usr/bin/yelp', DOCDIR+'/index.html']
-#                    },
-#                True, False
-#            ),
-#            fabout = ThreadGenerator,
-#            pabout = (
-#                AboutWindow, {
-#                    'img': ABOUT_IMAGE, 'name': app_name,
-#                    'version': app_version, 'url': app_url,
-#                    'copyright': app_copyright, 'description': app_description,
-#                    'authorsfile': AUTHORS_FILE, 'licensefile': LICENCE_FILE,
-#                    'translatorsfile': TRANSLATORS_FILE
-#                    },
-#                True, False
-#                ),
-#            fback = ThreadGenerator,
-#            pback = (
-#                UserMessage, {
-#                    'message': TEST_CONFIRM_CANCEL_MSG,
-#                    'title': TEST_CONFIRM_CANCEL_TITLE,
-#                    'type': gtk.MESSAGE_QUESTION,
-#                    'buttons': gtk.BUTTONS_YES_NO,
-#                    'c_1': gtk.RESPONSE_YES,
-#                    'f_1': self.window.hide, 'p_1': '',
-#                    'c_2': gtk.RESPONSE_YES,
-#                    'f_2': Main, 'p_2': ''
-#                    },
-#                True, False
-#                ),
-#            fgo = ThreadGenerator,
-#            pgo = (
-#                UserMessage, {
-#                    'message': TEST_CONFIRM_OK_MSG,
-#                    'title': TEST_CONFIRM_OK_TITLE,
-#                    'type': gtk.MESSAGE_QUESTION,
-#                    'buttons': gtk.BUTTONS_YES_NO,
-#                    'c_1': gtk.RESPONSE_YES,
-#                    'f_1': TestImage, 'p_1': (
-#                        self, self.testimage, self.testmemory,
-#                        self.testprocessors, self.teststart
-#                        )
-#                    },
-#                True, False
-#                )
-#            )
+        self.test_processors_title = Title(
+            c = self, box = self.inbox, text = TEST_PROCESSORS_1
+            )
 
-#        self.vbox.pack_start(self.banner, expand, fill, padding)
+        self.test_processors = NumericSelector(
+            c = self, box = self.inbox, init = 1.0, lower = 1.0,
+            upper = self.processors, inc_1 = 1.0, inc_2 = 1.0
+            )
 
-#        self.inbox.pack_start(self.test_image_title, expand, fill, padding)
-#        self.test_image_entries_box.pack_start(self.test_image, expand, fill, padding)
-#        self.test_image_entries_box.pack_start(self.test_image_choose, expand, fill, padding)
-#        self.test_image_entries_box.pack_start(self.test_image_clean, expand, fill, padding)
-#        self.inbox.pack_start(self.test_image_entries_box, expand, fill, padding)
-#        self.inbox.pack_start(self.test_image_help, expand, fill, padding)
-#        self.inbox.pack_start(gtk.HSeparator(), expand, fill, padding)
-#        self.inbox.pack_start(self.test_memory_title, expand, fill, padding)
-#        self.inbox.pack_start(self.test_memory, expand, fill, padding)
-#        self.inbox.pack_start(self.test_memory_help, expand, fill, padding)
-#        self.inbox.pack_start(gtk.HSeparator(), expand, fill, padding)
-#        self.inbox.pack_start(self.test_processors_title, expand, fill, padding)
-#        self.inbox.pack_start(self.test_processors, expand, fill, padding)
-#        self.inbox.pack_start(self.test_processors_help, expand, fill, padding)
-#        self.inbox.pack_start(gtk.HSeparator(), expand, fill, padding)
-#        self.inbox.pack_start(self.test_start_title, expand, fill, padding)
-#        self.inbox.pack_start(self.test_start, expand, fill, padding)
-#        self.inbox.pack_start(self.test_start_help, expand, fill, padding)
+        self.test_processors_description = Description(
+            c = self, box = self.inbox, text = TEST_PROCESSORS_2
+            )
 
-#        self.vbox.pack_start(self.inbox, expand, fill, padding)
-#        self.vbox.pack_start(self.bottombuttons, expand, fill, padding)
+        self.custom_separator_3 = CustomSeparator(
+            c = self, box = self.inbox, align = 'horizontal'
+            )
 
-#        self.window.add(self.vbox)
-#        self.window.show_all()
+        self.test_start_title = Title(
+            c = self, box = self.inbox, text = TEST_START_1
+            )
+
+        self.test_start = OptionList(
+            c = self, box = self.inbox, optionlist = [
+                TEST_START_CD_LABEL, TEST_START_HD_LABEL
+                ]
+            )
+
+        self.test_start_description = Description(
+            c = self, box = self.inbox, text = TEST_START_2
+            )
+
+        self.custom_separator_4 = CustomSeparator(
+            c = self, box = self.inbox, align = 'horizontal'
+            )
+
+        self.test_disk_box_1 = CustomBox(
+            c = self, box = self.inbox, align = 'horizontal'
+            )
+
+        self.test_disk_box_2 = CustomBox(
+            c = self, box = self.inbox, align = 'horizontal'
+            )
+
+        self.test_disk = NumericSelector(
+            c = self, box = self.test_disk_box_2, init = 10.0, lower = 5.0,
+            upper = self.free_disk, inc_1 = 1.0, inc_2 = 10.0
+            )
+
+        self.test_disk_check = ActiveCheck(
+            c = self, box = self.test_disk_box_1, text = TEST_DISK_CHECK_LABEL,
+            active = False, f_1 = Toggle, p_1 = (self.test_disk_box_2,),
+            )
+
+        self.outbox.pack_start(self.inbox, False, False, 0)
+
+        self.bottom_buttons = BottomButtons(
+            c = self, box = self.outbox, width = 80, height = 30,
+            fclose = ThreadGenerator,
+            pclose = (
+                UserMessage, {
+                    'message': TEST_CONFIRM_CANCEL_MSG.format('\n\n'),
+                    'title': TEST_CONFIRM_CANCEL_TITLE,
+                    'type': gtk.MESSAGE_QUESTION,
+                    'buttons': gtk.BUTTONS_YES_NO,
+                    'c_1': gtk.RESPONSE_YES,
+                    'f_1': self.window.destroy, 'p_1': '',
+                    'c_2': gtk.RESPONSE_YES,
+                    'f_2': gtk.main_quit, 'p_2': ''
+                    },
+                True, False
+                ),
+            fhelp = ThreadGenerator,
+            phelp = (
+                ProcessGenerator, {
+                    'command': ['/usr/bin/yelp', DOCDIR+'/index.html']
+                    },
+                True, False
+            ),
+            fabout = ThreadGenerator,
+            pabout = (AboutWindow, {}, True, False),
+            fback = ThreadGenerator,
+            pback = (
+                UserMessage, {
+                    'message': TEST_CONFIRM_CANCEL_MSG.format('\n\n'),
+                    'title': TEST_CONFIRM_CANCEL_TITLE,
+                    'type': gtk.MESSAGE_QUESTION,
+                    'buttons': gtk.BUTTONS_YES_NO,
+                    'c_1': gtk.RESPONSE_YES,
+                    'f_1': self.window.hide, 'p_1': '',
+                    'c_2': gtk.RESPONSE_YES,
+                    'f_2': Main, 'p_2': ''
+                    },
+                True, False
+                ),
+            fgo = ThreadGenerator,
+            pgo = (
+                UserMessage, {
+                    'message': TEST_CONFIRM_OK_MSG.format('\n\n'),
+                    'title': TEST_CONFIRM_OK_TITLE,
+                    'type': gtk.MESSAGE_QUESTION,
+                    'buttons': gtk.BUTTONS_YES_NO,
+                    'c_1': gtk.RESPONSE_YES,
+                    'f_1': TestImage, 'p_1': (
+                        self, self.test_image, self.test_memory,
+                        self.test_processors, self.test_start
+                        )
+                    },
+                True, False
+                )
+            )
+
+        Toggle(self, self.test_disk_box_2)
+
+        self.window.add(self.outbox)
+        self.window.show_all()
 
 class Save():
-    pass
-#    def __init__(self):
-#        # Creating Window
-#        self.window = gtk.Window()
-#        self.window.set_border_width(0)
-#        self.window.set_title(BUILD_TITLE)
-#        self.window.set_position(gtk.WIN_POS_CENTER_ALWAYS)
-#        self.window.set_size_request(window_width, window_height)
-#        self.window.set_resizable(False)
-#        self.window.connect("destroy", gtk.main_quit)
-#        self.window.set_icon_from_file(BAR_ICON)
+    def __init__(self):
+        # Creating Window
+        self.window, self.outbox , self.inbox = WindowContainer(
+            c = self, title = SAVE_TITLE, outpad = 0, inpad = 10,
+            spacing = 5
+            )
 
-#        self.vbox = gtk.VBox(False, 5)
-#        self.inbox = gtk.VBox(False, 5)
-#        self.inbox.set_border_width(10)
+        self.available_drives = GetWritableDrives()
 
-#        self.profile_name_title = Title(c = self, text = BUILD_PROFILE_NAME_1)
-#        self.profile_arch_title = Title(c = self, text = BUILD_PROFILE_ARCH_1)
-#        self.profile_media_title = Title(c = self, text = BUILD_PROFILE_MEDIA_1)
+        # Creating Objects
+        self.banner = Banner(
+            c = self, box = self.outbox, image = BANNER_IMAGE
+            )
 
-#        self.profile_name_help = ActiveLink(c = self, text = BUILD_PROFILE_NAME_2)
-#        self.profile_arch_help = ActiveLink(c = self, text = BUILD_PROFILE_ARCH_2)
-#        self.profile_media_help = ActiveLink(c = self, text = BUILD_PROFILE_MEDIA_2)
+        self.outbox.pack_start(gtk.HBox(), False, False, 10)
 
-#        self.profilelist, self.profiledefault = ProfileList(
-#            c = self, profiledir = PROFILEDIR
-#            )
+        self.save_device_title = Title(
+            c = self, box = self.inbox, text = SAVE_DEVICE_1
+            )
 
-#        self.nativearch = GetArch()
+        self.save_device = ActiveCombo(
+            c = self, box = self.inbox, combolist = self.available_drives,
+            combodefault = 0, entry = True
+            )
 
-#        self.banner = Banner(self, BANNER_IMAGE)
+        self.save_device_description = Description(
+            c = self, box = self.inbox, text = SAVE_DEVICE_2
+            )
 
-#        self.profile_name, self.profilename = Combo(
-#            c = self, indent = True, combolist = self.profilelist,
-#            combodefault = self.profiledefault, entry = False
-#            )
+        self.custom_separator_1 = CustomSeparator(
+            c = self, box = self.inbox, align = 'horizontal'
+            )
 
-#        self.profile_arch, self.profilearch = OptionList(
-#            c = self, indent = True, optionlist = supported_arch
-#            )
+        self.save_image_title = Title(
+            c = self, box = self.inbox, text = SAVE_IMAGE_1
+            )
 
-#        self.profile_media, self.profilemedia = OptionList(
-#            c = self, indent = True, optionlist = supported_media
-#            )
+        self.save_image_box = CustomBox(
+            c = self, box = self.inbox, align = 'horizontal'
+            )
 
-#        if self.nativearch == 'i686':
-#            for child in self.profilearch:
-#                if child.get_label() == 'amd64':
-#                    child.set_sensitive(False)
+        self.save_image = TextEntry(
+            c = self, box = self.save_image_box, maxlength = 1024, length = 68,
+            text = SAVE_IMAGE_ENTRY, regex = '^.*$'
+            )
 
-#        self.bottombuttons = BottomButtons(
-#            c = self, width = 80, height = 30,
-#            fclose = ThreadGenerator,
-#            pclose = (
-#                UserMessage, {
-#                    'message': BUILD_CONFIRM_CANCEL_MSG,
-#                    'title': BUILD_CONFIRM_CANCEL_TITLE,
-#                    'type': gtk.MESSAGE_QUESTION,
-#                    'buttons': gtk.BUTTONS_YES_NO,
-#                    'c_1': gtk.RESPONSE_YES,
-#                    'f_1': self.window.destroy, 'p_1': '',
-#                    'c_2': gtk.RESPONSE_YES,
-#                    'f_2': gtk.main_quit, 'p_2': ''
-#                    },
-#                True, False
-#                ),
-#            fhelp = ThreadGenerator,
-#            phelp = (
-#                ProcessGenerator, {
-#                    'command': ['/usr/bin/yelp', DOCDIR+'/index.html']
-#                    },
-#                True, False
-#            ),
-#            fabout = ThreadGenerator,
-#            pabout = (
-#                AboutWindow, {
-#                    'img': ABOUT_IMAGE, 'name': app_name,
-#                    'version': app_version, 'url': app_url,
-#                    'copyright': app_copyright, 'description': app_description,
-#                    'authorsfile': AUTHORS_FILE, 'licensefile': LICENCE_FILE,
-#                    'translatorsfile': TRANSLATORS_FILE
-#                    },
-#                True, False
-#                ),
-#            fback = ThreadGenerator,
-#            pback = (
-#                UserMessage, {
-#                    'message': BUILD_CONFIRM_CANCEL_MSG % '\n\n',
-#                    'title': BUILD_CONFIRM_CANCEL_TITLE,
-#                    'type': gtk.MESSAGE_QUESTION,
-#                    'buttons': gtk.BUTTONS_YES_NO,
-#                    'c_1': gtk.RESPONSE_YES,
-#                    'f_1': self.window.hide, 'p_1': '',
-#                    'c_2': gtk.RESPONSE_YES,
-#                    'f_2': Main, 'p_2': ''
-#                    },
-#                True, False
-#                ),
-#            fgo = ThreadGenerator,
-#            pgo = (
-#                UserMessage, {
-#                    'message': BUILD_CONFIRM_OK_MSG % '\n\n',
-#                    'title': BUILD_CONFIRM_OK_TITLE,
-#                    'type': gtk.MESSAGE_QUESTION,
-#                    'buttons': gtk.BUTTONS_YES_NO,
-#                    'c_1': gtk.RESPONSE_YES,
-#                    'f_1': BuildImage, 'p_1': (
-#                        self, self.profilename, self.profilearch,
-#                        self.profilemedia, self.inbox
-#                        )
-#                    },
-#                True, False
-#                )
-#            )
+        self.save_image_choose = ActiveButton(
+            c = self, box = self.save_image_box, text = gtk.STOCK_OPEN,
+            width = 0, height = 0, f_1 = ThreadGenerator, p_1 = (
+                UserSelect, {
+                    'c': self,
+                    'title': SAVE_IMAGE_SELECT_TITLE,
+                    'action': gtk.FILE_CHOOSER_ACTION_OPEN,
+                    'allfiltertitle': SAVE_MIMETYPE_ALL_NAME,
+                    'filter': {
+                        'name': SAVE_MIMETYPE_ISO_NAME,
+                        'mimetypes': ('application/octet-stream',)
+                        },
+                    'entry': self.save_image
+                    },
+                True, False
+                )
+            )
 
-#        self.vbox.pack_start(self.banner, expand, fill, padding)
+        self.save_image_clean = ActiveButton(
+            c = self, box = self.save_image_box, text = gtk.STOCK_CLEAR,
+            width = 0, height = 0, f_1 = CleanEntry, p_1 = (self.save_image,),
+            )
 
-#        self.inbox.pack_start(self.profile_name_title, expand, fill, padding)
-#        self.inbox.pack_start(self.profile_name_help, expand, fill, padding)
-#        self.inbox.pack_start(self.profile_name, expand, fill, padding)
-#        self.inbox.pack_start(gtk.HSeparator(), expand, fill, padding)
-#        self.inbox.pack_start(self.profile_arch_title, expand, fill, padding)
-#        self.inbox.pack_start(self.profile_arch_help, expand, fill, padding)
-#        self.inbox.pack_start(self.profile_arch, expand, fill, padding)
-#        self.inbox.pack_start(gtk.HSeparator(), expand, fill, padding)
-#        self.inbox.pack_start(self.profile_media_title, expand, fill, padding)
-#        self.inbox.pack_start(self.profile_media_help, expand, fill, padding)
-#        self.inbox.pack_start(self.profile_media, expand, fill, padding)
-#        self.inbox.pack_start(self.bottombuttons, expand, fill, padding)
+        self.save_image_description = Description(
+            c = self, box = self.inbox, text = SAVE_IMAGE_2
+            )
 
-#        self.vbox.pack_start(self.inbox, expand, fill, padding)
+        self.outbox.pack_start(self.inbox, False, False, 0)
+        self.outbox.pack_start(gtk.HBox(), False, False, 110)
 
-#        self.window.add(self.vbox)
-#        self.window.show_all()
+        self.bottombuttons = BottomButtons(
+            c = self, box = self.outbox, width = 80, height = 30,
+            fclose = ThreadGenerator,
+            pclose = (
+                UserMessage, {
+                    'message': SAVE_CONFIRM_CANCEL_MSG.format('\n\n'),
+                    'title': SAVE_CONFIRM_CANCEL_TITLE,
+                    'type': gtk.MESSAGE_QUESTION,
+                    'buttons': gtk.BUTTONS_YES_NO,
+                    'c_1': gtk.RESPONSE_YES,
+                    'f_1': self.window.destroy, 'p_1': '',
+                    'c_2': gtk.RESPONSE_YES,
+                    'f_2': gtk.main_quit, 'p_2': ''
+                    },
+                True, False
+                ),
+            fhelp = ThreadGenerator,
+            phelp = (
+                ProcessGenerator, {
+                    'command': ['/usr/bin/yelp', DOCDIR+'/index.html']
+                    },
+                True, False
+            ),
+            fabout = ThreadGenerator,
+            pabout = (AboutWindow, {}, True, False),
+            fback = ThreadGenerator,
+            pback = (
+                UserMessage, {
+                    'message': SAVE_CONFIRM_CANCEL_MSG.format('\n\n'),
+                    'title': SAVE_CONFIRM_CANCEL_TITLE,
+                    'type': gtk.MESSAGE_QUESTION,
+                    'buttons': gtk.BUTTONS_YES_NO,
+                    'c_1': gtk.RESPONSE_YES,
+                    'f_1': self.window.hide, 'p_1': '',
+                    'c_2': gtk.RESPONSE_YES,
+                    'f_2': Main, 'p_2': ''
+                    },
+                True, False
+                ),
+            fgo = ThreadGenerator,
+            pgo = (
+                UserMessage, {
+                    'message': SAVE_CONFIRM_OK_MSG.format('\n\n'),
+                    'title': SAVE_CONFIRM_OK_TITLE,
+                    'type': gtk.MESSAGE_QUESTION,
+                    'buttons': gtk.BUTTONS_YES_NO,
+                    'c_1': gtk.RESPONSE_YES,
+                    'f_1': SaveImage, 'p_1': (
+                        self, self.save_device, self.save_image
+                        )
+                    },
+                True, False
+                )
+            )
+
+        self.window.add(self.outbox)
+        self.window.show_all()

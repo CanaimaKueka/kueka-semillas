@@ -10,12 +10,12 @@
    xmlns:xlink="http://www.w3.org/1999/xlink"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="512"
+   width="150"
    height="150"
    id="svg2"
    sodipodi:version="0.32"
    inkscape:version="0.47 r22583"
-   sodipodi:docname="banner.svg"
+   sodipodi:docname="logo.svg"
    inkscape:output_extension="org.inkscape.output.svg.inkscape"
    version="1.0"
    inkscape:export-filename="/media/dev/canaima-semilla/gui/canaimasemilla/images/banner.png"
@@ -1521,7 +1521,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -1531,7 +1531,7 @@
      id="layer1"
      transform="translate(-305.81417,-435.47525)">
     <g
-       transform="matrix(0.05857131,-0.19441807,0.19838837,0.05739911,496.18553,662.22095)"
+       transform="matrix(0.05857131,-0.19441807,0.19838837,0.05739911,315.18553,662.22095)"
        id="g3183">
       <path
          style="fill:#b1dc02;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:4.32283449;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"

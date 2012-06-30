@@ -47,39 +47,37 @@ fi
 . "${BASEDIR}/scripts/init.sh"
 
 if [ "${ACTION}" = "grabar" ]; then
-	LONGOPTS="imagen:,dispositivo:"
-	COMMAND="probar"
+	LONGOPTS="imagen:,dispositivo:,expresivo,silencioso,listar-opticos,listar-usb,ayuda,uso,acerca"
+	COMMAND="grabar"
 	PARAMETERS="[-i|--imagen ARCHIVO]\n\
-\t[-m|--memoria 256|512|...]\n\
-\t[-p|--procesadores 1|2|4|...]\n\
-\t[-c|--iniciar-cd]\n\
-\t[-d|--iniciar-dd]\n\
-\t[-n|--nuevo-disco]\n\
-\t[-s|--dimensiones-disco 10|50|...]\n\
+\t[-d|--dispositivo DISPOSITIVO]\n\
+\t[-v|--expresivo]\n\
+\t[-q|--silencioso]\n\
+\t[-l|--listar-opticos]\n\
+\t[-L|--listar-usb]\n\
 \t[-h|--ayuda]\n\
 \t[-u|--uso]\n\
 \t[-A|--acerca]\n"
 
 elif [ "${ACTION}" = "save" ]; then
-	LONGOPTS="image:,device:"
-	COMMAND="probar"
-	PARAMETERS="[-i|--imagen ARCHIVO]\n\
-\t[-m|--memoria 256|512|...]\n\
-\t[-p|--procesadores 1|2|4|...]\n\
-\t[-c|--iniciar-cd]\n\
-\t[-d|--iniciar-dd]\n\
-\t[-n|--nuevo-disco]\n\
-\t[-s|--dimensiones-disco 10|50|...]\n\
-\t[-h|--ayuda]\n\
-\t[-u|--uso]\n\
-\t[-A|--acerca]\n"
+	LONGOPTS="image:,device:,verbose,quiet,list-optical,list-usb,help,usage,about"
+	COMMAND="save"
+	PARAMETERS="[-i|--image FILE]\n\
+\t[-d|--device DEVICE]\n\
+\t[-v|--verbose]\n\
+\t[-q|--quiet]\n\
+\t[-l|--list-optical]\n\
+\t[-L|--list-usb]\n\
+\t[-h|--help]\n\
+\t[-u|--usage]\n\
+\t[-A|--about]\n"
 
 else
 	ERRORMSG "Error interno"
 	exit 1
 fi
 
-SHORTOPTS="i:d:"
+SHORTOPTS="i:d:vqlLhuA"
 DESCRIPTION="$( NORMALMSG "Comando para simulación de imágenes instalables." )"
 
 OPTIONS="$( getopt --shell="sh" --name="${0}" --options="${SHORTOPTS}" --longoptions="${LONGOPTS}" -- "${@}" )"
@@ -152,36 +150,43 @@ while true; do
 	esac
 done
 
-
 case ${SAVE_OP_MODE} in
-	list-usb)
-
-	;;
-
-	list-usb)
-
+	list-usb|list-optical)
+		LIST_DEV "${SAVE_OP_MODE}"
 	;;
 
 	normal)
+		USB_LIST="$( LIST_DEV "list-usb" )"
+		OPT_LIST="$( LIST_DEV "list-optical" )"
 
-	;;
-esac
-	/dev/cdrom|/dev/cdrw|/dev/dvd|/dev/dvdrw|/dev/scd0|/dev/sr0|cd|dvd)
-		BURNDEVICE="$( wodim -devices | grep '/dev/' | awk '{print $2}' )"
-		if wodim ${BURNDEVICE} -data ${IMAGE}; then
-			SUCCESSMSG ""
-			exit 0
-		else
-			ERRORMSG ""
-			exit 1
-		fi
-	;;
-	*)
-		if dd if="${IMAGE}" of="${DEVICE}"; then
-			SUCCESSMSG ""
-			exit 0
-		else
-			ERRORMSG ""
+		for ITEM in ${USB_LIST}; do
+			if [ "${ITEM}" = "${DEVICE}" ]; then
+				if dd if="${IMAGE}" of="${DEVICE}" 1>/dev/null 2>&1; then
+					SAVED=1
+					SUCCESSMSG "¡Felicidades! Su imagen ha sido grabada satisfactoriamente en el dispositivo indicado."
+					exit 0
+				else
+					ERRORMSG "Ha ocurrido un error mientras se grababa la imagen. Retire la unidad e inténtelo de nuevo."
+					exit 1
+				fi
+			fi
+		done
+
+		for ITEM in ${OPT_LIST}; do
+			if [ "${ITEM}" = "${DEVICE}" ]; then
+				if wodim -eject -data dev="${DEVICE}" ${IMAGE} 1>/dev/null 2>&1; then
+					SAVED=1
+					SUCCESSMSG "¡Felicidades! Su imagen ha sido grabada satisfactoriamente en el dispositivo indicado."
+					exit 0
+				else
+					ERRORMSG "Ha ocurrido un error mientras se grababa la imagen. Retire la unidad e inténtelo de nuevo."
+					exit 1
+				fi
+			fi
+		done
+
+		if [ ${SAVED} != 1 ]; then
+			ERRORMSG "El dispositivo indicado no es apto para grabar imágenes."
 			exit 1
 		fi
 	;;
