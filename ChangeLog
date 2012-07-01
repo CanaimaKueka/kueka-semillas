@@ -1,3 +1,9 @@
+DEVELOPMENT RELEASE v3.0+dev20120630185151 (06/30/12)
+Ajustando el arte gráfico de la gui.
+Mejorando esquema de traducción de cadenas de texto.
+Ingeniería de detalle para los módulos de la gui.
+Actualizando perfiles.
+
 DEVELOPMENT RELEASE v3.0+20120626164317 (06/26/12)
 Cambiando la ubicación de la carpeta de código fuente de la interfaz gráfica de ./gui/canaimasemilla a ./canaimasemilla
 Cambiando ubicación del binario principal del core a la carpeta raíz.
