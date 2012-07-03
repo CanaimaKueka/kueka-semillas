@@ -159,31 +159,40 @@ gen-mo: check-buildep clean-mo
 
 # INSTALL TASKS ------------------------------------------------------------------------------
 
-install:
+install: install-core install-doc install-gui
 
-	@# c-s-core
-	@mkdir -p $(COREDIR)/usr/bin/
-	@mkdir -p $(COREDIR)/etc/canaima-semilla/
-	@mkdir -p $(COREDIR)/usr/share/canaima-semilla/scripts/
-	@mkdir -p $(COREDIR)/usr/share/locale/
-	@cp scripts/c-s.sh $(COREDIR)/usr/bin/c-s
-	@cp -r scripts templates profiles $(COREDIR)/usr/share/canaima-semilla/
-	@cp -r config $(COREDIR)/etc/canaima-semilla/
-	@cp -r locale/* $(COREDIR)/usr/share/locale/
-	@rm -f $(COREDIR)/usr/share/canaima-semilla/scripts/c-s.sh
-	@rm -rf $(COREDIR)/usr/share/locale/pot
+install-core:
 
-	@# c-s-doc
-	@mkdir -p $(DOCDIR)/usr/share/applications/
-	@mkdir -p $(DOCDIR)/usr/share/doc/canaima-semilla/
-	@cp c-s-manual.desktop $(DOCDIR)/usr/share/applications/
-	@cp -r documentation/html $(DOCDIR)/usr/share/doc/canaima-semilla/
+	@mkdir -p $(DESTDIR)/usr/bin
+	@mkdir -p $(DESTDIR)/etc/canaima-semilla/core
+	@mkdir -p $(DESTDIR)/usr/share/canaima-semilla
+	@cp c-s-core.sh $(DESTDIR)/usr/bin/c-s
+	@cp -r scripts templates profiles $(DESTDIR)/usr/share/canaima-semilla/
+	@cp config/core/* $(DESTDIR)/etc/canaima-semilla/core/
 
-	@# c-s-gui
+install-common:
+
+	@mkdir -p $(DESTDIR)/usr/share/locale
+	@mkdir -p $(DESTDIR)/usr/share/icons/hicolor
+	@cp -r locale/* $(DESTDIR)/usr/share/locale/
+	@cp -r icons/hicolor/* $(DESTDIR)/usr/share/icons/hicolor/
+	@rm -rf $(DESTDIR)/usr/share/locale/pot
+
+install-doc:
+
+	@mkdir -p $(DESTDIR)/usr/share/applications/
+	@mkdir -p $(DESTDIR)/usr/share/doc/canaima-semilla/
+	@cp c-s-manual.desktop $(DESTDIR)/usr/share/applications/
+	@cp -r documentation/html $(DESTDIR)/usr/share/doc/canaima-semilla/
+
+install-gui:
+
 	@mkdir -p $(GUIDIR)/usr/share/applications/
 	@mkdir -p $(GUIDIR)/usr/share/canaima-semilla/
+	@mkdir -p $(DESTDIR)/etc/canaima-semilla/gui
 	@cp c-s-gui.desktop $(GUIDIR)/usr/share/applications/
 	@cp -r gui $(GUIDIR)/usr/share/canaima-semilla/
+	@cp config/gui/* $(DESTDIR)/etc/canaima-semilla/gui/
 
 uninstall:
 
