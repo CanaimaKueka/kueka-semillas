@@ -195,7 +195,7 @@ if [ "${KVM_NEW_DISK}" = "true" ]; then
 	fi
 fi
 
-if ${KVM} -snapshot -m "${KVM_MEM}" -smp "${KVM_PROC}" -boot "${KVM_DISK_MODE}" -hda "${KVM_DISK_FILE}" -cdrom "${KVM_CD_FILE}"; then
+if ${KVM} -m "${KVM_MEM}" -smp "${KVM_PROC}" -boot "${KVM_DISK_MODE}" -hda "${KVM_DISK_FILE}" -cdrom "${KVM_CD_FILE}"; then
 	SUCCESSMSG "Emulación iniciada a las ${TIMESTAMP}."
 	exit 0
 else

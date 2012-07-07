@@ -80,9 +80,9 @@ fi
 SHORTOPTS="i:d:vqlLhuA"
 DESCRIPTION="$( NORMALMSG "Comando para simulación de imágenes instalables." )"
 
-OPTIONS="$( getopt --shell="sh" --name="${0}" --options="${SHORTOPTS}" --longoptions="${LONGOPTS}" -- "${@}" )"
+OPTIONS="$( ${GETOPT} --shell="sh" --name="${0}" --options="${SHORTOPTS}" --longoptions="${LONGOPTS}" -- "${@}" )"
 
-if [ $? != 0 ]; then
+if [ ${?} != 0 ]; then
 	ERRORMSG "Ocurrió un problema interpretando los parámetros."
 	exit 1
 fi
@@ -161,7 +161,7 @@ case ${SAVE_OP_MODE} in
 
 		for ITEM in ${USB_LIST}; do
 			if [ "${ITEM}" = "${DEVICE}" ]; then
-				if dd if="${IMAGE}" of="${DEVICE}" 1>/dev/null 2>&1; then
+				if ${DD} if="${IMAGE}" of="${DEVICE}" 1>/dev/null 2>&1; then
 					SAVED=1
 					SUCCESSMSG "¡Felicidades! Su imagen ha sido grabada satisfactoriamente en el dispositivo indicado."
 					exit 0
@@ -174,7 +174,7 @@ case ${SAVE_OP_MODE} in
 
 		for ITEM in ${OPT_LIST}; do
 			if [ "${ITEM}" = "${DEVICE}" ]; then
-				if wodim -eject -data dev="${DEVICE}" ${IMAGE} 1>/dev/null 2>&1; then
+				if ${WODIM} -eject -data dev="${DEVICE}" ${IMAGE} 1>/dev/null 2>&1; then
 					SAVED=1
 					SUCCESSMSG "¡Felicidades! Su imagen ha sido grabada satisfactoriamente en el dispositivo indicado."
 					exit 0
