@@ -1,16 +1,16 @@
 # Plantilla de Traducción para Canaima Semilla.
-# Copyright (C) 2012 Luis Alejandro Martínez Faneyth
+# Copyright (C) 2013 Luis Alejandro Martínez Faneyth
 # This file is distributed under the same license as the Canaima Semilla package.
 #
 # Translators:
-# Luis Alejandro Martínez Faneyth <luis@huntingbears.com.ve>, 2012
+# Luis Alejandro Martínez Faneyth <luis@huntingbears.com.ve>, 2013
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: Canaima Semilla 3.0\n"
 "Report-Msgid-Bugs-To: desarrolladores@canaima.softwarelibre.gob.ve\n"
-"POT-Creation-Date: 2012-07-07 03:09-0430\n"
-"PO-Revision-Date: 2012-07-07 03:09-0430\n"
+"POT-Creation-Date: 2013-04-29 13:40-0430\n"
+"PO-Revision-Date: 2013-04-29 13:40-0430\n"
 "Last-Translator: Luis Alejandro Martínez Faneyth <luis@huntingbears.com.ve>\n"
 "Language-Team: Equipo de Traducción de Canaima Semilla <desarrolladores@canaima.softwarelibre.gob.ve>\n"
 "Language: English\n"

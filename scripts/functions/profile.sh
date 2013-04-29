@@ -192,14 +192,14 @@ CS_LOAD_PROFILE() {
 			MEDIO="iso"
 			MEDIO_LBNAME="binary.iso"
 			MEDIO_CSNAME="${META_DISTRO}-${PROFILE_NAME}~${TIMESTAMP}_${ARCH}.iso"
-			LB_BOOTLOADER="isolinux"
+			LB_BOOTLOADER="syslinux"
 		;;
 
 		mixto|hybrid|iso-hybrid)
 			MEDIO="iso-hybrid"
 			MEDIO_LBNAME="binary-hybrid.iso"
 			MEDIO_CSNAME="${META_DISTRO}-${PROFILE_NAME}~${TIMESTAMP}_${ARCH}.iso"
-			LB_BOOTLOADER="isolinux"
+			LB_BOOTLOADER="syslinux"
 		;;
 
 		*)

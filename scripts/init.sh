@@ -36,7 +36,7 @@ for BIN in ${BINLIST}; do
 	elif [ -x "${BIN}" ]; then
 		eval "${VARNAME}=\"${BIN}\""
 	else
-		ERRORMSG "No se ha podido encontrar un reemplazo para '%s', la instalación de Canaima Semilla puede estar corrupta." "${BIN}"
+		echo "No se ha podido encontrar un reemplazo para '%s', la instalación de Canaima Semilla puede estar corrupta." "${BIN}"
 		exit 1
 	fi
 done
@@ -44,7 +44,7 @@ done
 if ${DPKG_QUERY} --show --showformat='${Version}\n' live-build 1>/dev/null 2>&1; then
 	LB_VERSION="$( ${DPKG_QUERY} --show --showformat='${Version}\n' live-build )"
 else
-	ERRORMSG "No se ha podido encontrar el paquete 'live-build'."
+	echo "No se ha podido encontrar el paquete 'live-build'."
 	exit 1
 fi
 
@@ -70,42 +70,42 @@ export PATH="${BINDIR%/}:${SCRIPTS%/}:${MODULES%/}:${PATH}"
 
 # Comprobando estado previo a la ejecución de módulos
 if [ $( ${ID} -u ) != 0 ]; then
-	ERRORMSG "Canaima Semilla debe ser ejecutado como usuario root."
+	echo "Canaima Semilla debe ser ejecutado como usuario root."
 	exit 1
 fi
 
 if [ ! -f "${CONFIG}" ]; then
-	ERRORMSG "El archivo de configuración '%s' no existe o no es ejecutable." "${CONFIG}"
+	echo "El archivo de configuración '%s' no existe o no es ejecutable." "${CONFIG}"
 	exit 1
 fi
 
 if [ ! -f "${LIBRARY}" ]; then
-	ERRORMSG "La librería de funciones principales '%s' no existe o no es ejecutable." "${LIBRARY}"
+	echo "La librería de funciones principales '%s' no existe o no es ejecutable." "${LIBRARY}"
 	exit 1
 fi
 
 if [ ! -d "${FUNCTIONS}" ]; then
-	ERRORMSG "El directorio que contiene las funciones '%s' no existe." "${FUNCTIONS}"
+	echo "El directorio que contiene las funciones '%s' no existe." "${FUNCTIONS}"
 	exit 1
 fi
 
 if [ ! -d "${MODULES}" ]; then
-	ERRORMSG "El directorio que contiene los módulos '%s' no existe." "${MODULES}"
+	echo "El directorio que contiene los módulos '%s' no existe." "${MODULES}"
 	exit 1
 fi
 
 if [ ! -d "${PROFILES}" ]; then
-	ERRORMSG "El directorio que contiene los perfiles '%s' no existe." "${PROFILES}"
+	echo "El directorio que contiene los perfiles '%s' no existe." "${PROFILES}"
 	exit 1
 fi
 
 if [ ! -d "${SCRIPTS}" ]; then
-	ERRORMSG "El directorio que contiene los scripts '%s' no existe." "${SCRIPTS}"
+	echo "El directorio que contiene los scripts '%s' no existe." "${SCRIPTS}"
 	exit 1
 fi
 
 if [ ! -d "${ISOS}" ]; then
-	ERRORMSG "El directorio de construcción de imágenes '%s' no existe." "${ISOS}"
+	echo "El directorio de construcción de imágenes '%s' no existe." "${ISOS}"
 	exit 1
 fi
 

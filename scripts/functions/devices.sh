@@ -38,7 +38,7 @@ LIST_DEV() {
         TYPE="${1}"
         [ -n "${TYPE}" ] && shift 1 || true
 
-	DEVICELIST="$( ls -1 "/sys/block/" )"
+	DEVICELIST="$( ls -d1 /sys/block/* )"
 
 	if [ "${TYPE}" = "list-optical" ]; then
 		wodim -devices | grep '/dev/' | awk '{print $2}' | awk -F= '{print $2}'

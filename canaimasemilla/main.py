@@ -258,7 +258,7 @@ class Profile():
 
         self.locale_list, self.locale_active = LocaleList(
             c = self, supported = supported_locales,
-            current = os.environ['LC_ALL']
+            current = os.environ['LANG']
             )
 
         self.native_arch = GetArch()

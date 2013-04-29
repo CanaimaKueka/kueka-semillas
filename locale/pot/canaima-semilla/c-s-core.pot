@@ -1,16 +1,16 @@
 # Plantilla de Traducción para Canaima Semilla.
-# Copyright (C) 2012 Luis Alejandro Martínez Faneyth
+# Copyright (C) 2013 Luis Alejandro Martínez Faneyth
 # This file is distributed under the same license as the Canaima Semilla package.
 #
 # Translators:
-# Luis Alejandro Martínez Faneyth <luis@huntingbears.com.ve>, 2012
+# Luis Alejandro Martínez Faneyth <luis@huntingbears.com.ve>, 2013
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: Canaima Semilla 3.0\n"
 "Report-Msgid-Bugs-To: desarrolladores@canaima.softwarelibre.gob.ve\n"
-"POT-Creation-Date: 2012-07-07 03:09-0430\n"
-"PO-Revision-Date: 2012-07-07 03:09-0430\n"
+"POT-Creation-Date: 2013-04-29 13:40-0430\n"
+"PO-Revision-Date: 2013-04-29 13:40-0430\n"
 "Last-Translator: Luis Alejandro Martínez Faneyth <luis@huntingbears.com.ve>\n"
 "Language-Team: Equipo de Traducción de Canaima Semilla <desarrolladores@canaima.softwarelibre.gob.ve>\n"
 "Language: English\n"
@@ -59,10 +59,6 @@ msgstr ""
 msgid "Arquitecturas habilitadas para la construcción de la distribución [ej: i386 amd64]"
 msgstr ""
 
-#: ../../../scripts/init.sh:73
-msgid "Canaima Semilla debe ser ejecutado como usuario root."
-msgstr ""
-
 #: ../../../scripts/modules/profile.sh:204
 msgid "Cancelado."
 msgstr ""
@@ -93,10 +89,6 @@ msgstr ""
 msgid "El archivo de configuraciones '%s' no existe o no es un archivo válido."
 msgstr ""
 
-#: ../../../scripts/init.sh:78
-msgid "El archivo de configuración '%s' no existe o no es ejecutable."
-msgstr ""
-
 #: ../../../scripts/functions/image.sh:55
 msgid "El contenedor de construcción parece haber sido configurado manualmente."
 msgstr ""
@@ -108,24 +100,7 @@ msgstr ""
 #: ../../../scripts/functions/tree.sh:94
 #: ../../../scripts/functions/tree.sh:207
 #: ../../../scripts/modules/build.sh:212 ../../../scripts/modules/build.sh:236
-#: ../../../scripts/init.sh:108
 msgid "El directorio de construcción de imágenes '%s' no existe."
-msgstr ""
-
-#: ../../../scripts/init.sh:88
-msgid "El directorio que contiene las funciones '%s' no existe."
-msgstr ""
-
-#: ../../../scripts/init.sh:93
-msgid "El directorio que contiene los módulos '%s' no existe."
-msgstr ""
-
-#: ../../../scripts/init.sh:98
-msgid "El directorio que contiene los perfiles '%s' no existe."
-msgstr ""
-
-#: ../../../scripts/init.sh:103
-msgid "El directorio que contiene los scripts '%s' no existe."
 msgstr ""
 
 #: ../../../scripts/modules/save.sh:189
@@ -148,8 +123,8 @@ msgstr ""
 msgid "El perfil '%s' no existe dentro de la carpeta de perfiles '%s'."
 msgstr ""
 
-#: ../../../scripts/modules/save.sh:76 ../../../scripts/modules/build.sh:84
-#: ../../../scripts/modules/test.sh:78 ../../../scripts/modules/profile.sh:67
+#: ../../../scripts/modules/build.sh:84 ../../../scripts/modules/profile.sh:67
+#: ../../../scripts/modules/save.sh:76 ../../../scripts/modules/test.sh:78
 msgid "Error interno"
 msgstr ""
 
@@ -198,10 +173,6 @@ msgstr ""
 #: ../../../scripts/functions/profile.sh:398
 #: ../../../scripts/functions/profile.sh:415
 msgid "La instalación de %s puede estar corrupta, por favor reinstala."
-msgstr ""
-
-#: ../../../scripts/init.sh:83
-msgid "La librería de funciones principales '%s' no existe o no es ejecutable."
 msgstr ""
 
 #: ../../../scripts/modules/profile.sh:189
@@ -380,14 +351,6 @@ msgstr ""
 msgid "No se ha especificado una versión para la Metadistribución base."
 msgstr ""
 
-#: ../../../scripts/init.sh:47
-msgid "No se ha podido encontrar el paquete 'live-build'."
-msgstr ""
-
-#: ../../../scripts/init.sh:39
-msgid "No se ha podido encontrar un reemplazo para '%s', la instalación de Canaima Semilla puede estar corrupta."
-msgstr ""
-
 #: ../../../scripts/functions/profile.sh:269
 msgid "No se han definido archivos para incluir en el sistema."
 msgstr ""
@@ -440,11 +403,11 @@ msgstr ""
 msgid "Ocurrió un error durante la generación de la imagen."
 msgstr ""
 
-#: ../../../scripts/modules/save.sh:86 ../../../scripts/modules/save.sh:147
 #: ../../../scripts/modules/build.sh:94 ../../../scripts/modules/build.sh:175
-#: ../../../scripts/modules/test.sh:88 ../../../scripts/modules/test.sh:154
 #: ../../../scripts/modules/profile.sh:77
-#: ../../../scripts/modules/profile.sh:118
+#: ../../../scripts/modules/profile.sh:118 ../../../scripts/modules/save.sh:86
+#: ../../../scripts/modules/save.sh:147 ../../../scripts/modules/test.sh:88
+#: ../../../scripts/modules/test.sh:154
 msgid "Ocurrió un problema interpretando los parámetros."
 msgstr ""
 
