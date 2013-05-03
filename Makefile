@@ -274,9 +274,9 @@ gen-test:
 	done
 	@printf "]\n"
 
-snapshot: check-maintdep prepare gen-html gen-wiki gen-po clean
+snapshot: check-maintdep prepare gen-html gen-wiki gen-po clean-all
 
-	@$(MAKE) clean
+	@$(MAKE) clean-all
 	@$(SHELLBIN) tools/snapshot.sh
 
 release: check-maintdep

@@ -106,17 +106,24 @@ CS_CREATE_TREE() {
 
 	if ${DPKG} --compare-versions "${LB_VERSION}" ge 3.0; then
 		LB_PARENTS="--parent-mirror-bootstrap=\"${META_REPO}\" \
---parent-mirror-chroot=\"${META_REPO}\" \
---parent-mirror-binary=\"${META_REPO}\" \
+--parent-distribution=\"${META_CODENAME}\" \
+--parent-archive-areas=\"${META_REPOSECTIONS}\" \
+--parent-debian-installer-distribution=\"${META_CODENAME}\" \
 --parent-mirror-debian-installer=\"${META_REPO}\" \
+--parent-mirror-debian-installer=\"${META_REPO}\" \
+--parent-mirror-chroot=\"${META_REPO}\" \
 --parent-mirror-chroot-security=\"none\" \
---parent-mirror-chroot-volatile=\"none\" \
+--parent-mirror-chroot-updates=\"none\" \
 --parent-mirror-chroot-backports=\"none\" \
+--parent-mirror-binary=\"${META_REPO}\" \
 --parent-mirror-binary-security=\"none\" \
---parent-mirror-binary-volatile=\"none\" \
+--parent-mirror-binary-updates=\"none\" \
 --parent-mirror-binary-backports=\"none\""
 		LB_INDICES="--apt-indices=\"none\""
-		LB_SYSLINUX="--syslinux-theme=\"live-build\""
+		LB_SYSLINUX="--apt-source-archives=\"false\" \
+--system=\"live\" \
+--firmware-binary=\"false\" \
+--firmware-chroot=\"false\""
 	else
 		LB_INDICES="--binary-indices=\"false\""
 		LB_SYSLINUX="--syslinux-menu=\"true\" \
@@ -134,29 +141,27 @@ CS_CREATE_TREE() {
 --linux-flavours=\"${KERNEL_ARCH}\" \
 --distribution=\"${META_CODENAME}\" \
 --mode=\"${META_MODE}\" \
---language=\"${OS_LANG}\" \
 --apt=\"aptitude\" \
 --apt-recommends=\"false\" \
 --apt-secure=\"false\" \
 --bootloader=\"syslinux\" \
---binary-images=\"${MEDIO}\" \
 --bootstrap=\"debootstrap\" \
---includes=\"none\" \
+--binary-images=\"${MEDIO}\" \
 --archive-areas=\"${META_REPOSECTIONS}\" \
 --mirror-bootstrap=\"${META_REPO}\" \
 --mirror-chroot=\"${META_REPO}\" \
---mirror-binary=\"${META_REPO}\" \
---mirror-debian-installer=\"${META_REPO}\" \
 --mirror-chroot-security=\"none\" \
---mirror-chroot-volatile=\"none\" \
+--mirror-chroot-updates=\"none\" \
 --mirror-chroot-backports=\"none\" \
+--mirror-binary=\"${META_REPO}\" \
 --mirror-binary-security=\"none\" \
---mirror-binary-volatile=\"none\" \
+--mirror-binary-updates=\"none\" \
 --mirror-binary-backports=\"none\" \
+--mirror-debian-installer=\"${META_REPO}\" \
 --security=\"false\" \
---volatile=\"false\" \
 --backports=\"false\" \
 --source=\"false\" \
+--updates=\"false\" \
 --iso-preparer=\"${CS_ISO_PREPARER}\" \
 --iso-volume=\"${CS_ISO_VOLUME}\" \
 --iso-publisher=\"${CS_ISO_PUBLISHER}\" \
