@@ -1,5 +1,12 @@
 label live-@FLAVOUR@
 	menu label ^Live (@FLAVOUR@)
 	menu default
-	kernel @KERNEL@
-	append initrd=@INITRD@ boot=live config @LB_BOOTAPPEND_LIVE@
+	linux @LINUX@
+	initrd @INITRD@
+	append @APPEND_LIVE@
+
+label live-@FLAVOUR@-failsafe
+	menu label ^Live (@FLAVOUR@ failsafe)
+	linux @LINUX@
+	initrd @INITRD@
+	append @APPEND_LIVE_FAILSAFE@

@@ -118,7 +118,10 @@ CS_CREATE_TREE() {
 --parent-mirror-binary=\"${META_REPO}\" \
 --parent-mirror-binary-security=\"none\" \
 --parent-mirror-binary-updates=\"none\" \
---parent-mirror-binary-backports=\"none\""
+--parent-mirror-binary-backports=\"none\" \
+--mirror-chroot-updates=\"none\" \
+--mirror-binary-updates=\"none\" \
+--updates=\"false\""
 		LB_INDICES="--apt-indices=\"none\""
 		LB_SYSLINUX="--apt-source-archives=\"false\" \
 --system=\"live\" \
@@ -128,6 +131,11 @@ CS_CREATE_TREE() {
 		LB_INDICES="--binary-indices=\"false\""
 		LB_SYSLINUX="--syslinux-menu=\"true\" \
 --syslinux-timeout=\"5\" \
+--language=\"${OS_LANG}\" \
+--includes=\"none\" \
+--mirror-chroot-volatile=\"none\" \
+--mirror-binary-volatile=\"none\" \
+--volatile=\"false\" \
 --syslinux-splash=\"${IMG_SYSLINUX_SPLASH}\""
 		LB_USERNAME="--username=\"${META_DISTRO}\""
 		LB_HOSTNAME="--hostname=\"${META_DISTRO}-${SABOR}\""
@@ -151,17 +159,14 @@ CS_CREATE_TREE() {
 --mirror-bootstrap=\"${META_REPO}\" \
 --mirror-chroot=\"${META_REPO}\" \
 --mirror-chroot-security=\"none\" \
---mirror-chroot-updates=\"none\" \
 --mirror-chroot-backports=\"none\" \
 --mirror-binary=\"${META_REPO}\" \
 --mirror-binary-security=\"none\" \
---mirror-binary-updates=\"none\" \
 --mirror-binary-backports=\"none\" \
 --mirror-debian-installer=\"${META_REPO}\" \
 --security=\"false\" \
 --backports=\"false\" \
 --source=\"false\" \
---updates=\"false\" \
 --iso-preparer=\"${CS_ISO_PREPARER}\" \
 --iso-volume=\"${CS_ISO_VOLUME}\" \
 --iso-publisher=\"${CS_ISO_PUBLISHER}\" \
@@ -223,7 +228,7 @@ CS_POPULATE_TREE() {
 	if ${DPKG} --compare-versions "${LB_VERSION}" ge 3.0; then
 		LB_IMG_SYSLINUX_TEMPLATE_DIR="${ISOS}/config/bootloaders/${LB_BOOTLOADER}"
 		LB_IMG_SYSLINUX_TEMPLATE_SPLASH_DIR="${ISOS}/config/bootloaders/${LB_BOOTLOADER}"
-		LB_IMG_SYSLINUX_SPLASH_DIR="${ISOS}/config/binary_syslinux"
+		LB_IMG_SYSLINUX_SPLASH_DIR="${ISOS}/config/bootloaders/${LB_BOOTLOADER}"
 		LB_IMG_INCLUDES_DIR="${ISOS}/config/includes.binary"
 		LB_OS_INCLUDES_DIR="${ISOS}/config/includes.chroot"
 		LB_IMG_HOOKS_DIR="${ISOS}/config/hooks"
@@ -236,11 +241,11 @@ CS_POPULATE_TREE() {
 		LB_OS_PACKAGES_FILE="${LB_OS_PACKAGES_DIR}/packages.list.chroot"
 		LB_IMG_POOL_PACKAGES_DIR="${ISOS}/config/package-lists"
 		LB_IMG_POOL_PACKAGES_FILE="${LB_IMG_POOL_PACKAGES_DIR}/packages.list.binary"
-		LB_IMG_DEBIAN_INSTALLER_BANNER_DIR="${ISOS}/config/binary_debian-installer-includes/usr/share/graphics"
+		LB_IMG_DEBIAN_INSTALLER_BANNER_DIR="${ISOS}/config/includes.debian-installer/usr/share/graphics"
 		LB_IMG_DEBIAN_INSTALLER_BANNER_FILE="${LB_IMG_DEBIAN_INSTALLER_BANNER_DIR}/logo_debian.png"
-		LB_IMG_DEBIAN_INSTALLER_PRESEED_DIR="${ISOS}/config/binary_debian-installer"
+		LB_IMG_DEBIAN_INSTALLER_PRESEED_DIR="${ISOS}/config/debian-installer"
 		LB_IMG_DEBIAN_INSTALLER_PRESEED_FILE="${LB_IMG_DEBIAN_INSTALLER_PRESEED_DIR}/preseed.cfg"
-		LB_IMG_DEBIAN_INSTALLER_GTK_DIR="${ISOS}/config/binary_debian-installer-includes/usr/share/themes/Clearlooks/gtk-2.0"
+		LB_IMG_DEBIAN_INSTALLER_GTK_DIR="${ISOS}/config/includes.debian-installer/usr/share/themes/Clearlooks/gtk-2.0"
 		LB_IMG_DEBIAN_INSTALLER_GTK_FILE="${LB_IMG_DEBIAN_INSTALLER_GTK_DIR}/gtkrc"
 	else
 		LB_IMG_SYSLINUX_TEMPLATE_DIR="${ISOS}/config/templates/${LB_BOOTLOADER}"
@@ -310,7 +315,7 @@ CS_POPULATE_TREE() {
 		${CP} "${OS_EXTRAREPOS}" "${LB_IMG_EXTRAREPOS_FILE}"
 	fi
 
-	${ECHO} "${OS_PACKAGES}" > "${LB_OS_PACKAGES_FILE}"
+	${ECHO} "${OS_PACKAGES} live-tools user-setup sudo eject" > "${LB_OS_PACKAGES_FILE}"
 	${ECHO} "${IMG_POOL_PACKAGES}" > "${LB_IMG_POOL_PACKAGES_FILE}"
 
 	if [ "${IMG_DEBIAN_INSTALLER}" = "live" ]; then
