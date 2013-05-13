@@ -197,7 +197,7 @@ CS_LOAD_PROFILE() {
 			MEDIO="iso"
 			MEDIO_LBNAME="binary.iso"
 			MEDIO_CSNAME="${META_DISTRO}-${PROFILE_NAME}~${TIMESTAMP}_${ARCH}.iso"
-			LB_BOOTLOADER="syslinux"
+			LB_BOOTLOADER="isolinux"
 		;;
 
 		mixto|hybrid|iso-hybrid)
@@ -208,7 +208,7 @@ CS_LOAD_PROFILE() {
 				MEDIO_LBNAME="binary-hybrid.iso"
 			fi
 			MEDIO_CSNAME="${META_DISTRO}-${PROFILE_NAME}~${TIMESTAMP}_${ARCH}.iso"
-			LB_BOOTLOADER="syslinux"
+			LB_BOOTLOADER="isolinux"
 		;;
 
 		*)
@@ -454,7 +454,9 @@ CS_LOAD_PROFILE() {
 	CS_ISO_VOLUME="$( ${ECHO} "${CS_ISO_VOLUME}" | ${CUT} -c1-32 )"
 	CS_ISO_PUBLISHER="${CS_ISO_PUBLISHER:-${AUTHOR_NAME}; ${AUTHOR_EMAIL}; ${AUTHOR_URL}}"
 	CS_ISO_APPLICATION="${CS_ISO_APPLICATION:-${META_DISTRO}-${PROFILE_NAME}}"
-	CS_BOOTAPPEND_LIVE="live-config.locales=${OS_LOCALE} \
+	CS_BOOTAPPEND_LIVE="boot=live live-config \
+live-config.timezone=America/Caracas \
+live-config.locales=${OS_LOCALE} \
 live-config.hostname=${META_DISTRO}-${PROFILE_NAME} \
 live-config.username=${META_DISTRO} \
 live-config.user-fullname=${META_DISTRO} \

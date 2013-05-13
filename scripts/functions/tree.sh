@@ -315,7 +315,7 @@ CS_POPULATE_TREE() {
 		${CP} "${OS_EXTRAREPOS}" "${LB_IMG_EXTRAREPOS_FILE}"
 	fi
 
-	${ECHO} "${OS_PACKAGES} live-tools user-setup sudo eject" > "${LB_OS_PACKAGES_FILE}"
+	${ECHO} "${OS_PACKAGES} locales live-tools user-setup sudo eject" > "${LB_OS_PACKAGES_FILE}"
 	${ECHO} "${IMG_POOL_PACKAGES}" > "${LB_IMG_POOL_PACKAGES_FILE}"
 
 	if [ "${IMG_DEBIAN_INSTALLER}" = "live" ]; then
