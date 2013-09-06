@@ -122,7 +122,8 @@ CS_CREATE_TREE() {
 --mirror-chroot-updates=\"none\" \
 --mirror-binary-updates=\"none\" \
 --updates=\"false\""
-		LB_INDICES="--apt-indices=\"none\""
+		LB_INDICES="--apt-indices=\"none\" \
+--cache-indices=\"false\""
 		LB_SYSLINUX="--apt-source-archives=\"false\" \
 --system=\"live\" \
 --firmware-binary=\"false\" \
