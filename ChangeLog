@@ -1,3 +1,30 @@
+DEVELOPMENT RELEASE v3.0+dev20130919112121 (09/19/13)
+Actualizando paquetes de pool.
+Configuración de teclado en entrada predeterminada
+Configuración de teclado en entrada predeterminada
+Se suministran ahora los valores predeterminados para teclado a
+través de live-config. Solo afecta por los momentos a la entrada
+de syslinux predeterminda. Mas adelante se puede automatizar esto
+para las demas entradas en otros idiomas.
+Agregando opciones de Lenguaje y Arranque por disco al menú Syslinux
+Añadiendo opción de arranque por disco duro
+Se agrego al final del menu de syslinux la opción de arranque por
+el primer disco duro, esta opción funcionara siempre y cuando el
+disco exista y tenga un sector de arranque válido para el sistema
+Agregando opciones de seleccion de Lenguage
+Se agrego el archivo de configuracion de syslinux para los idiomas
+soportados por canaima locales.cfg.
+Corrigiendo asignación de bootloader según tipo de medio.
+Agregando paquete "locales" a paquetes obligatorios dentro de la ISO.
+Agregando zona horaria por defecto a modo LIVE.
+Modificando perfil para remover paquete innecesario.
+Cambiando fondo de syslinux.
+Ajustando opciones para la versión 3.0.5-1 de live-build.
+Agregando templates de syslinux e isolinux para la versión 3.0.5-1 de live-build.
+Actualizando comandos para la nueva versión de live-build.
+Limpiando documentación generada.
+Actualizando perfil para Canaima Popular.
+
 DEVELOPMENT RELEASE v3.0+dev20130429134042 (04/29/13)
 Actualizando plantillas de documentación.
 Agregando plantillas en español para syslinux.
