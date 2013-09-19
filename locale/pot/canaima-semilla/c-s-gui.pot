@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Canaima Semilla 3.0\n"
 "Report-Msgid-Bugs-To: desarrolladores@canaima.softwarelibre.gob.ve\n"
-"POT-Creation-Date: 2013-04-29 13:40-0430\n"
-"PO-Revision-Date: 2013-04-29 13:40-0430\n"
+"POT-Creation-Date: 2013-09-19 11:21-0430\n"
+"PO-Revision-Date: 2013-09-19 11:21-0430\n"
 "Last-Translator: Luis Alejandro Martínez Faneyth <luis@huntingbears.com.ve>\n"
 "Language-Team: Equipo de Traducción de Canaima Semilla <desarrolladores@canaima.softwarelibre.gob.ve>\n"
 "Language: English\n"
@@ -152,6 +152,7 @@ msgstr ""
 
 #: ../../../canaimasemilla/translator.py:111
 #: ../../../canaimasemilla/translator.py:124
+#, python-brace-format
 msgid "El soporte para arquitectura i386 y/o amd64 se encuentra vacío.{0}Debes seleccionar las arquitecturas soportadas para poder realizar la validación de los repositorios y paquetes que se incluirán dentro de la imagen instalable."
 msgstr ""
 
@@ -222,6 +223,7 @@ msgid "Ha ocurrido un error desconocido durante la grabación de la imagen en el
 msgstr ""
 
 #: ../../../canaimasemilla/translator.py:66
+#, python-brace-format
 msgid "Ha ocurrido un error mientras se intentaba comprobar la existencia de los repositorios especificados.{0}Por favor verifica que estás conectado a internet o que la ruta es la correcta."
 msgstr ""
 
@@ -319,6 +321,7 @@ msgid "Introduzca una dirección web para la persona o grupo responsable:"
 msgstr ""
 
 #: ../../../canaimasemilla/translator.py:122
+#, python-brace-format
 msgid "La dirección URL \"{0}\" es inválida.{1}Comprueba que has introducido correctamente los datos y vuelve a intentarlo."
 msgstr ""
 
@@ -335,6 +338,7 @@ msgid "Los repositorios adicionales permiten agregar software no oficial o desar
 msgstr ""
 
 #: ../../../canaimasemilla/translator.py:110
+#, python-brace-format
 msgid "No se ha encontrado el paquete \"{0}\" dentro de los repositorios provistos."
 msgstr ""
 
@@ -539,18 +543,22 @@ msgid "Tenga en cuenta que algunas arquitecturas funcionan en ciertos tipos de c
 msgstr ""
 
 #: ../../../canaimasemilla/translator.py:62
+#, python-brace-format
 msgid "Todo está preparado para comenzar a construir la imagen.{0}Presione aceptar para continuar o cancelar para volver a la pantalla anterior."
 msgstr ""
 
 #: ../../../canaimasemilla/translator.py:196
+#, python-brace-format
 msgid "Todo está preparado para comenzar la emulación de la imagen.{0}Presione aceptar para continuar o cancelar para volver a la pantalla anterior."
 msgstr ""
 
 #: ../../../canaimasemilla/translator.py:165
+#, python-brace-format
 msgid "Todo está preparado para crear el nuevo perfil.{0}Presione aceptar para continuar o cancelar para volver a la pantalla anterior."
 msgstr ""
 
 #: ../../../canaimasemilla/translator.py:211
+#, python-brace-format
 msgid "Todo está preparado para la grabación de la imagen.{0}Presione aceptar para continuar o cancelar para volver a la pantalla anterior."
 msgstr ""
 
@@ -570,12 +578,14 @@ msgid "Validación de repositorios"
 msgstr ""
 
 #: ../../../canaimasemilla/translator.py:108
+#, python-brace-format
 msgid "Validando presencia del paquete \"{0}\" dentro{1}del repositorio principal y repositorios adicionales ..."
 msgstr ""
 
 #: ../../../canaimasemilla/translator.py:64
 #: ../../../canaimasemilla/translator.py:106
 #: ../../../canaimasemilla/translator.py:121
+#, python-brace-format
 msgid "Validando sección \"{0}\" de la rama \"{1}\"{2}para el repositorio \"{3}\" ({4})"
 msgstr ""
 
@@ -585,6 +595,7 @@ msgstr ""
 
 #: ../../../canaimasemilla/translator.py:113
 #: ../../../canaimasemilla/translator.py:126
+#, python-brace-format
 msgid "{0}{1}Ha ocurrido un error mientras se intentaba comprobar la existencia de los repositorios especificados.{2}Por favor verifica que estás conectado a internet o que los datos proporcionados son correctos."
 msgstr ""
 
@@ -601,17 +612,21 @@ msgid "¡Felicidades! Su perfil ha sido creado."
 msgstr ""
 
 #: ../../../canaimasemilla/translator.py:60
+#, python-brace-format
 msgid "¿Está seguro que desea cancelar la creación de la imagen?{0}Presione aceptar para interrumpir la creación de la imagen o cancelar para continuar con el proceso."
 msgstr ""
 
 #: ../../../canaimasemilla/translator.py:163
+#, python-brace-format
 msgid "¿Está seguro que desea cancelar la creación del perfil?{0}Presione aceptar para interrumpir la creación del perfil o cancelar para continuar con el proceso."
 msgstr ""
 
 #: ../../../canaimasemilla/translator.py:194
+#, python-brace-format
 msgid "¿Está seguro que desea cancelar la emulación de la imagen?{0}Presione aceptar para interrumpir la emulación de la imagen o cancelar para continuar con el proceso."
 msgstr ""
 
 #: ../../../canaimasemilla/translator.py:209
+#, python-brace-format
 msgid "¿Está seguro que desea cancelar la grabación de la imagen?{0}Presione aceptar para interrumpir la grabación de la imagen o cancelar para continuar con el proceso."
 msgstr ""

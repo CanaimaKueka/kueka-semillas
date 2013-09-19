@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Canaima Semilla 3.0\n"
 "Report-Msgid-Bugs-To: desarrolladores@canaima.softwarelibre.gob.ve\n"
-"POT-Creation-Date: 2013-04-29 13:40-0430\n"
-"PO-Revision-Date: 2013-04-29 13:40-0430\n"
+"POT-Creation-Date: 2013-09-19 11:21-0430\n"
+"PO-Revision-Date: 2013-09-19 11:21-0430\n"
 "Last-Translator: Luis Alejandro Martínez Faneyth <luis@huntingbears.com.ve>\n"
 "Language-Team: Equipo de Traducción de Canaima Semilla <desarrolladores@canaima.softwarelibre.gob.ve>\n"
 "Language: English\n"
@@ -22,23 +22,23 @@ msgstr ""
 msgid "%s no pudo encontrar una configuración apropiada en %s."
 msgstr ""
 
-#: ../../../scripts/functions/profile.sh:261
+#: ../../../scripts/functions/profile.sh:270
 msgid "'%s' está vacío o no es un archivo válido. Ningún repositorio adicional se incluirá en el sistema."
 msgstr ""
 
-#: ../../../scripts/functions/profile.sh:274
+#: ../../../scripts/functions/profile.sh:283
 msgid "'%s' está vacío o no es un directorio. Ningún archivo se incluirá en el sistema."
 msgstr ""
 
-#: ../../../scripts/functions/profile.sh:300
+#: ../../../scripts/functions/profile.sh:309
 msgid "'%s' está vacío o no es un directorio. Ningún archivo se incluirá en la imagen."
 msgstr ""
 
-#: ../../../scripts/functions/profile.sh:287
+#: ../../../scripts/functions/profile.sh:296
 msgid "'%s' está vacío o no es un directorio. Ningún gancho se ejecutará en el sistema."
 msgstr ""
 
-#: ../../../scripts/functions/profile.sh:313
+#: ../../../scripts/functions/profile.sh:322
 msgid "'%s' está vacío o no es un directorio. Ningún gancho se ejecutará en la imagen."
 msgstr ""
 
@@ -46,12 +46,12 @@ msgstr ""
 msgid "'%s' no parece ser un módulo válido de '%s'."
 msgstr ""
 
-#: ../../../scripts/functions/profile.sh:171
+#: ../../../scripts/functions/profile.sh:176
 msgid "Arquitectura '%s' no soportada por %s. Abortando."
 msgstr ""
 
 #: ../../../scripts/functions/profile.sh:150
-#: ../../../scripts/functions/profile.sh:165
+#: ../../../scripts/functions/profile.sh:170
 msgid "Arquitectura '%s' no soportada por el perfil '%s'. Abortando."
 msgstr ""
 
@@ -75,17 +75,17 @@ msgstr ""
 msgid "Código nombre de la Metadistribución base [ej: squeeze]"
 msgstr ""
 
-#: ../../../scripts/functions/profile.sh:334
+#: ../../../scripts/functions/profile.sh:343
 msgid "Debe utilizar una imagen PNG de dimensiones menores o iguales a 640x480px."
 msgstr ""
 
-#: ../../../scripts/functions/profile.sh:373
+#: ../../../scripts/functions/profile.sh:382
 msgid "Debe utilizar una imagen PNG de dimensiones menores o iguales a 800x75px."
 msgstr ""
 
-#: ../../../scripts/functions/tree.sh:101
-#: ../../../scripts/functions/tree.sh:214
 #: ../../../scripts/functions/profile.sh:70
+#: ../../../scripts/functions/tree.sh:101
+#: ../../../scripts/functions/tree.sh:224
 msgid "El archivo de configuraciones '%s' no existe o no es un archivo válido."
 msgstr ""
 
@@ -97,9 +97,9 @@ msgstr ""
 msgid "El directorio '%s' establecido a través de la opción --dir-construir no existe."
 msgstr ""
 
-#: ../../../scripts/functions/tree.sh:94
-#: ../../../scripts/functions/tree.sh:207
 #: ../../../scripts/modules/build.sh:212 ../../../scripts/modules/build.sh:236
+#: ../../../scripts/functions/tree.sh:94
+#: ../../../scripts/functions/tree.sh:217
 msgid "El directorio de construcción de imágenes '%s' no existe."
 msgstr ""
 
@@ -123,12 +123,12 @@ msgstr ""
 msgid "El perfil '%s' no existe dentro de la carpeta de perfiles '%s'."
 msgstr ""
 
-#: ../../../scripts/modules/build.sh:84 ../../../scripts/modules/profile.sh:67
-#: ../../../scripts/modules/save.sh:76 ../../../scripts/modules/test.sh:78
+#: ../../../scripts/modules/build.sh:84 ../../../scripts/modules/save.sh:76
+#: ../../../scripts/modules/profile.sh:67 ../../../scripts/modules/test.sh:78
 msgid "Error interno"
 msgstr ""
 
-#: ../../../scripts/functions/tree.sh:174
+#: ../../../scripts/functions/tree.sh:184
 msgid "Generando árbol de configuraciones ..."
 msgstr ""
 
@@ -160,18 +160,18 @@ msgstr ""
 msgid "La función '%s' necesita el nombre de un módulo como primer argumento."
 msgstr ""
 
-#: ../../../scripts/functions/profile.sh:372
+#: ../../../scripts/functions/profile.sh:381
 msgid "La imagen de encabezado seleccionada es inapropiada."
 msgstr ""
 
-#: ../../../scripts/functions/profile.sh:333
+#: ../../../scripts/functions/profile.sh:342
 msgid "La imagen seleccionada para la portada de arranque es inapropiada."
 msgstr ""
 
-#: ../../../scripts/functions/profile.sh:342
-#: ../../../scripts/functions/profile.sh:381
-#: ../../../scripts/functions/profile.sh:398
-#: ../../../scripts/functions/profile.sh:415
+#: ../../../scripts/functions/profile.sh:351
+#: ../../../scripts/functions/profile.sh:390
+#: ../../../scripts/functions/profile.sh:407
+#: ../../../scripts/functions/profile.sh:424
 msgid "La instalación de %s puede estar corrupta, por favor reinstala."
 msgstr ""
 
@@ -191,47 +191,47 @@ msgstr ""
 msgid "Leyendo estado de la dirección web del autor"
 msgstr ""
 
-#: ../../../scripts/functions/profile.sh:279
+#: ../../../scripts/functions/profile.sh:288
 msgid "Leyendo estado de la ejecución de ganchos en el sistema"
 msgstr ""
 
-#: ../../../scripts/functions/profile.sh:305
+#: ../../../scripts/functions/profile.sh:314
 msgid "Leyendo estado de la ejecución de ganchos en la imagen"
 msgstr ""
 
-#: ../../../scripts/functions/profile.sh:363
+#: ../../../scripts/functions/profile.sh:372
 msgid "Leyendo estado de la imagen de encabezado para el instalador"
 msgstr ""
 
-#: ../../../scripts/functions/profile.sh:324
+#: ../../../scripts/functions/profile.sh:333
 msgid "Leyendo estado de la imagen para la portada de arranque"
 msgstr ""
 
-#: ../../../scripts/functions/profile.sh:266
+#: ../../../scripts/functions/profile.sh:275
 msgid "Leyendo estado de la inclusión de archivos en el sistema"
 msgstr ""
 
-#: ../../../scripts/functions/profile.sh:292
+#: ../../../scripts/functions/profile.sh:301
 msgid "Leyendo estado de la inclusión de archivos en la imagen"
 msgstr ""
 
-#: ../../../scripts/functions/profile.sh:253
+#: ../../../scripts/functions/profile.sh:262
 msgid "Leyendo estado de la inclusión de repositorios adicionales en el sistema"
 msgstr ""
 
-#: ../../../scripts/functions/profile.sh:245
+#: ../../../scripts/functions/profile.sh:254
 msgid "Leyendo estado de la lista de paquetes a incluir en el repositorio interno de la imagen"
 msgstr ""
 
-#: ../../../scripts/functions/profile.sh:237
+#: ../../../scripts/functions/profile.sh:246
 msgid "Leyendo estado de la lista de paquetes de sistema"
 msgstr ""
 
-#: ../../../scripts/functions/profile.sh:386
+#: ../../../scripts/functions/profile.sh:395
 msgid "Leyendo estado de la preconfiguración para el instalador"
 msgstr ""
 
-#: ../../../scripts/functions/profile.sh:213
+#: ../../../scripts/functions/profile.sh:222
 msgid "Leyendo estado de la versión para la Metadistribución base"
 msgstr ""
 
@@ -239,7 +239,7 @@ msgstr ""
 msgid "Leyendo estado de las arquitecturas habilitadas para este perfil"
 msgstr ""
 
-#: ../../../scripts/functions/profile.sh:229
+#: ../../../scripts/functions/profile.sh:238
 msgid "Leyendo estado de las secciones para el repositorio de la Metadistribución base"
 msgstr ""
 
@@ -247,15 +247,15 @@ msgstr ""
 msgid "Leyendo estado del correo electrónico del autor"
 msgstr ""
 
-#: ../../../scripts/functions/profile.sh:403
+#: ../../../scripts/functions/profile.sh:412
 msgid "Leyendo estado del estilo visual para el instalador"
 msgstr ""
 
-#: ../../../scripts/functions/profile.sh:178
+#: ../../../scripts/functions/profile.sh:183
 msgid "Leyendo estado del formato de imagen a utilizar"
 msgstr ""
 
-#: ../../../scripts/functions/profile.sh:347
+#: ../../../scripts/functions/profile.sh:356
 msgid "Leyendo estado del instalador nativo"
 msgstr ""
 
@@ -271,7 +271,7 @@ msgstr ""
 msgid "Leyendo estado del nombre del perfil"
 msgstr ""
 
-#: ../../../scripts/functions/profile.sh:221
+#: ../../../scripts/functions/profile.sh:230
 msgid "Leyendo estado del repositorio para la Metadistribución base"
 msgstr ""
 
@@ -307,7 +307,7 @@ msgstr ""
 msgid "No puede dejar el campo 'PROFILE_NAME' vacío."
 msgstr ""
 
-#: ../../../scripts/functions/profile.sh:406
+#: ../../../scripts/functions/profile.sh:415
 msgid "No se ha definido un estilo visual para el instalador."
 msgstr ""
 
@@ -315,15 +315,15 @@ msgstr ""
 msgid "No se ha definido un lenguaje de sistema para el sabor en construcción."
 msgstr ""
 
-#: ../../../scripts/functions/profile.sh:366
+#: ../../../scripts/functions/profile.sh:375
 msgid "No se ha definido una imagen de encabezado para el instalador."
 msgstr ""
 
-#: ../../../scripts/functions/profile.sh:327
+#: ../../../scripts/functions/profile.sh:336
 msgid "No se ha definido una imagen para la portada de arranque."
 msgstr ""
 
-#: ../../../scripts/functions/profile.sh:389
+#: ../../../scripts/functions/profile.sh:398
 msgid "No se ha definido una preconfiguración para el instalador."
 msgstr ""
 
@@ -339,7 +339,7 @@ msgstr ""
 msgid "No se ha especificado un correo para el autor del sabor en construcción."
 msgstr ""
 
-#: ../../../scripts/functions/profile.sh:224
+#: ../../../scripts/functions/profile.sh:233
 msgid "No se ha especificado un repositorio para la Metadistribución base."
 msgstr ""
 
@@ -347,27 +347,27 @@ msgstr ""
 msgid "No se ha especificado una dirección web para el autor del sabor en construcción."
 msgstr ""
 
-#: ../../../scripts/functions/profile.sh:216
+#: ../../../scripts/functions/profile.sh:225
 msgid "No se ha especificado una versión para la Metadistribución base."
 msgstr ""
 
-#: ../../../scripts/functions/profile.sh:269
+#: ../../../scripts/functions/profile.sh:278
 msgid "No se han definido archivos para incluir en el sistema."
 msgstr ""
 
-#: ../../../scripts/functions/profile.sh:295
+#: ../../../scripts/functions/profile.sh:304
 msgid "No se han definido archivos para incluir en la imagen."
 msgstr ""
 
-#: ../../../scripts/functions/profile.sh:282
+#: ../../../scripts/functions/profile.sh:291
 msgid "No se han definido ganchos para ejecutar en el sistema."
 msgstr ""
 
-#: ../../../scripts/functions/profile.sh:308
+#: ../../../scripts/functions/profile.sh:317
 msgid "No se han definido ganchos para incluir en la imagen."
 msgstr ""
 
-#: ../../../scripts/functions/profile.sh:256
+#: ../../../scripts/functions/profile.sh:265
 msgid "No se han definido repositorios adicionales para incluir en el sistema."
 msgstr ""
 
@@ -375,19 +375,19 @@ msgstr ""
 msgid "No se han especificado las arquitecturas habilitadas para el sabor en construcción."
 msgstr ""
 
-#: ../../../scripts/functions/profile.sh:232
+#: ../../../scripts/functions/profile.sh:241
 msgid "No se han especificado las secciones para el repositorio de la Metadistribución base."
 msgstr ""
 
-#: ../../../scripts/functions/profile.sh:248
+#: ../../../scripts/functions/profile.sh:257
 msgid "No se han incluído elementos dentro de la lista de paquetes para el repositorio interno."
 msgstr ""
 
-#: ../../../scripts/functions/profile.sh:240
+#: ../../../scripts/functions/profile.sh:249
 msgid "No se han incluído elementos dentro de la lista de paquetes para el sistema operativo."
 msgstr ""
 
-#: ../../../scripts/functions/profile.sh:356
+#: ../../../scripts/functions/profile.sh:365
 msgid "No se incluirá el instalador en la imagen."
 msgstr ""
 
@@ -404,9 +404,9 @@ msgid "Ocurrió un error durante la generación de la imagen."
 msgstr ""
 
 #: ../../../scripts/modules/build.sh:94 ../../../scripts/modules/build.sh:175
+#: ../../../scripts/modules/save.sh:86 ../../../scripts/modules/save.sh:147
 #: ../../../scripts/modules/profile.sh:77
-#: ../../../scripts/modules/profile.sh:118 ../../../scripts/modules/save.sh:86
-#: ../../../scripts/modules/save.sh:147 ../../../scripts/modules/test.sh:88
+#: ../../../scripts/modules/profile.sh:118 ../../../scripts/modules/test.sh:88
 #: ../../../scripts/modules/test.sh:154
 msgid "Ocurrió un problema interpretando los parámetros."
 msgstr ""
@@ -447,23 +447,23 @@ msgstr ""
 msgid "Respaldando árbol de configuraciones previo en '%s'."
 msgstr ""
 
-#: ../../../scripts/functions/profile.sh:414
+#: ../../../scripts/functions/profile.sh:423
 msgid "Resultó imposible seleccionar un estilo visual para el instalador."
 msgstr ""
 
-#: ../../../scripts/functions/profile.sh:380
+#: ../../../scripts/functions/profile.sh:389
 msgid "Resultó imposible seleccionar una imagen de encabezado."
 msgstr ""
 
-#: ../../../scripts/functions/profile.sh:341
+#: ../../../scripts/functions/profile.sh:350
 msgid "Resultó imposible seleccionar una imagen para la portada de arranque."
 msgstr ""
 
-#: ../../../scripts/functions/profile.sh:397
+#: ../../../scripts/functions/profile.sh:406
 msgid "Resultó imposible seleccionar una preconfiguración para el instalador."
 msgstr ""
 
-#: ../../../scripts/functions/profile.sh:285
+#: ../../../scripts/functions/profile.sh:294
 msgid "Se ejecutarán en el sistema los ganchos presentes en el directorio '%s'."
 msgstr ""
 
@@ -479,23 +479,23 @@ msgstr ""
 msgid "Se ha creado una imagen %s con un peso de %s."
 msgstr ""
 
-#: ../../../scripts/functions/profile.sh:350
+#: ../../../scripts/functions/profile.sh:359
 msgid "Se incluirá el instalador en la imagen."
 msgstr ""
 
-#: ../../../scripts/functions/profile.sh:272
+#: ../../../scripts/functions/profile.sh:281
 msgid "Se incluirán en el sistema los archivos presentes en el directorio '%s'."
 msgstr ""
 
-#: ../../../scripts/functions/profile.sh:259
+#: ../../../scripts/functions/profile.sh:268
 msgid "Se incluirán en el sistema los repositorios adicionales presentes en el archivo '%s'."
 msgstr ""
 
-#: ../../../scripts/functions/profile.sh:298
+#: ../../../scripts/functions/profile.sh:307
 msgid "Se incluirán en la imagen los archivos presentes en el directorio '%s'."
 msgstr ""
 
-#: ../../../scripts/functions/profile.sh:311
+#: ../../../scripts/functions/profile.sh:320
 msgid "Se incluirán en la imagen los ganchos presentes en el directorio '%s'."
 msgstr ""
 
@@ -503,7 +503,7 @@ msgstr ""
 msgid "Secciones del repositorio para la Metadistribución base [ej: main contrib]"
 msgstr ""
 
-#: ../../../scripts/functions/profile.sh:175
+#: ../../../scripts/functions/profile.sh:180
 msgid "Seleccionando '%s' como arquitectura de construcción para la imagen"
 msgstr ""
 
@@ -519,7 +519,7 @@ msgstr ""
 msgid "Seleccionando '%s' como dirección web para el autor del sabor."
 msgstr ""
 
-#: ../../../scripts/functions/profile.sh:210
+#: ../../../scripts/functions/profile.sh:219
 msgid "Seleccionando '%s' como formato de construcción para la imagen"
 msgstr ""
 
@@ -527,15 +527,15 @@ msgstr ""
 msgid "Seleccionando '%s' como lenguaje de sistema para el sabor en construcción."
 msgstr ""
 
-#: ../../../scripts/functions/profile.sh:226
+#: ../../../scripts/functions/profile.sh:235
 msgid "Seleccionando '%s' como repositorio para la Metadistribución base."
 msgstr ""
 
-#: ../../../scripts/functions/profile.sh:234
+#: ../../../scripts/functions/profile.sh:243
 msgid "Seleccionando '%s' como secciones para el repositorio de la Metadistribución base."
 msgstr ""
 
-#: ../../../scripts/functions/profile.sh:218
+#: ../../../scripts/functions/profile.sh:227
 msgid "Seleccionando '%s' como versión de la Metadistribución base."
 msgstr ""
 
@@ -551,43 +551,43 @@ msgstr ""
 msgid "Seleccionando Metadistribución base '%s' para la construcción del sistema."
 msgstr ""
 
-#: ../../../scripts/functions/profile.sh:409
+#: ../../../scripts/functions/profile.sh:418
 msgid "Seleccionando estilo visual para el instalador presente en el perfil"
 msgstr ""
 
-#: ../../../scripts/functions/profile.sh:412
+#: ../../../scripts/functions/profile.sh:421
 msgid "Seleccionando estilo visual predeterminado para el instalador."
 msgstr ""
 
-#: ../../../scripts/functions/profile.sh:378
+#: ../../../scripts/functions/profile.sh:387
 msgid "Seleccionando imagen de encabezado predeterminada."
 msgstr ""
 
-#: ../../../scripts/functions/profile.sh:370
+#: ../../../scripts/functions/profile.sh:379
 msgid "Seleccionando la imagen de encabezado presente en el perfil."
 msgstr ""
 
-#: ../../../scripts/functions/profile.sh:331
+#: ../../../scripts/functions/profile.sh:340
 msgid "Seleccionando la imagen para la portada de arranque presente en el perfil."
 msgstr ""
 
-#: ../../../scripts/functions/profile.sh:339
+#: ../../../scripts/functions/profile.sh:348
 msgid "Seleccionando la imagen predeterminada para la portada de arranque."
 msgstr ""
 
-#: ../../../scripts/functions/profile.sh:395
+#: ../../../scripts/functions/profile.sh:404
 msgid "Seleccionando los valores predeterminados de preconfiguración para el instalador."
 msgstr ""
 
-#: ../../../scripts/functions/profile.sh:242
+#: ../../../scripts/functions/profile.sh:251
 msgid "Seleccionando paquetes '%s' para construir el sabor."
 msgstr ""
 
-#: ../../../scripts/functions/profile.sh:250
+#: ../../../scripts/functions/profile.sh:259
 msgid "Seleccionando paquetes '%s' para incluir en el repositorio interno."
 msgstr ""
 
-#: ../../../scripts/functions/profile.sh:392
+#: ../../../scripts/functions/profile.sh:401
 msgid "Seleccionando preconfiguración para el instalador presente en el perfil"
 msgstr ""
 
@@ -595,7 +595,7 @@ msgstr ""
 msgid "Si deseas asistencia, puedes enviar un correo a %s con el contenido del archivo '%s'"
 msgstr ""
 
-#: ../../../scripts/functions/profile.sh:206
+#: ../../../scripts/functions/profile.sh:215
 msgid "Tipo de formato '%s' no reconocido por %s. Abortando."
 msgstr ""
 
