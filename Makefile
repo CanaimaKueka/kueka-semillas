@@ -164,11 +164,12 @@ install: install-core install-common install-doc install-gui
 install-core:
 
 	@mkdir -p $(DESTDIR)/usr/bin
-	@mkdir -p $(DESTDIR)/etc/canaima-semilla/core
-	@mkdir -p $(DESTDIR)/usr/share/canaima-semilla
+	@mkdir -p $(DESTDIR)/etc/canaima-semilla/config/core
+	@mkdir -p $(DESTDIR)/usr/share/canaima-semilla/isos
 	@cp c-s-core.sh $(DESTDIR)/usr/bin/c-s
 	@cp -r scripts templates profiles $(DESTDIR)/usr/share/canaima-semilla/
-	@cp config/core/* $(DESTDIR)/etc/canaima-semilla/core/
+	@cp config/core/* $(DESTDIR)/etc/canaima-semilla/config/core/
+	@cp VERSION TRANSLATORS README COPYING AUTHORS LICENSE $(DESTDIR)/usr/share/canaima-semilla/
 
 install-common:
 
@@ -190,11 +191,11 @@ install-gui:
 	@mkdir -p $(DESTDIR)/usr/share/pyshared/
 	@mkdir -p $(DESTDIR)/usr/bin/
 	@mkdir -p $(DESTDIR)/usr/share/applications/
-	@mkdir -p $(DESTDIR)/etc/canaima-semilla/gui
+	@mkdir -p $(DESTDIR)/etc/canaima-semilla/config/gui
 	@cp -r canaimasemilla $(DESTDIR)/usr/share/pyshared/
 	@cp c-s-gui.py $(DESTDIR)/usr/bin/c-s-gui
 	@cp c-s-gui.desktop $(DESTDIR)/usr/share/applications/
-	@cp config/gui/* $(DESTDIR)/etc/canaima-semilla/gui/
+	@cp config/gui/* $(DESTDIR)/etc/canaima-semilla/config/gui/
 
 uninstall:
 

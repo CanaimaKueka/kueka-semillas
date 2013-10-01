@@ -36,7 +36,7 @@ curdir = os.path.abspath(os.getcwd())
 
 if curdir == '/usr/bin':
     GUIDIR = '/usr/share/pyshared/canaimasemilla'
-    CONFDIR = '/etc/canaima-semilla/gui'
+    CONFDIR = '/etc/canaima-semilla/config/gui'
     BINDIR = '/usr/bin'
     CSBIN = 'c-s'
     SHAREDIR = '/usr/share/canaima-semilla'
