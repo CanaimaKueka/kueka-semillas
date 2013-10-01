@@ -1,0 +1,11 @@
+#!/usr/bin/make -f
+
+%:
+	dh ${@}
+
+override_dh_auto_build:
+	$(MAKE) DESTDIR=$(CURDIR)/debian/canaima-semilla build
+
+override_dh_auto_install:
+	$(MAKE) DESTDIR=$(CURDIR)/debian/canaima-semilla install
+

@@ -159,7 +159,7 @@ gen-mo: check-buildep clean-mo
 
 # INSTALL TASKS ------------------------------------------------------------------------------
 
-install: install-core install-doc install-gui
+install: install-core install-common install-doc install-gui
 
 install-core:
 
@@ -188,10 +188,10 @@ install-doc:
 install-gui:
 
 	@mkdir -p $(GUIDIR)/usr/share/applications/
-	@mkdir -p $(GUIDIR)/usr/share/canaima-semilla/
+	@mkdir -p $(GUIDIR)/usr/share/pyshared/
 	@mkdir -p $(DESTDIR)/etc/canaima-semilla/gui
 	@cp c-s-gui.desktop $(GUIDIR)/usr/share/applications/
-	@cp -r gui $(GUIDIR)/usr/share/canaima-semilla/
+	@cp -r canaimasemilla $(GUIDIR)/usr/share/pyshared/
 	@cp config/gui/* $(DESTDIR)/etc/canaima-semilla/gui/
 
 uninstall:
