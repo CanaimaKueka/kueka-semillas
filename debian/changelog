@@ -1,4 +1,4 @@
-canaima-semilla (3.0~a1-1) testing; urgency=low
+canaima-semilla (3.0~a1-1) kerepakupai; urgency=low
 
   [ Niv Sardi ]
   * [a8b38b4] don't use ${1} but name it, and shift $\@ Signed-off-by: Niv
@@ -199,6 +199,11 @@ canaima-semilla (3.0~a1-1) testing; urgency=low
   * [3d39d46] Corrigiendo asignación de bootloader según tipo de medio.
     Agregando paquete "locales" a paquetes obligatorios dentro de la ISO.
     Agregando zona horaria por defecto a modo LIVE.
+  * [7337422] Actualizando paquetes de pool.
+  * [c71419c] New development snapshot 3.0+dev20130919112121
+  * [e0c424d] Primer empaquetado.
+  * [f0d4014] Corrigiendo lanzadores .desktop
+  * [3292e46] Marcando debian/rules como ejecutable.
 
   [ Erick Birbe ]
   * [39a0881] Agregando opciones de seleccion de Lenguage. Se agrego el
@@ -213,12 +218,6 @@ canaima-semilla (3.0~a1-1) testing; urgency=low
     de live-config. Solo afecta por los momentos a la entrada de syslinux
     predeterminda. Mas adelante se puede automatizar esto para las demas
     entradas en otros idiomas.
-
-  [ Luis Alejandro Martínez Faneyth ]
-  * [7337422] Actualizando paquetes de pool.
-  * [c71419c] New development snapshot 3.0+dev20130919112121
-  * [e0c424d] Primer empaquetado.
-  * [f0d4014] Corrigiendo lanzadores .desktop
 
  -- Luis Alejandro Martínez Faneyth <luis@huntingbears.com.ve>  Tue, 01 Oct 2013 11:27:09 -0430
 
