@@ -187,11 +187,13 @@ install-doc:
 
 install-gui:
 
-	@mkdir -p $(GUIDIR)/usr/share/applications/
-	@mkdir -p $(GUIDIR)/usr/share/pyshared/
+	@mkdir -p $(DESTDIR)/usr/share/pyshared/
+	@mkdir -p $(DESTDIR)/usr/bin/
+	@mkdir -p $(DESTDIR)/usr/share/applications/
 	@mkdir -p $(DESTDIR)/etc/canaima-semilla/gui
-	@cp c-s-gui.desktop $(GUIDIR)/usr/share/applications/
-	@cp -r canaimasemilla $(GUIDIR)/usr/share/pyshared/
+	@cp -r canaimasemilla $(DESTDIR)/usr/share/pyshared/
+	@cp c-s-gui.py $(DESTDIR)/usr/bin/c-s-gui
+	@cp c-s-gui.desktop $(DESTDIR)/usr/share/applications/
 	@cp config/gui/* $(DESTDIR)/etc/canaima-semilla/gui/
 
 uninstall:
