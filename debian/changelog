@@ -204,6 +204,7 @@ canaima-semilla (3.0~a1-1) kerepakupai; urgency=low
   * [e0c424d] Primer empaquetado.
   * [f0d4014] Corrigiendo lanzadores .desktop
   * [3292e46] Marcando debian/rules como ejecutable.
+  * [463e2cc] Agregando dependencia a python.
 
   [ Erick Birbe ]
   * [39a0881] Agregando opciones de seleccion de Lenguage. Se agrego el
