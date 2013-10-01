@@ -1,3 +1,227 @@
+canaima-semilla (3.0~a1-1) testing; urgency=low
+
+  [ Niv Sardi ]
+  * [a8b38b4] don't use ${1} but name it, and shift $\@ Signed-off-by: Niv
+    Sardi <xaiki@debian.org>
+  * [0dad7ca] cosmetics: split fat big line, into many smalls. Signed-off-
+    by: Niv Sardi <xaiki@debian.org>
+  * [c8e7b17] use getopt to simplify canaima-semilla.sh. Signed-off-by:
+    Niv Sardi <xaiki@debian.org>
+  * [342577a] make CONFIGURAR-SABOR take an argument. Signed-off-by: Niv
+    Sardi <xaiki@debian.org>
+  * [21927cf] if lb/config exits, move it to .bak before proceding.
+    Signed-off-by: Niv Sardi <xaiki@debian.org>
+  * [bc5019d] cosmetics: rename getopt argument to short-form and
+    lowercase. Signed-off-by: Niv Sardi <xaiki@debian.org>
+  * [bf9eb8a] simplify canaima-semilla.sh bugfix: $ARQUITECTURA
+    disapeared, use $arch. Signed-off-by: Niv Sardi <xaiki@debian.org>
+  * [c861e09] add -c|--conf option, to conditionally load VARIABLES
+    overrides. Signed-off-by: Niv Sardi <xaiki@debian.org>
+  * [1800116] default to include installer, and re-work installer code'
+    Signed-off-by: Niv Sardi <xaiki@debian.org>
+  * [59b6369] lb_fixup: move all options that aren't supported by new lb
+    out of the way. Signed-off-by: Niv Sardi <xaiki@debian.org>
+  * [b86165e] lb_fixup, --packages disappeared, build a package-lists
+    instead. Signed-off-by: Niv Sardi <xaiki@debian.org>
+  * [e8bb79a] cosmetics. Signed-off-by: Niv Sardi <xaiki@debian.org>
+  * [2384834] make everything executable from source. Signed-off-by: Niv
+    Sardi <xaiki@debian.org>
+  * [c1ce503] cosmetics: ${1} is really to ugly.. Signed-off-by: Niv Sardi
+    <xaiki@debian.org>
+  * [d7003ef] indentation: cosmetics. Signed-off-by: Niv Sardi
+    <xaiki@debian.org>
+  * [2cce202] move chunk of code from canaima-semilla to canaima-semilla-
+    construir. Signed-off-by: Niv Sardi <xaiki@debian.org>
+  * [810c85f] install canaima-semilla-construir. Signed-off-by: Niv Sardi
+    <xaiki@debian.org>
+  * [a864b2b] create semilla if doesn't exist. Signed-off-by: Niv Sardi
+    <xaiki@debian.org>
+  * [e5cd9ae] n0 bash. Signed-off-by: Niv Sardi <xaiki@debian.org>
+  * [f8496f8] ... fuck daniel bauman... chroot_sources is now archives
+    everything has changed name.. great, ok so now we map: binary
+    list.binary binary.gpg key.binary chroot list.chroot chroot.gpg
+    key.chroot Signed-off-by: Niv Sardi <xaiki@debian.org>
+  * [dea0d52] Better handeling of SABOR FAILOVER. Signed-off-by: Niv Sardi
+    <xaiki@debian.org>
+  * [d7f9a1e] WIP. Signed-off-by: Niv Sardi <xaiki@debian.org>
+
+  [ Luis Alejandro Martínez Faneyth ]
+  * [35c0752] Importando desarrollo de la Interfaz Gráfica por Nixon
+    Molina y Carlos Espinoza. Fusionando documentación e imágenes de la
+    Interfaz Gráfica con la aplicación principal. Mejorando Makefile y
+    agregando herramientas para el mantenimiento de la aplicación.
+  * [cf4d95b] Correcting Makefile
+  * [df9f463] Generando documentación
+  * [ce07a96] Agregando locales
+  * [a13777a] Removiendo carpeta debian de rama de desarrollo Renombrando
+    algunos scripts
+  * [651f583] Generación dinámica de imágenes
+  * [f00b2c1] Creando funciones y módulos básicos
+  * [efa9f06] Agregando documentación autogenerada Agregando plantillas
+    para syslinux
+  * [40c8b5d] New development snapshot +20120320183640
+  * [d17f281] Corrigiendo error en script de generación de snapshot
+  * [e8b0d01] New development snapshot +20120320185318
+  * [6aa14e4] Test Snapshot
+  * [e55d611] New development snapshot +20120320200934
+  * [2ef8aa8] Corrigiendo sintaxis para sh
+  * [ca44144] New development snapshot 3.0+20120321115651
+  * [15d5dee] Mejorando scripts, funciones y módulos
+  * [91b31a5] New development snapshot 3.0+20120323183735
+  * [29f824d] Agregando soporte para localización en scripts de bash
+    Arreglando detalles estéticos
+  * [24089c3] New development snapshot 3.0+20120326115954
+  * [e5d53dd] Creación de la función CS_LOAD_PROFILE, para validar la
+    configuración del perfil. Separación de las constantes de colores de
+    las funciones de mensajes. Reorganización de la plantilla del perfil
+    por defecto. Actualización de documentación y traducciones.
+  * [b4e2c53] New development snapshot 3.0+20120327230826
+  * [20aea0c] Perfeccionando módulo de construcción.
+  * [137dc71] Mejorando el módulo de construcción
+  * [2475609] Mejorando función para la carga del perfil. Incluyendo
+    platillas para debootstrap.
+  * [928f907] New development snapshot 3.0+20120403173411
+  * [80c4a70] Mejorando módulo de construcción y función para cargar el
+    perfil.
+  * [6fc8f5d] New development snapshot 3.0+20120410000334
+  * [8e0a6f5] Mejorando funciones.
+  * [661acae] New development snapshot 3.0+20120410174159
+  * [3b315ca] Actualizando plantillas de syslinux. Mejorando módulo de
+    construcción. Actualizando cadenas de texto traducibles.
+  * [c25c1d4] New development snapshot 3.0+20120419190335
+  * [e962772] Ampliando las plantillas de syslinux. Mejorando funciones de
+    módulos y perfiles.
+  * [381b6c7] New development snapshot 3.0+20120420175220
+  * [9d403a7] Mejorando la organización de la gui
+  * [776fb71] New development snapshot 3.0+20120423051401
+  * [a64fce3] Organizando íconos
+  * [ab847ce] New development snapshot 3.0+20120423054101
+  * [3ab4c76] Actualizando
+  * [eab5974] New development snapshot 3.0+20120423054314
+  * [85e4cfc] Agregando estilo visual para la interfaz gráfica.
+    Actualizando módulo de construcción para la interfaz gráfica.
+  * [cd76a68] New development snapshot 3.0+20120424010701
+  * [dbc248c] Corrigiendo errores de compatibilidad con shell.
+  * [7f72b4d] New development snapshot 3.0+20120424020838
+  * [17622f9] Añadiendo soporte para isolinux. Mejorando módulos de gui.
+  * [1f78b70] New development snapshot 3.0+20120424175003
+  * [18e93d2] Mejorando módulo para crear perfil de la gui.
+  * [5827054] New development snapshot 3.0+20120425182437
+  * [6828bdf] Mejorando configuración automática.
+  * [e16032e] New development snapshot 3.0+20120427014259
+  * [ca96e56] Mejorando módulo de edición de perfil.
+  * [45d624e] New development snapshot 3.0+20120427162807
+  * [6bd2905] Mejorando módulo de creación del perfil
+  * [9857678] New development snapshot 3.0+20120507115542
+  * [271968a] Actualizando mensajes de traducción
+  * [142a2ee] New development snapshot 3.0+20120507124627
+  * [57ff86d] Borrando plantilla para isolinux, convirtiendo en enlace
+    simbólico hacia syslinux. Desarrollando módulo para probar imágenes
+    con qemu-kvm.
+  * [bc9042b] New development snapshot 3.0+20120521232022
+  * [433daac] Mejorando el módulo de construcción de perfiles.
+  * [7b7c73a] New development snapshot 3.0+20120522183846
+  * [fc207e3] Mejorando módulo de creación de perfiles
+  * [9972264] New development snapshot 3.0+20120524185632
+  * [a4f3dc9] Separando funciones constructoras en librerías diferentes.
+  * [b7b3af5] New development snapshot 3.0+20120525174810
+  * [9d922b0] Removiendo imágenes png generadas a partir de svg. Se
+    generan al momento de compilación/empaquetamiento. Renombrando
+    librerías. Generando locales para es_VE y en_US. Creando .po para
+    gui/core. Actualizando plantillas .pot.
+  * [9aa42d6] New development snapshot 3.0+20120527034049
+  * [c4ea775] Mejorando módulos en general
+  * [9c59e79] New development snapshot 3.0+20120527224239
+  * [1aa5b2d] Mejorando módulo de creación de perfiles.
+  * [98fb7cc] New development snapshot 3.0+20120530170603
+  * [51aac09] Mejorando el módulo de creación de perfiles.
+  * [b72a3b5] New development snapshot 3.0+20120602105537
+  * [91e6930] Mejorando el módulo principal. Cambiando el nombre de
+    algunas imágenes. Actualizando traducciones. Agregando TRANSLATORS.
+  * [0b55612] New development snapshot 3.0+20120604002502
+  * [3f4d271] Mejorando módulo principal. Actualizando traducciones.
+  * [ff07b96] New development snapshot 3.0+20120605233135
+  * [aef716e] Mejorando módulo de construcción de imágenes Actualizando
+    traducciones
+  * [f697eda] New development snapshot 3.0+20120606182858
+  * [31cba44] Mejorando módulo para construcción de imágenes.
+    Actualizando traducciones.
+  * [223dbc5] New development snapshot 3.0+20120607195036
+  * [3e4682b] Implementando hilos en build.py y main.py. Actualizando
+    cadenas de traducción.
+  * [778d6ba] New development snapshot 3.0+20120608181049
+  * [d3ef384] Migrando el perfil 'popular' al nuevo formato. Eliminando
+    archivos de prueba innecesarios. Mejorando función BuildImage de la
+    gui.
+  * [2d6c6ad] Mejorando la documentación de las funciones. Mejorando la
+    forma en que se determinan los campos por defecto cuando se genera un
+    nuevo perfil a través del módulo "profile/perfil". Mejorando las
+    plantillas de perfiles para Canaima, Debian y Ubuntu. Corrigiendo
+    errores en las rutinas del mantenedor (release/snapshot). Completando
+    módulo para la gestión de perfiles (profile/perfil).
+  * [b901485] Completando módulo para grabar imágenes. Completando
+    módulo para probar imágenes. Actualizando traducciones de la gui y
+    el core. Actualizando documentación.
+  * [41fae26] New development snapshot 3.0+20120613115157
+  * [c6f2617] Mejorando el reconocimiento de binarios.
+  * [202de7c] Removiendo módulos inactivos de la gui. Moviendo
+    definiciones de elementos GTK principales a library.controller.
+    Actualizando traducciones-
+  * [14055da] New development snapshot 3.0+20120621060642
+  * [ac65f12] Cambiando la ubicación de la carpeta de código fuente de
+    la interfaz gráfica de ./gui/canaimasemilla a ./canaimasemilla
+    Cambiando ubicación del binario principal del core a la carpeta
+    raíz. Cambiando ubicación del binario principal de la gui  a la
+    carpeta raíz. Reestructurando ubicación y nombres de las librerías
+    principales de la gui. Actualizando cadenas de traducción.
+    Introduciendo nuevo script para la asistencia en la traducción de
+    cadenas de texto.
+  * [fc0ee20] New development snapshot 3.0+20120626164317
+  * [abba0ce] Ajustando el arte gráfico de la gui. Mejorando esquema de
+    traducción de cadenas de texto. Ingeniería de detalle para los
+    módulos de la gui. Actualizando perfiles.
+  * [7950259] New development snapshot 3.0+dev20120630185151
+  * [2424cce] Mejorando forma de instalación a través del Makefile.
+    Actualizando perfil de Canaima Popular.
+  * [031e8cb] Actualizando perfil "popular"
+  * [258c5e1] New development snapshot 3.0+dev20120707030932
+  * [0ca148d] Actualizando plantillas de documentación. Agregando
+    plantillas en español para syslinux.
+  * [933ade9] New development snapshot 3.0+dev20130429134042
+  * [509e314] Actualizando comandos para la nueva versión de live-build.
+    Limpiando documentación generada. Actualizando perfil para Canaima
+    Popular.
+  * [4966056] Ajustando opciones para la versión 3.0.5-1 de live-build.
+    Agregando templates de syslinux e isolinux para la versión 3.0.5-1 de
+    live-build.
+  * [79db571] Modificando perfil para remover paquete innecesario.
+    Cambiando fondo de syslinux.
+  * [3d39d46] Corrigiendo asignación de bootloader según tipo de medio.
+    Agregando paquete "locales" a paquetes obligatorios dentro de la ISO.
+    Agregando zona horaria por defecto a modo LIVE.
+
+  [ Erick Birbe ]
+  * [39a0881] Agregando opciones de seleccion de Lenguage. Se agrego el
+    archivo de configuracion de syslinux para los idiomas soportados por
+    canaima locales.cfg.
+  * [5504722] Añadiendo opción de arranque por disco duro. Se agrego al
+    final del menu de syslinux la opción de arranque por el primer disco
+    duro, esta opción funcionara siempre y cuando el disco exista y tenga
+    un sector de arranque válido para el sistema
+  * [38d8ca8] Configuración de teclado en entrada predeterminada. Se
+    suministran ahora los valores predeterminados para teclado a través
+    de live-config. Solo afecta por los momentos a la entrada de syslinux
+    predeterminda. Mas adelante se puede automatizar esto para las demas
+    entradas en otros idiomas.
+
+  [ Luis Alejandro Martínez Faneyth ]
+  * [7337422] Actualizando paquetes de pool.
+  * [c71419c] New development snapshot 3.0+dev20130919112121
+  * [e0c424d] Primer empaquetado.
+  * [f0d4014] Corrigiendo lanzadores .desktop
+
+ -- Luis Alejandro Martínez Faneyth <luis@huntingbears.com.ve>  Tue, 01 Oct 2013 11:27:09 -0430
+
 canaima-semilla (2.0+51) testing; urgency=low
 
   * [a8e75e3] Corrigiendo error en el scriptt principal
