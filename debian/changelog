@@ -1,3 +1,26 @@
+canaima-semilla (3.0~a2-1) kerepakupai; urgency=low
+
+  [ Francisco Javier Vásquez Guerrero ]
+  * [ef8d343] Mejorando tema de syslinux para la versión 4.0~b1.
+    Adaptando perfil de configuración para la versión 4.0~b1.
+  * [55ede85] Corrigiendo separación multilínea de string en bash.
+  * [d4be868] Creando nuevamente archivo isos/.dummy
+
+  [ Erick Birbe ]
+  * [c2bc39b] Desabilitando comportamientos de GNOME en Live CD *
+    Desabilitando el bloqueo de pantalla * Desabilitando las
+    notificaciones de particiones montadas por el   instalador de Canaima.
+    Debido a que Live-Config no procesa bien los llamados a gsettings
+    durante el arranque por problemas con DBus, se hizo un hook que copia
+    archivos .desktop que seran ejecutados durante el inicio de sesion del
+    usuario.
+
+  [ Luis Alejandro Martínez Faneyth ]
+  * [463e2cc] Agregando dependencia a python.
+  * [0bd7558] Update changelog for 3.0~a1-1 release
+
+ -- Luis Alejandro Martínez Faneyth <luis@huntingbears.com.ve>  Tue, 01 Oct 2013 13:28:34 -0430
+
 canaima-semilla (3.0~a1-1) kerepakupai; urgency=low
 
   [ Niv Sardi ]
