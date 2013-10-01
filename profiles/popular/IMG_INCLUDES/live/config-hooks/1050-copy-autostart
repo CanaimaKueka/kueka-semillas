@@ -1,0 +1,4 @@
+#!/bin/sh
+
+# Copying launchers that will run when the Live User starts session
+cp -f /lib/live/mount/medium/live/data/autostart/*.desktop  /etc/xdg/autostart/
