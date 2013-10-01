@@ -1,3 +1,9 @@
+canaima-semilla (3.0~a3-1) kerepakupai; urgency=low
+
+  * [76b69c7] Corrigiendo parámetros de configuración.
+
+ -- Luis Alejandro Martínez Faneyth <luis@huntingbears.com.ve>  Tue, 01 Oct 2013 14:56:26 -0430
+
 canaima-semilla (3.0~a2-1) kerepakupai; urgency=low
 
   [ Francisco Javier Vásquez Guerrero ]
@@ -17,7 +23,6 @@ canaima-semilla (3.0~a2-1) kerepakupai; urgency=low
 
   [ Luis Alejandro Martínez Faneyth ]
   * [463e2cc] Agregando dependencia a python.
-  * [0bd7558] Update changelog for 3.0~a1-1 release
 
  -- Luis Alejandro Martínez Faneyth <luis@huntingbears.com.ve>  Tue, 01 Oct 2013 13:28:34 -0430
 
