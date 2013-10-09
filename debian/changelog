@@ -1,5 +1,6 @@
 canaima-semilla (3.0~a3-1) kerepakupai; urgency=low
 
+  * [8ded5df] Agregando python-support.
   * [76b69c7] Corrigiendo parámetros de configuración.
 
  -- Luis Alejandro Martínez Faneyth <luis@huntingbears.com.ve>  Tue, 01 Oct 2013 14:56:26 -0430
