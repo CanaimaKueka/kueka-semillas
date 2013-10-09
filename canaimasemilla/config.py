@@ -28,21 +28,13 @@
 #
 # CODE IS POETRY
 
-import os
+import os, sys
 
 from canaimasemilla.common import ConfigMapper
 
-path = os.path.join(os.path.dirname(__file__))
-for root, dirs, files in os.walk(path):
-    for f in files:
-        path = os.path.join(root, f)
-        if path.endswith('.pyc') or path.endswith('.pyo'):
-            os.remove(path)
-
 curdir = os.path.normpath(os.path.join(os.path.realpath(os.path.abspath(__file__)), '..', '..'))
-print curdir
 
-if curdir == '/usr/share/pyshared':
+if curdir == '/usr/share/pyshared' or curdir == '/usr/lib/pymodules/python%s' % sys.version[:3]:
     GUIDIR = '/usr/share/pyshared/canaimasemilla'
     CONFDIR = '/etc/canaima-semilla/config/gui'
     BINDIR = '/usr/bin'
