@@ -1,7 +1,7 @@
 #!/usr/bin/make -f
 
 %:
-	dh ${@}
+	dh ${@} --with python-support
 
 override_dh_auto_build:
 	$(MAKE) DESTDIR=$(CURDIR)/debian/canaima-semilla build
