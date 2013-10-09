@@ -1,3 +1,9 @@
+canaima-semilla (3.0~a3-2) kerepakupai; urgency=low
+
+  * [ff325a4] Quitando el precompilado de archivos python.
+
+ -- Luis Alejandro Martínez Faneyth <luis@huntingbears.com.ve>  Wed, 09 Oct 2013 11:38:35 -0430
+
 canaima-semilla (3.0~a3-1) kerepakupai; urgency=low
 
   * [8ded5df] Agregando python-support.
