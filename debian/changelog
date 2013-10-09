@@ -1,5 +1,6 @@
 canaima-semilla (3.0~a3-2) kerepakupai; urgency=low
 
+  * [c7fcebf] Agregando una rutina de limpieza de archivos precompilados.
   * [ff325a4] Quitando el precompilado de archivos python.
 
  -- Luis Alejandro Martínez Faneyth <luis@huntingbears.com.ve>  Wed, 09 Oct 2013 11:38:35 -0430
