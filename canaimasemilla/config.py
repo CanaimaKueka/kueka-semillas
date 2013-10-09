@@ -32,7 +32,15 @@ import os
 
 from canaimasemilla.common import ConfigMapper
 
+path = os.path.join(os.path.dirname(__file__))
+for root, dirs, files in os.walk(path):
+    for f in files:
+        path = os.path.join(root, f)
+        if path.endswith('.pyc') or path.endswith('.pyo'):
+            os.remove(path)
+
 curdir = os.path.normpath(os.path.join(os.path.realpath(os.path.abspath(__file__)), '..', '..'))
+print curdir
 
 if curdir == '/usr/share/pyshared':
     GUIDIR = '/usr/share/pyshared/canaimasemilla'
