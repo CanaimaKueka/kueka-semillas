@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/python -B
 # -*- coding: utf-8 -*-
 #
 # ==============================================================================
@@ -32,9 +32,9 @@ import os
 
 from canaimasemilla.common import ConfigMapper
 
-curdir = os.path.abspath(os.getcwd())
+curdir = os.path.normpath(os.path.join(os.path.realpath(os.path.abspath(__file__)), '..', '..'))
 
-if curdir == '/usr/bin':
+if curdir == '/usr/share/pyshared':
     GUIDIR = '/usr/share/pyshared/canaimasemilla'
     CONFDIR = '/etc/canaima-semilla/config/gui'
     BINDIR = '/usr/bin'
