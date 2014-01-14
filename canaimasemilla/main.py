@@ -283,7 +283,7 @@ class Profile():
             )
 
         self.profile_name = TextEntry(
-            c = self, box = self.id_tab, maxlength = 1024, length = 60,
+            c = self, box = self.id_tab, maxlength = 1024, length = 50,
             text = default_profile_name, regex = '^[a-z-]*$'
             )
 
@@ -300,7 +300,7 @@ class Profile():
             )
 
         self.author_name = TextEntry(
-            c = self, box = self.id_tab, maxlength = 1024, length = 60,
+            c = self, box = self.id_tab, maxlength = 1024, length = 50,
             text = default_profile_author, regex = '^[\w\ ]*$'
             )
 
@@ -317,7 +317,7 @@ class Profile():
             )
 
         self.author_email = TextEntry(
-            c = self, box = self.id_tab, maxlength = 1024, length = 60,
+            c = self, box = self.id_tab, maxlength = 1024, length = 50,
             text = default_profile_email, regex = '^[_.@0-9A-Za-z-]*$'
             )
 
@@ -334,7 +334,7 @@ class Profile():
             )
 
         self.author_url = TextEntry(
-            c = self, box = self.id_tab, maxlength = 1024, length = 60,
+            c = self, box = self.id_tab, maxlength = 1024, length = 50,
             text = default_profile_url, regex = '^[-A-Za-z0-9+&@#/%?=~_()|!:,.;]*$'
             )
 
@@ -387,7 +387,7 @@ class Profile():
             )
 
         self.meta_repo = TextEntry(
-            c = self, box = self.distro_tab, maxlength = 1024, length = 60,
+            c = self, box = self.distro_tab, maxlength = 1024, length = 50,
             text = canaima_repo, regex = '^[-A-Za-z0-9+&@#/%?=~_()|!:,.;]*$'
             )
 
@@ -470,7 +470,7 @@ class Profile():
 
         self.img_syslinux_splash = TextEntry(
             c = self, box = self.img_syslinux_splash_box, maxlength = 1024,
-            length = 68, text = PROFILE_IMG_SYSLINUX_SPLASH_ENTRY, regex = '^.*$'
+            length = 50, text = PROFILE_IMG_SYSLINUX_SPLASH_ENTRY, regex = '^.*$'
             )
 
         self.img_syslinux_splash_choose = ActiveButton(
@@ -586,7 +586,7 @@ class Profile():
 
         self.os_packages_name = TextEntry(
             c = self, box = self.os_packages_box_2,
-            maxlength = 1024, length = 68, text = PROFILE_OS_PACKAGES_ENTRY,
+            maxlength = 1024, length = 50, text = PROFILE_OS_PACKAGES_ENTRY,
             regex = '^[A-Za-z0-9\ -]*$'
             )
 
@@ -638,7 +638,7 @@ class Profile():
 
         self.img_pool_packages_name = TextEntry(
             c = self, box = self.img_pool_packages_box_2,
-            maxlength = 1024, length = 68,
+            maxlength = 1024, length = 50,
             text = PROFILE_IMG_POOL_PACKAGES_ENTRY, regex = '^[A-Za-z0-9\ -]*$'
             )
 
@@ -678,7 +678,7 @@ class Profile():
             )
 
         self.os_includes = TextEntry(
-            c = self, box = self.os_includes_box, maxlength = 1024, length = 68,
+            c = self, box = self.os_includes_box, maxlength = 1024, length = 50,
             text = PROFILE_OS_INCLUDES_ENTRY, regex = '^.*$'
             )
 
@@ -722,7 +722,7 @@ class Profile():
             )
 
         self.img_includes = TextEntry(
-            c = self, box = self.img_includes_box, maxlength = 1024, length = 68,
+            c = self, box = self.img_includes_box, maxlength = 1024, length = 50,
             text = PROFILE_IMG_INCLUDES_ENTRY, regex = '^.*$'
             )
 
@@ -766,7 +766,7 @@ class Profile():
             )
 
         self.os_hooks = TextEntry(
-            c = self, box = self.os_hooks_box, maxlength = 1024, length = 68,
+            c = self, box = self.os_hooks_box, maxlength = 1024, length = 50,
             text = PROFILE_OS_HOOKS_ENTRY, regex = '^.*$'
             )
 
@@ -810,7 +810,7 @@ class Profile():
             )
 
         self.img_hooks = TextEntry(
-            c = self, box = self.img_hooks_box, maxlength = 1024, length = 68,
+            c = self, box = self.img_hooks_box, maxlength = 1024, length = 50,
             text = PROFILE_IMG_HOOKS_ENTRY, regex = '^.*$'
             )
 
@@ -867,7 +867,7 @@ class Profile():
 
         self.img_debian_installer_banner = TextEntry(
             c = self, box = self.img_debian_installer_banner_box,
-            maxlength = 1024, length = 68,
+            maxlength = 1024, length = 50,
             text = PROFILE_IMG_DEBIAN_INSTALLER_BANNER_ENTRY, regex = '^.*$'
             )
 
@@ -907,7 +907,7 @@ class Profile():
 
         self.img_debian_installer_preseed = TextEntry(
             c = self, box = self.img_debian_installer_preseed_box,
-            maxlength = 1024, length = 68,
+            maxlength = 1024, length = 50,
             text = PROFILE_IMG_DEBIAN_INSTALLER_PRESEED_ENTRY, regex = '^.*$'
             )
 
@@ -943,7 +943,7 @@ class Profile():
 
         self.img_debian_installer_gtk = TextEntry(
             c = self, box = self.img_debian_installer_gtk_box,
-            maxlength = 1024, length = 68,
+            maxlength = 1024, length = 50,
             text = PROFILE_IMG_DEBIAN_INSTALLER_GTK_ENTRY, regex = '^.*$'
             )
 
@@ -1081,7 +1081,7 @@ class Test():
             )
 
         self.test_image = TextEntry(
-            c = self, box = self.test_image_box, maxlength = 1024, length = 68,
+            c = self, box = self.test_image_box, maxlength = 1024, length = 50,
             text = TEST_IMAGE_ENTRY, regex = '^.*$'
             )
 
@@ -1292,7 +1292,7 @@ class Save():
             )
 
         self.save_image = TextEntry(
-            c = self, box = self.save_image_box, maxlength = 1024, length = 68,
+            c = self, box = self.save_image_box, maxlength = 1024, length = 50,
             text = SAVE_IMAGE_ENTRY, regex = '^.*$'
             )
 
