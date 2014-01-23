@@ -30,21 +30,21 @@ ROOTNAME="$( basename ${ROOTDIR} )"
 PROJDIR="$( dirname ${ROOTDIR} )"
 VERSION="${ROOTDIR}/VERSION"
 TYPE="${1}"
-VERDE="\e[1;32m"
-ROJO="\e[1;31m"
-AMARILLO="\e[1;33m"
-FIN="\e[0m"
+VERDE="\033[1;32m"
+ROJO="\033[1;31m"
+AMARILLO="\033[1;33m"
+FIN="\033[0m"
 
 ERROR() {
-echo -e ${ROJO}${1}${FIN}
+	printf "${ROJO}${1}${FIN}\n"
 }
 
 WARNING() {
-echo -e ${AMARILLO}${1}${FIN}
+	printf "${AMARILLO}${1}${FIN}\n"
 }
 
 SUCCESS() {
-echo -e ${VERDE}${1}${FIN}
+	printf "${VERDE}${1}${FIN}\n"
 }
 
 git config --global user.name "Luis Alejandro Martínez Faneyth"
@@ -70,7 +70,7 @@ elif [ "${TYPE}" = "test-snapshot" ]; then
 	git merge -q -s recursive -X theirs --squash development
 fi
 
-NEWRELVERSION="$( cat ${VERSION} | grep "VERSION" | sed 's/VERSION = //g' )"
+NEWRELVERSION="$( cat ${VERSION} | grep "VERSION" | sed 's/VERSION=//g' )"
 
 if [ "${OLDRELVERSION}" = "${NEWRELVERSION}" ]; then
 	if [ "${OLDDEBSTATUS}" = "UNRELEASED" ]; then
