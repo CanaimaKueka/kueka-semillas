@@ -187,7 +187,7 @@ if [ "${KVM_NEW_DISK}" = "true" ]; then
 
 	${MKDIR} -p "$( ${DIRNAME} "${KVM_DISK_FILE}" )"
 
-	if ${KVM_IMG} create -f qcow2 "${KVM_DISK_FILE}" "${KVM_NEW_DISK_SIZE}G"; then
+	if ${QEMU_IMG} create -f qcow2 "${KVM_DISK_FILE}" "${KVM_NEW_DISK_SIZE}G"; then
 		SUCCESSMSG "Se ha creado un nuevo disco virtual de %sG en %s." "${KVM_NEW_DISK_SIZE}" "${KVM_DISK_FILE}"
 	else
 		ERRORMSG "Ha ocurrido un error inesperado durante la creación un nuevo disco virtual en %s." "${KVM_DISK_FILE}"

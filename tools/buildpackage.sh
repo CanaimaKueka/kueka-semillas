@@ -1,6 +1,6 @@
-#!/bin/bash
+#!/bin/sh -e
 #
-# ====================================================================
+# ===================================================================
 # PACKAGE: aguilas
 # FILE: tools/buildpackage.sh
 # DESCRIPTION:  Makes a new debian package of a stable release.
@@ -8,7 +8,7 @@
 # COPYRIGHT:
 # (C) 2012 Luis Alejandro Martínez Faneyth <luis@huntingbears.com.ve>
 # LICENCE: GPL3
-# ====================================================================
+# ===================================================================
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -35,15 +35,15 @@ ROJO="\e[1;31m"
 AMARILLO="\e[1;33m"
 FIN="\e[0m"
 
-function ERROR() {
+ERROR() {
 echo -e ${ROJO}${1}${FIN}
 }
 
-function WARNING() {
+WARNING() {
 echo -e ${AMARILLO}${1}${FIN}
 }
 
-function SUCCESS() {
+SUCCESS() {
 echo -e ${VERDE}${1}${FIN}
 }
 
@@ -64,16 +64,16 @@ OLDREV="$( echo ${OLDDEBVERSION#${OLDRELVERSION}-} | sed 's/~.*//g' )"
 
 WARNING "Merging new upstream release ..."
 
-if [ "${TYPE}" == "final-release" ] || [ "${TYPE}" == "test-release" ]; then
+if [ "${TYPE}" = "final-release" ] || [ "${TYPE}" = "test-release" ]; then
 	git merge -q -s recursive -X theirs --squash release
-elif [ "${TYPE}" == "test-snapshot" ]; then
+elif [ "${TYPE}" = "test-snapshot" ]; then
 	git merge -q -s recursive -X theirs --squash development
 fi
 
 NEWRELVERSION="$( cat ${VERSION} | grep "VERSION" | sed 's/VERSION = //g' )"
 
-if [ "${OLDRELVERSION}" == "${NEWRELVERSION}" ]; then
-	if [ "${OLDDEBSTATUS}" == "UNRELEASED" ]; then
+if [ "${OLDRELVERSION}" = "${NEWRELVERSION}" ]; then
+	if [ "${OLDDEBSTATUS}" = "UNRELEASED" ]; then
 		NEWREV="${OLDREV}"
 	else
 		NEWREV="$[ ${OLDREV}+1 ]"
@@ -85,10 +85,10 @@ fi
 NEWDEBVERSION="${NEWRELVERSION}-${NEWREV}"
 
 WARNING "Generating Debian changelog ..."
-if [ "${TYPE}" == "final-release" ]; then
+if [ "${TYPE}" = "final-release" ]; then
 	OPTIONS="-kE78DAA2E -tc --git-tag --git-retag"
 	git dch --new-version="${NEWDEBVERSION}" --release --auto --id-length=7 --full
-elif [ "${TYPE}" == "test-snapshot" ] || [ "${TYPE}" == "test-release" ]; then
+elif [ "${TYPE}" = "test-snapshot" ] || [ "${TYPE}" = "test-release" ]; then
 	OPTIONS="-us -uc"
 	git dch --new-version="${NEWDEBVERSION}" --snapshot --auto --id-length=7 --full
 fi
@@ -105,7 +105,7 @@ git buildpackage ${OPTIONS}
 git clean -fd
 git reset --hard
 
-if [ "${TYPE}" == "final-release" ]; then
+if [ "${TYPE}" = "final-release" ]; then
 	WARNING "Uploading changes to remote servers ..."
 	git push -q --tags git@github.com:HuntingBears/canaima-semilla.git master
 	git push -q --tags git@gitorious.org:huntingbears/canaima-semilla.git master

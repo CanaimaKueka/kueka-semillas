@@ -1,4 +1,4 @@
 [Desktop Entry]
 Type=Application
 Name=Disabler
-Exec=/lib/live/mount/medium/live/data/scripts/disabler.sh
+Exec=/bin/bash /lib/live/mount/medium/live/data/scripts/disabler.sh

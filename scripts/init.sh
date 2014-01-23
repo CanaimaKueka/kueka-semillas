@@ -26,7 +26,7 @@
 #
 # CODE IS POETRY
 
-BINLIST="/usr/bin/kvm /usr/bin/kvm-img /bin/cat /bin/df /bin/echo /usr/bin/awk /bin/rm /usr/bin/getopt /usr/bin/dpkg /usr/bin/lb /usr/bin/tee /bin/mv /usr/bin/stat /usr/bin/bc /usr/bin/gettext /usr/bin/printf /usr/bin/file /usr/bin/identify /usr/bin/dirname /bin/readlink /usr/bin/man /bin/mkdir /bin/cp /usr/bin/cut /bin/grep /bin/sed /usr/bin/seq /usr/bin/wc /bin/chmod /usr/bin/id /bin/date /usr/bin/dpkg-query /usr/bin/which /bin/ls /usr/bin/basename /bin/tempfile /usr/bin/tr /usr/bin/wodim /bin/dd"
+BINLIST="/usr/bin/kvm /usr/bin/qemu-img /bin/cat /bin/df /bin/echo /usr/bin/awk /bin/rm /usr/bin/getopt /usr/bin/dpkg /usr/bin/lb /usr/bin/tee /bin/mv /usr/bin/stat /usr/bin/bc /usr/bin/gettext /usr/bin/printf /usr/bin/file /usr/bin/identify /usr/bin/dirname /bin/readlink /usr/bin/man /bin/mkdir /bin/cp /usr/bin/cut /bin/grep /bin/sed /usr/bin/seq /usr/bin/wc /bin/chmod /usr/bin/id /bin/date /usr/bin/dpkg-query /usr/bin/which /bin/ls /usr/bin/basename /bin/tempfile /usr/bin/tr /usr/bin/wodim /bin/dd"
 
 for BIN in ${BINLIST}; do
 	CMDNAME="$( basename ${BIN} )"

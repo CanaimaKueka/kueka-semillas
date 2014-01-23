@@ -1,3 +1,73 @@
+DEVELOPMENT RELEASE v3.0+dev20140123150631 (01/23/14)
+Mejorando script de empaquetamiento.
+
+DEVELOPMENT RELEASE v3.0+dev20140123145752 (01/23/14)
+Corrigiendo binario de KVM_IMG.
+
+DEVELOPMENT RELEASE v3.0+dev20140123143131 (01/23/14)
+Corrigiendo script.
+
+DEVELOPMENT RELEASE v3.0+dev20140123142651 (01/23/14)
+Actualizando l10n.
+Conflicts:
+	debian/changelog
+	debian/rules
+Corrigiendo longitud de los campos de texto.
+Agregando llamado a bash para poder ejecutar el script disabler
+Agregando llamado a bash para poder ejecutar el script disabler
+Copiando datos de plantilla y mejorando Label para Failsafe
+Quitando mayusculas a sentencia MENU DEFAULT por live-build
+La sentencia MENU DEFAULT es utilizada por live-build dentro de
+sus scripts, pero en minusculas.
+Cambiando posición del Menu y Activando el AUTOBOOT
+La posicion anterior del menu impedia editar correctamente los
+valores de la linea de comando de las entradas. Se subio el menu
+un poco mas arriba para liberar este espacio y asi no generar
+conflictos con la linea de comandos.
+Se activo el autoboot para iniciar directamente sin intervencion
+del usuario. El tiempo de espera se configuro a 5 segundos.
+Las etiquetas de Syslinux se cambiaron a mayusculas.
+Conflicts:
+	profiles/popular/profile.conf
+Removiendo línea mal ubicada en profiles.conf
+Incorporando kernel 486 para computadores antiguos
+Colocando un nombre más adecuado al modo failsafe
+Este cambio cierra el ticket #792 del trac de Canaima.
+Copiando datos de isolinux/3.0/ a syslinux/3.0/
+Copiando las mejoras realizadas en la plantilla de isolinux a la
+plantilla de syslinux.
+Update changelog for 3.0~a3-2 release
+Mejorando la detección de la carpeta de trabajo.
+Update changelog for 3.0~a3-2 release
+Agregando una rutina de limpieza de archivos precompilados.
+Update changelog for 3.0~a3-2 release
+Quitando el precompilado de archivos python.
+Update changelog for 3.0~a3-1 release
+Agregando python-support.
+Removiendo la carpeta debian/.
+Update changelog for 3.0~a3-1 release
+Corrigiendo parámetros de configuración.
+Update changelog for 3.0~a2-1 release
+Update changelog for 3.0~a1-1 release
+Agregando dependencia a python.
+Update changelog for 3.0~a1-1 release
+Marcando debian/rules como ejecutable.
+Update changelog for 3.0~a1-1 release
+Corrigiendo lanzadores .desktop
+Primer empaquetado.
+Conflicts:
+	scripts/functions/profile.sh
+Cambios aplicados para generar Canaima 4.0 Beta2
+Creando nuevamente archivo isos/.dummy
+Desabilitando comportamientos de GNOME en Live CD
+* Desabilitando el bloqueo de pantalla
+* Desabilitando las notificaciones de particiones montadas por el
+  instalador de Canaima.
+Debido a que Live-Config no procesa bien los llamados a gsettings
+durante el arranque por problemas con DBus, se hizo un hook que
+copia archivos .desktop que seran ejecutados durante el inicio de
+sesion del usuario.
+
 DEVELOPMENT RELEASE v3.0+dev20130919112121 (09/19/13)
 Actualizando paquetes de pool.
 Configuración de teclado en entrada predeterminada

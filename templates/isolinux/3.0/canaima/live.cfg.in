@@ -1,12 +1,12 @@
-label live-@FLAVOUR@
-	menu label ^Probar e Instalar (@FLAVOUR@)
+LABEL live-@FLAVOUR@
+	MENU LABEL ^Probar e Instalar (@FLAVOUR@)
 	menu default
-	linux @LINUX@
-	initrd @INITRD@
-	append @APPEND_LIVE@
+	LINUX @LINUX@
+	INITRD @INITRD@
+	APPEND @APPEND_LIVE@
 
-label live-@FLAVOUR@-failsafe
-	menu label ^Probar e Instalar (@FLAVOUR@ failsafe)
-	linux @LINUX@
-	initrd @INITRD@
-	append @APPEND_LIVE_FAILSAFE@
+LABEL live-@FLAVOUR@-failsafe
+	MENU LABEL Modo a Prueba de ^Fallos (@FLAVOUR@ failsafe)
+	LINUX @LINUX@
+	INITRD @INITRD@
+	APPEND @APPEND_LIVE_FAILSAFE@

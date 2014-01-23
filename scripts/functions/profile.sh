@@ -161,10 +161,10 @@ CS_LOAD_PROFILE() {
 			if [ $( ${ECHO} ${PROFILE_ARCH} | ${GREP} -wc "${ARCH}") -ge 1 ]; then
 				if ${DPKG} --compare-versions "${LB_VERSION}" ge 3.0; then
 					ARCH="i386"
-					KERNEL_ARCH="686-pae"
+					KERNEL_ARCH="686-pae 486"
 				else
 					ARCH="i386"
-					KERNEL_ARCH="686"
+					KERNEL_ARCH="686 486"
 				fi
 			else
 				ERRORMSG "Arquitectura '%s' no soportada por el perfil '%s'. Abortando." "${ARCH}" "${SABOR}"
