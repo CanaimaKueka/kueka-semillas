@@ -46,13 +46,17 @@ if __name__ == "__main__":
     except Exception:
         gettext.NullTranslations().install()
 
-    if os.geteuid() != 0:
-        dialog = UserMessage(
-            message = MAIN_ROOT_ERROR_MSG, title = MAIN_ROOT_ERROR_TITLE,
-            type = gtk.MESSAGE_ERROR, buttons = gtk.BUTTONS_OK,
-            c_1 = gtk.RESPONSE_OK, f_1 = sys.exit, p_1 = (1,)
-            )
-    else:
-        app = Main()
-        gtk.main()
-        sys.exit()
+    # if os.geteuid() != 0:
+    #     dialog = UserMessage(
+    #         message = MAIN_ROOT_ERROR_MSG, title = MAIN_ROOT_ERROR_TITLE,
+    #         type = gtk.MESSAGE_ERROR, buttons = gtk.BUTTONS_OK,
+    #         c_1 = gtk.RESPONSE_OK, f_1 = sys.exit, p_1 = (1,)
+    #         )
+    # else:
+    #     app = Main()
+    #     gtk.main()
+    #     sys.exit()
+
+    app = Main()
+    gtk.main()
+    sys.exit()

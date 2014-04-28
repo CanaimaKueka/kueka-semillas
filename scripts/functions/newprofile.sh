@@ -49,7 +49,7 @@ INFOMSG "Página web de la persona o grupo responsable"
 
 INFOMSG "Metadistribución base para la distribución derivada [ej: debian]"
 # WHERE
-# META_DIST="@@META_DIST@@"
+# META_DISTRO="@@META_DISTRO@@"
 
 INFOMSG "Código nombre de la Metadistribución base [ej: squeeze]"
 # WHERE

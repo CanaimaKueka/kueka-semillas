@@ -1,0 +1,5 @@
+*.py[co]
+*.png
+*.ico
+*.jpg
+isos/*

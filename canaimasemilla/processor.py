@@ -214,6 +214,7 @@ def ProcessGenerator(command, terminal = False, bar = False):
         strcmd = command
 
     cmd = '{0} 1>{1} 2>&1'.format(strcmd, filename)
+    print cmd
 
     try:
         os.mkfifo(filename)
@@ -351,20 +352,21 @@ def Toggle(r, do, dont = False, children = False,
 
     if children:
         widgetlist = do.get_children()
-        if morechildren:
+        if morechildren and widgetlist:
             for widget in widgetlist:
                 morewidgets = widget.get_children()
                 widgetlist = widgetlist + morewidgets
     else:
         widgetlist = do
 
-    for widget in widgetlist:
-        if widget != dont:
-            if widget.get_sensitive() or alwaysoff:
-                setting = False
-            else:
-                setting = True
-            widget.set_sensitive(setting)
+    if widgetlist:
+        for widget in widgetlist:
+            if widget != dont:
+                if widget.get_sensitive() or alwaysoff:
+                    setting = False
+                else:
+                    setting = True
+                widget.set_sensitive(setting)
 
 def ChangeCodename(r, c, codenamecombo, db):
     codenamelist, codenameactive = CodenameList(c, r, db)
@@ -835,7 +837,7 @@ def CreateProfile(c, profilename, profilearch, authorname, authoremail,
     author_email = 'AUTHOR_EMAIL="'+_authoremail+'"\n'
     author_url = 'AUTHOR_URL="'+_authorurl+'"\n'
     os_locale = 'OS_LOCALE="'+_oslocale+'"\n'
-    meta_dist = 'META_DIST="'+_metadist+'"\n'
+    meta_dist = 'META_DISTRO="'+_metadist+'"\n'
     meta_codename = 'META_CODENAME="'+_metacodename+'"\n'
     meta_repo = 'META_REPO="'+_metarepo+'"\n'
     meta_reposections = 'META_REPOSECTIONS="'+_metareposections+'"\n'

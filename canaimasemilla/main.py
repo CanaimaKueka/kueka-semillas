@@ -343,8 +343,8 @@ class Profile():
             )
 
         # DISTRO TAB
-        self.meta_dist_title = Title(
-            c = self, box = self.distro_tab, text = PROFILE_META_DIST_1
+        self.meta_distro_title = Title(
+            c = self, box = self.distro_tab, text = PROFILE_META_DISTRO_1
             )
 
         self.meta_box = CustomBox(
@@ -353,7 +353,7 @@ class Profile():
 
         self.meta_box.set_spacing(5)
 
-        self.meta_dist_box = CustomBox(
+        self.meta_distro_box = CustomBox(
             c = self, box = self.meta_box, align = 'horizontal'
             )
 
@@ -361,16 +361,16 @@ class Profile():
             c = self, box = self.meta_box, align = 'horizontal'
             )
 
-        self.meta_dist_description = Description(
-            c = self, box = self.distro_tab, text = PROFILE_META_DIST_2
+        self.meta_distro_description = Description(
+            c = self, box = self.distro_tab, text = PROFILE_META_DISTRO_2
             )
 
-        self.meta_dist = gtk.combo_box_new_text()
-        self.meta_dist.append_text('canaima')
-        self.meta_dist.set_active(0)
+        self.meta_distro = gtk.combo_box_new_text()
+        self.meta_distro.append_text('canaima')
+        self.meta_distro.set_active(0)
 
         self.codename_list, self.codename_active = CodenameList(
-            c = self, dist = self.meta_dist, db = apt_templates
+            c = self, dist = self.meta_distro, db = apt_templates
             )
 
         self.meta_codename = ActiveCombo(
@@ -403,15 +403,15 @@ class Profile():
             c = self, box = self.distro_tab, text = PROFILE_META_REPOSECTIONS_1
             )
 
-        self.section_list = SectionList(c = self, dist = self.meta_dist)
+        self.section_list = SectionList(c = self, dist = self.meta_distro)
 
         self.meta_reposections = CheckList(
             c = self, box = self.distro_tab, checklist = self.section_list,
             checkdefault = 'main'
             )
 
-        self.meta_dist = ActiveCombo(
-            c = self, box = self.meta_dist_box, combolist = cs_distros,
+        self.meta_distro = ActiveCombo(
+            c = self, box = self.meta_distro_box, combolist = cs_distros,
             combodefault = 2, entry = False,
             f_1 = ChangeCodename,
             p_1 = (self, self.meta_codename, apt_templates),
@@ -527,7 +527,7 @@ class Profile():
 
         self.os_extrarepos_url = TextEntry(
             c = self, box = self.os_extrarepos_box_3,
-            maxlength = 1024, length = 38, text = PROFILE_OS_EXTRAREPOS_URL,
+            maxlength = 1024, length = 26, text = PROFILE_OS_EXTRAREPOS_URL,
             regex = '^[-A-Za-z0-9+&@#/%?=~_()|!:,.;]*$'
             )
 
@@ -539,7 +539,7 @@ class Profile():
 
         self.os_extrarepos_sections = TextEntry(
             c = self, box = self.os_extrarepos_box_3,
-            maxlength = 1024, length = 17, text = PROFILE_OS_EXTRAREPOS_SECTIONS,
+            maxlength = 1024, length = 10, text = PROFILE_OS_EXTRAREPOS_SECTIONS,
             regex = '^[A-Za-z0-9\ -]*$'
             )
 
@@ -1026,7 +1026,7 @@ class Profile():
                     'f_1': CreateProfile, 'p_1': (
                         self, self.profile_name, self.profile_arch,
                         self.author_name, self.author_email, self.author_url,
-                        self.os_locale, self.meta_dist, self.meta_codename,
+                        self.os_locale, self.meta_distro, self.meta_codename,
                         self.meta_repo, self.meta_reposections, self.os_extrarepos,
                         self.os_packages, self.img_pool_packages, self.os_includes,
                         self.img_includes, self.os_hooks, self.img_hooks,
