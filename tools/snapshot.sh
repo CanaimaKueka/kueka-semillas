@@ -100,7 +100,7 @@ git log > ${CHANGES}
 
 OLDVERSION="$( cat ${VERSION} | grep "VERSION" | sed 's/VERSION=//g;s/"//g' )"
 OLDCOMMIT="$( cat ${VERSION} | grep "COMMIT" | sed 's/COMMIT=//g;s/"//g' )"
-OLDCOMMITLINE="$( cat ${CHANGES}  | grep -n "${OLDCOMMIT}" | awk -F: '{print $1}' )"
+OLDCOMMITLINE="$( cat ${CHANGES} | grep -n "${OLDCOMMIT}" | awk -F: '{print $1}' )"
 
 read -p "Enter new version (last version was ${OLDVERSION}): " REPLY
 NEWVERSION="${REPLY}"
@@ -124,7 +124,7 @@ WARNING "Commiting changes ..."
 git add .
 git commit -q -a -m "New development snapshot ${NEWVERSION}+${SNAPSHOT}"
 git tag ${NEWVERSION}+${SNAPSHOT} -m "New development snapshot ${NEWVERSION}+${SNAPSHOT}"
- 
+
 WARNING "Creating tarball ..."
 tar -czf ../canaima-semilla_${NEWVERSION}+${SNAPSHOT}.orig.tar.gz *
 

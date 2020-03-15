@@ -248,7 +248,7 @@ Para informar sobre el problema ocurrido debe seguir los siguientes pasos:
 
    4.2 The Pythagorean Theorem Illustrated
 
-2. Ingrese en su dirección de correo electrónico y mande ese archivo a la siguiente dirección ``<desarrolladores@canaima.softwarelibre.gob.ve>``.
+2. Ingrese en su dirección de correo electrónico y mande ese archivo a la siguiente dirección ``<developers@canaimakueka.org.ve>``.
 
 .. note:
 
@@ -436,4 +436,4 @@ Puede encontrar una copia de esta licencia en este manual o en el archivo inclui
 Retroalimentación
 ~~~~~~~~~~~~~~~~~
 
-Para informar de un fallo o hacer cualquier sugerencia concerniente a Canaima Semilla o esta documentación, envie un correo a la siguiente dirección: ``<desarrolladores@canaima.softwarelibre.gob.ve>``.
+Para informar de un fallo o hacer cualquier sugerencia concerniente a Canaima Semilla o esta documentación, envie un correo a la siguiente dirección: ``<developers@canaimakueka.org.ve>``.

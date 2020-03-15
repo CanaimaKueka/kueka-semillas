@@ -5,14 +5,14 @@ SHELL = sh -e
 # Datos del Proyecto
 AUTHOR = Luis Alejandro Martínez Faneyth
 EMAIL = luis@huntingbears.com.ve
-MAILIST = desarrolladores@canaima.softwarelibre.gob.ve
+MAILIST = developers@canaimakueka.org.ve
 PACKAGE = Canaima Semilla
 CHARSET = UTF-8
 VERSION = $(shell cat VERSION | grep "VERSION" | sed 's/VERSION="//g;s/+.*//g')
 YEAR = $(shell date +%Y)
 
 # Datos de traducción
-LANGTEAM = Equipo de Traducción de Canaima Semilla <desarrolladores@canaima.softwarelibre.gob.ve>
+LANGTEAM = Equipo de Traducción de Canaima Semilla <developers@canaimakueka.org.ve>
 POTITLE = Plantilla de Traducción para Canaima Semilla
 POTEAM = Equipo de Traducción de Canaima Semilla
 PODATE = $(shell date +%F\ %R%z)

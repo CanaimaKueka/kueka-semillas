@@ -36,19 +36,19 @@ cp ${POT} ${TMP}
 LINEID=$( cat ${TMP} | grep -n 'msgid "' | grep -v 'msgid ""' | awk -F: '{print $1}' )
 
 for ID in ${LINEID}; do
-	SENTENCE=$( sed -n ${ID}p ${TMP} | sed 's/msgid //g;s/"//g' )
+    SENTENCE=$( sed -n ${ID}p ${TMP} | sed 's/msgid //g;s/"//g' )
 
-	read -p "Previous: \"${SENTENCE}\"; New = "
+    read -p "Previous: \"${SENTENCE}\"; New = "
 
-	NEW='msgid "'${REPLY}'"'
+    NEW='msgid "'${REPLY}'"'
         OLD='msgid "'${SENTENCE}'"'
 
-	if [ "${NEW}" != 'msgid ""' ]; then
-		sed -i "s|${OLD}|${NEW}|g" ${TMP}
-		for FILE in ${FILES}; do
-			sed -i "s|_(\"${OLD}\")|_(\"${NEW}\")|g" ${FILE}
-		done
-	fi
+    if [ "${NEW}" != 'msgid ""' ]; then
+        sed -i "s|${OLD}|${NEW}|g" ${TMP}
+        for FILE in ${FILES}; do
+            sed -i "s|_(\"${OLD}\")|_(\"${NEW}\")|g" ${FILE}
+        done
+    fi
 done
 
 cp ${TMP} ${POT}
