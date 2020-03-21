@@ -5,7 +5,7 @@
 # ARCHIVO: scripts/functions/profile.sh
 # DESCRIPCIÓN: Funciones para la carga y validación de los perfiles.
 # COPYRIGHT:
-#       (C) 2010-2012 Luis Alejandro Martínez Faneyth <luis@huntingbears.com.ve>
+#       (C) 2010-2020 Luis Alejandro Martínez Faneyth <luis@collagelabs.org>
 #       (C) 2012 Niv Sardi <xaiki@debian.org>
 # LICENCIA: GPL-3
 # ==============================================================================
@@ -449,7 +449,7 @@ CS_LOAD_PROFILE() {
 	IMG_HOOKS="${IMG_HOOKS%/}"
 	IMG_SYSLINUX_TEMPLATE="${IMG_SYSLINUX_TEMPLATE%/}"
 	OS_LANG="$( ${ECHO} "${OS_LOCALE}" | ${SED} 's/_.*//g' )"
-	CS_ISO_PREPARER="${CS_ISO_PREPARER:-${CS_NAME}; http://code.google.com/p/canaima-semilla/}"
+	CS_ISO_PREPARER="${CS_ISO_PREPARER:-${CS_NAME}; https://github.com/CanaimaKueka/canaima-semilla/}"
 	CS_ISO_VOLUME="${CS_ISO_VOLUME:-${META_DISTRO}-${PROFILE_NAME}}"
 	CS_ISO_VOLUME="$( ${ECHO} "${CS_ISO_VOLUME}" | ${CUT} -c1-32 )"
 	CS_ISO_PUBLISHER="${CS_ISO_PUBLISHER:-${AUTHOR_NAME}; ${AUTHOR_EMAIL}; ${AUTHOR_URL}}"

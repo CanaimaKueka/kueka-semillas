@@ -1,6 +1,3 @@
-[submodule "documentation/googlewiki"]
-	path = documentation/googlewiki
-	url = https://code.google.com/p/canaima-semilla.wiki/
 [submodule "documentation/githubwiki"]
 	path = documentation/githubwiki
-	url = git@github.com:LuisAlejandro/canaima-semilla.wiki.git
+	url = git@github.com:CanaimaKueka/canaima-semilla.wiki.git

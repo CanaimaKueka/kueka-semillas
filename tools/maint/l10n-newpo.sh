@@ -7,7 +7,7 @@
 #		based on the Aguilas POT template.
 # USAGE: ./tools/maint/l10n-newpo.sh [L10N CODE]
 # COPYRIGHT:
-# (C) 2012 Luis Alejandro Martínez Faneyth <luis@huntingbears.com.ve>
+# (C) 2010-2020 Luis Alejandro Martínez Faneyth <luis@collagelabs.org>
 # LICENCE: GPL3
 # ====================================================================
 #

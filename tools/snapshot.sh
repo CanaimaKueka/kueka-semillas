@@ -6,7 +6,7 @@
 # DESCRIPTION:  Makes a new development snapshot of Canaima Semilla.
 # USAGE: ./tools/snapshot.sh
 # COPYRIGHT:
-# (C) 2012 Luis Alejandro Martínez Faneyth <luis@huntingbears.com.ve>
+# (C) 2010-2020 Luis Alejandro Martínez Faneyth <luis@collagelabs.org>
 # LICENCE: GPL3
 # ====================================================================
 #
@@ -27,7 +27,6 @@
 
 ROOTDIR="$( pwd )"
 GITHUBWIKI="${ROOTDIR}/documentation/githubwiki"
-GOOGLEWIKI="${ROOTDIR}/documentation/googlewiki"
 VERSION="${ROOTDIR}/VERSION"
 CHANGELOG="${ROOTDIR}/ChangeLog"
 CHANGES="$( tempfile )"
@@ -52,9 +51,9 @@ SUCCESS() {
 }
 
 git config --global user.name "Luis Alejandro Martínez Faneyth"
-git config --global user.email "luis@huntingbears.com.ve"
+git config --global user.email "luis@collagelabs.org"
 export DEBFULLNAME="Luis Alejandro Martínez Faneyth"
-export DEBEMAIL="luis@huntingbears.com.ve"
+export DEBEMAIL="luis@collagelabs.org"
 
 if [ "$( git branch 2> /dev/null | sed -e '/^[^*]/d;s/\* //' )" != "development" ]; then
 	ERROR "[MAIN] You are not on \"development\" branch."
@@ -66,25 +65,12 @@ if [ "$( git branch 2> /dev/null | sed -e '/^[^*]/d;s/\* //' )" != "development"
 	git checkout development
 fi
 cd ${ROOTDIR}
-cd ${GOOGLEWIKI}
-if [ "$( git branch 2> /dev/null | sed -e '/^[^*]/d;s/\* //' )" != "development" ]; then
-	ERROR "[GOOGLEWIKI] You are not on \"development\" branch."
-	git checkout development
-fi
-cd ${ROOTDIR}
-
-WARNING "Updating Google Code wiki ..."
-cd ${GOOGLEWIKI}
-git add .
-git commit -q -a -m "Updating documentation"
-git push -q --tags https://code.google.com/p/canaima-semilla.wiki/ development
-cd ${ROOTDIR}
 
 WARNING "Updating Github wiki ..."
 cd ${GITHUBWIKI}
 git add .
 git commit -q -a -m "Updating documentation"
-git push -q --tags git@github.com:HuntingBears/canaima-semilla.wiki.git development
+git push -q --tags git@github.com:CanaimaKueka/canaima-semilla.wiki.git development
 cd ${ROOTDIR}
 
 WARNING "Committing changes ..."
@@ -129,8 +115,6 @@ WARNING "Creating tarball ..."
 tar -czf ../canaima-semilla_${NEWVERSION}+${SNAPSHOT}.orig.tar.gz *
 
 WARNING "Pushing changes to remote repositories ..."
-git push -q --tags git@github.com:HuntingBears/canaima-semilla.git development
-git push -q --tags git@gitorious.org:huntingbears/canaima-semilla.git development
-git push -q --tags https://code.google.com/p/canaima-semilla/ development
+git push -q --tags git@github.com:CanaimaKueka/canaima-semilla.git development
 
 SUCCESS "Snapshot Published"

@@ -5,7 +5,7 @@
 # ARCHIVO: scripts/functions/misc.sh
 # DESCRIPCIÓN: Funciones misceláneas.
 # COPYRIGHT:
-#       (C) 2010-2012 Luis Alejandro Martínez Faneyth <luis@huntingbears.com.ve>
+#       (C) 2010-2020 Luis Alejandro Martínez Faneyth <luis@collagelabs.org>
 #       (C) 2012 Niv Sardi <xaiki@debian.org>
 # LICENCIA: GPL-3
 # ==============================================================================
@@ -123,7 +123,7 @@ ABOUT() {
 	${ECHO}
 	${PRINTF} "This program is a part of %s\n" "${CS_PKG}"
 	${ECHO}
-	${ECHO} "(C) 2010-2012 Luis Alejandro Martínez Faneyth <luis@huntingbears.com.ve>"
+	${ECHO} "(C) 2010-2020 Luis Alejandro Martínez Faneyth <luis@collagelabs.org>"
 	${ECHO} "(C) 2012 Niv Sardi <xaiki@debian.org>"
 	${ECHO}
 	${ECHO} "This program is free software: you can redistribute it and/or modify"
@@ -142,7 +142,7 @@ ABOUT() {
 	${ECHO} "On Debian systems, the complete text of the GNU General Public License"
 	${ECHO} "can be found in /usr/share/common-licenses/GPL-3 file."
 	${ECHO}
-	${ECHO} "Homepage: <http://code.google.com/p/canaima-semilla/>"
+	${ECHO} "Homepage: <https://github.com/CanaimaKueka/canaima-semilla/>"
 	${ECHO}
 
 	exit 0

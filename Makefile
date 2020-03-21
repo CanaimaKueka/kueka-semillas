@@ -4,7 +4,7 @@ SHELL = sh -e
 
 # Datos del Proyecto
 AUTHOR = Luis Alejandro Martínez Faneyth
-EMAIL = luis@huntingbears.com.ve
+EMAIL = luis@collagelabs.org
 MAILIST = developers@canaimakueka.org.ve
 PACKAGE = Canaima Semilla
 CHARSET = UTF-8
@@ -213,7 +213,6 @@ prepare: check-maintdep
 	@git submodule init
 	@git submodule update
 	@cd documentation/githubwiki/ && git checkout development && git pull origin development
-	@cd documentation/googlewiki/ && git checkout development && git pull origin development
 
 pull-po: check-maintdep
 
@@ -359,7 +358,6 @@ clean-html:
 clean-wiki:
 
 	@echo "Cleaning generated wiki pages ..."
-	@rm -rf documentation/googlewiki/*
 	@rm -rf documentation/githubwiki/*
 
 clean-man:
@@ -566,3 +564,7 @@ check-buildep:
 		exit 1; \
 	fi
 	@echo
+
+image:
+
+	@docker build --rm -t canaimakueka/canaima-semilla:latest .

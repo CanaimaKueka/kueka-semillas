@@ -6,7 +6,7 @@
 # DESCRIPCIÓN: Rutina para la definición de los valores por defecto de las
 #              principales variables.
 # COPYRIGHT:
-#       (C) 2010-2012 Luis Alejandro Martínez Faneyth <luis@huntingbears.com.ve>
+#       (C) 2010-2020 Luis Alejandro Martínez Faneyth <luis@collagelabs.org>
 #       (C) 2012 Niv Sardi <xaiki@debian.org>
 # LICENCIA: GPL-3
 # ==============================================================================

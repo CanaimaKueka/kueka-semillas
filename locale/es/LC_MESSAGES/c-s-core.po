@@ -3,7 +3,7 @@
 # This file is distributed under the same license as the Canaima Semilla package.
 #
 # Translators:
-# Luis Alejandro Martínez Faneyth <luis@huntingbears.com.ve>, 2012
+# Luis Alejandro Martínez Faneyth <luis@collagelabs.org>, 2012
 #
 msgid ""
 msgstr ""
@@ -11,7 +11,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: developers@canaimakueka.org.ve\n"
 "POT-Creation-Date: 2014-01-23 14:26-0430\n"
 "PO-Revision-Date: 2012-06-21 06:06-0430\n"
-"Last-Translator: Luis Alejandro Martínez Faneyth <luis@huntingbears.com.ve>\n"
+"Last-Translator: Luis Alejandro Martínez Faneyth <luis@collagelabs.org>\n"
 "Language-Team: Equipo de Traducción de Canaima Semilla <developers@canaimakueka.org.ve>\n"
 "Language: English\n"
 "MIME-Version: 1.0\n"

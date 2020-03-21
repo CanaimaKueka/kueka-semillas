@@ -6,7 +6,7 @@
 # DESCRIPCIÓN: Rutina auxiliar para la preparación y validación del ambiente
 #	      de ejecución del script principal.
 # COPYRIGHT:
-#       (C) 2010-2012 Luis Alejandro Martínez Faneyth <luis@huntingbears.com.ve>
+#       (C) 2010-2020 Luis Alejandro Martínez Faneyth <luis@collagelabs.org>
 #       (C) 2012 Niv Sardi <xaiki@debian.org>
 # LICENCIA: GPL-3
 # ==============================================================================

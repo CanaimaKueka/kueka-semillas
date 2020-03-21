@@ -6,7 +6,7 @@
 # DESCRIPTION:  Makes a new stable release of Canaima Semilla.
 # USAGE: ./tools/release.sh
 # COPYRIGHT:
-# (C) 2012 Luis Alejandro Martínez Faneyth <luis@huntingbears.com.ve>
+# (C) 2010-2020 Luis Alejandro Martínez Faneyth <luis@collagelabs.org>
 # LICENCE: GPL3
 # ====================================================================
 #
@@ -29,7 +29,6 @@ ROOTDIR="$( pwd )"
 ROOTNAME="$( basename ${ROOTDIR} )"
 PROJDIR="$( dirname ${ROOTDIR} )"
 GITHUBWIKI="${ROOTDIR}/documentation/githubwiki"
-GOOGLEWIKI="${ROOTDIR}/documentation/googlewiki"
 VERSION="${ROOTDIR}/VERSION"
 CHANGELOG="${ROOTDIR}/ChangeLog"
 CHANGES="$( tempfile )"
@@ -54,9 +53,9 @@ SUCCESS() {
 }
 
 git config --global user.name "Luis Alejandro Martínez Faneyth"
-git config --global user.email "luis@huntingbears.com.ve"
+git config --global user.email "luis@collagelabs.org"
 export DEBFULLNAME="Luis Alejandro Martínez Faneyth"
-export DEBEMAIL="luis@huntingbears.com.ve"
+export DEBEMAIL="luis@collagelabs.org"
 
 if [ "$( git branch 2> /dev/null | sed -e '/^[^*]/d;s/\* //' )" != "development" ]; then
 	ERROR "[MAIN] You are not on \"development\" branch."
@@ -73,16 +72,6 @@ if [ "$( git branch 2> /dev/null | sed -e '/^[^*]/d;s/\* //' )" != "development"
 fi
 if [ -n "$( git diff --exit-code 2> /dev/null )" ]; then
 	ERROR "[GITHUBWIKI] You have uncommitted code on \"development\" branch."
-	exit 1
-fi
-cd ${ROOTDIR}
-cd ${GOOGLEWIKI}
-if [ "$( git branch 2> /dev/null | sed -e '/^[^*]/d;s/\* //' )" != "development" ]; then
-	ERROR "[GOOGLEWIKI] You are not on \"development\" branch."
-	git checkout development
-fi
-if [ -n "$( git diff --exit-code 2> /dev/null )" ]; then
-	ERROR "[GOOGLEWIKI] You have uncommitted code on \"development\" branch."
 	exit 1
 fi
 cd ${ROOTDIR}
@@ -120,23 +109,13 @@ echo "RELDATE=\"${DATE}\"" >> ${VERSION}
 WARNING "Updating submodules ..."
 make prepare
 
-WARNING "Updating Google Code wiki ..."
-cd ${GOOGLEWIKI}
-git checkout master
-git merge -q -s recursive -X theirs --squash development
-git add .
-git commit -q -a -m "Updating documentation"
-git push -q --tags https://code.google.com/p/canaima-semilla.wiki/ master
-git checkout development
-cd ${ROOTDIR}
-
 WARNING "Updating GitHub wiki ..."
 cd ${GITHUBWIKI}
 git checkout master
 git merge -q -s recursive -X theirs --squash development
 git add .
 git commit -q -a -m "Updating documentation"
-git push -q --tags git@github.com:HuntingBears/canaima-semilla.wiki.git master
+git push -q --tags git@github.com:CanaimaKueka/canaima-semilla.wiki.git master
 git checkout development
 cd ${ROOTDIR}
 
@@ -149,9 +128,7 @@ WARNING "Creating tarball ..."
 tar -czf ../canaima-semilla_${NEWVERSION}.orig.tar.gz *
 
 WARNING "Pushing new version to remote repositories ..."
-git push -q --tags git@github.com:HuntingBears/canaima-semilla.git release
-git push -q --tags git@gitorious.org:huntingbears/canaima-semilla.git release
-git push -q --tags https://code.google.com/p/canaima-semilla/ release
+git push -q --tags git@github.com:CanaimaKueka/canaima-semilla.git release
 
 git checkout development
 

@@ -6,7 +6,7 @@
 # DESCRIPTION:  Makes a new debian package of a stable release.
 # USAGE: ./tools/buildpackage.sh
 # COPYRIGHT:
-# (C) 2012 Luis Alejandro Martínez Faneyth <luis@huntingbears.com.ve>
+# (C) 2010-2020 Luis Alejandro Martínez Faneyth <luis@collagelabs.org>
 # LICENCE: GPL3
 # ===================================================================
 #
@@ -48,9 +48,9 @@ SUCCESS() {
 }
 
 git config --global user.name "Luis Alejandro Martínez Faneyth"
-git config --global user.email "luis@huntingbears.com.ve"
+git config --global user.email "luis@collagelabs.org"
 export DEBFULLNAME="Luis Alejandro Martínez Faneyth"
-export DEBEMAIL="luis@huntingbears.com.ve"
+export DEBEMAIL="luis@collagelabs.org"
 
 git checkout master
 git clean -fd
@@ -107,7 +107,7 @@ git reset --hard
 
 if [ "${TYPE}" = "final-release" ]; then
 	WARNING "Uploading changes to remote servers ..."
-	git push -q --tags git@github.com:HuntingBears/canaima-semilla.git master
+	git push -q --tags git@github.com:CanaimaKueka/canaima-semilla.git master
 	git push -q --tags git@gitorious.org:huntingbears/canaima-semilla.git master
 	git push -q --tags https://code.google.com/p/canaima-semilla/ master
 

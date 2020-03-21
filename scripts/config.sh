@@ -5,7 +5,7 @@
 # ARCHIVO: scripts/config.sh
 # DESCRIPCIÓN: Rutina auxiliar para la carga de los archivos de configuración.
 # COPYRIGHT:
-#       (C) 2010-2012 Luis Alejandro Martínez Faneyth <luis@huntingbears.com.ve>
+#       (C) 2010-2020 Luis Alejandro Martínez Faneyth <luis@collagelabs.org>
 #       (C) 2012 Niv Sardi <xaiki@debian.org>
 # LICENCIA: GPL-3
 # ==============================================================================
