@@ -1,5 +1,5 @@
 setuptools==45.1.0
-pip==20.0.2
+pip==21.1
 flake8==3.7.9
 wheel==0.34.2
 tox==3.14.3
